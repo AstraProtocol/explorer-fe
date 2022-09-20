@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  vesting:
+    image: explorer-fe
+    ports:
+      - '80:3000'
+    environment:
+      - NEXT_PUBLIC_ENDPOINT='http://159.223.36.174:1317'
+      - NEXT_PUBLIC_RPC='http://167.71.207.84:8545'
+      - NEXT_PUBLIC_CHAINID=11115
+      - NEXT_PUBLIC_COSMOS_CHAINID='astra_11115-1'
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
