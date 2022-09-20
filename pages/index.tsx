@@ -1,11 +1,27 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout";
+import { GetStaticPropsContext, NextPage } from 'next'
+import { useTranslations } from 'next-intl'
+import pick from 'lodash/pick'
+import React from 'react'
+import Layout from '../components/Layout'
 
-type Props = {};
+const Home: React.FC<NextPage> = _ => {
+	const t = useTranslations('Index')
+	return <Layout>{t('title')}</Layout>
+}
+type HomeExtendProps = typeof Home & { messages: string[] }
+;(Home as HomeExtendProps).messages = ['Index']
 
-const Home: React.FC<Props> = (props) => {
-	return <Layout>Implement Here</Layout>;
-};
-
-export default Home;
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+	return {
+		props: {
+			messages: pick(
+				{
+					...(await import(`../messages/share/${locale}.json`)).default,
+					...(await import(`../messages/index/${locale}.json`)).default
+				},
+				(Home as HomeExtendProps).messages
+			)
+		}
+	}
+}
+export default Home
