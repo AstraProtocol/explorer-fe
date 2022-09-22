@@ -4,11 +4,15 @@ import pick from 'lodash/pick'
 import React from 'react'
 import Layout from '../components/Layout'
 import Search from '../components/Search'
+import Head from 'next/head'
 
 const Home: React.FC<NextPage> = _ => {
 	const t = useTranslations('Index')
 	return (
 		<Layout>
+			<Head>
+				<title>Explorer</title>
+			</Head>
 			{t('title')}
 			<Search />
 		</Layout>
