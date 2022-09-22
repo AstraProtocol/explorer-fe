@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-export default function useOutsideAlerter(ref, hideMenu: Function) {
+export default function useOutsideElement(ref, clickOut: Function) {
 	useEffect(() => {
 		/**
 		 * Alert if clicked on outside of element
@@ -11,7 +11,7 @@ export default function useOutsideAlerter(ref, hideMenu: Function) {
 		function handleClickOutside(event) {
 			if (ref.current && !ref.current.contains(event.target)) {
 				// alert('You clicked outside of me!')O
-                hideMenu();
+				clickOut()
 			}
 		}
 		// Bind the event listener

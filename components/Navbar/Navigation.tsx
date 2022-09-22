@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 
 import styles from './style.module.scss'
-import useOutsideAlerter from './useOutsideAlerter'
+import useOutsideAlerter from '../../hooks/useOutsideElement'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 type MenuType = 'static' | 'locale'
