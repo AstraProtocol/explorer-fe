@@ -3,9 +3,9 @@ export default function LiveIcon() {
 		<>
 			<style jsx>{`
 				span {
-                    display: inline-block;
+					display: inline-block;
 					width: 10px;
-                    border-radius: 50%;
+					border-radius: 50%;
 					height: 10px;
 					background: linear-gradient(212.01deg, #b8ff8b 6.41%, #4eca00 91.99%);
 					box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.04);

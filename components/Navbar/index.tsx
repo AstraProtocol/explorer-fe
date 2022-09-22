@@ -137,7 +137,7 @@ export default function Navbar() {
 		<nav className={clsx(styles.navbar, { 'shadow-xs': shadow })}>
 			<div className={clsx(styles.container, 'margin-auto')}>
 				<div className={styles.left}>
-					<Logo type='transparent' />
+					<Logo type="transparent" />
 				</div>
 				<div className={styles.right}>
 					<Navigation items={items} />

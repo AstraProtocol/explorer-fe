@@ -11,7 +11,7 @@ type Props = {
 const Layout: React.FC<Props> = props => (
 	<SWRConfig
 		value={{
-			fetcher: fetcher,
+			fetcher: fetcher
 		}}
 	>
 		<div className="dark--mode" style={{ minHeight: '100vh' }}>

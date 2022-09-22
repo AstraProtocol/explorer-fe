@@ -6,8 +6,8 @@ import styles from './style.module.scss'
 
 type SearchResultProps = {
 	status: SearchStatusEnum
-	items?: SearchItemResponse[],
-    searchValue?: string;
+	items?: SearchItemResponse[]
+	searchValue?: string
 }
 
 export default function SearchResult({ status, items, searchValue }: SearchResultProps) {
@@ -29,7 +29,9 @@ export default function SearchResult({ status, items, searchValue }: SearchResul
 			)}
 			{status === SearchStatusEnum.DONE && items?.length > 0 && (
 				<div className={clsx(styles.searchResultList, 'padding-top-lg')}>
-					<div className="text-base text-bold padding-bottom-sm margin-bottom-sm">{items.length} search result:</div>
+					<div className="text-base text-bold padding-bottom-sm margin-bottom-sm">
+						{items.length} search result:
+					</div>
 					{items.map(item => (
 						<ResultView item={item} searchValue={searchValue} />
 					))}

@@ -17,8 +17,8 @@ const spinnerSizes = {
 		circle: {
 			width: '6px',
 			height: '6px',
-            top: "-3px",
-            left: "0px"
+			top: '-3px',
+			left: '0px'
 		}
 	},
 	md: {
@@ -31,9 +31,9 @@ const spinnerSizes = {
 		circle: {
 			width: '8px',
 			height: '8px',
-            borderWidth: "1px",
-            top: "-3px",
-            left: "-2px"
+			borderWidth: '1px',
+			top: '-3px',
+			left: '-2px'
 		}
 	},
 	lg: {
@@ -41,14 +41,14 @@ const spinnerSizes = {
 			width: '50px',
 			height: '50px',
 			borderWidth: '12px',
-			borderLeftWidth: '12px',
+			borderLeftWidth: '12px'
 		},
 		circle: {
 			width: '14px',
 			height: '14px',
-            borderWidth: "2px",
-            top: "-9px",
-            left: "-6px"
+			borderWidth: '2px',
+			top: '-9px',
+			left: '-6px'
 		}
 	}
 }

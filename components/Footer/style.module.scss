@@ -2,7 +2,7 @@
 	background-color: rgba(var(--contrast-color-theme--raw), 0.05);
 }
 .footerInfo {
-    display: flex;
+	display: flex;
 	.wrapperLinks {
 		display: flex;
 		div {
@@ -16,7 +16,7 @@
 }
 
 .footerSocial {
-    div:last-child {
-        display:  flex;
-    }
+	div:last-child {
+		display: flex;
+	}
 }
