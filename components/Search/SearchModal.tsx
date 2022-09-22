@@ -44,7 +44,6 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 
 	useEffect(() => {
 		const value = _inputRef?.current?.value
-        console.log(value)
 		if (_search && value) {
 			if (value === 'fail') {
 				_setSearchStatus(SearchStatusEnum.DONE)
