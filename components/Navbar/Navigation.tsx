@@ -78,9 +78,15 @@ export default function Navigation({ items }: NavigationProps) {
 					{_renderLink(link, label)}
 					{sub1?.length > 0 && (
 						<ul
-							className={clsx(styles.submenu, 'same-bg-color-100', 'radius-sm', "border-solid border-sm", {
-								[styles.show]: show
-							})}
+							className={clsx(
+								styles.submenu,
+								'same-bg-color-100',
+								'radius-sm',
+								'border-solid border-sm',
+								{
+									[styles.show]: show
+								}
+							)}
 						>
 							{sub1.map(menu => (
 								<li

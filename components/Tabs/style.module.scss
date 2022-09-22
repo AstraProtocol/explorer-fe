@@ -1,0 +1,29 @@
+.tabs {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-left: var(--offset-xl);
+    padding-right: var(--offset-xl);
+}
+
+.tab {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.tabActive {
+    color: var(--primary-color-normal);
+}
+
+.borderActive {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 1;
+    background-color: var(--primary-color-normal);
+
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}

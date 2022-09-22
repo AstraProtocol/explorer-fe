@@ -1,0 +1,23 @@
+.backgroundCard {
+	box-sizing: border-box;
+
+	/* Auto layout */
+
+
+	/* White Color/50 */
+
+	background: var(--border-color);
+	/* White Color/50 */
+
+	border: 1px solid var(--border-color);
+	backdrop-filter: blur(42px);
+	/* Note: backdrop-filter has minimal browser support */
+
+	border-radius: 16px;
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+}

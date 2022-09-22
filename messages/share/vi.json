@@ -1,9 +1,7 @@
 {
-    "Navbar": {
-        "en": "Tiếng anh",
-        "vi": "Tiếng việt"
-    },
-    "Footer": {
-        
-    }
+	"Navbar": {
+		"en": "Tiếng anh",
+		"vi": "Tiếng việt"
+	},
+	"Footer": {}
 }

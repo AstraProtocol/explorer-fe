@@ -11,7 +11,7 @@ export default function useOutsideAlerter(ref, hideMenu: Function) {
 		function handleClickOutside(event) {
 			if (ref.current && !ref.current.contains(event.target)) {
 				// alert('You clicked outside of me!')O
-                hideMenu();
+				hideMenu()
 			}
 		}
 		// Bind the event listener
