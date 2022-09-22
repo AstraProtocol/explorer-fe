@@ -33,7 +33,7 @@ export default function SearchResult({ status, items, searchValue }: SearchResul
 						{items.length} search result:
 					</div>
 					{items.map(item => (
-						<ResultView item={item} searchValue={searchValue} />
+						<ResultView key={item.inserted_at} item={item} searchValue={searchValue} />
 					))}
 				</div>
 			)}
