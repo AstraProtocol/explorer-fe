@@ -1,14 +1,16 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { SearchItem, SearchStatusEnum } from './SearchModal'
+import ResultView from './ResultView'
+import { SearchStatusEnum } from './SearchModal'
 import styles from './style.module.scss'
 
 type SearchResultProps = {
 	status: SearchStatusEnum
-	items?: SearchItem[]
+	items?: SearchItemResponse[],
+    searchValue?: string;
 }
 
-export default function SearchResult({ status, items }: SearchResultProps) {
+export default function SearchResult({ status, items, searchValue }: SearchResultProps) {
 	return (
 		<div className={styles.searchResult}>
 			{status === SearchStatusEnum.INPUTTING && (
@@ -26,13 +28,10 @@ export default function SearchResult({ status, items }: SearchResultProps) {
 				</div>
 			)}
 			{status === SearchStatusEnum.DONE && items?.length > 0 && (
-				<div className={clsx(styles.searchResultList, "padding-top-lg")}>
-					<div className='text-base padding-bottom-sm margin-bottom-sm'>{items.length} search result:</div>
-					{items.map(({ label, time }) => (
-						<div key={label} className={clsx(styles.item, "money money-sm padding-left-xs")}>
-							<div className={clsx("text-bold")}>{label}</div>
-							<div>{time}</div>
-						</div>
+				<div className={clsx(styles.searchResultList, 'padding-top-lg')}>
+					<div className="text-base text-bold padding-bottom-sm margin-bottom-sm">{items.length} search result:</div>
+					{items.map(item => (
+						<ResultView item={item} searchValue={searchValue} />
 					))}
 				</div>
 			)}

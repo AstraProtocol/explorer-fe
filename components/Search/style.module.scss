@@ -114,5 +114,9 @@
 	&:hover {
 		background-image: url('/images/icons/clear_hover.svg');
 	}
-    cursor: pointer;
+	cursor: pointer;
+}
+
+.separate {
+	border-left: 1.4px solid rgba(255, 255, 255, 0.1);
 }

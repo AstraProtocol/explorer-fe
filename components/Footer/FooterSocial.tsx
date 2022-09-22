@@ -35,7 +35,7 @@ export default function FooterSocial({ classes }: FooterSocialProps) {
 			<div className="margin-bottom-md text text-base text-bold">Connect with us</div>
 			<div>
 				{socialItems.map(item => (
-					<a href={item.link} className="margin-right-sm">
+					<a key={item.icon} href={item.link} className="margin-right-sm">
 						<Image src={item.icon} width={32} height={32} />
 					</a>
 				))}

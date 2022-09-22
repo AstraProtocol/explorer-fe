@@ -1,7 +1,9 @@
 import clsx from 'clsx'
-import { ChangeEventHandler, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useRef } from 'react'
+import useSWR from 'swr'
+import API_LIST from '../../api/api_list'
 import useOutsideElement from '../../hooks/useOutsideElement'
 import ModalWrapper from '../Modal/ModalWrapper'
 import Spinner from '../Spinner'
@@ -31,9 +33,23 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	const [_search, _setSearch] = useState<boolean>(false)
 	const [_timeout, _setTimeout] = useState<NodeJS.Timeout>(undefined)
 	const [_searchStatus, _setSearchStatus] = useState<SearchStatusEnum>(SearchStatusEnum.INPUTTING)
-	const [_results, _setResults] = useState<SearchItem[]>()
 
 	useOutsideElement(_searchWrapperRef, closeModal)
+
+	const _fetch = () => {
+		const value = _inputRef?.current?.value
+		if (_search && value) {
+			return [API_LIST.SEARCH, { q: value }]
+		}
+		return null
+	}
+	const { data } = useSWR(_fetch())
+
+	useEffect(() => {
+		if (_search && data !== undefined) {
+			_setSearchStatus(SearchStatusEnum.DONE)
+		}
+	}, [data])
 	useEffect(() => {
 		if (open) {
 			setTimeout(() => {
@@ -41,26 +57,6 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 			}, 100)
 		}
 	}, [open])
-
-	useEffect(() => {
-		const value = _inputRef?.current?.value
-		if (_search && value) {
-			if (value === 'fail') {
-				_setSearchStatus(SearchStatusEnum.DONE)
-                _setResults(undefined)
-			} else {
-				setTimeout(() => {
-					_setSearchStatus(SearchStatusEnum.DONE)
-					_setResults([
-						{
-							label: '0x913d6f1177d5accc60619485466298184d8777840cfb2d862e3d5e37090e2a8d',
-							time: 'hh:mm:ssss (+7 UTC)'
-						}
-					])
-				}, 2000)
-			}
-		}
-	}, [_search, _inputRef])
 
 	const _inputChange = (event: React.FormEvent<HTMLInputElement>) => {
 		const value = event.currentTarget.value
@@ -79,9 +75,8 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	}
 	const _clearSearch = () => {
 		_setSearch(false)
-		_setResults(undefined)
 		_setSearchStatus(SearchStatusEnum.INPUTTING)
-        _inputRef.current.value = "";
+		_inputRef.current.value = ''
 	}
 	return (
 		<ModalWrapper open={open}>
@@ -98,7 +93,11 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						)}
 					</div>
 				</div>
-				<SearchResult status={_searchStatus} items={_results} />
+				<SearchResult
+					status={_searchStatus}
+					items={data as SearchItemResponse[]}
+					searchValue={_inputRef?.current?.value}
+				/>
 			</div>
 		</ModalWrapper>
 	)
