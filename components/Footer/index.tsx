@@ -11,7 +11,7 @@ export default function Footer() {
 		<footer className={clsx(styles.footer, "padding-top-xl padding-bottom-xl")}>
 			<Container>
 				<div className={styles.footerLogo}>
-					<Logo type="white" />
+					<Logo type="white" textSize='lg' />
 				</div>
 				<div className={clsx(styles.footerInfo, "row")}>
 					<FooterLink classes='col col-9 gutter-right' />

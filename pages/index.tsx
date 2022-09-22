@@ -13,7 +13,6 @@ const Home: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Explorer</title>
 			</Head>
-			{t('title')}
 			<Search />
 		</Layout>
 	)
