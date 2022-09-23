@@ -1,0 +1,53 @@
+.row {
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+}
+
+.blockRow {
+	box-sizing: border-box;
+	height: 72px;
+
+	/* White Color/50 */
+
+	/* Note: backdrop-filter has minimal browser support */
+	border-radius: 16px;
+
+	/* Inside auto layout */
+
+	padding: 12px 28px;
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+}
+
+.backgroundRow {
+	background: var(--border-color);
+	/* White Color/50 */
+	border: 1px solid var(--border-color);
+	backdrop-filter: blur(42px);
+}
+
+.gradientRow {
+	background: linear-gradient(90deg, rgba(139, 255, 98, 0.08) 0%, rgba(97, 181, 67, 0) 10.65%),
+		rgba(255, 255, 255, 0.05);
+	border: 1px solid var(--border-color);
+	backdrop-filter: blur(42px);
+}
+
+.rowType {
+	position: absolute;
+	width: 4px;
+	height: 32px;
+	left: 0px;
+	top: 20px;
+	border-radius: 0px 4px 4px 0px;
+}
+
+.success {
+	background: var(--alert-color-success);
+}
+
+.error {
+	background: var(--alert-color-error);
+}

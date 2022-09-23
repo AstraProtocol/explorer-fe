@@ -1,12 +1,12 @@
 import clsx from 'clsx'
+import cloneDeep from 'lodash/cloneDeep'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import cloneDeep from 'lodash/cloneDeep'
 
-import styles from './style.module.scss'
-import useOutsideAlerter from '../../hooks/useOutsideElement'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import useOutsideAlerter from '../../hooks/useOutsideElement'
+import styles from './style.module.scss'
 type MenuType = 'static' | 'locale'
 
 type SubMenuItem = {
