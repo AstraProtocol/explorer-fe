@@ -1,0 +1,22 @@
+.footer {
+	background-color: rgba(var(--contrast-color-theme--raw), 0.05);
+}
+.footerInfo {
+	display: flex;
+	.wrapperLinks {
+		display: flex;
+		div {
+			display: flex;
+			flex-direction: column;
+			a {
+				color: var(--contrast-color-theme-50);
+			}
+		}
+	}
+}
+
+.footerSocial {
+	div:last-child {
+		display: flex;
+	}
+}

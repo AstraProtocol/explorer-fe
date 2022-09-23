@@ -1,19 +1,31 @@
-import React, { ReactNode } from "react";
-import BackgroundCard from "./BackgroundCard";
-import Navbar from "./Navbar";
+import React, { ReactNode } from 'react'
+import { SWRConfig } from 'swr'
+import { fetcher } from '../api'
+import { selectTheme } from '../slices/themeSlice'
+import { useAppSelector } from '../store/hooks'
+import Footer from './Footer'
+import Navbar from './Navbar'
 
 type Props = {
 	children: ReactNode
 }
 
-const Layout: React.FC<Props> = (props) => (
-  <div className="dark--mode">
-    <Navbar />
-    <div className="layout" style={{height: "200vh"}}>{props.children}</div>
-	<BackgroundCard>
-				<h1>afsdfasdf</h1>
-			</BackgroundCard>
-  </div>
-);
+const Layout: React.FC<Props> = props => {
+	const theme = useAppSelector(selectTheme)
 
-export default Layout;
+	return (
+		<SWRConfig
+			value={{
+				fetcher: fetcher
+			}}
+		>
+			<div className={theme} style={{ minHeight: '100vh' }}>
+				<Navbar />
+				<div className="layout">{props.children}</div>
+				<Footer />
+			</div>
+		</SWRConfig>
+	)
+}
+
+export default Layout

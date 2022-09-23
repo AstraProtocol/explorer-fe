@@ -1,0 +1,36 @@
+.loader {
+	border: 16px solid var(--contrast-color-theme-20);
+	border-radius: 50%;
+	border-left: 16px solid var(--primary-color-lighter);
+	-webkit-animation: spin 1.5s linear infinite; /* Safari */
+	animation: spin 1.5s linear infinite;
+	position: relative;
+}
+.circle {
+	border-radius: 50%;
+	position: absolute;
+	/* White Color/White */
+	background: white;
+	/* Primary/Lighter */
+	border: 1px solid var(--primary-color-lighter);
+	box-shadow: 3px -1px 5px var(--primary-color-lighter);
+	backdrop-filter: blur(42px);
+}
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

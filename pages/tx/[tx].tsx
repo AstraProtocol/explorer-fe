@@ -1,11 +1,11 @@
-import React from "react";
-import { GetStaticProps } from "next";
-import Layout from "../../components/Layout";
+import React from 'react'
+import { GetStaticProps } from 'next'
+import Layout from '../../components/Layout'
 
-type Props = {};
+type Props = {}
 
-const TransactionDetailPage: React.FC<Props> = (props) => {
-	return <Layout>Implement Here</Layout>;
-};
+const TransactionDetailPage: React.FC<Props> = props => {
+	return <Layout>Implement Here</Layout>
+}
 
-export default TransactionDetailPage;
+export default TransactionDetailPage
