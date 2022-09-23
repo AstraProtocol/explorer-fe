@@ -8,5 +8,5 @@ interface SearchItemResponse {
 	name?: string
 	symbol?: string
 	tx_hash?: string
-	type: 'transaction_cosmos' | 'address'
+	type: 'transaction_cosmos' | 'address' | 'block' | 'transaction'
 }

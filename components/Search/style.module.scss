@@ -120,3 +120,14 @@
 .separate {
 	border-left: 1.4px solid rgba(255, 255, 255, 0.1);
 }
+
+.viewMoreInfo {
+	display: flex;
+	justify-content: space-between;
+	.viewTag {
+		text-transform: uppercase;
+		background-color: rgba(var(--contrast-color-theme--raw), 0.05);
+		border-radius: 4px;
+		font-family: 'Manrope';
+	}
+}

@@ -89,3 +89,15 @@
 		}
 	}
 }
+.right {
+	display: flex;
+	.switchTheme {
+		display: flex;
+		button {
+			background-color: transparent;
+			color: var(--contrast-color-theme-100);
+			border: none;
+			cursor: pointer;
+		}
+	}
+}

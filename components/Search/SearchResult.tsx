@@ -11,6 +11,7 @@ type SearchResultProps = {
 }
 
 export default function SearchResult({ status, items, searchValue }: SearchResultProps) {
+	console.log(items)
 	return (
 		<div className={styles.searchResult}>
 			{status === SearchStatusEnum.INPUTTING && (
@@ -33,7 +34,7 @@ export default function SearchResult({ status, items, searchValue }: SearchResul
 						{items.length} search result:
 					</div>
 					{items.map(item => (
-						<ResultView key={item.inserted_at} item={item} searchValue={searchValue} />
+						<ResultView key={item.inserted_at} item={item} />
 					))}
 				</div>
 			)}

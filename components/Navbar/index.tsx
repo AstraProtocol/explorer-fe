@@ -1,9 +1,10 @@
-import styles from './style.module.scss'
-import Logo from '../Logo'
-import Navigation, { MenuItem } from './Navigation'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
+import Logo from '../Logo'
 import LiveIcon from './LiveIcon'
+import Navigation, { MenuItem } from './Navigation'
+import styles from './style.module.scss'
+import SwitchTheme from './SwitchTheme'
 
 const items: MenuItem[] = [
 	{
@@ -97,23 +98,23 @@ const items: MenuItem[] = [
 				link: '/astra'
 			}
 		]
-	},
-	{
-		id: '6',
-		type: 'locale',
-		submenus: [
-			{
-				id: '6.1',
-				label: 'ENG',
-				link: '/en'
-			},
-			{
-				id: '6.2',
-				label: 'VI',
-				link: '/vi'
-			}
-		]
 	}
+	// {
+	// 	id: '6',
+	// 	type: 'locale',
+	// 	submenus: [
+	// 		{
+	// 			id: '6.1',
+	// 			label: 'ENG',
+	// 			link: '/en'
+	// 		},
+	// 		{
+	// 			id: '6.2',
+	// 			label: 'VI',
+	// 			link: '/vi'
+	// 		}
+	// 	]
+	// }
 ]
 
 export default function Navbar() {
@@ -141,6 +142,7 @@ export default function Navbar() {
 				</div>
 				<div className={styles.right}>
 					<Navigation items={items} />
+					<SwitchTheme />
 				</div>
 			</div>
 		</nav>
