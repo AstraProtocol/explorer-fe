@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import React, { ReactNode } from 'react'
-import CopyButton from './Button/CopyButton'
-import BackgroundCard from './Card/Background/BackgroundCard'
-import Navbar from './Navbar'
-import BackgroundRow from './Row/BackgroundRow'
-import GradientRow from './Row/GradientRow'
-import Tabs from './Tabs/Tabs'
-import Typography from './Typography'
+import CopyButton from '../components/Button/CopyButton'
+import BackgroundCard from '../components/Card/Background/BackgroundCard'
+import Navbar from '../components/Navbar'
+import BackgroundRow from '../components/Row/BackgroundRow'
+import GradientRow from '../components/Row/GradientRow'
+import Tabs from '../components/Tabs/Tabs'
+import Typography from '../components/Typography'
 
 type Props = {
 	children: ReactNode
