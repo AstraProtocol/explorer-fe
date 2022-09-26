@@ -3,7 +3,7 @@ import { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import '@astraprotocol//astra-ui/shared/style.css'
+import '@astraprotocol/astra-ui/lib/shared/style.css'
 import store, { persistor } from '../store'
 
 const App = ({ Component, pageProps }: AppProps) => {
