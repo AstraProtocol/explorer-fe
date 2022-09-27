@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './style.module.scss'
 
 interface Props {
-	children: React.ReactElement
+	children: React.ReactNode
 }
 
 const BackgroundCard = ({ children }: Props) => {
