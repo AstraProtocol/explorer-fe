@@ -22,3 +22,28 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	const big = BigNumber.from(value)
 	return formatUnits(big, decimals)
 }
+
+export class LinkMaker {
+	static address(address: string) {
+		return `/address/${address}`
+	}
+	/**
+	 *
+	 * @param blockNumber empty -> block homepage
+	 * @returns
+	 */
+	static block(blockNumber: string | number) {
+		blockNumber = blockNumber > 0 ? `/${blockNumber}` : ''
+		return `/blocks${blockNumber}`
+	}
+
+	/**
+	 *
+	 * @param blockNumber empty -> block homepage
+	 * @returns
+	 */
+	static transaction(hash: string) {
+		hash = hash ? `/${hash}` : ''
+		return `/tx${hash}`
+	}
+}

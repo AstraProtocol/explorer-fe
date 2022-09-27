@@ -5,6 +5,7 @@ import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import useSWR from 'swr'
+import { LinkMaker } from 'utils/helper'
 import RowBrief from './BlockBriefRow'
 
 export function HomeBlock() {
@@ -18,7 +19,7 @@ export function HomeBlock() {
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Lastest Block</span>
 				<DotSpace />
-				<a href="/blocks" className="link secondary-color-normal">
+				<a href={LinkMaker.block()} className="link secondary-color-normal">
 					View all Blocks
 				</a>
 			</div>
@@ -31,7 +32,7 @@ export function HomeBlock() {
 						<RowBrief
 							key={item.number}
 							blockNumber={item.number}
-							proposer={item.miner_hash}
+							proposerAddress={item.miner_hash}
 							transactions={0}
 							updatedAt={item.timestamp}
 						/>

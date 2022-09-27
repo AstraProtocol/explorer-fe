@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
-import { ellipseBetweenText, ellipseRightText } from 'utils/helper'
+import { ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type TransactionBriefRowProps = {
@@ -28,7 +28,7 @@ export default function TransactionBriefRow({ hash, from, to, balance, updatedAt
 					<div>
 						<span className={clsx('contrast-color-30 margin-right-xs')}>Hash</span>
 						<Typography.LinkText
-							href=""
+							href={LinkMaker.transaction(hash)}
 							children={`${ellipseRightText(hash, 24)}`}
 							className={['money', 'money-sm']}
 						/>

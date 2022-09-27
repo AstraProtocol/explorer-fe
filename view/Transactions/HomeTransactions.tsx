@@ -5,7 +5,7 @@ import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import useSWR from 'swr'
-import { convertBalanceToView } from 'utils/helper'
+import { convertBalanceToView, LinkMaker } from 'utils/helper'
 import RowBrief from './TransactionBriefRow'
 
 export function HomeTransactions() {
@@ -19,7 +19,7 @@ export function HomeTransactions() {
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Lastest Transactions</span>
 				<DotSpace />
-				<a href="/tx" className="link secondary-color-normal">
+				<a href={LinkMaker.transaction()} className="link secondary-color-normal">
 					View all transactions
 				</a>
 			</div>
