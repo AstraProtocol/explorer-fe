@@ -1,0 +1,14 @@
+.title {
+	display: inline-flex;
+	align-items: center;
+	&::after {
+		content: '';
+		width: 5px;
+		height: 5px;
+		display: inline-flex;
+		background: var(--contrast-color-theme-30);
+		border-radius: 50%;
+		margin-left: var(--offset-sm);
+		margin-right: var(--offset-sm);
+	}
+}

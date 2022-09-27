@@ -1,8 +1,7 @@
-import clsx from 'clsx'
 import React, { ReactNode } from 'react'
 import CopyButton from '../components/Button/CopyButton'
 import BackgroundCard from '../components/Card/Background/BackgroundCard'
-import Navbar from '../components/Navbar'
+import Layout from '../components/Layout'
 import BackgroundRow from '../components/Row/BackgroundRow'
 import GradientRow from '../components/Row/GradientRow'
 import Tabs from '../components/Tabs/Tabs'
@@ -13,8 +12,7 @@ type Props = {
 }
 
 const DemoPage: React.FC<Props> = props => (
-	<div className={clsx('dark--mode', 'local')}>
-		<Navbar />
+	<Layout>
 		<BackgroundCard>
 			<Tabs
 				tabs={[
@@ -52,19 +50,19 @@ const DemoPage: React.FC<Props> = props => (
 		<Typography.ErrorText>Error</Typography.ErrorText>
 		<div />
 		<BackgroundCard>
-			<h1>afsdfasdf</h1>
+			<h1>afsdfasdf BackgroundCard</h1>
 		</BackgroundCard>
 		<GradientRow type="success">
-			<span>f</span>
-			<span>g</span>
+			<span>f GradientRow</span>
+			<span>g GradientRow</span>
 		</GradientRow>
 		<GradientRow type="error">
-			<span>f</span>
-			<span>g</span>
+			<span>f GradientRow</span>
+			<span>g GradientRow</span>
 		</GradientRow>
 		<BackgroundRow>
-			<span>f</span>
-			<span>g</span>
+			<span>f BackgroundRow</span>
+			<span>g BackgroundRow</span>
 		</BackgroundRow>
 		<div className="layout" style={{ height: '200vh' }}>
 			{props.children}
@@ -82,7 +80,7 @@ const DemoPage: React.FC<Props> = props => (
 					#08080a;
 			}
 		`}</style>
-	</div>
+	</Layout>
 )
 
 export default DemoPage

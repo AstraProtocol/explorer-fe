@@ -11,7 +11,6 @@ type SearchResultProps = {
 }
 
 export default function SearchResult({ status, items, searchValue }: SearchResultProps) {
-	console.log(items)
 	return (
 		<div className={styles.searchResult}>
 			{status === SearchStatusEnum.INPUTTING && (
