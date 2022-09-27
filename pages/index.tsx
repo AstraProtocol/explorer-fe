@@ -27,16 +27,6 @@ const Home: React.FC<NextPage> = _ => {
 					</div>
 				</div>
 			</Container>
-			<Container>
-				<div className="row md-wrap">
-					<div className={clsx('col col-6 gutter-right')}>
-						<HomeBlock />
-					</div>
-					<div className={clsx('col col-6')}>
-						<HomeTransactions />
-					</div>
-				</div>
-			</Container>
 		</Layout>
 	)
 }
