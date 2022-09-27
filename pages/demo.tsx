@@ -1,4 +1,8 @@
+
 import React, { ReactNode } from 'react'
+import clsx from 'clsx'
+import Table, { TableDataSource } from 'components/Table/Table'
+import { ReactNode } from 'react'
 import CopyButton from '../components/Button/CopyButton'
 import BackgroundCard from '../components/Card/Background/BackgroundCard'
 import Layout from '../components/Layout'
@@ -11,8 +15,48 @@ type Props = {
 	children: ReactNode
 }
 
+const tableData = [
+	{
+		x: 1,
+		y: 2
+	},
+	{
+		x: 2,
+		y: 2
+	},
+	{
+		x: 3,
+		y: 2
+	}
+]
+
+const dataSource: TableDataSource[] = [
+	{
+		dataIndex: 'xxx',
+		key: 'xxx',
+		render: (v, r, index) => index + 1,
+		title: 'STT'
+	},
+	{
+		dataIndex: 'x',
+		key: 'x',
+		render: v => <span>{v}</span>,
+		title: 'Test X'
+	},
+	{
+		dataIndex: 'y',
+		key: 'y',
+		render: v => <span style={{ color: 'red' }}>{v} </span>,
+		title: 'Test Y'
+	}
+]
+
 const DemoPage: React.FC<Props> = props => (
 	<Layout>
+		<Table title="Demo Table" rowKey="x" dataSource={dataSource} data={tableData} />
+		<br />
+		<Table title="Demo Table" inverted rowKey="x" dataSource={dataSource} data={tableData} />
+		<br />
 		<BackgroundCard>
 			<Tabs
 				tabs={[
