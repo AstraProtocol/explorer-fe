@@ -11,14 +11,14 @@ export function HomeBlock() {
 	const _fetchCondition = () => {
 		return [API_LIST.ALL_BLOCKS]
 	}
-	const { data } = useSWR<BlockResponse>(_fetchCondition(), { refreshInterval: 3000 })
+	const { data } = useSWR<BlockResponse>(_fetchCondition(), { refreshInterval: 2000 })
 	const blockTop10 = data?.items?.slice(0, 10)
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Lastest Block</span>
 				<DotSpace />
-				<a href="/block" className="link secondary-color-normal">
+				<a href="/blocks" className="link secondary-color-normal">
 					View all Blocks
 				</a>
 			</div>
