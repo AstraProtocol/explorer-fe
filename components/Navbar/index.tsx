@@ -98,23 +98,23 @@ const items: MenuItem[] = [
 				link: '/astra'
 			}
 		]
+	},
+	{
+		id: '6',
+		type: 'locale',
+		submenus: [
+			{
+				id: '6.1',
+				label: 'ENG',
+				link: '/en'
+			},
+			{
+				id: '6.2',
+				label: 'VI',
+				link: '/vi'
+			}
+		]
 	}
-	// {
-	// 	id: '6',
-	// 	type: 'locale',
-	// 	submenus: [
-	// 		{
-	// 			id: '6.1',
-	// 			label: 'ENG',
-	// 			link: '/en'
-	// 		},
-	// 		{
-	// 			id: '6.2',
-	// 			label: 'VI',
-	// 			link: '/vi'
-	// 		}
-	// 	]
-	// }
 ]
 
 export default function Navbar() {
@@ -135,7 +135,7 @@ export default function Navbar() {
 	}, [shadow])
 
 	return (
-		<nav className={clsx(styles.navbar, { 'shadow-xs': shadow })}>
+		<nav className={clsx(styles.navbar, 'margin-bottom-sm', { 'shadow-xs': shadow })}>
 			<div className={clsx(styles.container, 'margin-auto')}>
 				<div className={styles.left}>
 					<Logo type="transparent" />

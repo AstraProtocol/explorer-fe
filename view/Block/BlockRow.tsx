@@ -3,6 +3,7 @@ import DotSpace from 'components/DotSpace'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
+import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type BlockRowProps = {
@@ -12,39 +13,72 @@ type BlockRowProps = {
 	transactions: number
 	proposerAddress: string
 	mine?: boolean
+	value: number
 }
 
-export default function BlockRow({ blockNumber, updatedAt, transactions, proposerAddress, mine }: BlockRowProps) {
+export default function BlockRow({
+	blockNumber,
+	updatedAt,
+	transactions,
+	proposerAddress,
+	mine,
+	size,
+	value
+}: BlockRowProps) {
 	return (
-		<div className={clsx(styles.rowBrief, 'padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm')}>
+		<div
+			className={clsx(
+				styles.rowBrief,
+				styles.blockRow,
+				'row padding-left-lg',
+				'padding-right-lg padding-top-sm padding-bottom-sm',
+				'radius-lg',
+				'margin-bottom-xs'
+			)}
+		>
 			<div className={clsx(styles.icon, 'margin-right-sm')}>
 				<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
 			</div>
-			<div>
-				<Typography.LinkText
-					href={`/block/${blockNumber}/transactions`}
-					children={`#${blockNumber}`}
-					className={['money', 'money-sm']}
-				/>
-			</div>
-			<div className={styles.content}>
-				<div>
-					<Typography.LinkText
-						href={`/address/${proposerAddress}`}
-						children={`#${blockNumber}`}
-						className={['money', 'money-sm']}
-					/>
-				</div>
-				<div className={clsx('block-ver-center', styles.info)}>
-					<div className="block-ver-center">
-						<span className={clsx('contrast-color-30 padding-right-2xs')}>Block Proposer</span>
-						<span className="contrast-color-70 money">{proposerAddress}</span>
-						<DotSpace />
-						<span className="contrast-color-70">{transactions} Transactions</span>
+			{mine ? (
+				<>
+					<div className="col-2" />
+					<div className="contrast-color-70">Block mined, awaiting import...</div>
+				</>
+			) : (
+				<>
+					<div className="col-2">
+						<Typography.LinkText
+							href={LinkMaker.block(blockNumber)}
+							children={`#${blockNumber}`}
+							className={['money', 'money-sm']}
+						/>
 					</div>
-					<Timer updatedAt={updatedAt} />
-				</div>
-			</div>
+					<div className="col-6">
+						<div>
+							<Typography.LinkText
+								href={LinkMaker.address(proposerAddress)}
+								children={proposerAddress}
+								className={['money', 'money-sm']}
+							/>
+						</div>
+						<div className={clsx('block-ver-center', styles.info)}>
+							<div className="block-ver-center">
+								<span className={clsx('text text-sm contrast-color-30 padding-right-2xs')}>
+									{transactions} Transactions
+								</span>
+								<DotSpace />
+								<span className="text text-sm contrast-color-30">{size} bytes</span>
+							</div>
+						</div>
+					</div>
+
+					<div className="col-2">
+						<Timer updatedAt={updatedAt} />
+					</div>
+
+					<div className="money money-xs contrast-color-70">{value}</div>
+				</>
+			)}
 		</div>
 	)
 }

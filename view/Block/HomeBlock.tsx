@@ -1,19 +1,14 @@
-import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
-import useSWR from 'swr'
 import { LinkMaker } from 'utils/helper'
 import RowBrief from './BlockBriefRow'
+import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
-	const _fetchCondition = () => {
-		return [API_LIST.ALL_BLOCKS]
-	}
-	const { data } = useSWR<BlockResponse>(_fetchCondition(), { refreshInterval: 2000 })
-	const blockTop10 = data?.items?.slice(0, 10)
+	const { top10 } = useBlock()
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
@@ -24,11 +19,11 @@ export function HomeBlock() {
 				</a>
 			</div>
 
-			{!blockTop10 || blockTop10.length === 0 ? (
+			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
 				<BackgroundCard>
-					{blockTop10?.map(item => (
+					{top10?.map(item => (
 						<RowBrief
 							key={item.number}
 							blockNumber={item.number}

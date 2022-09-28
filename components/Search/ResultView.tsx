@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import Typography from 'components/Typography'
 import styles from './style.module.scss'
 
 type ResultViewProps = {
@@ -21,11 +21,7 @@ export default function ResultView({ item }: ResultViewProps) {
 			<div className={clsx('text-bold')}>{_getLabel()}</div>
 			<div className={clsx(styles.viewMoreInfo, 'margin-top-xs')}>
 				<div>
-					<span className="money-sm">
-						{moment(inserted_at).utcOffset('+0700').format('HH:mm:ss (+7 UTC)')}
-					</span>
-					<span className={clsx(styles.separate, 'margin-left-xs padding-left-xs margin-top-md')}></span>
-					<span className="money-sm">{moment(inserted_at).utcOffset('+0700').format('DD/MM/YYYY')}</span>
+					<Typography.Time time={inserted_at} confirmedWithin="2ss" />
 				</div>
 				<div
 					className={clsx(

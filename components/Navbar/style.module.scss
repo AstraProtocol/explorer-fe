@@ -8,6 +8,7 @@
 	width: 100%;
 	z-index: 99;
 	height: 80px;
+	background-color: var(--theme-backgorund-mode);
 	.container {
 		max-width: 1400px;
 		display: flex;
@@ -57,7 +58,7 @@
 			visibility: hidden;
 			opacity: 0;
 			transition: opacity 0.5s;
-			background-color: rgba(var(--contrast-color-theme--raw), 0.05);
+			background-color: rgba(var(--same-color-theme--raw), 1);
 			a {
 				text-decoration: none;
 				font-weight: bold;
