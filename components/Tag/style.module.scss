@@ -1,0 +1,26 @@
+.tag {
+	// width: auto;
+	border-radius: var(--radius-sm);
+	padding: calc(0.5 * var(--offset-xs)) var(--offset-xs);
+	// text-align: center;
+}
+
+.success {
+	background: rgba(102, 192, 70, 0.12);
+}
+
+.error {
+	background: rgba(230, 51, 51, 0.12);
+}
+
+.warning {
+	background: rgba(255, 200, 42, 0.12);
+}
+
+.primary {
+	background: rgba(34, 106, 255, 0.12);
+}
+
+.info {
+	background: rgba(65, 62, 51, 0.12);
+}

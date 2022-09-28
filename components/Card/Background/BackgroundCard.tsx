@@ -1,12 +1,13 @@
-import React from 'react'
+import clsx from 'clsx'
 import styles from './style.module.scss'
 
 interface Props {
-	children: React.ReactNode
+	children: JSX.Element
+	classes?: string
 }
 
-const BackgroundCard = ({ children }: Props) => {
-	return <div className={styles.backgroundCard}>{children}</div>
+const BackgroundCard = ({ children, classes }: Props) => {
+	return <div className={clsx(styles.backgroundCard, classes)}>{children}</div>
 }
 
 export default BackgroundCard
