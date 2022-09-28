@@ -1,19 +1,14 @@
-import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
-import useSWR from 'swr'
 import { convertBalanceToView, LinkMaker } from 'utils/helper'
+import useTransaction from './hook/useTransaction'
 import RowBrief from './TransactionBriefRow'
 
 export function HomeTransactions() {
-	const _fetchCondition = () => {
-		return [API_LIST.ALL_TRANSACTIONS]
-	}
-	const { data } = useSWR<TransactionResponse>(_fetchCondition())
-	const top10 = data?.items?.slice(0, 10)
+	const { top10 } = useTransaction()
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
@@ -36,6 +31,7 @@ export function HomeTransactions() {
 							from="0x123123123123123123123123123123"
 							to="0x2139847192384719234"
 							updatedAt={new Date().getTime()}
+							newTransaction={item.newTransaction}
 						/>
 					))}
 				</BackgroundCard>

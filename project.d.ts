@@ -31,6 +31,7 @@ interface BlockItem {
 	timestamp: string
 	total_difficulty: string
 	updated_at: string
+	newBlock?: boolean
 }
 
 interface BlockResponse {
@@ -61,6 +62,7 @@ interface TransactionItem {
 		value: string
 	}
 	revert_reason: null
+	newTransaction?: boolean
 }
 
 interface TransactionResponse {

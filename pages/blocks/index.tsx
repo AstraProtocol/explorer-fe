@@ -33,6 +33,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 									updatedAt={item.timestamp}
 									size={item.size}
 									value={0}
+									newBlock={item.newBlock}
 								/>
 							))}
 						</div>

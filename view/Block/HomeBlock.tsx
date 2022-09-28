@@ -30,6 +30,7 @@ export function HomeBlock() {
 							proposerAddress={item.miner_hash}
 							transactions={0}
 							updatedAt={item.timestamp}
+							newBlock={item.newBlock}
 						/>
 					))}
 				</BackgroundCard>
