@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import styles from './style.module.scss'
 
 interface Props {
-	children: JSX.Element
+	children: JSX.Element | JSX.Element[]
 	classes?: string
 }
 

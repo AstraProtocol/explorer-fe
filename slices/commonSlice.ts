@@ -21,6 +21,7 @@ export const commonSlice = createSlice({
 		},
 		setValidatorSummary: (state, action: PayloadAction<ValidatorData[]>) => {
 			state.validatorSummary = action.payload
+			localStorage.setItem('validators', JSON.stringify(action.payload))
 		}
 	}
 })
