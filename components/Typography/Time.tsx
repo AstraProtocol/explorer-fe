@@ -1,7 +1,10 @@
 import clsx from 'clsx'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { dateFormat } from 'utils/helper'
-
+dayjs.extend(utc)
+dayjs.extend(timezone)
 interface TimeProps {
 	time: string | number
 	confirmedWithin?: string
@@ -11,9 +14,9 @@ interface TimeProps {
 export const Time = ({ time, color, confirmedWithin }: TimeProps) => {
 	return (
 		<span className={clsx('money money-sm', color || 'contrast-color-70')}>
-			<span className="money-sm">{moment(time).utcOffset('+0700').format('HH:mm:ss (+7 UTC)')}</span>
+			<span className="money-sm">{dayjs(time).utcOffset('+0700').format('HH:mm:ss (+7 UTC)')}</span>
 			<span className={clsx('separate', 'margin-left-xs padding-left-xs margin-top-md')}></span>
-			<span className="money-sm">{moment(time).utcOffset('+0700').format(dateFormat())}</span>
+			<span className="money-sm">{dayjs(time).utcOffset('+0700').format(dateFormat())}</span>
 			{confirmedWithin && (
 				<>
 					<span className={clsx('separate', 'margin-left-xs padding-left-xs margin-top-md')}></span>
