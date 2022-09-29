@@ -57,7 +57,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 		if (_search && data !== undefined) {
 			_setSearchStatus(SearchStatusEnum.DONE)
 		}
-	}, [data])
+	}, [data, _search])
 	useEffect(() => {
 		if (open) {
 			setTimeout(() => {

@@ -18,7 +18,7 @@ export default function RowShowAnimation({ children, action, minHeight = 'unset'
 				setShow(true)
 			}, 100)
 		}
-	}, [])
+	}, [action])
 	return (
 		<>
 			{action ? (

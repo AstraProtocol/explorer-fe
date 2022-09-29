@@ -17,5 +17,5 @@
 		"baseUrl": "."
 	},
 	"exclude": ["node_modules", ".vscode"],
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+	"include": ["next-env.d.ts", "project.d.ts", "**/*.ts", "**/*.tsx"]
 }

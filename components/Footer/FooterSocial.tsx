@@ -36,7 +36,7 @@ export default function FooterSocial({ classes }: FooterSocialProps) {
 			<div>
 				{socialItems.map(item => (
 					<a key={item.icon} href={item.link} className="margin-right-sm">
-						<Image src={item.icon} width={32} height={32} />
+						<Image alt="Astra explorer" src={item.icon} width={32} height={32} />
 					</a>
 				))}
 			</div>

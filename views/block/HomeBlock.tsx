@@ -6,7 +6,7 @@ import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import { getStakingValidatorByHex } from 'utils/address'
 import { LinkMaker } from 'utils/helper'
-import RowBrief from './BlockBriefRow'
+import BlockBriefRow from './BlockBriefRow'
 import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
@@ -30,7 +30,7 @@ export function HomeBlock() {
 						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
 						const proposer = getStakingValidatorByHex(proposerHash)
 						return (
-							<RowBrief
+							<BlockBriefRow
 								key={item.blockHeight}
 								blockNumber={item.blockHeight}
 								proposerAddress={astraToEth(proposer.initialDelegatorAddress)}

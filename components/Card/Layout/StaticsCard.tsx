@@ -18,7 +18,7 @@ const StaticsCard = ({ icon, title, content, classes, contentClasses }: Props) =
 		<Row className={'block-ver-center'}>
 			<div className={clsx(styles.iconBlock, 'block-center')}>
 				{/* <span className={icon}></span> */}
-				<Image src={`/images/icons/${icon}.svg`} width={48} height={48} />
+				<Image alt={icon} src={`/images/icons/${icon}.svg`} width={48} height={48} />
 			</div>
 			<div className={clsx(styles.contentBlock)}>
 				<span className={clsx('text', 'text-sm', 'contrast-color-70')}>{title}</span>
