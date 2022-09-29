@@ -5,6 +5,7 @@ import Head from 'next/head'
 import React from 'react'
 import { HomeBlock } from 'view/Block/HomeBlock'
 import { HomeTransactions } from 'view/Transactions/HomeTransactions'
+import Overview from 'views/homepage/Overview'
 import Layout from '../components/Layout'
 import Search from '../components/Search'
 
@@ -16,8 +17,9 @@ const Home: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Explorer</title>
 			</Head>
-			<Search />
 			<Container>
+				<Search />
+				<Overview />
 				<div className="row md-wrap">
 					<div className={clsx('col col-6 gutter-right')}>
 						<HomeBlock />
