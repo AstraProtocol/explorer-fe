@@ -7,22 +7,29 @@ export default function useTransaction() {
 	const [_items, setState] = useState<TransactionItem[]>()
 
 	const _fetchCondition = () => {
-		return [API_LIST.ALL_TRANSACTIONS]
+		return [
+			API_LIST.ALL_TRANSACTIONS,
+			{
+				pagination: 'offset',
+				page: 1,
+				limit: 20,
+				order: 'height.desc'
+			}
+		]
 	}
 	const { data } = useSWR<TransactionResponse>(_fetchCondition(), {
 		refreshInterval: parseInt(process.env.NEXT_PUBLIC_TRANSACTION_INTERVAL)
 	})
 	useEffect(() => {
-		if (data?.items) {
+		if (data?.result) {
 			if (isEmpty(_items)) {
-				setState(data?.items)
+				setState(data?.result)
 			} else {
-				const items = differenceWith<TransactionItem, TransactionItem>(data.items, _items, (a, b) => {
+				const items = differenceWith<TransactionItem, TransactionItem>(data.result, _items, (a, b) => {
 					return a.hash === b.hash
 				})
-				console.log(items.map(item => item.hash))
 				items.map(item => (item.newTransaction = true))
-				setState(data?.items)
+				setState(data?.result)
 			}
 		}
 	}, [data])

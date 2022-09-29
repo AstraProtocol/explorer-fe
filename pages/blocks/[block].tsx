@@ -14,39 +14,62 @@ const BlockDetailPage: React.FC<Props> = ({ data }) => {
 		const keys = Object.keys(data)
 		let items: CardRowItem[] = []
 		for (let key of keys) {
-			let item: CardRowItem
 			switch (key) {
 				case 'hash':
-					item = {
+					items.push({
 						label: 'Transaction Hash:',
 						type: 'copy',
 						contents: [{ value: data[key] }]
-					}
+					})
 					break
 				case 'cosmos':
-					item = {
+					items.push({
 						label: 'Transaction Cosmons:',
 						type: 'link-copy',
 						contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
-					}
+					})
 					break
 				case 'result':
-					item = {
+					items.push({
 						label: 'Result',
 						type: 'label',
 						contents: [{ value: data[key], type: data[key], backgroundType: 'unset' }]
-					}
+					})
+					break
+				case 'status':
+					items.push({
+						label: 'Status',
+						type: 'label',
+						contents: [
+							{ value: 'success', type: 'success', backgroundType: 'rectangle' },
+							{ value: data[key], type: 'unset', backgroundType: 'specialShape' }
+						]
+					})
 					break
 				case 'blockNumber':
-					item = {
+					items.push({
 						label: 'Block',
 						type: 'link',
 						contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
-					}
+					})
 					break
 				case 'transfers':
-					item = {
+					items.push({
 						label: 'Tokens Transferred:',
+						type: 'transfer',
+						contents: [
+							{
+								transfer: {
+									from: '0xbf...214222',
+									to: '0xbf865...12311e',
+									value: 10.1234123412341,
+									token: 'WASA'
+								}
+							}
+						]
+					})
+					items.push({
+						label: '',
 						type: 'transfer',
 						contents: [
 							{
@@ -58,45 +81,41 @@ const BlockDetailPage: React.FC<Props> = ({ data }) => {
 								}
 							}
 						]
-					}
+					})
 					break
 				case 'time':
-					item = {
+					items.push({
 						label: 'Timestamp',
 						type: 'time',
 						contents: [{ value: data[key], type: data[key], suffix: '2.33ss' }]
-					}
+					})
 					break
 				case 'value':
-					item = {
+					items.push({
 						label: ' Value',
 						type: 'balance',
 						contents: [{ value: data[key].value, suffix: '(0.00 VND)' }]
-					}
+					})
 					break
 				case 'fee':
-					item = {
+					items.push({
 						label: 'Transaction fee',
 						type: 'balance',
 						contents: [{ value: data[key].value, suffix: '(0.00 VND)' }]
-					}
+					})
 					break
 				case 'gasPrice':
-					item = {
+					items.push({
 						label: 'Gas Price',
 						type: 'text',
 						contents: [{ value: data[key] }]
-					}
+					})
 					break
-			}
-			if (item) {
-				items.push(item)
 			}
 		}
 		return items
 	}
 	const items = convertRawDataToCardData(data)
-	console.log(items)
 	return (
 		<Layout>
 			<Container>

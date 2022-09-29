@@ -43,21 +43,24 @@ export default function BlockRow({
 				<div className={clsx(styles.icon, 'margin-right-sm')}>
 					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
 				</div>
+				<div className="col-2">
+					{mine ? (
+						<span className={clsx('money', 'money-sm')}>#{blockNumber}</span>
+					) : (
+						<Typography.LinkText
+							href={LinkMaker.block(blockNumber)}
+							children={`#${blockNumber}`}
+							className={['money', 'money-sm']}
+						/>
+					)}
+				</div>
 				{mine ? (
-					<>
-						<div className="col-2" />
+					<div className="col-9 gutter-left">
 						<div className="contrast-color-70">Block mined, awaiting import...</div>
-					</>
+					</div>
 				) : (
 					<>
-						<div className="col-2">
-							<Typography.LinkText
-								href={LinkMaker.block(blockNumber)}
-								children={`#${blockNumber}`}
-								className={['money', 'money-sm']}
-							/>
-						</div>
-						<div className="col-6">
+						<div className={clsx('col-6 padding-left-lg', styles.borderLeft)}>
 							<div>
 								<Typography.LinkText
 									href={LinkMaker.address(proposerAddress)}

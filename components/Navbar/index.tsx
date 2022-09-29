@@ -98,23 +98,23 @@ const items: MenuItem[] = [
 				link: '/astra'
 			}
 		]
-	},
-	{
-		id: '6',
-		type: 'locale',
-		submenus: [
-			{
-				id: '6.1',
-				label: 'ENG',
-				link: '/en'
-			},
-			{
-				id: '6.2',
-				label: 'VI',
-				link: '/vi'
-			}
-		]
 	}
+	// {
+	// 	id: '6',
+	// 	type: 'locale',
+	// 	submenus: [
+	// 		{
+	// 			id: '6.1',
+	// 			label: 'ENG',
+	// 			link: '/en'
+	// 		},
+	// 		{
+	// 			id: '6.2',
+	// 			label: 'VI',
+	// 			link: '/vi'
+	// 		}
+	// 	]
+	// }
 ]
 
 export default function Navbar() {

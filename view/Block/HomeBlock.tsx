@@ -8,7 +8,7 @@ import RowBrief from './BlockBriefRow'
 import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
-	const { top10 } = useBlock()
+	const { top10, getPropserAddress } = useBlock()
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
@@ -25,11 +25,11 @@ export function HomeBlock() {
 				<BackgroundCard>
 					{top10?.map(item => (
 						<RowBrief
-							key={item.number}
-							blockNumber={item.number}
-							proposerAddress={item.miner_hash}
-							transactions={0}
-							updatedAt={item.timestamp}
+							key={item.blockHeight}
+							blockNumber={item.blockHeight}
+							proposerAddress={getPropserAddress(item.committedCouncilNodes)?.address}
+							transactions={item.transactionCount}
+							updatedAt={item.blockTime}
 							newBlock={item.newBlock}
 						/>
 					))}

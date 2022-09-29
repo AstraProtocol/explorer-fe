@@ -25,12 +25,12 @@ export function HomeTransactions() {
 				<BackgroundCard>
 					{top10?.map(item => (
 						<RowBrief
-							key={item.hash}
-							hash={item.hash}
-							balance={{ value: convertBalanceToView(item.value.value), token: 'ASA' }}
+							key={item.blockHash}
+							hash={item.blockHash}
+							balance={{ value: convertBalanceToView('000'), token: 'ASA' }}
 							from="0x123123123123123123123123123123"
 							to="0x2139847192384719234"
-							updatedAt={new Date().getTime()}
+							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
 						/>
 					))}

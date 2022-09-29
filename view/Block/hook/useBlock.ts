@@ -7,26 +7,40 @@ export default function useBlock() {
 	const [_items, setState] = useState<BlockItem[]>()
 
 	const _fetchCondition = () => {
-		return [API_LIST.ALL_BLOCKS]
+		return [
+			API_LIST.ALL_BLOCKS,
+			{
+				pagination: 'offset',
+				page: 1,
+				limit: 20,
+				order: 'height.desc'
+			}
+		]
 	}
 	const { data } = useSWR<BlockResponse>(_fetchCondition(), {
 		refreshInterval: parseInt(process.env.NEXT_PUBLIC_BLOCK_INTERVAL)
 	})
+
+	const _getPropserAddress = (items: Commited[]): Commited | null => {
+		return items?.find(item => item.isProposer)
+	}
+
 	useEffect(() => {
-		if (data?.items) {
+		if (data?.result) {
 			if (isEmpty(_items)) {
-				setState(data?.items)
+				setState(data?.result)
 			} else {
-				const items = differenceWith<BlockItem, BlockItem>(data.items, _items, (a, b) => {
-					return a.number === b.number
+				const items = differenceWith<BlockItem, BlockItem>(data.result, _items, (a, b) => {
+					return a.blockHeight === b.blockHeight
 				})
 				items.map(item => (item.newBlock = true))
-				setState(data?.items)
+				setState(data?.result)
 			}
 		}
 	}, [data])
 	return {
 		top10: _items?.slice(0, 10),
-		fullPageData: _items
+		fullPageData: _items,
+		getPropserAddress: _getPropserAddress
 	}
 }

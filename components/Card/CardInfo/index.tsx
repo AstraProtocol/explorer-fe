@@ -40,14 +40,14 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 		<BackgroundCard classes={['margin-bottom-md', ...classes]}>
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
 				{items.map(({ label, type, contents }) => (
-					<div key={label} className={clsx(styles.cardRow, 'row')}>
+					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-md')}>
 						<div className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center')}>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 						</div>
 						{(contents as Content[]).map(content => (
 							<div
 								key={content.value || new Date().getTime()}
-								className={clsx(styles.rightColumn, 'block-center')}
+								className={clsx(styles.rightColumn, 'block-center margin-right-sm')}
 							>
 								{type === 'text' ? (
 									<span className="moeny money-sm contrast-color-100">{content.value}</span>

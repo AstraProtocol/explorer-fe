@@ -1,7 +1,7 @@
 const API_LIST = {
 	SEARCH: '/token-autocomplete',
-	ALL_BLOCKS: '/blocks?api=true',
-	ALL_TRANSACTIONS: '/txs?api=true'
+	ALL_BLOCKS: 'evm_/blocks',
+	ALL_TRANSACTIONS: 'evm_/transactions'
 }
 
 export default API_LIST
