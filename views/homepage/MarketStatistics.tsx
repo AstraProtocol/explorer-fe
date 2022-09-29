@@ -2,6 +2,7 @@ import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import StaticsCard from 'components/Card/Layout/StaticsCard'
 import useSWR from 'swr'
+import { Icon } from 'utils/enum'
 
 interface Props {
 	classes?: string
@@ -32,7 +33,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 					classes="margin-right-xl"
 					contentClasses="money-2sm"
 					content={`${commonStatsData?.average_block_time} seconds`}
-					icon="copy-icon"
+					icon={Icon.Recovery}
 					title="Average Block Time"
 				/>
 				{/* </div>
@@ -40,7 +41,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 				<StaticsCard
 					content={estimateCountedData?.total_transactions}
 					contentClasses="money-2sm"
-					icon="copy-icon"
+					icon={Icon.Analytics}
 					title="Total Transactions"
 				/>
 			</div>
@@ -50,7 +51,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 					classes="margin-right-xl"
 					contentClasses="money-2sm"
 					content={latestBlock || estimateCountedData?.total_blocks}
-					icon="copy-icon"
+					icon={Icon.Database}
 					title="Total Blocks"
 				/>
 				{/* </div>
@@ -58,7 +59,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 				<StaticsCard
 					content={estimateCountedData?.wallet_addresses}
 					contentClasses="money-2sm"
-					icon="copy-icon"
+					icon={Icon.Wallet}
 					title="Wallet Addresses"
 				/>
 			</div>

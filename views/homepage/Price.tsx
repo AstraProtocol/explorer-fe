@@ -26,7 +26,7 @@ const Price = ({ classes }: Props) => {
 				<div className="margin-bottom-xs">
 					<Tag type="warning" text="NaN" />
 				</div>
-				<TypographyUI.Balance value={undefined} currency="VND" />
+				<TypographyUI.Balance value="NaN" currency="VND" />
 			</div>
 		)
 	}

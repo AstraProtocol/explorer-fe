@@ -26,9 +26,19 @@
 	}
 
 	.rightBlock {
+		position: relative;
 		margin: var(--offset-lg) var(--offset-lg);
 		.chart {
 			margin: var(--offset-lg) 0;
+		}
+		.blurBlock {
+			opacity: 0.5;
+		}
+		.spinner {
+			opacity: 1;
+			position: absolute;
+			left: 50%;
+			top: 50%;
 		}
 	}
 }

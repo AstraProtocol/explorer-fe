@@ -142,3 +142,15 @@ interface MarketPrice {
 	}
 	at: string
 }
+
+// enum Icon {
+// 	Analytics,
+// 	Chart,
+// 	Clear,
+// 	ClearHover,
+// 	Database,
+// 	Gas,
+// 	Loading,
+// 	Recovery,
+// 	Wallet
+// }

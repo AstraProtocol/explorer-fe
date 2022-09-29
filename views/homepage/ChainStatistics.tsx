@@ -1,4 +1,5 @@
 import StaticsCard from 'components/Card/Layout/StaticsCard'
+import { Icon } from 'utils/enum'
 import { formatCurrencyValue, formatUnitValue } from 'utils/helper'
 
 interface Props {
@@ -14,19 +15,19 @@ const ChainStatistics = ({ classes, commonStatsData, estimateCountedData, gasTra
 			<StaticsCard
 				classes="col col-4"
 				content={formatCurrencyValue(commonStatsData?.token_stats?.market_cap)}
-				icon="copy-icon"
+				icon={Icon.Chart}
 				title="Market Cap"
 			/>
 			<StaticsCard
 				classes="col col-4"
 				content={formatUnitValue(gasTracker?.average)}
-				icon="copy-icon"
+				icon={Icon.Gas}
 				title="Gas Tracker"
 			/>
 			<StaticsCard
 				classes="col col-4"
 				content={commonStatsData?.transaction_stats?.number_of_transactions}
-				icon="copy-icon"
+				icon={Icon.Analytics}
 				title="Daily Transactions"
 			/>
 		</div>

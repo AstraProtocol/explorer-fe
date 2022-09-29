@@ -9,15 +9,15 @@ import MarketStatistics from './MarketStatistics'
 import Price from './Price'
 import styles from './style.module.scss'
 
-function getEstimateCountedData(estimateCountedData) {
+function getEstimateCountedData(estimateCountedData): EstimateCountedInfo {
 	return estimateCountedData
 }
 
-function getCommonStatsData(commonStatsDataRaw) {
+function getCommonStatsData(commonStatsDataRaw): CommonStats {
 	return commonStatsDataRaw
 }
 
-function getGasAvgData(gasAvgData) {
+function getGasAvgData(gasAvgData): GasTracker {
 	return gasAvgData
 }
 
@@ -41,7 +41,7 @@ const Overview = () => {
 	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTracker>(_fetchCondition('gas_avg'))
 
 	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw)
-	const commonStatsData = getEstimateCountedData(commonStatsDataRaw)
+	const commonStatsData = getCommonStatsData(commonStatsDataRaw)
 	const gasAvgData = getGasAvgData(gasAvgRaw)
 
 	return (
@@ -54,7 +54,7 @@ const Overview = () => {
 								<Logo text="Astra" type="transparent" />
 							</div>
 							<div className={clsx('col col-6')}>
-								<Price estimateCountedData={estimateCountedData} commonStatsData={commonStatsData} />
+								<Price />
 							</div>
 						</div>
 						<div className={styles.separateBlock} />

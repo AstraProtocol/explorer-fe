@@ -11,7 +11,7 @@ import {
 	Tooltip
 } from 'chart.js'
 import 'chartjs-adapter-dayjs'
-import dayjs from 'dayjs'
+import Spinner from 'components/Spinner'
 import humps from 'humps'
 import numeral from 'numeral'
 import { Line } from 'react-chartjs-2'
@@ -23,40 +23,10 @@ Chart.defaults.font.family =
 	'Nunito, "Helvetica Neue", Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 Chart.register(LineController, CategoryScale, LineElement, PointElement, LinearScale, TimeScale, Title, Tooltip)
 
-interface Props {}
-
 const grid = {
 	display: false,
 	drawBorder: false,
 	drawOnChartArea: false
-}
-
-function xAxe(fontColor) {
-	return {
-		grid: grid,
-		type: 'time',
-		time: {
-			unit: 'day',
-			tooltipFormat: 'YYYY-MM-DD',
-			stepSize: 14
-		},
-		ticks: {
-			color: fontColor
-		}
-	}
-}
-
-// const padding = {
-// 	left: 20,
-// 	right: 20
-// }
-
-// const legend = {
-// 	display: false
-// }
-
-function formatValue(val) {
-	return `${numeral(val).format('0,0')}`
 }
 
 function getDataFromLocalStorage(key) {
@@ -69,21 +39,22 @@ function setDataToLocalStorage(key, data) {
 }
 
 function getPriceData(marketHistoryData) {
-	// if (marketHistoryData.length === 0) {
-	//   return getDataFromLocalStorage('priceData')
-	// }
+	if (marketHistoryData.length === 0) {
+		return getDataFromLocalStorage('priceData')
+	}
 	const data = marketHistoryData.map(({ date, closingPrice }) => ({
 		x: date,
 		y: closingPrice
 	}))
-	// setDataToLocalStorage('priceData', data)
+
+	setDataToLocalStorage('priceData', data)
 	return data
 }
 
 function getTxHistoryData(transactionHistory) {
-	// if (transactionHistory.length === 0) {
-	//   return getDataFromLocalStorage('txHistoryData')
-	// }
+	if (transactionHistory.length === 0) {
+		return getDataFromLocalStorage('txHistoryData')
+	}
 	if (transactionHistory.length == 0) return []
 
 	const data = transactionHistory.map(dataPoint => ({
@@ -92,11 +63,12 @@ function getTxHistoryData(transactionHistory) {
 	}))
 
 	// it should be empty value for tx history the current day
-	const prevDay = dayjs(data[0].x)
-	let curDay = prevDay.add(1, 'd')
-	data.unshift({ x: curDay, y: null })
+	// const prevDay = dayjs(data[0].x)
+	// let curDay = prevDay.add(1, 'd')
+	// // console.log(data)
+	// data.unshift({ x: curDay, y: null })
 
-	// setDataToLocalStorage('txHistoryData', data)
+	setDataToLocalStorage('txHistoryData', data)
 	return data
 }
 
@@ -121,7 +93,7 @@ const OverviewChart = ({}) => {
 		? JSON.parse(historyCounterTransactionRaw.history_data)
 		: []
 
-	const data = {
+	const data: any = {
 		datasets: [
 			{
 				label: 'Price',
@@ -146,12 +118,15 @@ const OverviewChart = ({}) => {
 		]
 	}
 
-	const options = {
+	const options: any = {
+		type: 'line',
 		responsive: true,
+		showLine: true,
 		interaction: {
 			mode: 'index' as const,
 			intersect: false
 		},
+		locale: 'vi-VN',
 		stacked: false,
 		plugins: {
 			title: {
@@ -160,6 +135,29 @@ const OverviewChart = ({}) => {
 			tooltip: {
 				mode: 'index',
 				intersect: false,
+				backgroundColor: 'white',
+				cornerRadius: 8,
+				titleFont: {
+					family: 'Manrope',
+					size: 12,
+					weight: 400,
+					lineHeight: 1.6
+				},
+				padding: {
+					top: 8,
+					bottom: 8,
+					left: 16,
+					right: 16
+				},
+				titleColor: 'rgba(0, 0, 0, 0.5)',
+				bodyColor: '#0B0F1E',
+				bodyFont: {
+					family: 'Titillium Web',
+					size: 15,
+					weight: 600,
+					lineHeight: 2.2
+				},
+
 				callbacks: {
 					label: context => {
 						const { label } = context.dataset
@@ -169,7 +167,7 @@ const OverviewChart = ({}) => {
 						} else if (context.dataset.yAxisID === 'marketCap') {
 							return `${label}: ${formatCurrencyValue(parsed.y)}`
 						} else if (context.dataset.yAxisID === 'numTransactions') {
-							return `${label}: ${formattedValue}`
+							return `${label}: ${numeral(parsed.y).format('0,0')}`
 						}
 						return formattedValue
 					}
@@ -194,7 +192,7 @@ const OverviewChart = ({}) => {
 				grid,
 				ticks: {
 					beginAtZero: true,
-					maxTicksLimit: 4
+					drawOnChartArea: false
 				}
 			},
 			numTransactions: {
@@ -204,7 +202,12 @@ const OverviewChart = ({}) => {
 				grid,
 				ticks: {
 					beginAtZero: true,
-					maxTicksLimit: 5
+					maxTicksLimit: 5,
+					format: {
+						// currency: 'en'
+						// localeMatcher: 'en'
+						useGrouping: true
+					}
 				}
 			},
 			marketCap: {
@@ -219,11 +222,20 @@ const OverviewChart = ({}) => {
 		}
 	}
 
-	return (
-		// <div className={styles.chart}>
-		<Line className={styles.chart} height={100} options={options} data={data} />
-		// </div>
-	)
+	if (!historyCounterTransactionRaw) {
+		return (
+			<>
+				<div className={styles.blurBlock}>
+					<Line className={styles.chart} height={100} options={options} data={data} />
+				</div>
+				<div className={styles.spinner}>
+					<Spinner />
+				</div>
+			</>
+		)
+	}
+
+	return <Line className={styles.chart} height={100} options={options} data={data} />
 }
 
 export default OverviewChart
