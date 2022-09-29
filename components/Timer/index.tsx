@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
 type TimerProps = {
@@ -22,42 +22,42 @@ export default function Timer({ interval = 1000, updatedAt }: TimerProps) {
 	const _disabledInterval = () => _setIntervalTime(0)
 
 	const _renderText = () => {
-		const years = Number(moment().diff(moment(updatedAt), 'years'))
+		const years = Number(dayjs().diff(dayjs(updatedAt), 'years'))
 		if (years > 0) {
 			// _disabledInterval()
 			return `${years} year${years > 1 ? 's' : ''} ago`
 		}
-		const months = Number(moment().diff(moment(updatedAt), 'months'))
+		const months = Number(dayjs().diff(dayjs(updatedAt), 'months'))
 		if (months > 0) {
 			// _disabledInterval()
 			return `${months} month${months > 1 ? 's' : ''} ago`
 		}
-		const weeks = Number(moment().diff(moment(updatedAt), 'weeks'))
+		const weeks = Number(dayjs().diff(dayjs(updatedAt), 'weeks'))
 
 		if (weeks > 0) {
 			// _disabledInterval()
 			return `${weeks} week${weeks > 1 ? 's' : ''} ago`
 		}
-		const days = Number(moment().diff(moment(updatedAt), 'days'))
+		const days = Number(dayjs().diff(dayjs(updatedAt), 'days'))
 
 		if (days > 0) {
 			// _disabledInterval()
 			return `${days} day${days > 1 ? 's' : ''} ago`
 		}
-		const hours = Number(moment().diff(moment(updatedAt), 'hours'))
+		const hours = Number(dayjs().diff(dayjs(updatedAt), 'hours'))
 
 		if (hours > 0) {
 			// _disabledInterval()
 			return `${hours} hour${hours > 1 ? 's' : ''} ago`
 		}
 
-		const minutes = Number(moment().diff(moment(updatedAt), 'minutes'))
+		const minutes = Number(dayjs().diff(dayjs(updatedAt), 'minutes'))
 
 		if (minutes > 0) {
 			// _setIntervalTime(30000)
 			return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
 		}
-		const seconds = Number(moment().diff(moment(updatedAt), 'seconds'))
+		const seconds = Number(dayjs().diff(dayjs(updatedAt), 'seconds'))
 
 		if (seconds > 0) {
 			// _setIntervalTime(1000)

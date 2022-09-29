@@ -1,0 +1,44 @@
+.overview {
+	margin-bottom: 56px;
+	.leftBlock {
+		padding: var(--offset-xl) var(--offset-lg);
+		.priceBlock {
+			float: right;
+			text-align: right;
+		}
+		.separateBlock {
+			margin-top: 14px;
+			margin-bottom: var(--offset-xl);
+			height: 1px;
+			background-color: var(--border-color);
+		}
+	}
+
+	.centerBlock {
+		position: absolute;
+		top: var(--offset-lg);
+		left: 40.5%;
+		height: 90%;
+		// margin: var(--offset-lg) var(--offset-sm);
+		width: 1px;
+		background-color: var(--border-color);
+		// color: var(--border-color);
+	}
+
+	.rightBlock {
+		position: relative;
+		margin: var(--offset-lg) var(--offset-lg);
+		.chart {
+			margin: var(--offset-lg) 0;
+		}
+		.blurBlock {
+			opacity: 0.5;
+		}
+		.spinner {
+			opacity: 1;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+	}
+}

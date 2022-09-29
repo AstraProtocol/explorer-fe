@@ -95,3 +95,83 @@ interface TransactionResponse {
 	result: TransactionItem[]
 	pagination: Pagination
 }
+
+interface MarketHistoryPrice {
+	closing_price: number
+	date: string
+}
+
+interface TransactionHistoryCounter {
+	date: string
+	number_of_transactions: number
+}
+
+interface MarketHistoryPriceResponse {
+	history_data: string
+	supply_data: string
+}
+
+interface TransactionHistoryCounterResponse {
+	history_data: string
+}
+
+interface EstimateCountedInfo {
+	total_blocks: number
+	total_transactions: number
+	wallet_addresses: number
+}
+
+interface CommonStats {
+	average_block_time: number
+	token_stats: {
+		circulating_supply: string
+		market_cap: string
+		price: string
+		volume_24h: string
+	}
+	transaction_stats: {
+		date: string
+		gas_used: string
+		number_of_transactions: number
+		total_fee: string
+	}
+}
+
+interface GasTracker {
+	average: number
+	fast: number
+	slow: number
+}
+
+interface LatestBlock {
+	jsonrpc: string
+	result: string
+	id: number
+}
+
+interface MarketPrice {
+	ticker: {
+		low: string
+		high: string
+		open: string
+		last: string
+		volume: string
+		amount: string
+		vol: string
+		avg_price: string
+		price_change_percent: string
+	}
+	at: string
+}
+
+// enum Icon {
+// 	Analytics,
+// 	Chart,
+// 	Clear,
+// 	ClearHover,
+// 	Database,
+// 	Gas,
+// 	Loading,
+// 	Recovery,
+// 	Wallet
+// }
