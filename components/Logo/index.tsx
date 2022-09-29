@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 type LogoProps = {
 	type?: 'transparent' | 'white'
@@ -14,11 +15,11 @@ export default function Logo({
 	text = 'Astra Blockchain'
 }: LogoProps) {
 	return (
-		<a href="/" className="link block-center text-bold contrast-color-100">
-			<>
+		<Link href="/">
+			<div className="link block-center text-bold contrast-color-100">
 				<Image alt="Astra blockchain" src={`/images/logo/${type}_logo.svg`} width={48} height={48} />
 				{hasText && <span className={`text text-${textSize} text-bold`}>{text}</span>}
-			</>
-		</a>
+			</div>
+		</Link>
 	)
 }

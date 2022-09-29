@@ -1,5 +1,8 @@
 # Install dependencies only when needed
 FROM node:18-alpine AS deps
+ENV GITHUB_TOKEN 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
+RUN npm config set "@astraprotocol:registry" "https://npm.pkg.github.com"
+RUN npm config set "//npm.pkg.github.com/:_authToken" "${GITHUB_TOKEN}"
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 WORKDIR /app
 COPY package.json yarn.lock ./
@@ -11,7 +14,7 @@ RUN yarn --frozen-lockfile
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/src ./src
+COPY --from=deps /app/ ./
 COPY . . 
 RUN yarn build
 

@@ -3,6 +3,7 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
+import Typography from 'components/Typography'
 import { convertBalanceToView, LinkMaker } from 'utils/helper'
 import useTransaction from './hook/useTransaction'
 import RowBrief from './TransactionBriefRow'
@@ -14,9 +15,7 @@ export function HomeTransactions() {
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Lastest Transactions</span>
 				<DotSpace />
-				<a href={LinkMaker.transaction()} className="link secondary-color-normal">
-					View all transactions
-				</a>
+				<Typography.LinkText href={LinkMaker.block()}>View all transactions</Typography.LinkText>
 			</div>
 
 			{!top10 || top10.length === 0 ? (

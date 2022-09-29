@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Link from 'next/link'
 
 interface Props {
 	children: string
@@ -8,8 +9,8 @@ interface Props {
 
 export const LinkText = ({ children, className = [], href }: Props) => {
 	return (
-		<a href={href} className={clsx('text', 'text-base', 'link alert-color-primary', ...className)}>
-			{children}
-		</a>
+		<Link href={href}>
+			<span className={clsx('text', 'text-base', 'link', 'alert-color-primary', ...className)}>{children}</span>
+		</Link>
 	)
 }

@@ -4,6 +4,7 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
+import Typography from 'components/Typography'
 import { getStakingValidatorByHex } from 'utils/address'
 import { LinkMaker } from 'utils/helper'
 import BlockBriefRow from './BlockBriefRow'
@@ -17,9 +18,7 @@ export function HomeBlock() {
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Lastest Block</span>
 				<DotSpace />
-				<a href={LinkMaker.block()} className="link secondary-color-normal">
-					View all Blocks
-				</a>
+				<Typography.LinkText href={LinkMaker.block()}>View all Blocks</Typography.LinkText>
 			</div>
 
 			{!top10 || top10.length === 0 ? (
