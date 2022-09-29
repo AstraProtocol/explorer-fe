@@ -15,7 +15,7 @@ const Home: React.FC<NextPage> = _ => {
 	return (
 		<Layout>
 			<Head>
-				<title>Explorer</title>
+				<title>Astra Explorer</title>
 			</Head>
 			<Container>
 				<Search />

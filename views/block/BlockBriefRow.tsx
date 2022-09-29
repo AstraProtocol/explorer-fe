@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
-import DotSpace from 'components/DotSpace'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
@@ -12,6 +11,7 @@ type BlockBriefRowProps = {
 	updatedAt: number | string
 	transactions: number
 	proposerAddress: string
+	proposerName: string
 	newBlock?: boolean
 }
 
@@ -20,6 +20,7 @@ export default function BlockBriefRow({
 	updatedAt,
 	transactions,
 	proposerAddress,
+	proposerName,
 	newBlock
 }: BlockBriefRowProps) {
 	return (
@@ -36,15 +37,17 @@ export default function BlockBriefRow({
 							className={['money', 'money-sm']}
 						/>
 					</div>
-					<div className={clsx('block-ver-center', styles.info)}>
+					<div className={clsx('margin-top-xs block-ver-center', styles.info)}>
 						<div className="block-ver-center">
 							<span className={clsx('contrast-color-30 padding-right-2xs')}>Block Proposer</span>
-							<span className="contrast-color-70 money">{ellipseBetweenText(proposerAddress, 6, 6)}</span>
-							<DotSpace />
-							<span className="contrast-color-70">{transactions} Transactions</span>
+							<span className="contrast-color-70 money">
+								{proposerName} ({ellipseBetweenText(proposerAddress, 6, 6)})
+							</span>
+							{/* <DotSpace /> */}
 						</div>
 						<Timer updatedAt={updatedAt} />
 					</div>
+					<div className="contrast-color-70">{transactions} Transactions</div>
 				</div>
 			</div>
 		</RowShowAnimation>

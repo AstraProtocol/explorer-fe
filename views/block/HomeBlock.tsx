@@ -1,14 +1,17 @@
+import { astraToEth } from '@astradefi/address-converter'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
+import { getStakingValidatorByHex } from 'utils/address'
 import { LinkMaker } from 'utils/helper'
 import BlockBriefRow from './BlockBriefRow'
 import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
 	const { top10, getPropserAddress } = useBlock()
+
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
@@ -23,16 +26,21 @@ export function HomeBlock() {
 				<RowLoader row={10} />
 			) : (
 				<BackgroundCard>
-					{top10?.map(item => (
-						<BlockBriefRow
-							key={item.blockHeight}
-							blockNumber={item.blockHeight}
-							proposerAddress={getPropserAddress(item.committedCouncilNodes)?.address}
-							transactions={item.transactionCount}
-							updatedAt={item.blockTime}
-							newBlock={item.newBlock}
-						/>
-					))}
+					{top10?.map(item => {
+						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
+						const proposer = getStakingValidatorByHex(proposerHash)
+						return (
+							<BlockBriefRow
+								key={item.blockHeight}
+								blockNumber={item.blockHeight}
+								proposerAddress={astraToEth(proposer.initialDelegatorAddress)}
+								proposerName={proposer.moniker}
+								transactions={item.transactionCount}
+								updatedAt={item.blockTime}
+								newBlock={item.newBlock}
+							/>
+						)
+					})}
 				</BackgroundCard>
 			)}
 		</Container>

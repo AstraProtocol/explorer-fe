@@ -1,26 +1,18 @@
 import { Typography as TypographyUI } from '@astraprotocol/astra-ui'
-import API_LIST from 'api/api_list'
 import Tag from 'components/Tag'
 import numeral from 'numeral'
-import useSWR from 'swr'
+import { getAstraSummary } from 'slices/commonSlice'
+import { useAppSelector } from 'store/hooks'
 import styles from './style.module.scss'
 
 interface Props {
 	classes?: string
 }
 
-const getMarketPriceData = data => {
-	return data?.ticker
-}
-
 const Price = ({ classes }: Props) => {
-	const _fetchCondition = () => {
-		return [API_LIST.MARKET_PRICE]
-	}
-	const { data: marketPriceDataRaw } = useSWR<any>(_fetchCondition(), { refreshInterval: 5000 })
-	const marketPrice = getMarketPriceData(marketPriceDataRaw)
+	const astraSummary = useAppSelector(getAstraSummary)
 
-	if (!marketPrice) {
+	if (!astraSummary) {
 		return (
 			<div className={styles.priceBlock}>
 				<div className="margin-bottom-xs">
@@ -31,15 +23,15 @@ const Price = ({ classes }: Props) => {
 		)
 	}
 
-	const delta = (marketPrice.last / marketPrice.open - 1) * 100
+	const delta = (astraSummary.last / astraSummary.open - 1) * 100
 	const deltaText = delta >= 0 ? `+${numeral(delta).format('0.00')}` : numeral(delta).format('0.00')
-	const deltaStyle = delta > 0 ? 'success' : 'error'
+	const deltaStyle = delta == 0 ? 'warning' : delta > 0 ? 'success' : 'error'
 	return (
 		<div className={styles.priceBlock}>
 			<div className="margin-bottom-xs">
 				<Tag type={deltaStyle} text={`${deltaText}%`} />
 			</div>
-			<TypographyUI.Balance value={marketPrice.last} currency="VND" />
+			<TypographyUI.Balance value={astraSummary.last} currency="VND" />
 		</div>
 	)
 }

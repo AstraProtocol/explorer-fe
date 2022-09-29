@@ -5,6 +5,8 @@ const API_LIST = {
 	ALL_TRANSACTIONS: 'evm_/transactions',
 	LATEST_BLOCK: '/api/v1?module=block&action=eth_block_number',
 
+	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',
+
 	MARKET_HISTORY_PRICE: '/api/v1/market-history-chart',
 	TRANSACTION_HISTORY_COUNTER: '/api/v1/transaction-history-chart',
 

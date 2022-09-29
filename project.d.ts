@@ -149,29 +149,56 @@ interface LatestBlock {
 	id: number
 }
 
-interface MarketPrice {
-	ticker: {
-		low: string
-		high: string
-		open: string
-		last: string
-		volume: string
-		amount: string
-		vol: string
-		avg_price: string
-		price_change_percent: string
-	}
+interface MarketPriceResponse {
+	ticker: AstraSummary
 	at: string
 }
 
-// enum Icon {
-// 	Analytics,
-// 	Chart,
-// 	Clear,
-// 	ClearHover,
-// 	Database,
-// 	Gas,
-// 	Loading,
-// 	Recovery,
-// 	Wallet
-// }
+interface AstraSummary {
+	low: string
+	high: string
+	open: string
+	last: string
+	volume: string
+	amount: string
+	vol: string
+	avg_price: string
+	price_change_percent: string
+}
+
+interface ValidatorData {
+	operatorAddress: string
+	consensusNodeAddress: string
+	initialDelegatorAddress: string
+	tendermintPubkey: string
+	tendermintAddress: string
+	status: string
+	failed: boolean
+	joinedAtBlockHeight: number
+	power: string
+	moniker: string
+	identity: string
+	website: string
+	securityContact: string
+	details: string
+	commissionRate: string
+	commissionMaxRate: string
+	commissionMaxChangeRate: string
+	minSelfDelegation: string
+	totalSignedBlock: number
+	totalActiveBlock: number
+	impreciseUpTime: string
+	votedGovProposal: number
+	powerPercentage: string
+	cumulativePowerPercentage: string
+}
+
+interface ValidatorResponse {
+	result: ValidatorData[]
+	pagination: {
+		total_record: number
+		total_page: number
+		current_page: number
+		limit: number
+	}
+}
