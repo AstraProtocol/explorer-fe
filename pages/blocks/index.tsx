@@ -6,8 +6,8 @@ import RowTitle from 'components/Typography/RowTitle'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
-import BlockRow from 'view/Block/BlockRow'
-import useBlock from 'view/Block/hook/useBlock'
+import BlockRow from 'views/block/BlockRow'
+import useBlock from 'views/Block/hook/useBlock'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
