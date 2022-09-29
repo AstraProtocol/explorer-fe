@@ -15,8 +15,10 @@ export default function Logo({
 }: LogoProps) {
 	return (
 		<a href="/" className="link block-center text-bold contrast-color-100">
-			<Image src={`/images/logo/${type}_logo.svg`} width={48} height={48} />
-			{hasText && <span className={`text text-${textSize} text-bold`}>{text}</span>}
+			<>
+				<Image alt="Astra blockchain" src={`/images/logo/${type}_logo.svg`} width={48} height={48} />
+				{hasText && <span className={`text text-${textSize} text-bold`}>{text}</span>}
+			</>
 		</a>
 	)
 }

@@ -4,7 +4,7 @@ import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import { LinkMaker } from 'utils/helper'
-import RowBrief from './BlockBriefRow'
+import BlockBriefRow from './BlockBriefRow'
 import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
@@ -24,7 +24,7 @@ export function HomeBlock() {
 			) : (
 				<BackgroundCard>
 					{top10?.map(item => (
-						<RowBrief
+						<BlockBriefRow
 							key={item.blockHeight}
 							blockNumber={item.blockHeight}
 							proposerAddress={getPropserAddress(item.committedCouncilNodes)?.address}

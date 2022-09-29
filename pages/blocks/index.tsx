@@ -7,7 +7,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import BlockRow from 'views/block/BlockRow'
-import useBlock from 'views/Block/hook/useBlock'
+import useBlock from 'views/block/hook/useBlock'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {

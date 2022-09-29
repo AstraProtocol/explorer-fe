@@ -37,7 +37,7 @@ type CardInfoProps = {
 
 export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 	return (
-		<BackgroundCard classes={['margin-bottom-md', ...classes]}>
+		<BackgroundCard classes={`margin-bottom-md ${classes.join(' ')}`}>
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
 				{items.map(({ label, type, contents }) => (
 					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-md')}>

@@ -53,7 +53,7 @@ export default function Navigation({ items }: NavigationProps) {
 			>
 				{locale ? (
 					<>
-						<Image src={`/images/flag${link}.svg`} width={30} height={19} />
+						<Image alt={link} src={`/images/flag${link}.svg`} width={30} height={19} />
 						<span className="padding-left-xs">{text}</span>
 					</>
 				) : (
@@ -94,7 +94,7 @@ export default function Navigation({ items }: NavigationProps) {
 		return (
 			<>
 				<span className="text-base text-center text-bold contrast-color-70 padding-sm block-center pointer">
-					<Image src={`/images/flag/${locale}.svg`} width={30} height={19} />
+					<Image alt={locale} src={`/images/flag/${locale}.svg`} width={30} height={19} />
 					<span className="padding-left-xs">{localeItem.label}</span>
 				</span>
 			</>

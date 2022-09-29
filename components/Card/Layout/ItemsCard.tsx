@@ -1,5 +1,6 @@
+import Row from 'components/Grid/Row'
 import BackgroundCard from '../Background/BackgroundCard'
-
+import styles from './style.module.scss'
 interface ItemComponent {
 	label: string
 	content: JSX.Element | string
