@@ -23,6 +23,14 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	const big = BigNumber.from(value)
 	return formatUnits(big, decimals)
 }
+/**
+ * return format text of date
+ * @param local
+ * @returns
+ */
+export const dateFormat = (local = 'vi') => {
+	return local === 'vi' ? process.env.NEXT_PUBLIC_DATE_FORMAT_VI : process.env.NEXT_PUBLIC_DATE_FROMAT_OTHER
+}
 
 export function formatCurrencyValue(value, symbol = 'VND') {
 	symbol = symbol || ''
@@ -62,7 +70,7 @@ export class LinkMaker {
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static block(blockNumber: string | number) {
+	static block(blockNumber?: string | number) {
 		blockNumber = blockNumber > 0 ? `/${blockNumber}` : ''
 		return `/blocks${blockNumber}`
 	}
@@ -72,7 +80,7 @@ export class LinkMaker {
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static transaction(hash: string) {
+	static transaction(hash?: string) {
 		hash = hash ? `/${hash}` : ''
 		return `/tx${hash}`
 	}

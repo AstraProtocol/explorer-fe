@@ -8,8 +8,8 @@ export default function RowLoader({ row = 1 }: RowLoaderProps) {
 	return (
 		<table className={styles.table}>
 			<tbody>
-				{new Array(row).fill(0).map(_ => (
-					<tr>
+				{new Array(row).fill(0).map((_, index) => (
+					<tr key={index}>
 						<td className="td-1">
 							<span></span>
 						</td>

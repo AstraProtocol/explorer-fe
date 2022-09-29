@@ -1,8 +1,8 @@
 const API_LIST = {
 	SEARCH: '/token-autocomplete',
 
-	ALL_BLOCKS: '/blocks?api=true',
-	ALL_TRANSACTIONS: '/txs?api=true',
+	ALL_BLOCKS: 'evm_/blocks',
+	ALL_TRANSACTIONS: 'evm_/transactions',
 	LATEST_BLOCK: '/api/v1?module=block&action=eth_block_number',
 
 	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',

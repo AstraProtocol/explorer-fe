@@ -12,7 +12,9 @@ export const cosmosFetcher = (url: string, params: { [key: string]: string }) =>
 const evmApi = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_EVM_API,
 	timeout: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT) || 15000,
-	headers: { 'content-type': 'application/json' }
+	headers: {
+		'content-type': 'application/json'
+	}
 })
 
 export const evmFetcher = (url: string, params: { [key: string]: string }) => {

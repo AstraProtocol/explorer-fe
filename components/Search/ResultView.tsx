@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import dayjs from 'dayjs'
+import Typography from 'components/Typography'
 import styles from './style.module.scss'
 
 type ResultViewProps = {
@@ -21,9 +21,7 @@ export default function ResultView({ item }: ResultViewProps) {
 			<div className={clsx('text-bold')}>{_getLabel()}</div>
 			<div className={clsx(styles.viewMoreInfo, 'margin-top-xs')}>
 				<div>
-					<span className="money-sm">{dayjs(inserted_at).format('HH:mm:ss')}</span>
-					<span className={clsx(styles.separate, 'margin-left-xs padding-left-xs margin-top-md')}></span>
-					<span className="money-sm">{dayjs(inserted_at).format('DD/MM/YYYY')}</span>
+					<Typography.Time time={inserted_at} confirmedWithin="2ss" />
 				</div>
 				<div
 					className={clsx(

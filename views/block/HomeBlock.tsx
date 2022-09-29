@@ -10,6 +10,7 @@ import { useAppSelector } from 'store/hooks'
 import useSWR from 'swr'
 import { LinkMaker } from 'utils/helper'
 import RowBrief from './BlockBriefRow'
+import useBlock from './hook/useBlock'
 
 export function HomeBlock() {
 	const validatorSummary = useAppSelector(getValidatorSummary)
@@ -22,6 +23,7 @@ export function HomeBlock() {
 
 	console.log(blockTop10)
 
+	const { top10, getPropserAddress } = useBlock()
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
@@ -32,20 +34,21 @@ export function HomeBlock() {
 				</a>
 			</div>
 
-			{!blockTop10 || blockTop10.length === 0 ? (
+			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
 				<BackgroundCard>
-					{blockTop10?.map(item => (
+					{top10?.map(item => (
 						<RowBrief
 							validator={validatorSummary.find(
 								(v: ValidatorData) => v.initialDelegatorAddress == ethToAstra(item.miner_hash)
 							)}
-							key={item.number}
-							blockNumber={item.number}
-							proposerAddress={item.miner_hash}
-							transactions={0}
-							updatedAt={item.timestamp}
+							key={item.blockHeight}
+							blockNumber={item.blockHeight}
+							proposerAddress={getPropserAddress(item.committedCouncilNodes)?.address}
+							transactions={item.transactionCount}
+							updatedAt={item.blockTime}
+							newBlock={item.newBlock}
 						/>
 					))}
 				</BackgroundCard>

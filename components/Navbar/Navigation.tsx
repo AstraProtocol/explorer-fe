@@ -40,10 +40,25 @@ export default function Navigation({ items }: NavigationProps) {
 	const hideMenu = () => setMenuItems(items)
 	useOutsideAlerter(wrapperRef, hideMenu)
 
-	const _renderLink = (link, text) => {
+	const _renderLink = (link, text, index, len, locale = false) => {
 		const span = () => (
-			<span className="text-base text-center text-bold contrast-color-70 padding-sm block-center pointer">
-				{text}
+			<span
+				className={clsx(
+					'text-base text-center text-bold',
+					'contrast-color-70 padding-sm',
+					'block-center pointer',
+					{ 'radius-tl-sm radius-tr-sm': index === 0 },
+					{ 'radius-bl-sm radius-br-sm': index === len - 1 }
+				)}
+			>
+				{locale ? (
+					<>
+						<Image src={`/images/flag${link}.svg`} width={30} height={19} />
+						<span className="padding-left-xs">{text}</span>
+					</>
+				) : (
+					text
+				)}
 			</span>
 		)
 		return link ? <Link href={link}>{span()}</Link> : span()
@@ -85,18 +100,6 @@ export default function Navigation({ items }: NavigationProps) {
 			</>
 		)
 	}
-
-	const _renderLocaleItems = (link, label) => {
-		return (
-			<>
-				<span className="text-base text-bold contrast-color-70 padding-sm block-center pointer">
-					<Image src={`/images/flag${link}.svg`} width={30} height={19} />
-					<span className="padding-left-xs">{label}</span>
-				</span>
-			</>
-		)
-	}
-
 	return (
 		<ul className={styles.navigation} ref={wrapperRef}>
 			{_menuItems.map(({ link = '', prefixIcon, label, show, id, submenus: sub1, type, background }) => (
@@ -114,7 +117,7 @@ export default function Navigation({ items }: NavigationProps) {
 					) : (
 						<>
 							{prefixIcon && prefixIcon}
-							{_renderLink(link, label)}
+							{_renderLink(link, label, 1, 0)}
 						</>
 					)}
 
@@ -122,7 +125,7 @@ export default function Navigation({ items }: NavigationProps) {
 						<>
 							<span className="dropdown-icon" data-text="icon"></span>
 							<ul
-								className={clsx(styles.submenu, 'radius-sm', 'border border-base', {
+								className={clsx(styles.submenu, 'radius-sm shadow-xs', {
 									[styles.show]: show,
 									[styles.locale]: type === 'locale'
 								})}
@@ -135,9 +138,7 @@ export default function Navigation({ items }: NavigationProps) {
 										key={`${menu.link} + ${menu.label}`}
 										onClick={event => _showSubMenu(event, [id, menu.id])}
 									>
-										{type === 'locale'
-											? _renderLocaleItems(menu.link, menu.label)
-											: _renderLink(menu.link, menu.label)}
+										{_renderLink(menu.link, menu.label, index, sub1.length, type === 'locale')}
 										{menu.submenus && (
 											<ul
 												className={clsx(styles.submenu2, 'contrast-bg-color-50', 'radius-xs', {
@@ -146,7 +147,7 @@ export default function Navigation({ items }: NavigationProps) {
 											>
 												{menu.submenus.map(sub2 => (
 													<li key={`${sub2.link} + ${sub2.label}`}>
-														{_renderLink(sub2.link, sub2.label)}
+														{_renderLink(sub2.link, sub2.label, index, sub1.length, true)}
 													</li>
 												))}
 											</ul>

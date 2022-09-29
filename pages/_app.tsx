@@ -8,6 +8,7 @@ import '@astraprotocol/astra-ui//lib/shared/style.css'
 import { cosmosFetcher, evmFetcher } from 'api'
 import { SWRConfig } from 'swr'
 import store, { persistor } from '../store'
+import '../styles.css'
 
 dayjs.locale('en')
 

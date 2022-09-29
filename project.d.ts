@@ -11,68 +11,89 @@ interface SearchItemResponse {
 	type: 'transaction_cosmos' | 'address' | 'block' | 'transaction'
 }
 
+interface Commited {
+	address: string
+	time: string
+	signature: string
+	isProposer: boolean
+}
+interface Pagination {
+	total_record: number
+	total_page: number
+	current_page: number
+	limit: number
+}
 interface BlockItem {
-	base_fee_per_gas: {
-		value: string
-	}
-	consensus: boolean
-	difficulty: string
-	gas_limit: string
-	gas_used: string
-	hash: string
-	inserted_at: string
-	is_empty: null
-	miner_hash: string
-	nonce: string
-	number: number
-	parent_hash: string
-	refetch_needed: boolean
-	size: number
-	timestamp: string
-	total_difficulty: string
-	updated_at: string
+	blockHeight: number
+	blockHash: string
+	blockTime: string
+	appHash: string
+	transactionCount: number
+	committedCouncilNodes: Commited[]
+	newBlock?: boolean
 }
 
 interface BlockResponse {
-	items: BlockItem[]
-	next_page_path: string
+	result: BlockItem[]
+	pagination: Pagination
 }
 
 interface TransactionItem {
-	block_number: number
-	cumulative_gas_used: string
-	error: null
-	gas: string
-	gas_price: {
-		value: string
-	}
-	gas_used: string
+	newTransaction?: boolean
+	blockHeight: number
+	blockHash: string
+	blockTime: string
 	hash: string
-	cosmos_hash: string
 	index: number
-	created_contract_code_indexed_at: null
-	input: string
-	nonce: number
-	r: string
-	s: string
-	v: string
-	status: string
-	value: {
-		value: string
-	}
-	revert_reason: null
+	success: boolean
+	code: number
+	log: string
+	fee: {
+		denom: string
+		amount: string
+	}[]
+	feePayer: string
+	feeGranter: string
+	gasWanted: number
+	gasUsed: number
+	memo: string
+	timeoutHeight: number
+	messages: {
+		type: string
+		content: {
+			msgIndex: number
+			name: string
+			uuid: string
+			height: number
+			params: {
+				'from': string
+				'hash': string
+				'size': number
+				'@type': string
+				'data': {
+					'to': string
+					'gas': string
+					'r': string
+					'v': string
+					'@type': string
+					'nonce': string
+					'value': string
+					'gasPrice': string
+					's': string
+					'data': string
+				}
+			}
+			txHash: string
+			msgName: string
+			version: number
+		}
+	}[]
+	signers: never[]
 }
 
 interface TransactionResponse {
-	items: TransactionItem[]
-	next_page_params: {
-		api: string
-		block_number: number
-		index: number
-		page_number: number
-		page_size: number
-		pages_limit: number
-	}
+	result: TransactionItem[]
+	pagination: Pagination
 }
 
 interface MarketHistoryPrice {
