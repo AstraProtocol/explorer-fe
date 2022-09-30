@@ -47,7 +47,7 @@ workflows:
                       branches:
                           only:
                               - dev
-                              - master
+                              - main
             - publish_docker:
                   requires:
                       - build_docker
@@ -55,7 +55,7 @@ workflows:
                       branches:
                           only:
                               - dev
-                              - master
+                              - main
             - deploy_dev:
                   requires:
                       - publish_docker
@@ -69,7 +69,7 @@ workflows:
                   filters:
                       branches:
                           only:
-                              - master
+                              - main
 deployment_config:
     dev:
         ingress:
