@@ -77,7 +77,7 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 											text={content.value as string}
 											icon
 											type={content.type as LabelTypes}
-											background={content.backgroundType as LabelBackgroundTypes}
+											backgroundShape={content.backgroundType as LabelBackgroundTypes}
 										/>
 									</div>
 								) : null}

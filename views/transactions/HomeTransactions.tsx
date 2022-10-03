@@ -13,24 +13,25 @@ export function HomeTransactions() {
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
-				<span className={clsx('contrast-color-70')}>Lastest Transactions</span>
+				<span className={clsx('contrast-color-70')}>Latest Transactions</span>
 				<DotSpace />
-				<Typography.LinkText href={LinkMaker.block()}>View all transactions</Typography.LinkText>
+				<Typography.LinkText href={LinkMaker.transaction()}>View all transactions</Typography.LinkText>
 			</div>
 
 			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
 				<BackgroundCard>
-					{top10?.map(item => (
+					{top10?.map((item, index) => (
 						<RowBrief
-							key={item.blockHash}
-							hash={item.blockHash}
+							key={item.hash}
+							hash={item.hash}
 							balance={{ value: convertBalanceToView('000'), token: 'ASA' }}
 							from="0x123123123123123123123123123123"
 							to="0x2139847192384719234"
 							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
+							border={index !== top10.length - 1}
 						/>
 					))}
 				</BackgroundCard>

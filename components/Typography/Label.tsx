@@ -3,24 +3,54 @@ import clsx from 'clsx'
 export type LabelTypes = 'unset' | 'success' | 'error'
 export type LabelBackgroundTypes = 'unset' | 'rectangle' | 'specialShape'
 
+/**
+ * @type LabelTypes
+ * @icon show or hide. follow the type of label
+ * @color css color
+ * @raidus css radius
+ * @backgroundShape LabelBackgroundTypes default value is unset
+ * @padding css padding
+ */
 type LabelProps = {
 	type?: LabelTypes
 	icon?: boolean
 	text: string
 	color?: string
-	background?: LabelBackgroundTypes
+	radius?: string
+	backgroundShape?: LabelBackgroundTypes
+	padding?: string
+	font?: string
 }
 
-export function Label({ type, text, color, background, icon }: LabelProps) {
+export function Label({
+	type = 'unset',
+	text,
+	color,
+	backgroundShape = 'unset',
+	icon,
+	radius,
+	padding,
+	font
+}: LabelProps) {
 	return (
 		<span
-			className={clsx('label money money-sm radius-sm', 'padding-left-xs padding-right-xs', {
-				'alert-color-error': type === 'error',
-				'bg-error': type === 'error' && background !== 'unset',
-				'alert-color-success': type === 'success',
-				'bg-success': type === 'success' && background !== 'unset',
-				'pointer contrast-color-70': background === 'specialShape'
-			})}
+			className={clsx(
+				'label',
+				font || 'money-sm money',
+				padding || 'padding-left-xs padding-right-xs',
+				radius || 'radius-sm',
+				{
+					// color
+					'alert-color-error ': type === 'error',
+					'alert-color-success': type === 'success',
+					[color]: type === 'unset',
+					// background
+					'bg-error': type === 'error' && backgroundShape !== 'unset',
+					'bg-success': type === 'success' && backgroundShape !== 'unset',
+					'contrast-bg-color-10': type === 'unset' && backgroundShape === 'rectangle',
+					'pointer contrast-color-70': backgroundShape === 'specialShape'
+				}
+			)}
 		>
 			{icon && (
 				<span
@@ -36,7 +66,6 @@ export function Label({ type, text, color, background, icon }: LabelProps) {
 				.label {
 					display: inline-flex;
 					position: relative;
-					font-weight: 400;
 				}
 				.bg-success {
 					background-color: rgba(var(--alert-color--success-raw), 0.24);
@@ -44,9 +73,6 @@ export function Label({ type, text, color, background, icon }: LabelProps) {
 
 				.bg-error {
 					background: rgba(var(--alert-color--error-raw), 0.24);
-				}
-				.bg-normal {
-					background: rgba(var(--alert-color--success-raw), 0.24);
 				}
 
 				.pointer {

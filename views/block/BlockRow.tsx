@@ -40,10 +40,10 @@ export default function BlockRow({
 					'margin-bottom-xs'
 				)}
 			>
-				<div className={clsx(styles.icon, 'margin-right-sm')}>
+				<div className={clsx(styles.iconCetner, 'margin-right-sm')}>
 					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
 				</div>
-				<div className="col-2">
+				<div className="col-2 block-ver-center">
 					{mine ? (
 						<span className={clsx('money', 'money-sm')}>#{blockNumber}</span>
 					) : (
@@ -73,17 +73,21 @@ export default function BlockRow({
 									<span className={clsx('text text-sm contrast-color-30 padding-right-2xs')}>
 										{transactions} Transactions
 									</span>
-									<DotSpace />
-									<span className="text text-sm contrast-color-30">{size} bytes</span>
+									{!!size && (
+										<>
+											<DotSpace />
+											<span className="text text-sm contrast-color-30">{size} bytes</span>
+										</>
+									)}
 								</div>
 							</div>
 						</div>
 
-						<div className="col-2">
+						<div className="col-2 block-ver-center">
 							<Timer updatedAt={updatedAt} />
 						</div>
 
-						<div className="money money-xs contrast-color-70">{value}</div>
+						<div className="money money-xs contrast-color-70 block-ver-center">{transactions}</div>
 					</>
 				)}
 			</div>

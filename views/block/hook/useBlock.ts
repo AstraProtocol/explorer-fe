@@ -39,7 +39,7 @@ export default function useBlock() {
 		}
 	}, [data])
 	return {
-		top10: _items?.slice(0, 10),
+		top10: _items?.slice(0, 7),
 		fullPageData: _items,
 		getPropserAddress: _getPropserAddress
 	}

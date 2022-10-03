@@ -16,7 +16,7 @@ export function HomeBlock() {
 	return (
 		<Container>
 			<div className="block-ver-center margin-bottom-md">
-				<span className={clsx('contrast-color-70')}>Lastest Block</span>
+				<span className={clsx('contrast-color-70')}>Latest Block</span>
 				<DotSpace />
 				<Typography.LinkText href={LinkMaker.block()}>View all Blocks</Typography.LinkText>
 			</div>
@@ -25,7 +25,7 @@ export function HomeBlock() {
 				<RowLoader row={10} />
 			) : (
 				<BackgroundCard>
-					{top10?.map(item => {
+					{top10?.map((item, index) => {
 						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
 						const proposer = getStakingValidatorByHex(proposerHash)
 						return (
@@ -37,6 +37,7 @@ export function HomeBlock() {
 								transactions={item.transactionCount}
 								updatedAt={item.blockTime}
 								newBlock={item.newBlock}
+								border={index !== top10.length - 1}
 							/>
 						)
 					})}
