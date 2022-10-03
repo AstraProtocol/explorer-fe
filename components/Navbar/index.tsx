@@ -51,12 +51,12 @@ const items: MenuItem[] = [
 			{
 				id: '3.1',
 				label: 'All',
-				link: '/all'
+				link: '/tokens'
 			},
 			{
 				id: '3.2',
 				label: 'Astra',
-				link: '/astra'
+				link: '/accounts'
 			}
 		]
 	},
