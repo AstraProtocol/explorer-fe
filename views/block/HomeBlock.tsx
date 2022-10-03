@@ -24,7 +24,7 @@ export function HomeBlock() {
 			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
-				<BackgroundCard>
+				<BackgroundCard classes="padding-bottom-sm">
 					{top10?.map((item, index) => {
 						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
 						const proposer = getStakingValidatorByHex(proposerHash)
@@ -37,7 +37,7 @@ export function HomeBlock() {
 								transactions={item.transactionCount}
 								updatedAt={item.blockTime}
 								newBlock={item.newBlock}
-								border={index !== top10.length - 1}
+								border={index !== 0}
 							/>
 						)
 					})}

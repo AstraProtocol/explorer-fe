@@ -22,10 +22,10 @@ export default function RowShowAnimation({ children, action, minHeight = 'unset'
 	return (
 		<>
 			{action ? (
-				<div style={{ minHeight: minHeight }}>
+				<div style={{ overflowY: 'hidden', minHeight: minHeight }}>
 					<CSSTransition
 						in={show}
-						timeout={300}
+						timeout={5000}
 						classNames="alert"
 						// nodeRef={childrenRef}
 						unmountOnExit

@@ -30,7 +30,7 @@ export default function TransactionBriefRow({
 	border
 }: TransactionBriefRowProps) {
 	return (
-		<RowShowAnimation minHeight="65px" action={newTransaction}>
+		<RowShowAnimation minHeight="100px" action={newTransaction}>
 			<div
 				className={clsx(
 					styles.rowBrief,

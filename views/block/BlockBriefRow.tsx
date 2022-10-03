@@ -26,13 +26,11 @@ export default function BlockBriefRow({
 	border
 }: BlockBriefRowProps) {
 	return (
-		<RowShowAnimation action={newBlock} minHeight="65px">
+		<RowShowAnimation action={newBlock} minHeight="100px">
 			<div
-				className={clsx(
-					styles.rowBrief,
-					'margin-left-lg margin-right-lg margin-top-sm margin-bottom-sm padding-bottom-sm',
-					{ 'border border-bottom-base': border }
-				)}
+				className={clsx(styles.rowBrief, 'margin-left-lg margin-right-lg margin-bottom-sm padding-top-sm', {
+					'border border-top-base': border
+				})}
 			>
 				<div className={clsx(styles.icon, 'margin-right-sm')}>
 					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
