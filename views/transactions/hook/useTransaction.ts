@@ -28,13 +28,16 @@ export default function useTransaction() {
 				const items = differenceWith<TransactionItem, TransactionItem>(data.result, _items, (a, b) => {
 					return a.hash === b.hash
 				})
-				items.map(item => (item.newTransaction = true))
+				// items.map(item => (item.newTransaction = true))
+				if (items.length > 0) {
+					items[0].newTransaction = true
+				}
 				setState(data?.result)
 			}
 		}
 	}, [data])
 	return {
-		top10: _items?.slice(0, 10),
+		top10: _items?.slice(0, 7),
 		fullPageData: _items
 	}
 }

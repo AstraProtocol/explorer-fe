@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 type Column = {
 	title: string
 	col: string
@@ -5,11 +7,12 @@ type Column = {
 
 type RowTitleProps = {
 	columns: Column[]
+	classes?: string
 }
 
-export default function RowTitle({ columns }: RowTitleProps) {
+export default function RowTitle({ columns, classes }: RowTitleProps) {
 	return (
-		<div className="row contrast-color-50 margin-bottom-sm margin-top-xl">
+		<div className={clsx('row contrast-color-50 margin-bottom-sm margin-top-xl', classes)}>
 			{columns.map(column => (
 				<div className={`${column.col}`} key={column.title}>
 					{column.title}

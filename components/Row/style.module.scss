@@ -23,10 +23,18 @@
 }
 
 .gradientRow {
-	background: linear-gradient(90deg, rgba(139, 255, 98, 0.08) 0%, rgba(97, 181, 67, 0) 10.65%),
-		rgba(255, 255, 255, 0.05);
-	border: 1px solid var(--border-color);
+	// border: 1px solid var(--border-color);
 	backdrop-filter: blur(42px);
+}
+
+.gradientRowSuccess {
+	background: linear-gradient(90deg, rgba(139, 255, 98, 0.08) 0%, rgba(97, 181, 67, 0) 10.65%),
+		rgba(var(--contrast-color-theme--raw), 0.05);
+}
+
+.gradientRowError {
+	background: linear-gradient(270deg, rgba(230, 51, 53, 0) 90.25%, rgba(230, 51, 51, 0.2) 100%),
+		rgba(var(--contrast-color-theme--raw), 0.05);
 }
 
 .rowType {

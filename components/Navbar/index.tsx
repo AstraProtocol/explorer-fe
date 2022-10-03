@@ -35,7 +35,7 @@ const items: MenuItem[] = [
 			{
 				id: '2.1',
 				label: 'Validated',
-				link: '/validated'
+				link: '/tx'
 			},
 			{
 				id: '2.2',

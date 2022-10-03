@@ -1,13 +1,15 @@
 .rowBrief {
 	display: flex;
-	align-items: center;
-	.icon {
+	.iconCetner {
+		display: flex;
+		align-items: center;
 	}
 	.content {
 		width: 100%;
 		.info {
 			display: flex;
 			justify-content: space-between;
+			width: 100%;
 		}
 	}
 }

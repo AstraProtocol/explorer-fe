@@ -28,6 +28,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 				<NextIntlProvider messages={(pageProps as typeof pageProps & { messages: any }).messages}>
 					<SWRConfig
 						value={{
+							revalidateOnReconnect: false,
+							refreshWhenOffline: false,
+							refreshWhenHidden: false,
+							refreshInterval: 0,
 							fetcher: (...rest) => {
 								return _detectFetcher(rest)
 							}

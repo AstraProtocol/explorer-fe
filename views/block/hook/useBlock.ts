@@ -33,13 +33,16 @@ export default function useBlock() {
 				const items = differenceWith<BlockItem, BlockItem>(data.result, _items, (a, b) => {
 					return a.blockHeight === b.blockHeight
 				})
-				items.map(item => (item.newBlock = true))
+				// items.map(item => (item.newBlock = true))
+				if (items.length > 0) {
+					items[0].newBlock = true
+				}
 				setState(data?.result)
 			}
 		}
 	}, [data])
 	return {
-		top10: _items?.slice(0, 10),
+		top10: _items?.slice(0, 7),
 		fullPageData: _items,
 		getPropserAddress: _getPropserAddress
 	}

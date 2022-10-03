@@ -101,12 +101,12 @@ const DemoPage: React.FC<Props> = props => (
 			<div />
 			<Typography.Time time={new Date().getTime()} confirmedWithin="2.344ss" />
 			<div />
-			<Typography.Label text="Confirmed by 25,886" background="specialShape" />
-			<Typography.Label text="Confirmed" background="rectangle" type="error" />
-			<Typography.Label text="Confirmed" background="rectangle" type="success" />
-			<Typography.Label text="Success" type="success" background="unset" />
-			<Typography.Label text="Success" type="success" background="unset" icon />
-			<Typography.Label text="Error" type="error" background="unset" icon />
+			<Typography.Label text="Confirmed by 25,886" backgroundShape="specialShape" />
+			<Typography.Label text="Confirmed" backgroundShape="rectangle" type="error" />
+			<Typography.Label text="Confirmed" backgroundShape="rectangle" type="success" />
+			<Typography.Label text="Success" type="success" />
+			<Typography.Label text="Success" type="success" icon />
+			<Typography.Label text="Error" type="error" icon />
 			<div />
 			<div />
 			<BackgroundCard>

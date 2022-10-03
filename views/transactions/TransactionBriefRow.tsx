@@ -17,6 +17,7 @@ type TransactionBriefRowProps = {
 	}
 	updatedAt: number | string
 	newTransaction?: boolean
+	border?: boolean
 }
 
 export default function TransactionBriefRow({
@@ -25,39 +26,69 @@ export default function TransactionBriefRow({
 	to,
 	balance,
 	updatedAt,
-	newTransaction
+	newTransaction,
+	border
 }: TransactionBriefRowProps) {
 	return (
-		<RowShowAnimation minHeight="65px" action={newTransaction}>
-			<div className={clsx(styles.rowBrief, 'padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm')}>
+		<RowShowAnimation minHeight="100px" action={newTransaction}>
+			<div
+				className={clsx(
+					styles.rowBrief,
+					'margin-left-lg margin-right-lg margin-top-sm margin-bottom-sm',
+					'padding-bottom-sm',
+					{ 'border border-bottom-base': border }
+				)}
+			>
 				<div className={clsx(styles.icon, 'margin-right-sm')}>
-					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
+					<Image src={'/images/icons/transaction.png'} height={24} width={24} />
 				</div>
 				<div className={styles.content}>
 					<div className={clsx('block-ver-center', styles.info)}>
 						<div>
-							<span className={clsx('contrast-color-30 margin-right-xs')}>Hash</span>
+							<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>Hash</span>
 							<Typography.LinkText
 								href={LinkMaker.transaction(hash)}
 								children={`${ellipseRightText(hash, 24)}`}
-								className={['money', 'money-sm']}
+								fontType="Titi"
+								fontSize="money-xs"
 							/>
 						</div>
-						<TypographyUI.Balance
-							icon={<CryptoIcon name="asa" />}
-							currency={balance.token}
-							size="sm"
-							value={balance?.value}
-						/>
-					</div>
-					<div className={clsx('block-ver-center', styles.info)}>
-						<div className="block-ver-center">
-							<span className={clsx('contrast-color-30 margin-right-xs')}>From</span>
-							<span className="contrast-color-70 margin-right-lg">{ellipseBetweenText(from, 6, 6)}</span>
-							<span className={clsx('contrast-color-30 padding-right-2xs')}>To</span>
-							<span className="contrast-color-70 margin-right-lg">{ellipseBetweenText(to, 6, 6)}</span>
-						</div>
 						<Timer updatedAt={updatedAt} />
+					</div>
+					<div className={clsx('block-ver-center margin-top-xs', styles.info)}>
+						<div style={{ width: '100%' }}>
+							<div>
+								<div
+									className={clsx('contrast-color-30')}
+									style={{ display: 'inline-block', minWidth: '45px' }}
+								>
+									From
+								</div>
+								<span className="contrast-color-70 margin-right-lg money money-xs">
+									{ellipseBetweenText(from, 6, 6)}
+								</span>
+							</div>
+							<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+								<div>
+									<div
+										className={clsx('contrast-color-30')}
+										style={{ display: 'inline-block', minWidth: '45px' }}
+									>
+										To
+									</div>
+									<span className="contrast-color-70 margin-right-lg money money-xs">
+										{ellipseBetweenText(to, 6, 6)}
+									</span>
+								</div>
+
+								<TypographyUI.Balance
+									icon={<CryptoIcon name="asa" />}
+									currency={balance.token}
+									size="sm"
+									value={balance?.value}
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

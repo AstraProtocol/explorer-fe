@@ -1,7 +1,8 @@
 .rowBrief {
 	display: flex;
-	align-items: center;
-	.icon {
+	.iconCetner {
+		display: flex;
+		align-items: center;
 	}
 	.content {
 		width: 100%;
@@ -20,4 +21,9 @@
 }
 .borderLeft {
 	border-left: 1px solid rgba(var(--contrast-color-theme--raw), 0.05);
+}
+
+.topRow {
+	display: flex;
+	justify-content: space-between;
 }
