@@ -38,6 +38,73 @@ interface BlockResponse {
 	pagination: Pagination
 }
 
+interface BlockDetailResponse {
+	result: BlockItem
+}
+
+enum TransacionTypeEnum {
+	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
+	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
+	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
+	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
+	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate'
+}
+
+interface Signer {
+	keyInfo: {
+		type: string
+		isMultiSig: boolean
+		pubkeys: string[]
+	}
+	address: string
+	accountSequence: number
+}
+
+interface EVMTransactionContent {
+	msgIndex: number
+	name: string
+	uuid: string
+	height: number
+	params: {
+		'from': string
+		'hash': string
+		'size': number
+		'@type': TransacionTypeEnum
+		'data': {
+			'to': string
+			'gas': string
+			'r': string
+			'v': string
+			'@type': TransacionTypeEnum
+			'nonce': string
+			'value': string
+			'gasPrice': string
+			's': string
+			'data': string
+		}
+	}
+	txHash: string
+	msgName: string
+	version: number
+}
+
+interface CosmosTransactionContent {
+	amount: {
+		denom: string
+		amount: string
+	}[]
+	txHash: string
+	msgName: string
+	msgIndex: number
+	toAddress: string
+	fromAddress: string
+	name: string
+	uuid: string
+	height: number
+	version: number
+}
+
 interface TransactionItem {
 	newTransaction?: boolean
 	blockHeight: number
@@ -59,36 +126,10 @@ interface TransactionItem {
 	memo: string
 	timeoutHeight: number
 	messages: {
-		type: string
-		content: {
-			msgIndex: number
-			name: string
-			uuid: string
-			height: number
-			params: {
-				'from': string
-				'hash': string
-				'size': number
-				'@type': string
-				'data': {
-					'to': string
-					'gas': string
-					'r': string
-					'v': string
-					'@type': string
-					'nonce': string
-					'value': string
-					'gasPrice': string
-					's': string
-					'data': string
-				}
-			}
-			txHash: string
-			msgName: string
-			version: number
-		}
+		type: TransacionTypeEnum
+		content: EVMTransactionContent | CosmosTransactionContent
 	}[]
-	signers: never[]
+	signers: Signer[]
 }
 
 interface TransactionResponse {
@@ -201,4 +242,59 @@ interface ValidatorResponse {
 		current_page: number
 		limit: number
 	}
+}
+
+interface Proposer {
+	operatorAddress: string
+	consensusNodeAddress: string
+	initialDelegatorAddress: string
+	tendermintPubkey: string
+	tendermintAddress: string
+	status: string
+	jailed: boolean
+	joinedAtBlockHeight: number
+	power: string
+	moniker: string
+	identity: string
+	website: string
+	securityContact: string
+	details: string
+	commissionRate: string
+	commissionMaxRate: string
+	commissionMaxChangeRate: string
+	minSelfDelegation: string
+	totalSignedBlock: number
+	totalActiveBlock: number
+	impreciseUpTime: string
+	votedGovProposal: number
+	powerPercentage: string
+	cumulativePowerPercentage: string
+}
+
+interface EVMTransactionDetail {
+	blockNumber: string
+	confirmations: string
+	from: string
+	gasLimit: string
+	gasPrice: string
+	gasUsed: string
+	hash: string
+	input: string
+	logs: {
+		address: string
+		data: string
+		index: string
+		topics: string[]
+	}[]
+	next_page_params: null
+	revertReason: string
+	success: boolean
+	timeStamp: string
+	to: string
+	value: string
+}
+interface EVMTransactionDetailResponse {
+	message: string
+	result: EVMTransactionDetail
+	status: string
 }

@@ -27,7 +27,7 @@ export function HomeBlock() {
 				<BackgroundCard classes="padding-bottom-sm">
 					{top10?.map((item, index) => {
 						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
-						const proposer = getStakingValidatorByHex(proposerHash)
+						const proposer = getStakingValidatorByHex(proposerHash) as Proposer
 						return (
 							<BlockBriefRow
 								key={item.blockHeight}

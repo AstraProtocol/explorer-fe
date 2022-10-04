@@ -32,6 +32,7 @@ export function HomeTransactions() {
 							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
 							border={index !== top10.length - 1}
+							transactionType={item?.messages[0]?.type}
 						/>
 					))}
 				</BackgroundCard>

@@ -80,8 +80,8 @@ export class LinkMaker {
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static transaction(hash?: string) {
-		hash = hash ? `/${hash}` : ''
+	static transaction(hash?: string, query: string = '') {
+		hash = hash ? `/${hash}${query}` : ''
 		return `/tx${hash}`
 	}
 }

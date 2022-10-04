@@ -13,3 +13,16 @@
 		}
 	}
 }
+
+.borderWidthPadding {
+	&::after {
+		content: '';
+		height: 1px;
+		width: calc(100% - 56px);
+		background-color: var(--border-color);
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}

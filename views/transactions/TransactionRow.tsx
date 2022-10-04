@@ -8,6 +8,7 @@ import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker }
 import styles from './style.module.scss'
 
 type TransactionRowProps = {
+	style?: 'normal' | 'inject'
 	blockNumber: number
 	updatedAt: number | string
 	value: number
@@ -21,6 +22,8 @@ type TransactionRowProps = {
 	feeToken?: string
 	from?: string
 	to?: string
+	transactionType: TransacionTypeEnum
+	order?: 'end' | 'start' | ''
 }
 
 export default function TransactionRow({
@@ -36,52 +39,71 @@ export default function TransactionRow({
 	fee,
 	feeToken,
 	from,
-	to
+	to,
+	transactionType,
+	style = 'normal',
+	order
 }: TransactionRowProps) {
 	const statusText = status ? 'success' : 'error'
 	return (
 		<RowShowAnimation action={newBlock}>
 			<GradientRow
 				type={statusText}
-				classes={['margin-bottom-xs', 'padding-left-lg padding-right-lg', 'padding-top-xs padding-bottom-xs']}
+				classes={[
+					clsx('padding-left-lg padding-right-lg', 'padding-top-xs padding-bottom-xs', {
+						'margin-bottom-xs': style === 'normal',
+						'radius-lg': style === 'normal',
+						// 'border border-bottom-base': style === 'inject' && order === 'end',
+						[styles.borderWidthPadding]: style === 'inject'
+					})
+				]}
+				gradient={style === 'inject' ? 'transparent' : 'normal'}
 			>
 				<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
-					<div className={clsx('col-5 ')}>
+					<div className={clsx('col-5 block-ver-center')}>
 						<div>
 							<Typography.LinkText
-								href={LinkMaker.transaction(hash)}
+								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
 								className={['margin-right-xs']}
 								fontType="Titi"
 							>
 								{ellipseRightText(hash, 30)}
 							</Typography.LinkText>
-							<Typography.Label
-								text={labelStatus}
-								backgroundShape="rectangle"
-								color="contrast-color-70"
-								radius="radius-xs"
-								font="money-xs"
-							/>
-						</div>
-						<div className="margin-top-xs">
-							{!!from && (
-								<>
-									<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>From</span>
-									<span className="contrast-color-70 margin-right-lg money-xs money">
-										{ellipseBetweenText(from, 6, 6)}
-									</span>
-								</>
+							{!!labelStatus && (
+								<Typography.Label
+									text={labelStatus}
+									backgroundShape="rectangle"
+									color="contrast-color-70"
+									radius="radius-xs"
+									font="money-xs"
+								/>
 							)}
-							{!!to && (
-								<>
-									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									<span className="contrast-color-70 margin-right-lg  money-xs money">
-										{ellipseBetweenText(to, 6, 6)}
-									</span>
-								</>
-							)}
-							{!from && !to && <div style={{ height: '22px' }}> </div>}
 						</div>
+						{!!from ||
+							(!!to && (
+								<div className="margin-top-xs">
+									{!!from && (
+										<>
+											<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
+												From
+											</span>
+											<span className="contrast-color-70 margin-right-lg money-xs money">
+												{ellipseBetweenText(from, 6, 6)}
+											</span>
+										</>
+									)}
+									{!!to && (
+										<>
+											<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>
+												To
+											</span>
+											<span className="contrast-color-70 margin-right-lg  money-xs money">
+												{ellipseBetweenText(to, 6, 6)}
+											</span>
+										</>
+									)}
+								</div>
+							))}
 					</div>
 					<div className={clsx('col-2 block-ver-center')}>
 						<Typography.Label

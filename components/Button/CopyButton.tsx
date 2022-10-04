@@ -35,7 +35,7 @@ const CopyButton = ({ textCopy, textTitle, onCopy }: Props) => {
 			<div className={`contrast-color-100`}>
 				{textTitle && <span className="">{textTitle}</span>}
 				<span
-					className={clsx('padding-left-xs', {
+					className={clsx('padding-left-xs pointer', {
 						'copy-icon contrast-color-100': !copied,
 						'checked-icon alert-color-success': copied
 					})}

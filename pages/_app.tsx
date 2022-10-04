@@ -17,6 +17,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 		const path = rest[0] as string
 		let fetcher = cosmosFetcher
 		if (path.startsWith('evm_')) {
+			console.log(path)
 			rest[0] = path.replace('evm_', '')
 			fetcher = evmFetcher
 		}

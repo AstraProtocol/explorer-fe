@@ -15,7 +15,7 @@ const Home: React.FC<NextPage> = _ => {
 	return (
 		<Layout>
 			<Head>
-				<title>Astra Explorer</title>
+				<title>{process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
 			<Container>
 				<Search />

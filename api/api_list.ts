@@ -1,19 +1,23 @@
 const API_LIST = {
-	SEARCH: '/token-autocomplete',
+	SEARCH: 'evm_/token-autocomplete',
 
-	ALL_BLOCKS: 'evm_/blocks',
-	ALL_TRANSACTIONS: 'evm_/transactions',
-	LATEST_BLOCK: '/api/v1?module=block&action=eth_block_number',
+	ALL_BLOCKS: '/blocks',
+	BLOCKS: '/blocks/',
+	TRANSACTION_OF_BLOCK: '/blocks/:id/transactions?pagination=offset&page=1&limit=20&order=height.desc',
+	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
+
+	ALL_TRANSACTIONS: '/transactions',
+	TRANSACTIONS: '/transactions/',
 
 	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',
 
-	MARKET_HISTORY_PRICE: '/api/v1/market-history-chart',
-	TRANSACTION_HISTORY_COUNTER: '/api/v1/transaction-history-chart',
+	MARKET_HISTORY_PRICE: 'evm_/api/v1/market-history-chart',
+	TRANSACTION_HISTORY_COUNTER: 'evm_/api/v1/transaction-history-chart',
 
 	MARKET_PRICE: 'https://api.tiki.vn/sandseel/api/v2/public/markets/astra/summary',
-	COMMON_STATS: '/api/v1/common-stats',
-	ESTIMATE_COUNTED_INFO: '/api/v1/estimate-counted-info',
-	GAS_AVG: '/api/v1/gas-price-oracle'
+	COMMON_STATS: 'evm_/api/v1/common-stats',
+	ESTIMATE_COUNTED_INFO: 'evm_/api/v1/estimate-counted-info',
+	GAS_AVG: 'evm_/api/v1/gas-price-oracle'
 }
 
 export default API_LIST

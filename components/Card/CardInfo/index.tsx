@@ -12,7 +12,7 @@ export type Content = {
 	value?: string | number
 	prefix?: string
 	suffix?: string
-	icon?: string
+	icon?: boolean
 	token?: string
 	type?: LabelTypes
 	backgroundType?: LabelBackgroundTypes
@@ -40,14 +40,21 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 		<BackgroundCard classes={`margin-bottom-md ${classes.join(' ')}`}>
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
 				{items.map(({ label, type, contents }) => (
-					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-md')}>
-						<div className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center')}>
+					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-sm')}>
+						<div
+							className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center padding-bottom-sm')}
+						>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 						</div>
 						{(contents as Content[]).map(content => (
 							<div
 								key={content.value || new Date().getTime()}
-								className={clsx(styles.rightColumn, 'block-center margin-right-sm')}
+								className={clsx(
+									styles.rightColumn,
+									'col-10',
+									'block-ver-center margin-right-sm padding-bottom-sm',
+									'border border-bottom-base'
+								)}
 							>
 								{type === 'text' ? (
 									<span className="moeny money-sm contrast-color-100">{content.value}</span>
@@ -59,7 +66,7 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 									/>
 								) : null}
 								{type === 'link' ? (
-									<Typography.LinkText href={content.link || ''}>
+									<Typography.LinkText href={content.link || ''} fontType="Titi" fontSize="text-500">
 										{content.value as string}
 									</Typography.LinkText>
 								) : null}
@@ -75,7 +82,7 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 									<div className="block-center">
 										<Typography.Label
 											text={content.value as string}
-											icon
+											icon={content.icon}
 											type={content.type as LabelTypes}
 											backgroundShape={content.backgroundType as LabelBackgroundTypes}
 										/>

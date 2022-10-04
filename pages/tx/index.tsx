@@ -15,7 +15,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 	return (
 		<Layout>
 			<Head>
-				<title>Block</title>
+				<title>Transactions | {process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
 			<Search />
 			<Container>
@@ -49,9 +49,10 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 									to={''}
 									value={100000.93841029348}
 									valueToken="asa"
-									labelStatus="Approve"
-									type="Contract Call"
+									// labelStatus="Approve"
+									type={item?.messages[0]?.type.split('.').slice(-1).join('')}
 									newBlock={item.newTransaction}
+									transactionType={item?.messages[0]?.type}
 								/>
 							))}
 						</div>

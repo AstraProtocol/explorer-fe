@@ -18,6 +18,7 @@ type TransactionBriefRowProps = {
 	updatedAt: number | string
 	newTransaction?: boolean
 	border?: boolean
+	transactionType: TransacionTypeEnum
 }
 
 export default function TransactionBriefRow({
@@ -27,7 +28,8 @@ export default function TransactionBriefRow({
 	balance,
 	updatedAt,
 	newTransaction,
-	border
+	border,
+	transactionType
 }: TransactionBriefRowProps) {
 	return (
 		<RowShowAnimation minHeight="100px" action={newTransaction}>
@@ -47,7 +49,7 @@ export default function TransactionBriefRow({
 						<div>
 							<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>Hash</span>
 							<Typography.LinkText
-								href={LinkMaker.transaction(hash)}
+								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
 								children={`${ellipseRightText(hash, 24)}`}
 								fontType="Titi"
 								fontSize="money-xs"

@@ -31,7 +31,7 @@ const Tabs = ({ tabs, contents }: Props) => {
 					></Tab>
 				))}
 			</Row>
-			{contents[currentActiveValue]}
+			<div className="margin-top-xl padding-bottom-lg">{contents[currentActiveValue]}</div>
 		</>
 	)
 }
