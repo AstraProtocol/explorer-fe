@@ -1,11 +1,13 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 import Row from '../Grid/Row'
 import styles from './style.module.scss'
 import Tab from './Tab'
 
 interface Tab {
-	value: string
+	id: string
 	title: string
+	padding?: string
 }
 
 interface Content {
@@ -15,23 +17,38 @@ interface Content {
 interface Props {
 	tabs?: Tab[]
 	contents?: Content
+	classes?: string
+	headerBorder?: boolean
+	headerPadding?: string
+	tabChange?: (tabIndex: string) => {}
 }
 
-const Tabs = ({ tabs, contents }: Props) => {
-	const [currentActiveValue, setActiveValue] = useState(tabs[0].value)
+const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tabChange }: Props) => {
+	const [tabId, setTabId] = useState(tabs[0].id)
+	const _changeTab = value => {
+		setTabId(value)
+		if (tabChange) {
+			tabChange(value)
+		}
+	}
 	return (
 		<>
-			<Row className={styles.tabs}>
+			<Row
+				className={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
+					'border border-bottom-base': headerBorder
+				})}
+			>
 				{tabs.map((tab: Tab) => (
 					<Tab
-						onClick={() => setActiveValue(tab.value)}
-						active={currentActiveValue == tab.value}
+						onClick={() => _changeTab(tab.id)}
+						active={tabId == tab.id}
 						title={tab.title}
-						key={tab.value}
+						key={tab.id}
+						padding={tab.padding}
 					></Tab>
 				))}
 			</Row>
-			<div className="margin-top-xl padding-bottom-lg">{contents[currentActiveValue]}</div>
+			<div className={classes || 'margin-top-xl padding-bottom-lg'}>{contents[tabId]}</div>
 		</>
 	)
 }

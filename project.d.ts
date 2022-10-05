@@ -42,15 +42,6 @@ interface BlockDetailResponse {
 	result: BlockItem
 }
 
-enum TransacionTypeEnum {
-	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
-	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
-	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
-	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
-	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
-	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate'
-}
-
 interface Signer {
 	keyInfo: {
 		type: string
@@ -134,6 +125,11 @@ interface TransactionItem {
 
 interface TransactionResponse {
 	result: TransactionItem[]
+	pagination: Pagination
+}
+
+interface TransactionDetailResponse {
+	result: TransactionItem
 	pagination: Pagination
 }
 
@@ -271,6 +267,15 @@ interface Proposer {
 	cumulativePowerPercentage: string
 }
 
+interface EVMTransferItem {
+	amount: string
+	fromAddress: string
+	logIndex: string
+	toAddress: string
+	tokenContractAddress: string
+	tokenName: string
+	tokenSymbol: string
+}
 interface EVMTransactionDetail {
 	blockNumber: string
 	confirmations: string
@@ -286,6 +291,7 @@ interface EVMTransactionDetail {
 		index: string
 		topics: string[]
 	}[]
+	tokenTransfers: EVMTransferItem[]
 	next_page_params: null
 	revertReason: string
 	success: boolean
@@ -296,5 +302,68 @@ interface EVMTransactionDetail {
 interface EVMTransactionDetailResponse {
 	message: string
 	result: EVMTransactionDetail
+	status: string
+}
+
+interface InternalTransactionItem {
+	blockNumber: string
+	callType: string
+	contractAddress: string
+	errCode: string
+	from: string
+	gas: string
+	gasUsed: string
+	index: string
+	input: string
+	isError: string
+	timeStamp: string
+	to: string
+	transactionHash: string
+	type: string
+	value: string
+}
+interface InternalTransactionReponse {
+	message: 'OK' | string
+	result: InternalTransactionItem[]
+	status: string
+}
+
+interface CosmosTransactionDetailResponse {
+	message: string
+	result: {
+		blockHash: string
+		blockHeight: number
+		blockTime: string
+		confirmations: number
+		cosmosHash: string
+		createdContractCodeIndexedAt: null
+		cumulativeGasUsed: string
+		error: string
+		from: string
+		gasLimit: string
+		gasPrice: string
+		gasUsed: string
+		hash: string
+		index: number
+		input: string
+		logs: {
+			address: string
+			data: string
+			index: string
+			topics: string[]
+		}[]
+		maxFeePerGas: null
+		maxPriorityFeePerGas: null
+		nonce: number
+		r: string
+		revertReason: string
+		s: string
+		success: boolean
+		to: string
+		tokenTransfers: EVMTransferItem[]
+		type: number
+		v: string
+		value: string
+	}
 	status: string
 }

@@ -4,7 +4,7 @@ import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import Typography from 'components/Typography'
-import { convertBalanceToView, LinkMaker } from 'utils/helper'
+import { LinkMaker } from 'utils/helper'
 import useTransaction from './hook/useTransaction'
 import RowBrief from './TransactionBriefRow'
 
@@ -26,9 +26,9 @@ export function HomeTransactions() {
 						<RowBrief
 							key={item.hash}
 							hash={item.hash}
-							balance={{ value: convertBalanceToView('000'), token: 'ASA' }}
-							from="0x123123123123123123123123123123"
-							to="0x2139847192384719234"
+							balance={{ value: '' }} //{{ value: convertBalanceToView('000'), token: 'ASA' }}
+							from=""
+							to=""
 							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
 							border={index !== top10.length - 1}

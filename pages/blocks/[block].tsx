@@ -6,10 +6,11 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Tabs from 'components/Tabs/Tabs'
+import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
-import { LinkMaker } from 'utils/helper'
+import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
 
@@ -82,7 +83,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 					break
 			}
 		}
-		return _sortItemByLabel(items, [
+		return sortArrayFollowValue(items, 'label', [
 			'Block Height:',
 			'Timestamp:',
 			'Transaction:',
@@ -91,16 +92,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 			'Interacted With (To):'
 		])
 	}
-	const _sortItemByLabel = (items: CardRowItem[], labels: string[]) => {
-		const newItems: CardRowItem[] = []
-		for (let label of labels) {
-			const item = items.find(item => item.label === label)
-			if (item) {
-				newItems.push(item)
-			}
-		}
-		return newItems
-	}
+
 	const items = _convertRawDataToCardData(blockDetail)
 	return (
 		<Layout>
@@ -112,14 +104,12 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 				<CardInfo items={items} classes={['margin-top-sm']} />
 				<BackgroundCard>
 					<Tabs
-						tabs={[{ title: 'Transactions', value: '1' }]}
+						tabs={[{ title: 'Transactions', id: '1' }]}
 						contents={{
 							'1': (
 								<div>
-									{transactions && transactions.length == 0 ? (
-										<div className="contrast-color-100 text-center">
-											There are no transactions for this block.
-										</div>
+									{!transactions || transactions.length == 0 ? (
+										<Empty />
 									) : (
 										<>
 											{transactions?.map((item, index) => (
@@ -127,13 +117,13 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 													key={item.hash}
 													blockNumber={item.blockHeight}
 													updatedAt={item.blockTime}
-													fee={item.fee[0].amount}
-													feeToken={item.fee[0].denom}
+													fee={item?.fee[0]?.amount}
+													feeToken={item?.fee[0]?.denom}
 													status={item.success}
 													hash={item.hash}
 													from={''}
 													to={''}
-													value={100000.93841029348}
+													value={undefined}
 													valueToken="asa"
 													type={item?.messages[0]?.type.split('.').slice(-1).join('')}
 													newBlock={item.newTransaction}

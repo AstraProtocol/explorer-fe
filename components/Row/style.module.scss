@@ -42,7 +42,8 @@
 	width: 4px;
 	height: 32px;
 	left: 0px;
-	top: 20px;
+	top: 50%;
+	transform: translateY(-50%);
 	border-radius: 0px 4px 4px 0px;
 }
 

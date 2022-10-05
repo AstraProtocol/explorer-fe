@@ -6,7 +6,9 @@ const nextConfig = {
 		NEXT_PUBLIC_EVM_API: 'https://explorer.astranaut.dev',
 		NEXT_PUBLIC_BLOCK_INTERVAL: '5000',
 		NEXT_PUBLIC_TRANSACTION_INTERVAL: '5000',
-		NEXT_PUBLIC_TITLE: 'Astra Explorer'
+		NEXT_PUBLIC_TITLE: 'Astra Explorer',
+		NEXT_PUBLIC_DATE_FORMAT_VI: 'DD/MM/YYYY',
+		NEXT_PUBLIC_DATE_FROMAT_OTHER: 'MM/DD/YYYY'
 	}
 }
 

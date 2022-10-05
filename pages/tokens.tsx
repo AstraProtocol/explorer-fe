@@ -12,7 +12,7 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Astra Explorer</title>
 			</Head>
-			<Container></Container>
+			<Container>Token</Container>
 		</Layout>
 	)
 }

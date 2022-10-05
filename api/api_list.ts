@@ -8,6 +8,9 @@ const API_LIST = {
 
 	ALL_TRANSACTIONS: '/transactions',
 	TRANSACTIONS: '/transactions/',
+	EVM_TRANSACTION_DETAIL: '/api/v1?module=transaction&action=gettxinfo&txhash=', // call axios
+	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
+	COSMOS_TRANSACTION: '/api/v1?module=transaction&action=getTxCosmosInfo&txhash=', // call axios
 
 	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',
 

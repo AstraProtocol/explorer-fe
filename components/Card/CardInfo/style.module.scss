@@ -7,3 +7,12 @@
 .smallCard {
 	background-color: rgba(var(--contrast-color-theme--raw), 0.05);
 }
+
+.rawInput {
+	/* White Color/50 */
+	background: rgba(var(--contrast-color-theme--raw), 0.05);
+	/* White Color/100 */
+	border: 1px solid rgba(var(--contrast-color-theme--raw), 0.1);
+	border-radius: 8px;
+	padding: 12px;
+}

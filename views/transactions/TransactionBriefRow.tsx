@@ -41,7 +41,10 @@ export default function TransactionBriefRow({
 					{ 'border border-bottom-base': border }
 				)}
 			>
-				<div className={clsx(styles.icon, 'margin-right-sm')}>
+				<div
+					className={clsx(styles.icon, 'margin-right-sm')}
+					style={{ alignSelf: !to && !from ? '' : 'baseline' }}
+				>
 					<Image src={'/images/icons/transaction.png'} height={24} width={24} />
 				</div>
 				<div className={styles.content}>
@@ -57,41 +60,52 @@ export default function TransactionBriefRow({
 						</div>
 						<Timer updatedAt={updatedAt} />
 					</div>
-					<div className={clsx('block-ver-center margin-top-xs', styles.info)}>
-						<div style={{ width: '100%' }}>
-							<div>
-								<div
-									className={clsx('contrast-color-30')}
-									style={{ display: 'inline-block', minWidth: '45px' }}
-								>
-									From
-								</div>
-								<span className="contrast-color-70 margin-right-lg money money-xs">
-									{ellipseBetweenText(from, 6, 6)}
-								</span>
-							</div>
-							<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-								<div>
-									<div
-										className={clsx('contrast-color-30')}
-										style={{ display: 'inline-block', minWidth: '45px' }}
-									>
-										To
+					{(!!from || !!to) && (
+						<div className={clsx('block-ver-center margin-top-xs', styles.info)}>
+							<div style={{ width: '100%' }}>
+								{!!from && (
+									<div>
+										<>
+											<div
+												className={clsx('contrast-color-30')}
+												style={{ display: 'inline-block', minWidth: '45px' }}
+											>
+												From
+											</div>
+											<span className="contrast-color-70 margin-right-lg money money-xs">
+												{ellipseBetweenText(from, 6, 6)}
+											</span>
+										</>
 									</div>
-									<span className="contrast-color-70 margin-right-lg money money-xs">
-										{ellipseBetweenText(to, 6, 6)}
-									</span>
+								)}
+								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+									<div>
+										{!!to && (
+											<>
+												<div
+													className={clsx('contrast-color-30')}
+													style={{ display: 'inline-block', minWidth: '45px' }}
+												>
+													To
+												</div>
+												<span className="contrast-color-70 margin-right-lg money money-xs">
+													{ellipseBetweenText(to, 6, 6)}
+												</span>
+											</>
+										)}
+									</div>
+									{!!balance?.value && (
+										<TypographyUI.Balance
+											icon={<CryptoIcon name="asa" />}
+											currency={balance.token}
+											size="sm"
+											value={balance?.value}
+										/>
+									)}
 								</div>
-
-								<TypographyUI.Balance
-									icon={<CryptoIcon name="asa" />}
-									currency={balance.token}
-									size="sm"
-									value={balance?.value}
-								/>
 							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		</RowShowAnimation>
