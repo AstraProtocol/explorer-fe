@@ -59,8 +59,8 @@ const DemoPage: React.FC<Props> = props => (
 			<BackgroundCard>
 				<Tabs
 					tabs={[
-						{ title: 'Tab 1', value: '1' },
-						{ title: 'Tab 2', value: '2' }
+						{ title: 'Tab 1', id: '1' },
+						{ title: 'Tab 2', id: '2' }
 					]}
 					contents={{
 						'1': <div>Hello World</div>

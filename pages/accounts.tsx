@@ -12,7 +12,7 @@ const AccountsPage: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Astra Explorer</title>
 			</Head>
-			<Container></Container>
+			<Container>Account</Container>
 		</Layout>
 	)
 }

@@ -15,6 +15,7 @@ type LabelProps = {
 	type?: LabelTypes
 	icon?: boolean
 	text: string
+	titleText?: string
 	color?: string
 	radius?: string
 	backgroundShape?: LabelBackgroundTypes
@@ -25,6 +26,7 @@ type LabelProps = {
 export function Label({
 	type = 'unset',
 	text,
+	titleText,
 	color,
 	backgroundShape = 'unset',
 	icon,
@@ -34,23 +36,18 @@ export function Label({
 }: LabelProps) {
 	return (
 		<span
-			className={clsx(
-				'label',
-				font || 'money-sm money',
-				padding || 'padding-left-xs padding-right-xs',
-				radius || 'radius-sm',
-				{
-					// color
-					'alert-color-error ': type === 'error',
-					'alert-color-success': type === 'success',
-					[color]: type === 'unset',
-					// background
-					'bg-error': type === 'error' && backgroundShape !== 'unset',
-					'bg-success': type === 'success' && backgroundShape !== 'unset',
-					'contrast-bg-color-10': type === 'unset' && backgroundShape === 'rectangle',
-					'pointer contrast-color-70': backgroundShape === 'specialShape'
-				}
-			)}
+			className={clsx('label', font || 'money-sm money', padding || 'padding-right-xs', radius || 'radius-sm', {
+				// color
+				'alert-color-error ': type === 'error',
+				'alert-color-success': type === 'success',
+				[color]: type === 'unset',
+				// background
+				'bg-error': type === 'error' && backgroundShape !== 'unset',
+				'bg-success': type === 'success' && backgroundShape !== 'unset',
+				'contrast-bg-color-10': type === 'unset' && backgroundShape === 'rectangle',
+				'pointer contrast-color-70': backgroundShape === 'specialShape',
+				'padding-left-xs': backgroundShape !== 'unset'
+			})}
 		>
 			{icon && (
 				<span
@@ -61,7 +58,7 @@ export function Label({
 					})}
 				/>
 			)}
-			{text}
+			<span title={titleText}>{text}</span>
 			<style jsx>{`
 				.label {
 					display: inline-flex;

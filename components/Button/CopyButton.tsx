@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-
+import styles from './style.module.scss'
 /***
  * @param textCopy text copy into clipboard
  * @param textTitle text show on screen
@@ -13,9 +13,11 @@ interface Props {
 	textTitle?: JSX.Element | string
 	onCopy?: Function
 	iconCopy?: boolean
+	textColor?: string
+	textClasses?: string
 }
 
-const CopyButton = ({ textCopy, textTitle, onCopy }: Props) => {
+const CopyButton = ({ textCopy, textTitle, onCopy, textColor, textClasses }: Props) => {
 	const [copied, setCopied] = useState(false)
 
 	useEffect(() => {
@@ -32,10 +34,10 @@ const CopyButton = ({ textCopy, textTitle, onCopy }: Props) => {
 				}
 			}}
 		>
-			<div className={`contrast-color-100`}>
-				{textTitle && <span className="">{textTitle}</span>}
+			<div className={clsx('block-hor-center', textColor || 'contrast-color-100')}>
+				{textTitle && <span className={clsx(styles.text, textClasses)}>{textTitle}</span>}
 				<span
-					className={clsx('padding-left-xs', {
+					className={clsx('padding-left-xs pointer', {
 						'copy-icon contrast-color-100': !copied,
 						'checked-icon alert-color-success': copied
 					})}

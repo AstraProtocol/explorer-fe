@@ -3,8 +3,10 @@ import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
-import { LinkMaker } from 'utils/helper'
+import Tag from 'components/Typography/Tag'
 import BackgroundCard from '../Background/BackgroundCard'
+import RawInput from './Components/RawInput'
+import Transfers from './Components/Transfers'
 import styles from './style.module.scss'
 
 export type Content = {
@@ -12,7 +14,7 @@ export type Content = {
 	value?: string | number
 	prefix?: string
 	suffix?: string
-	icon?: string
+	icon?: boolean
 	token?: string
 	type?: LabelTypes
 	backgroundType?: LabelBackgroundTypes
@@ -26,7 +28,7 @@ export type Content = {
 
 export type CardRowItem = {
 	label?: string
-	type: 'copy' | 'link-copy' | 'label' | 'link' | 'balance' | 'text' | 'time' | 'transfer'
+	type: 'copy' | 'link-copy' | 'label' | 'link' | 'balance' | 'text' | 'time' | 'transfer' | 'raw-input' | 'nonce'
 	contents: Content[]
 }
 
@@ -40,113 +42,90 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 		<BackgroundCard classes={`margin-bottom-md ${classes.join(' ')}`}>
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
 				{items.map(({ label, type, contents }) => (
-					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-md')}>
-						<div className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center')}>
+					<div key={label} className={clsx(styles.cardRow, 'row margin-bottom-sm')}>
+						<div
+							className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center padding-bottom-sm')}
+						>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
+							{type === 'nonce' && <Tag text={'Position'} />}
 						</div>
-						{(contents as Content[]).map(content => (
-							<div
-								key={content.value || new Date().getTime()}
-								className={clsx(styles.rightColumn, 'block-center margin-right-sm')}
-							>
-								{type === 'text' ? (
-									<span className="moeny money-sm contrast-color-100">{content.value}</span>
-								) : null}
-								{type === 'copy' ? (
-									<CopyButton
-										textCopy={content?.value as string}
-										textTitle={content?.value as string}
-									/>
-								) : null}
-								{type === 'link' ? (
-									<Typography.LinkText href={content.link || ''}>
-										{content.value as string}
-									</Typography.LinkText>
-								) : null}
-								{type === 'link-copy' ? (
-									<div className="block-center">
-										<Typography.LinkText href={content.link || ''}>
+						<div
+							className={clsx(
+								styles.rightColumn,
+								'col-10',
+								'block-ver-center margin-right-sm padding-bottom-sm',
+								'border border-bottom-base'
+							)}
+						>
+							{(contents as Content[]).map(content => (
+								<div key={content.value}>
+									{type === 'nonce' ? (
+										<div className="block-ver-center money money-sm contrast-color-70">
+											{content.value}
+											<Tag text={content.suffix} />
+										</div>
+									) : null}
+									{type === 'text' ? (
+										<span className="money money-sm contrast-color-100">
+											{content.value} {content.suffix && content.suffix}
+										</span>
+									) : null}
+									{type === 'copy' ? (
+										<CopyButton
+											textCopy={content?.value as string}
+											textTitle={content?.value as string}
+										/>
+									) : null}
+									{type === 'link' ? (
+										<Typography.LinkText
+											href={(content.link as string) || ''}
+											fontType="Titi"
+											fontSize="text-500"
+										>
 											{content.value as string}
 										</Typography.LinkText>
-										<CopyButton textCopy={content.link as string} />
-									</div>
-								) : null}
-								{type === 'label' ? (
-									<div className="block-center">
-										<Typography.Label
-											text={content.value as string}
-											icon
-											type={content.type as LabelTypes}
-											backgroundShape={content.backgroundType as LabelBackgroundTypes}
-										/>
-									</div>
-								) : null}
-								{type === 'balance' ? (
-									<div className="block-center">
-										<TypographyUI.Balance
-											icon={<CryptoIcon name={'asa'} />}
-											value={content.value}
-											currency={content.token}
-											size="sm"
-										/>
-									</div>
-								) : null}
-								{type === 'time' ? (
-									<div className="block-center">
-										<Typography.Time time={content.value} confirmedWithin={content.suffix} />
-									</div>
-								) : null}
-								{type === 'transfer' ? (
-									<div className="block-center">
-										<span
-											className={clsx(
-												styles.smallCard,
-												'radius-sm block-center',
-												'contrast-color-100',
-												'padding-left-sm padding-right-sm padding-top-xs padding-bottom-xs',
-												'margin-right-md'
-											)}
-										>
-											<span className="padding-right-xs">From</span>
-											<Typography.LinkText href={LinkMaker.address(content?.transfer?.from)}>
-												{content?.transfer?.from}
+									) : null}
+									{type === 'link-copy' ? (
+										<div className="block-center">
+											<Typography.LinkText href={content.link || ''}>
+												{content.value as string}
 											</Typography.LinkText>
-											<CopyButton textCopy={content?.transfer?.from} />
-										</span>
-										<span
-											className={clsx(
-												styles.smallCard,
-												'radius-sm block-center',
-												'contrast-color-100',
-												'padding-left-sm padding-right-sm padding-top-xs padding-bottom-xs',
-												'margin-right-md'
-											)}
-										>
-											<span className="padding-right-xs">To</span>
-											<Typography.LinkText href={LinkMaker.address(content?.transfer?.to)}>
-												{content?.transfer?.to}
-											</Typography.LinkText>
-											<CopyButton textCopy={content?.transfer?.to} />
-										</span>
-										<span
-											className={clsx(
-												styles.smallCard,
-												'radius-sm block-center',
-												'contrast-color-100',
-												'padding-left-sm padding-right-sm padding-top-xs padding-bottom-xs',
-												'margin-right-md'
-											)}
-										>
-											<span className="padding-right-xs">For</span>
-											<span className="padding-right-xs">{content?.transfer.value}</span>
-											<Typography.LinkText href={LinkMaker.address(content?.transfer?.to)}>
-												{content?.transfer?.token}
-											</Typography.LinkText>
-										</span>
-									</div>
-								) : null}
-							</div>
-						))}
+											<CopyButton textCopy={content.link as string} />
+										</div>
+									) : null}
+									{type === 'label' ? (
+										<div className="block-center margin-right-md">
+											<Typography.Label
+												text={content.value as string}
+												icon={content.icon}
+												type={content.type as LabelTypes}
+												backgroundShape={content.backgroundType as LabelBackgroundTypes}
+											/>
+										</div>
+									) : null}
+									{type === 'balance' ? (
+										<div className="block-center">
+											<TypographyUI.Balance
+												icon={<CryptoIcon name={'asa'} />}
+												value={content.value}
+												currency={content.suffix}
+												size="sm"
+											/>
+										</div>
+									) : null}
+									{type === 'time' ? (
+										<div className="block-center">
+											<Typography.Time
+												time={content.value}
+												confirmedWithin={content.suffix as string}
+											/>
+										</div>
+									) : null}
+									{type === 'transfer' ? <Transfers content={content} /> : null}
+									{type === 'raw-input' ? <RawInput text={content.value as string} /> : null}
+								</div>
+							))}
+						</div>
 					</div>
 				))}
 			</div>

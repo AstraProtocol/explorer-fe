@@ -28,7 +28,7 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
  * @param local
  * @returns
  */
-export const dateFormat = (local = 'vi') => {
+export const dateFormat = (local = 'en') => {
 	return local === 'vi' ? process.env.NEXT_PUBLIC_DATE_FORMAT_VI : process.env.NEXT_PUBLIC_DATE_FROMAT_OTHER
 }
 
@@ -80,8 +80,32 @@ export class LinkMaker {
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static transaction(hash?: string) {
-		hash = hash ? `/${hash}` : ''
+	static transaction(hash?: string, query: string = '') {
+		hash = hash ? `/${hash}${query}` : ''
 		return `/tx${hash}`
 	}
 }
+
+/**
+ * sort element of array follow a sorted array value
+ * ex: items = [{a: 1}, {a: 3}, {b:5}]
+ *     attr = a
+ *     arr = [5,1,3]
+ * =====> [{a: 5}, {a: 1}, {b:3}]
+ * @param items array items
+ * @param attr  attribute of one item of items
+ * @param arr array value of attr need sort
+ * @returns
+ */
+export const sortArrayFollowValue = (items: any[], attr: string, arr: string[]) => {
+	const newItems = []
+	for (let value of arr) {
+		const item = items.find(item => item[attr] === value)
+		if (item) {
+			newItems.push(item)
+		}
+	}
+	return newItems
+}
+
+export const upperCaseFirstLetterOfWord = (text: string) => text?.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase())

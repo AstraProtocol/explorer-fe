@@ -12,10 +12,11 @@ import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
 	const { fullPageData } = useTransaction()
+
 	return (
 		<Layout>
 			<Head>
-				<title>Block</title>
+				<title>Transactions | {process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
 			<Search />
 			<Container>
@@ -23,12 +24,12 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 				<RowTitle
 					classes="padding-left-lg padding-right-lg"
 					columns={[
-						{ title: 'Hash', col: 'col-5' },
+						{ title: 'Hash', col: 'col-4' },
 						{ title: 'Type', col: 'col-2' },
-						{ title: 'Block', col: 'col-2' },
-						{ title: 'Amount', col: 'col-2' },
+						{ title: 'Block', col: 'col-2 padding-left-2xs' },
+						{ title: 'Amount', col: 'col-2 padding-left-2xs' },
 						{ title: 'Time', col: 'col-1' },
-						{ title: 'Status', col: 'col-1' }
+						{ title: 'Status', col: 'col-1 padding-left-md gutter-left' }
 					]}
 				/>
 				<div>
@@ -36,24 +37,28 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						<RowLoader row={12} />
 					) : (
 						<div>
-							{fullPageData?.map(item => (
-								<TransactionRow
-									key={item.hash}
-									blockNumber={item.blockHeight}
-									updatedAt={item.blockTime}
-									fee={item.fee[0].amount}
-									feeToken={item.fee[0].denom}
-									status={item.success}
-									hash={item.hash}
-									from={''}
-									to={''}
-									value={100000.93841029348}
-									valueToken="asa"
-									labelStatus="Approve"
-									type="Contract Call"
-									newBlock={item.newTransaction}
-								/>
-							))}
+							{fullPageData?.map(item => {
+								return (
+									<TransactionRow
+										key={item.hash}
+										blockNumber={item.blockHeight}
+										updatedAt={item.blockTime}
+										fee={item?.fee[0]?.amount}
+										feeToken={item?.fee[0]?.denom}
+										status={item.success}
+										hash={item.hash}
+										from={''}
+										to={''}
+										value={undefined}
+										valueToken="asa"
+										// labelStatus="Approve"
+										type={item?.messages[0]?.type.split('.').slice(-1).join('')}
+										newBlock={item.newTransaction}
+										transactionType={item?.messages[0]?.type}
+										height="auto"
+									/>
+								)
+							})}
 						</div>
 					)}
 				</div>

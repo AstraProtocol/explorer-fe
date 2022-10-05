@@ -2,7 +2,7 @@ import { sha256 } from '@cosmjs/crypto'
 import { fromBase64, fromBech32, fromHex, toHex } from '@cosmjs/encoding'
 import RIPEMD160 from 'ripemd160'
 
-export function consensusPubkeyToHexAddress(consensusPubkey) {
+export function consensusPubkeyToHexAddress(consensusPubkey): string {
 	let raw = null
 	if (typeof consensusPubkey === 'object') {
 		if (consensusPubkey.type === 'tendermint/PubKeySecp256k1') {
@@ -20,7 +20,7 @@ export function consensusPubkeyToHexAddress(consensusPubkey) {
 	return address
 }
 
-export function getStakingValidatorByHex(hex) {
+export function getStakingValidatorByHex(hex): Proposer | string {
 	const locals = localStorage.getItem(`validators`)
 	if (locals) {
 		const val = JSON.parse(locals).find(
@@ -31,14 +31,14 @@ export function getStakingValidatorByHex(hex) {
 				}) === hex
 		)
 		if (val) {
-			return val
+			return val as Proposer
 		}
 	}
 	// return abbr(hex)
 	return hex
 }
 
-export function abbr(string, length = 6, suffix = '...') {
+export function abbr(string, length = 6, suffix = '...'): string {
 	if (string && string.length > length) {
 		return `${string.substring(0, length)}${suffix}`
 	}

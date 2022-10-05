@@ -2,6 +2,7 @@ import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Logo from 'components/Logo'
+import Image from 'next/image'
 import useSWR from 'swr'
 import ChainStatistics from './ChainStatistics'
 import OverviewChart from './Chart'
@@ -46,6 +47,12 @@ const Overview = () => {
 
 	return (
 		<div className={clsx(styles.overview)}>
+			<div className={styles.moon1}>
+				<Image src={'/images/background/moon1.png'} layout="fill" />
+			</div>
+			<div className={styles.moon2}>
+				<Image src={'/images/background/moon2.png'} layout="fill" />
+			</div>
 			<BackgroundCard>
 				<div className="row md-wrap">
 					<div className={clsx('col col-5', styles.leftBlock)}>

@@ -5,3 +5,7 @@
 	transform: translateY(0);
 	transition: transform 1000ms;
 }
+
+.dark--mode {
+	background: radial-gradient(106.61% 108.18% at 0% 100%, rgba(82, 120, 255, 0.2) 0%, rgba(0, 0, 0, 0) 100%), #08080a;
+}

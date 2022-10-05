@@ -1,5 +1,7 @@
 .rowBrief {
 	display: flex;
+	min-height: 88.9px;
+	align-items: center;
 	.iconCetner {
 		display: flex;
 		align-items: center;
@@ -11,5 +13,23 @@
 			justify-content: space-between;
 			width: 100%;
 		}
+	}
+}
+
+.rowHeight {
+	display: flex;
+	min-height: 70px;
+}
+
+.borderWidthPadding {
+	&::after {
+		content: '';
+		height: 1px;
+		width: calc(100% - 56px);
+		background-color: var(--border-color);
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 }
