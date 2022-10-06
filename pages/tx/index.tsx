@@ -1,4 +1,4 @@
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
@@ -12,8 +12,7 @@ import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
-	const { fullPageData } = useTransaction()
-
+	const { fullPageData, pagination, changePage } = useTransaction()
 	return (
 		<Layout>
 			<Head>
@@ -21,7 +20,19 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Head>
 			<Search />
 			<Container>
-				<Breadcumbs items={[{ label: 'Validated Transactions' }]} />
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div>
+						<Breadcumbs items={[{ label: 'Validated Transactions' }]} />
+					</div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
+				</div>
 				<RowTitle
 					classes="padding-left-lg padding-right-lg"
 					columns={[

@@ -114,3 +114,11 @@ export const sortArrayFollowValue = (items: any[], attr: string, arr: string[]) 
  * @returns
  */
 export const upperCaseFirstLetterOfWord = (text: string) => text?.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase())
+
+export const convertURLQueryToObject = (path: string): { [key: string]: string } => {
+	const query = path.split('?')[1]
+	if (!query) {
+		return {}
+	}
+	return JSON.parse('{"' + decodeURI(query).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+}

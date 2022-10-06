@@ -32,3 +32,7 @@ export const evmConvertTokenTransferToTransactionRow = (
 
 	return rows
 }
+
+export const isEmptyRawInput = (input: string) => {
+	return !input || input.trim().length === 0 || input.toLowerCase() === '0x'
+}

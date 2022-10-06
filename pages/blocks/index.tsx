@@ -1,5 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
@@ -13,7 +13,7 @@ import useBlock from 'views/block/hook/useBlock'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
-	const { fullPageData, getPropserAddress } = useBlock()
+	const { fullPageData, getPropserAddress, pagination, changePage } = useBlock()
 	return (
 		<Layout>
 			<Head>
@@ -21,7 +21,19 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Head>
 			<Search />
 			<Container>
-				<Breadcumbs items={[{ label: 'Blocks' }]} />
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div>
+						<Breadcumbs items={[{ label: 'Blocks' }]} />
+					</div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
+				</div>
 				<RowTitle
 					columns={[
 						{ title: 'Block ID', col: 'padding-left-lg col-2 gutter-right' },

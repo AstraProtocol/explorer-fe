@@ -1,6 +1,7 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
 import Empty from 'components/Typography/Empty'
+import { isEmptyRawInput } from 'utils/evm'
 import useInternalTransactions from './hook/useInternalTransactions'
 import TransactionRow, { TransactionRowProps } from './TransactionRow'
 
@@ -28,7 +29,7 @@ const Transactions = ({ rows }: { rows: TransactionRowProps[] }) => {
 	)
 }
 export default function TransactionTabs({ transactions, evmHash, cosmosHash, type, input }: TransactionTabsProps) {
-	const hashInternalTransactions = input && input.length > 0 && type === 'evm'
+	const hashInternalTransactions = isEmptyRawInput(input) && type === 'evm'
 	const { rows: internalTransactionRows } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})

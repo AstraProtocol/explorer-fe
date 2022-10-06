@@ -3,7 +3,7 @@ import { cosmosApi, evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import { caculateCosmosAmount, convertMessageToTransfer, getCosmosType } from 'utils/cosmos'
-import { evmConvertTokenTransferToTransactionRow, evmTransactionType } from 'utils/evm'
+import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
 import { TransactionRowProps } from './TransactionRow'
 
 export interface TransactionQuery {
@@ -79,7 +79,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		// data.priorityFeePerGas = undefined
 		// data.gasUsedByTransaction = undefined
 		data.nonce = `${result.nonce}`
-		data.rawInput = result.input
+		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 		data.tokenTransfers = result?.tokenTransfers
 		data.index = result.index
 		data.typeOfTransfer = evmTransactionType(result.type)
@@ -112,7 +112,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		// data.priorityFeePerGas = undefined
 		// data.gasUsedByTransaction = undefined
 		// data.nonce = undefined
-		data.rawInput = result.input
+		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 		// data.tokenTransfers = result?.tokenTransfers
 	}
 
