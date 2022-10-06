@@ -1,48 +1,16 @@
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
+import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
-import { ellipseBetweenText, LinkMaker, sortArrayFollowValue } from 'utils/helper'
-
-export interface TransactionQuery {
-	tx: string
-	type?: string
-	evmHash?: string
-}
-export interface TransactionDetail {
-	evmHash?: string
-	cosmosHash?: string
-	result?: string
-	status?: string
-	blockHeight?: string
-	time?: string | number
-	from?: string
-	to?: string
-	value?: string
-	valueToken?: string
-	fee?: string
-	feeToken?: string
-	gasPrice?: string
-	type?: string
-	gasLimit?: string
-	gasUsed?: string
-	maxFeePerGas?: string
-	maxPriorityFeePerGas?: string
-	priorityFeePerGas?: string
-	gasUsedByTransaction?: string
-	nonce?: string
-	rawInput?: string
-	tokenTransfers?: EVMTransferItem[]
-	index?: number
-	nonceText?: string
-}
+import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
+import { TransactionDetail } from '../utils'
 
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
 	const astraPrice = formatNumber(astraSummary?.last || 0, 0)
-	console.log(data)
 	const _convertRawDataToCardData = useCallback(
 		data => {
 			const keys = Object.keys(data)
@@ -130,19 +98,22 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						})
 						break
 					case 'value':
-						let money = formatNumber(Number(astraPrice) * parseFloat(data[key]), 5)
+						let money = Number(astraPrice) * parseFloat(data[key])
+						let moneyFormat = formatCurrencyValue(money)
 						items.push({
 							label: 'Value:',
 							type: 'balance',
-							contents: [{ value: data[key], suffix: `(${money} VND)` }]
+							contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 						})
 						break
 					case 'fee':
-						money = formatNumber(Number(astraPrice) * parseFloat(data[key]), 5)
+						money = Number(astraPrice) * parseFloat(data[key])
+						moneyFormat = formatCurrencyValue(money)
+
 						items.push({
 							label: 'Transaction Fee:',
 							type: 'balance',
-							contents: [{ value: data[key], suffix: `(${money} VND)` }]
+							contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 						})
 						break
 					case 'gasPrice':
@@ -167,7 +138,6 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						})
 						break
 					case 'tokenTransfers':
-						console.log('asdfadsf')
 						const transfers = data[key] as EVMTransferItem[]
 						for (let transfer of transfers) {
 							items.push({
@@ -178,14 +148,13 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 										transfer: {
 											from: ellipseBetweenText(transfer.fromAddress, 6, 6),
 											to: ellipseBetweenText(transfer.fromAddress, 6, 6),
-											value: Number(transfer.amount),
+											value: Number(formatEther(transfer.amount)),
 											token: transfer.tokenSymbol
 										}
 									}
 								]
 							})
 						}
-
 						break
 					case 'nonce':
 						items.push({
@@ -194,26 +163,43 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							contents: [{ value: data[key], suffix: data.index }]
 						})
 						break
+					case 'typeOfTransfer':
+						items.push({
+							label: 'Transaction Type:',
+							type: 'text',
+							contents: [{ value: data[key] }]
+						})
+						break
 				}
 			}
-			return [
-				sortArrayFollowValue(items, 'label', [
-					'Transaction Hash:',
-					'Transaction Cosmos:',
-					'Result:',
-					'Status:',
-					'Block:',
-					'Timestamp:',
-					'From:',
-					'Interacted With (To):',
-					'Tokens Transferred:',
-					'Value:',
-					'Transaction Fee:',
-					'Gas Price:',
-					'Transaction Type:'
-				]),
-				sortArrayFollowValue(items, 'label', ['Gas Limit:', 'Nonce', 'Raw Input:'])
-			]
+			const mainItems = sortArrayFollowValue(items, 'label', [
+				'Transaction Hash:',
+				'Transaction Cosmos:',
+				'Result:',
+				'Status:',
+				'Block:',
+				'Timestamp:',
+				'From:',
+				'Interacted With (To):',
+				'Tokens Transferred:',
+				'Value:',
+				'Transaction Fee:',
+				'Gas Price:',
+				'Transaction Type:'
+			])
+			//remove label of token transfer
+			let hashTransfer = false
+			mainItems.map(item => {
+				if (item.label === 'Tokens Transferred:') {
+					if (!hashTransfer) {
+						hashTransfer = true
+					} else {
+						item.label = ''
+					}
+				}
+			})
+			const moreItems = sortArrayFollowValue(items, 'label', ['Gas Limit:', 'Nonce', 'Raw Input:'])
+			return [mainItems, moreItems]
 		},
 		[data, astraSummary]
 	)

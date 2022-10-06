@@ -10,6 +10,7 @@ import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
+import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
@@ -112,26 +113,29 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 										<Empty />
 									) : (
 										<>
-											{transactions?.map((item, index) => (
-												<TransactionRow
-													key={item.hash}
-													blockNumber={item.blockHeight}
-													updatedAt={item.blockTime}
-													fee={item?.fee[0]?.amount}
-													feeToken={item?.fee[0]?.denom}
-													status={item.success}
-													hash={item.hash}
-													from={''}
-													to={''}
-													value={undefined}
-													valueToken="asa"
-													type={item?.messages[0]?.type.split('.').slice(-1).join('')}
-													newBlock={item.newTransaction}
-													transactionType={item?.messages[0]?.type}
-													style="inject"
-													order={index === transactions.length - 1 ? 'end' : ''}
-												/>
-											))}
+											{transactions?.map((item, index) => {
+												const fee = caculateCosmosAmount(item.fee)
+												return (
+													<TransactionRow
+														key={item.hash}
+														blockNumber={item.blockHeight}
+														updatedAt={item.blockTime}
+														fee={fee.amount}
+														feeToken={fee.denom}
+														status={item.success}
+														hash={item.hash}
+														from={''}
+														to={''}
+														value={undefined}
+														valueToken="asa"
+														type={getCosmosType(item?.messages[0]?.type)}
+														newBlock={item.newTransaction}
+														transactionType={item?.messages[0]?.type}
+														style="inject"
+														order={index === transactions.length - 1 ? 'end' : ''}
+													/>
+												)
+											})}
 										</>
 									)}
 								</div>

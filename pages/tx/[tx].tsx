@@ -8,9 +8,14 @@ import { pickBy } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
-import useConvertData, { TransactionDetail, TransactionQuery } from 'views/transactions/hook/useConvertData'
+import useConvertData from 'views/transactions/hook/useConvertData'
 import TransactionTabs from 'views/transactions/TransactionTabs'
-import { cosmsTransactionDetail, evmTransactionDetail } from 'views/transactions/utils'
+import {
+	cosmsTransactionDetail,
+	evmTransactionDetail,
+	TransactionDetail,
+	TransactionQuery
+} from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 import { TransacionTypeEnum } from '../../utils/constants'
 
@@ -22,7 +27,6 @@ type Props = {
 
 const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: Props) => {
 	const [items, moreItems] = useConvertData({ data })
-	console.log(evmHash, cosmosHash)
 	return (
 		<Layout>
 			<Head>Transaction | {process.env.NEXT_PUBLIC_TITLE}</Head>
@@ -34,11 +38,17 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 					]}
 				/>
 				<div className="margin-top-2xl margin-bottom-md">
-					<Typography.PageTitle>Page Title</Typography.PageTitle>
+					<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
 				</div>
 				<CardInfo items={items} classes={['margin-top-sm']} />
 				{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
-				<TransactionTabs evmHash={evmHash} cosmosHash={cosmosHash} />
+				<TransactionTabs
+					evmHash={evmHash}
+					cosmosHash={cosmosHash}
+					type={data.type}
+					transactions={data?.tabTokenTransfers}
+					input={data?.rawInput}
+				/>
 			</Container>
 		</Layout>
 	)

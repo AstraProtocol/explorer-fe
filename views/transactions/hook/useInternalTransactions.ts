@@ -21,8 +21,9 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),
 					updatedAt: Number(internalItem?.timeStamp) * 1000,
-					value: Number(formatEther(internalItem?.value)),
+					value: formatEther(internalItem?.value),
 					valueToken: 'asa',
+					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,
 					type: upperCaseFirstLetterOfWord(internalItem?.callType),
 					status: internalItem?.errCode === '',

@@ -96,6 +96,15 @@ interface CosmosTransactionContent {
 	version: number
 }
 
+interface CosmosAmountItem {
+	denom: string
+	amount: string
+}
+
+interface TransactionMessage {
+	type: TransacionTypeEnum
+	content: EVMTransactionContent | CosmosTransactionContent
+}
 interface TransactionItem {
 	newTransaction?: boolean
 	blockHeight: number
@@ -106,20 +115,14 @@ interface TransactionItem {
 	success: boolean
 	code: number
 	log: string
-	fee: {
-		denom: string
-		amount: string
-	}[]
+	fee: CosmosAmountItem[]
 	feePayer: string
 	feeGranter: string
 	gasWanted: number
 	gasUsed: number
 	memo: string
 	timeoutHeight: number
-	messages: {
-		type: TransacionTypeEnum
-		content: EVMTransactionContent | CosmosTransactionContent
-	}[]
+	messages: TransactionMessage[]
 	signers: Signer[]
 }
 
@@ -328,7 +331,7 @@ interface InternalTransactionReponse {
 	status: string
 }
 
-interface CosmosTransactionDetailResponse {
+interface EvmTransactionDetailFromCosmosHashResponse {
 	message: string
 	result: {
 		blockHash: string
