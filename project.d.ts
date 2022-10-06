@@ -367,3 +367,21 @@ interface CosmosTransactionDetailResponse {
 	}
 	status: string
 }
+
+interface Token {
+	cataloged: boolean
+	contract_address_hash: string
+	decimals: string
+	holder_count: number
+	name: string
+	skip_metadata: any
+	symbol: string
+	total_supply: string
+	type: string
+}
+
+interface TokenResponse {
+	message: string
+	result: Token[]
+	status: string
+}

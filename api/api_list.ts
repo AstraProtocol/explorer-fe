@@ -5,6 +5,9 @@ const API_LIST = {
 	BLOCKS: '/blocks/',
 	TRANSACTION_OF_BLOCK: '/blocks/:id/transactions?pagination=offset&page=1&limit=20&order=height.desc',
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
+	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
+	ALL_HOLDERS:
+		'evm_/api/v1?module=token&action=getTokenHolders&contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20', // &page=1&offset=20
 
 	ALL_TRANSACTIONS: '/transactions',
 	TRANSACTIONS: '/transactions/',

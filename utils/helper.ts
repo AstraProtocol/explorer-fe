@@ -77,12 +77,22 @@ export class LinkMaker {
 
 	/**
 	 *
-	 * @param blockNumber empty -> block homepage
+	 * @param hash
+	 * @param query
 	 * @returns
 	 */
 	static transaction(hash?: string, query: string = '') {
 		hash = hash ? `/${hash}${query}` : ''
 		return `/tx${hash}`
+	}
+
+	/**
+	 *
+	 * @param token
+	 * @returns
+	 */
+	static token(token: string) {
+		return `/token/${token}`
 	}
 }
 
