@@ -12,8 +12,9 @@ export type TransactionRowProps = {
 	style?: 'normal' | 'inject'
 	blockNumber: number
 	updatedAt: number | string
-	value?: number
-	valueToken: CryptoIconNames
+	value?: string
+	valueCurrency?: string
+	valueToken?: CryptoIconNames
 	newBlock?: boolean
 	hash: string
 	type?: string
@@ -32,6 +33,7 @@ export default function TransactionRow({
 	blockNumber,
 	updatedAt,
 	value,
+	valueCurrency,
 	valueToken,
 	newBlock,
 	hash,
@@ -131,7 +133,8 @@ export default function TransactionRow({
 									<TypographyLib.Balance
 										size="xs"
 										value={value}
-										icon={<CryptoIcon name={valueToken} size="sm" />}
+										currency={valueCurrency?.toUpperCase()}
+										icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
 									/>
 									<br />
 								</>

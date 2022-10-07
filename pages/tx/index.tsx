@@ -1,18 +1,29 @@
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
 import RowTitle from 'components/Typography/RowTitle'
+import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
 import useTransaction from 'views/transactions/hook/useTransaction'
 import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
-	const { fullPageData } = useTransaction()
-
+	const [loaderTime, setLoaderTime] = useState(false)
+	const { fullPageData, pagination, changePage } = useTransaction()
+	//loader display at least 1 second
+	useEffect(() => {
+		if (isEmpty(fullPageData)) {
+			setLoaderTime(true) // time for loader dispaly
+			setTimeout(() => {
+				setLoaderTime(false) // endtime
+			}, 500)
+		}
+	}, [fullPageData])
 	return (
 		<Layout>
 			<Head>
@@ -20,7 +31,19 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Head>
 			<Search />
 			<Container>
-				<Breadcumbs items={[{ label: 'Validated Transactions' }]} />
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div>
+						<Breadcumbs items={[{ label: 'Validated Transactions' }]} />
+					</div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
+				</div>
 				<RowTitle
 					classes="padding-left-lg padding-right-lg"
 					columns={[
@@ -33,18 +56,19 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					]}
 				/>
 				<div>
-					{!fullPageData || fullPageData.length === 0 ? (
+					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (
 						<div>
 							{fullPageData?.map(item => {
+								const fee = caculateCosmosAmount(item.fee)
 								return (
 									<TransactionRow
 										key={item.hash}
 										blockNumber={item.blockHeight}
 										updatedAt={item.blockTime}
-										fee={item?.fee[0]?.amount}
-										feeToken={item?.fee[0]?.denom}
+										fee={fee.amount}
+										feeToken={fee.denom}
 										status={item.success}
 										hash={item.hash}
 										from={''}
@@ -52,7 +76,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										value={undefined}
 										valueToken="asa"
 										// labelStatus="Approve"
-										type={item?.messages[0]?.type.split('.').slice(-1).join('')}
+										type={getCosmosType(item?.messages[0]?.type)}
 										newBlock={item.newTransaction}
 										transactionType={item?.messages[0]?.type}
 										height="auto"
@@ -61,6 +85,17 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 							})}
 						</div>
 					)}
+				</div>
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div></div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
 				</div>
 			</Container>
 		</Layout>

@@ -4,6 +4,7 @@ import RowShowAnimation from 'components/Animation/RowShowAnimation'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
+import { TransacionTypeEnum } from 'utils/constants'
 import { ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 

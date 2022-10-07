@@ -2,6 +2,7 @@ import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import useSWR from 'swr'
+import { evmInternalTransactionType } from 'utils/evm'
 import { upperCaseFirstLetterOfWord } from 'utils/helper'
 import { TransactionRowProps } from '../TransactionRow'
 
@@ -21,10 +22,11 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),
 					updatedAt: Number(internalItem?.timeStamp) * 1000,
-					value: Number(formatEther(internalItem?.value)),
+					value: formatEther(internalItem?.value),
 					valueToken: 'asa',
+					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,
-					type: upperCaseFirstLetterOfWord(internalItem?.callType),
+					type: upperCaseFirstLetterOfWord(evmInternalTransactionType(internalItem?.callType)),
 					status: internalItem?.errCode === '',
 					from: internalItem?.from,
 					to: internalItem?.to

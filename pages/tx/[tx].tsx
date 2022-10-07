@@ -8,9 +8,14 @@ import { pickBy } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
-import useConvertData, { TransactionDetail, TransactionQuery } from 'views/transactions/hook/useConvertData'
+import useConvertData from 'views/transactions/hook/useConvertData'
 import TransactionTabs from 'views/transactions/TransactionTabs'
-import { cosmsTransactionDetail, evmTransactionDetail } from 'views/transactions/utils'
+import {
+	cosmsTransactionDetail,
+	evmTransactionDetail,
+	TransactionDetail,
+	TransactionQuery
+} from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 import { TransacionTypeEnum } from '../../utils/constants'
 
@@ -22,23 +27,30 @@ type Props = {
 
 const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: Props) => {
 	const [items, moreItems] = useConvertData({ data })
-	console.log(evmHash, cosmosHash)
 	return (
 		<Layout>
-			<Head>Transaction | {process.env.NEXT_PUBLIC_TITLE}</Head>
+			<Head>
+				<title>Transaction | {process.env.NEXT_PUBLIC_TITLE}</title>
+			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
 						{ label: 'Validated Transactions', link: LinkMaker.transaction() },
-						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
+						{ label: ellipseBetweenText(cosmosHash, 6, 6) }
 					]}
 				/>
 				<div className="margin-top-2xl margin-bottom-md">
-					<Typography.PageTitle>Page Title</Typography.PageTitle>
+					<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
 				</div>
 				<CardInfo items={items} classes={['margin-top-sm']} />
 				{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
-				<TransactionTabs evmHash={evmHash} cosmosHash={cosmosHash} />
+				<TransactionTabs
+					evmHash={evmHash}
+					cosmosHash={cosmosHash}
+					type={data.type}
+					transactions={data?.tabTokenTransfers}
+					input={data?.rawInput}
+				/>
 			</Container>
 		</Layout>
 	)
@@ -73,10 +85,10 @@ export async function getServerSideProps({ query }) {
 			}
 		}
 		//remove empty attribute
-		data = pickBy(data, item => item !== undefined)
+		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e) {
-		console.log('error api')
+		console.log('error api', `${API_LIST.TRANSACTIONS}${tx}`, e)
 		return {
 			redirect: {
 				destination: '/404',

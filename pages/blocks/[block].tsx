@@ -10,8 +10,10 @@ import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
+import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
+import { CardInfoLabels } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -28,7 +30,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 			switch (key) {
 				case 'blockHash':
 					items.push({
-						label: 'Hash:',
+						label: CardInfoLabels.hash,
 						type: 'copy',
 						contents: [{ value: data[key] }]
 					})
@@ -38,7 +40,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
 					const address = astraToEth(proposer.initialDelegatorAddress)
 					items.push({
-						label: 'Interacted With (To):',
+						label: CardInfoLabels.To,
 						type: 'link-copy',
 						contents: [
 							{
@@ -50,26 +52,26 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 					break
 				case 'blockHeight':
 					items.push({
-						label: 'Block Height:',
+						label: CardInfoLabels.Block_Height,
 						type: 'text',
 						contents: [{ value: data[key] }]
 					})
 					items.push({
-						label: 'Block:',
+						label: CardInfoLabels.Block,
 						type: 'link',
 						contents: [{ value: data[key], link: LinkMaker.block(data[key]) }]
 					})
 					break
 				case 'blockTime':
 					items.push({
-						label: 'Timestamp',
+						label: CardInfoLabels.Timestamp,
 						type: 'time',
 						contents: [{ value: data[key], type: data[key], suffix: '' }]
 					})
 					break
 				case 'transactionCount':
 					items.push({
-						label: 'Transaction:',
+						label: CardInfoLabels.Transaction,
 						type: 'label',
 						contents: [
 							{
@@ -84,12 +86,12 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 			}
 		}
 		return sortArrayFollowValue(items, 'label', [
-			'Block Height:',
-			'Timestamp:',
-			'Transaction:',
-			'Block:',
-			'Hash:',
-			'Interacted With (To):'
+			CardInfoLabels.Block_Height,
+			CardInfoLabels.Timestamp,
+			CardInfoLabels.Transaction,
+			CardInfoLabels.Block,
+			CardInfoLabels.hash,
+			CardInfoLabels.To
 		])
 	}
 
@@ -97,7 +99,9 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 	return (
 		<Layout>
 			<Head>
-				BLock {blockHeight} | {process.env.NEXT_PUBLIC_TITLE}
+				<title>
+					BLock {blockHeight} | {process.env.NEXT_PUBLIC_TITLE}
+				</title>
 			</Head>
 			<Container>
 				<Breadcumbs items={[{ label: 'Blocks', link: LinkMaker.block() }, { label: '#' + blockHeight }]} />
@@ -112,26 +116,29 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 										<Empty />
 									) : (
 										<>
-											{transactions?.map((item, index) => (
-												<TransactionRow
-													key={item.hash}
-													blockNumber={item.blockHeight}
-													updatedAt={item.blockTime}
-													fee={item?.fee[0]?.amount}
-													feeToken={item?.fee[0]?.denom}
-													status={item.success}
-													hash={item.hash}
-													from={''}
-													to={''}
-													value={undefined}
-													valueToken="asa"
-													type={item?.messages[0]?.type.split('.').slice(-1).join('')}
-													newBlock={item.newTransaction}
-													transactionType={item?.messages[0]?.type}
-													style="inject"
-													order={index === transactions.length - 1 ? 'end' : ''}
-												/>
-											))}
+											{transactions?.map((item, index) => {
+												const fee = caculateCosmosAmount(item.fee)
+												return (
+													<TransactionRow
+														key={item.hash}
+														blockNumber={item.blockHeight}
+														updatedAt={item.blockTime}
+														fee={fee.amount}
+														feeToken={fee.denom}
+														status={item.success}
+														hash={item.hash}
+														from={''}
+														to={''}
+														value={undefined}
+														valueToken="asa"
+														type={getCosmosType(item?.messages[0]?.type)}
+														newBlock={item.newTransaction}
+														transactionType={item?.messages[0]?.type}
+														style="inject"
+														order={index === transactions.length - 1 ? 'end' : ''}
+													/>
+												)
+											})}
 										</>
 									)}
 								</div>
