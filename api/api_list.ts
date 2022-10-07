@@ -1,5 +1,5 @@
 const API_LIST = {
-	SEARCH: 'evm_/token-autocomplete',
+	SEARCH: '/search?keyword=',
 
 	ALL_BLOCKS: '/blocks',
 	BLOCKS: '/blocks/',

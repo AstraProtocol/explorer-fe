@@ -45,7 +45,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							]
 						})
 						break
-					case 'status':
+					case 'confirmations':
 						items.push({
 							label: 'Status:',
 							type: 'label',
@@ -219,12 +219,20 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							contents: [{ value: data[key] }]
 						})
 						break
+					case 'failLog':
+						items.push({
+							label: 'Fail reason:',
+							type: 'text',
+							contents: [{ value: data[key] }]
+						})
+						break
 				}
 			}
 			const mainItems = sortArrayFollowValue(items, 'label', [
 				'Transaction Hash:',
 				'Transaction Cosmos:',
 				'Result:',
+				'Fail reason:',
 				'Status:',
 				'Block:',
 				//msgvote

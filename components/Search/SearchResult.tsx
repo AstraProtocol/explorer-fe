@@ -1,16 +1,66 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import ResultView from './ResultView'
+import ResultView, { SearchResultViewItem } from './ResultView'
 import { SearchStatusEnum } from './SearchModal'
 import styles from './style.module.scss'
 
 type SearchResultProps = {
 	status: SearchStatusEnum
-	items?: SearchItemResponse[]
+	data?: SearchItemResponse
 	searchValue?: string
 }
 
-export default function SearchResult({ status, items, searchValue }: SearchResultProps) {
+export default function SearchResult({ status, data }: SearchResultProps) {
+	const _convertDataToView = (): SearchResultViewItem[] => {
+		if (!data) {
+			return []
+		}
+		const { blocks, accounts, transactions, validators } = data?.result
+		const items: SearchResultViewItem[] = []
+		if (blocks && blocks.length > 0) {
+			for (let item of blocks) {
+				items.push({
+					time: item.blockTime,
+					type: 'Block',
+					value: item.blockHash,
+					linkValue: `${item.blockHeight}`
+				})
+			}
+		}
+		// if (accounts && accounts.length > 0) {
+		// 	for (let item of blocks) {
+		// 		items.push({
+		// 			time: item.blockTime,
+		// 			type: 'Block',
+		// 			value: item.blockHash
+		// 		})
+		// 	}
+		// }
+		if (transactions && transactions.length > 0) {
+			for (let item of transactions) {
+				items.push({
+					time: item.blockTime,
+					type: 'Transaction',
+					value: item.hash,
+					linkValue: item.hash
+				})
+			}
+		}
+
+		if (validators && validators.length > 0) {
+			for (let item of validators) {
+				items.push({
+					status: item.status,
+					type: 'Validator',
+					value: item.operatorAddress,
+					linkValue: item.operatorAddress
+				})
+			}
+		}
+
+		return items
+	}
+	const items = _convertDataToView()
 	return (
 		<div className={styles.searchResult}>
 			{status === SearchStatusEnum.INPUTTING && (
@@ -33,7 +83,7 @@ export default function SearchResult({ status, items, searchValue }: SearchResul
 						{items.length} search result:
 					</div>
 					{items.map(item => (
-						<ResultView key={item.inserted_at} item={item} />
+						<ResultView key={item.value} item={item} />
 					))}
 				</div>
 			)}

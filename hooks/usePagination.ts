@@ -25,11 +25,12 @@ export default function usePagination(rootPath: string) {
 	const setPagination = ({ page, total }: CustomRouter) => {
 		let data: CustomRouter = { page, total }
 		data = pickBy<CustomRouter>(data, item => item !== undefined)
+
 		_setPagination({
 			..._pagination,
 			...data
 		})
-		if (page !== undefined) {
+		if (page !== undefined && page > 1) {
 			router.push(
 				{
 					pathname: rootPath,

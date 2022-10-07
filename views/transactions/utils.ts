@@ -52,6 +52,7 @@ export interface TransactionDetail {
 	tabTokenTransfers?: TransactionRowProps[]
 	index?: number
 	nonceText?: string
+	failLog?: string
 	//msvote
 	voter?: string
 	proposalId?: string
@@ -142,6 +143,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	data.confirmations = undefined
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
+	data.failLog = !result.success ? result.log : undefined
 	// data.from = result.from
 	// data.to = result.to
 	// data.tokenTransfer = []

@@ -4,16 +4,27 @@ import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
 import RowTitle from 'components/Typography/RowTitle'
+import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import BlockRow from 'views/block/BlockRow'
 import useBlock from 'views/block/hook/useBlock'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
+	const [loaderTime, setLoaderTime] = useState(false)
 	const { fullPageData, getPropserAddress, pagination, changePage } = useBlock()
+	//loader display at least 1 second
+	useEffect(() => {
+		if (isEmpty(fullPageData)) {
+			setLoaderTime(true) // time for loader dispaly
+			setTimeout(() => {
+				setLoaderTime(false) // endtime
+			}, 500)
+		}
+	}, [fullPageData])
 	return (
 		<Layout>
 			<Head>
@@ -43,7 +54,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					]}
 				/>
 				<div>
-					{!fullPageData || fullPageData.length === 0 ? (
+					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (
 						<div>
