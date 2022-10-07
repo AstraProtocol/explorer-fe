@@ -15,6 +15,10 @@ interface Pagination {
 	current_page: number
 	limit: number
 }
+interface TransactionDetailResponse {
+	result: TransactionItem
+	pagination: Pagination
+}
 
 interface MarketHistoryPrice {
 	closing_price: number

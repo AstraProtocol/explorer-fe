@@ -8,6 +8,7 @@ import { useAppSelector } from 'store/hooks'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import { CardInfoLabels, TransactionDetail } from '../utils'
 
+
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
 	const astraPrice = formatNumber(astraSummary?.last || 0, 0)
@@ -34,6 +35,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'result':
 						items.push({
 							label: CardInfoLabels.Result,
+
 							type: 'label',
 							contents: [
 								{
