@@ -3,6 +3,7 @@ import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi, evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
+import numeral from 'numeral'
 import { TransacionTypeEnum } from 'utils/constants'
 import { caculateCosmosAmount, convertMessageToTransfer, getCosmosType } from 'utils/cosmos'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
@@ -63,6 +64,41 @@ export interface TransactionDetail {
 	//MsgBeginRedelegate
 	validatorSrcAddress?: string
 	validatorDstAddress?: string
+	revertReason?: string
+}
+
+export enum CardInfoLabels {
+	Transaction_Hash = 'Transaction Hash:',
+	Transaction_Cosmos = 'Transaction Cosmos:',
+	Result = 'Result:',
+	Status = 'Status:',
+	Block = 'Block:',
+	From = 'From:',
+	To = 'Interacted With (To):',
+	Timestamp = 'Timestamp:',
+	Value = 'Value:',
+	Transaction_Fee = 'Transaction Fee:',
+	Gas_Price = 'Gas Price:',
+	Gas_Limit = 'Gas Limit:',
+	Raw_Input = 'Raw Input:',
+	Tokens_Transferred = 'Tokens Transferred:',
+	Nonce = 'Nonce',
+	Transaction_Type = 'Transaction Type:',
+	Voter = 'Voter:',
+	Proposal_Id = 'Proposal Id:',
+	Option = 'Option:',
+	Delegator_Address = 'Delegator Address:',
+	Validator_Address = 'Validator Address:',
+	Validator_Src_Address = 'Validator Src Address:',
+	Validator_Dst_Address = 'Validator Dst Address:',
+	Fail_Reason = 'Fail reason:',
+	Revert_Reason = 'Revert reason:',
+	Max_Fee_Gas = 'Max Fee/ Gas:',
+	Max_Priority_Fer_Gas = 'Max Priority Fee/ Gas:',
+	Gas_Used_by_Transaction = 'Gas Used by Transaction:',
+	hash = 'Hash:',
+	Block_Height = 'Block Height:',
+	Transaction = 'Transaction:'
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
@@ -87,14 +123,21 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
 		data.gasLimit = formatNumber(result.gasLimit, 0)
 		data.gasUsed = result.gasUsed
-		data.maxFeePerGas = result.maxFeePerGas
+		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
 		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
-		// data.priorityFeePerGas = undefined
-		// data.gasUsedByTransaction = undefined
+			? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
+			: undefined
+		data.gasUsedByTransaction = result.cumulativeGasUsed
+			? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
+					parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
+			  ).format('0.00%')}`
+			: undefined
 		data.nonce = `${result.nonce}`
 		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 		data.tokenTransfers = result?.tokenTransfers
 		data.index = result.index
+		data.failLog = result.error
+		data.revertReason = result.revertReason
 		data.typeOfTransfer = evmTransactionType(result.type)
 		data.tabTokenTransfers = evmConvertTokenTransferToTransactionRow(
 			result?.tokenTransfers,

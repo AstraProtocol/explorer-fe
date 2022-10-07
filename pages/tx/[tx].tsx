@@ -29,12 +29,14 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 	const [items, moreItems] = useConvertData({ data })
 	return (
 		<Layout>
-			<Head>Transaction | {process.env.NEXT_PUBLIC_TITLE}</Head>
+			<Head>
+				<title>Transaction | {process.env.NEXT_PUBLIC_TITLE}</title>
+			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
 						{ label: 'Validated Transactions', link: LinkMaker.transaction() },
-						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
+						{ label: ellipseBetweenText(cosmosHash, 6, 6) }
 					]}
 				/>
 				<div className="margin-top-2xl margin-bottom-md">
@@ -83,7 +85,7 @@ export async function getServerSideProps({ query }) {
 			}
 		}
 		//remove empty attribute
-		data = pickBy(data, item => item !== undefined)
+		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e) {
 		console.log('error api', `${API_LIST.TRANSACTIONS}${tx}`, e)
