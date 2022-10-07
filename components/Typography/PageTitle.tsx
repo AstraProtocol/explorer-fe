@@ -15,5 +15,5 @@ export const PageTitle = ({ children, icon, className = [] }: Props) => {
 				</span>
 			</>
 		)
-	return <span className={clsx('text', 'text-2xl', 'text-bold', ...className)}>{children}</span>
+	return <span className={clsx('text text-2xl text-bold contrast-color-70', ...className)}>{children}</span>
 }

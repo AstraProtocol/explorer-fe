@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 export default function useAccounts(page: number) {
-	const [tokens, setState] = useState<Token[]>()
+	const [hookData, setState] = useState<UseAstraHolderData>()
 
 	const _fetchCondition = () => {
 		return [
@@ -14,14 +14,15 @@ export default function useAccounts(page: number) {
 			}
 		]
 	}
-	const { data } = useSWR<TokenResponse>(_fetchCondition())
+	const { data } = useSWR<TopAstraHolderResponse>(_fetchCondition())
 
 	useEffect(() => {
 		if (data?.result) {
-			setState(data?.result)
+			setState(data)
 		}
 	}, [data])
 	return {
-		tokens
+		hasNextPage: hookData?.hasNextPage,
+		accounts: hookData?.result
 	}
 }

@@ -6,28 +6,9 @@ import styles from './style.module.scss'
 type Props = {
 	index: number
 	token: Token
-	// blockNumber: number
-	// size: number
-	// updatedAt: number | string
-	// transactions: number
-	// proposerAddress: string
-	// mine?: boolean
-	// value: number
-	// newBlock?: boolean
 }
 
-export default function TokenRow({
-	index,
-	token
-}: // blockNumber,
-// updatedAt,
-// transactions,
-// proposerAddress,
-// mine,
-// size,
-// value,
-// newBlock
-Props) {
+export default function TokenRow({ index, token }: Props) {
 	return (
 		<div
 			className={clsx(
@@ -39,38 +20,37 @@ Props) {
 				'margin-bottom-xs'
 			)}
 		>
-			<div className={clsx('text text-base contrast-color-70 text-center margin-right-sm')}>{index}</div>
-			<div className="col-2 block-ver-center">
+			<div className={clsx(styles.countIndex, 'text text-base contrast-color-70 padding-right-lg')}>{index}</div>
+			<div className={clsx(styles.borderLeft, 'col-3 padding-left-lg block-ver-center')}>
 				<Typography.LinkText
-					href={LinkMaker.token(token.contract_address_hash)}
+					href={LinkMaker.token(token.contractAddressHash)}
 					className={['text', 'text-base']}
 				>
 					{`${token.name} (${token.symbol})`}
 				</Typography.LinkText>
 			</div>
 
-			<div className={clsx('col-5 padding-left-lg', styles.borderLeft)}>
-				<div>
-					<Typography.LinkText
-						href={LinkMaker.address(token.contract_address_hash)}
-						className={['text', 'text-sm']}
-					>
-						{token.contract_address_hash}
-					</Typography.LinkText>
-				</div>
-				{/* <div className={clsx('block-ver-center', styles.info)}>
-					<span className={clsx('money money-sm money-bold')}>{10000}</span>
-					<span className={clsx(styles.currency, 'money money-sm money-bold')}>USDT</span>
-				</div> */}
+			<div className={clsx('col-4 padding-left-lg', styles.borderLeft)}>
+				<Typography.LinkText
+					href={LinkMaker.address(token.contractAddressHash)}
+					className={['text', 'text-sm']}
+				>
+					{token.contractAddressHash}
+				</Typography.LinkText>
 			</div>
 
-			<div className="col-4 block-ver-center">
-				<span className={clsx('money money-sm money-bold padding-right-xs')}>{token.total_supply}</span>
+			<div className={clsx(styles.borderLeft, 'padding-left-lg col-4')}>
+				<span className={clsx('money money-sm money-bold padding-right-xs')}>{token.totalSupply}</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>{token.symbol}</span>
 			</div>
 
-			<div className="padding-left-lg text-center money money-xs contrast-color-70 block-ver-center">
-				{token.holder_count}
+			<div
+				className={clsx(
+					styles.borderLeft,
+					'padding-left-lg text-center money money-xs contrast-color-70 block-ver-center'
+				)}
+			>
+				{token.holderCount}
 			</div>
 		</div>
 	)

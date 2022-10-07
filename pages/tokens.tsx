@@ -1,4 +1,6 @@
+import { PaginationLite } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
+import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
@@ -12,8 +14,9 @@ import Layout from '../components/Layout'
 
 const AllTokensPage: React.FC<NextPage> = _ => {
 	const [currentPage, setPage] = useState(1)
-	const { tokens } = useTokens(currentPage)
-	console.log(tokens)
+	const { tokens, hasNextPage } = useTokens(currentPage)
+
+	const onPagingChange = (value: number) => setPage(value)
 
 	return (
 		<Layout>
@@ -22,24 +25,28 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 			</Head>
 
 			<Container>
-				<PageTitle>Tokens</PageTitle>
+				<Row style={{ justifyContent: 'space-between' }}>
+					<PageTitle>Tokens</PageTitle>
+					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+				</Row>
 				<RowTitle
 					columns={[
-						{ title: '', col: 'gutter-right' },
-						{ title: 'Token', col: 'padding-left-lg col-2 gutter-right' },
-						{ title: 'Address', col: 'padding-left-lg gutter-left col-5' },
-						{ title: 'Total Supply', col: 'padding-left-sm col-4' },
-						{ title: 'Holders Count', col: 'padding-left-lg ' }
+						{ title: 'S', col: 'hidden padding-right-lg gutter-right' },
+						{ title: 'Token', col: 'padding-left-lg col-3 gutter-right' },
+						{ title: 'Address', col: 'padding-left-lg col-4 gutter-right' },
+						{ title: 'Total Supply', col: 'padding-left-lg col-4 gutter-right' },
+						{ title: 'Holders Count', col: 'padding-left-lg' }
 					]}
 				/>
-				{/* <Pagination></Pagination> */}
+
 				{!tokens || tokens.length === 0 ? (
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm">
 						{tokens?.map((item: Token, index: number) => {
-							return <TokenRow key={index} index={index} token={item} />
+							return <TokenRow key={index} index={index + 1} token={item} />
 						})}
+						{/* <Pagination currentPage={currentPage} onChange={onPaginationChange} total={pagination.total} /> */}
 					</div>
 				)}
 			</Container>

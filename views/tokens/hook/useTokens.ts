@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 export default function useTokens(page: number) {
-	const [tokens, setState] = useState<Token[]>()
+	const [hookData, setState] = useState<UseTokenHookData>()
 
 	const _fetchCondition = () => {
 		return [
@@ -18,10 +18,11 @@ export default function useTokens(page: number) {
 
 	useEffect(() => {
 		if (data?.result) {
-			setState(data?.result)
+			setState(data)
 		}
 	}, [data])
 	return {
-		tokens
+		tokens: hookData?.result,
+		hasNextPage: hookData?.hasNextPage
 	}
 }
