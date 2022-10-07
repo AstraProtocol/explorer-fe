@@ -1,7 +1,9 @@
+import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi, evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
+import { TransacionTypeEnum } from 'utils/constants'
 import { caculateCosmosAmount, convertMessageToTransfer, getCosmosType } from 'utils/cosmos'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
 import { TransactionRowProps } from './TransactionRow'
@@ -50,6 +52,16 @@ export interface TransactionDetail {
 	tabTokenTransfers?: TransactionRowProps[]
 	index?: number
 	nonceText?: string
+	//msvote
+	voter?: string
+	proposalId?: string
+	option?: string
+	//msgDelegate
+	delegatorAddress?: string
+	validatorAddress?: string
+	//MsgBeginRedelegate
+	validatorSrcAddress?: string
+	validatorDstAddress?: string
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
@@ -145,6 +157,48 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	// data.gasUsedByTransaction = undefined
 	// data.nonce = undefined
 	// data.rawInput = result.input
-	data.tabTokenTransfers = convertMessageToTransfer(result.messages, result.blockTime, result.success)
+	// msgsend
+	_convertTransfer(data, result?.messages, result?.blockTime, result?.success)
+
+	_mapMsgVoteField(data, result?.messages)
+	_mapMsgDelegate(data, result?.messages)
+	_mapMsgBeginRedelegate(data, result?.messages)
+
 	return data
+}
+const _convertTransfer = (
+	data: TransactionDetail,
+	messages: TransactionMessage[],
+	blockTime?: string,
+	success?: boolean
+) => {
+	data.tabTokenTransfers = convertMessageToTransfer(messages, blockTime, success)
+}
+const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: TransacionTypeEnum = messages[0]?.type
+	if (type === TransacionTypeEnum.MsgVote) {
+		const content = messages[0].content as CosmosMsgVote
+		data.voter = astraToEth(content.voter)
+		data.proposalId = content.proposalId
+		data.option = content.option
+	}
+}
+
+const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: TransacionTypeEnum = messages[0]?.type
+	if (type === TransacionTypeEnum.MsgDelegate) {
+		const content = messages[0].content as CosmosMsgDelegate
+		data.delegatorAddress = content.delegatorAddress
+		data.validatorAddress = content.validatorAddress
+	}
+}
+
+const _mapMsgBeginRedelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: TransacionTypeEnum = messages[0]?.type
+	if (type === TransacionTypeEnum.MsgBeginRedelegate) {
+		const content = messages[0].content as CosmosMsgBeginRedelegate
+		data.delegatorAddress = content.delegatorAddress
+		data.validatorSrcAddress = content.validatorSrcAddress
+		data.validatorDstAddress = content.validatorDstAddress
+	}
 }

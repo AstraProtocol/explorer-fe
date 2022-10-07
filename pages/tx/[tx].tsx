@@ -86,7 +86,7 @@ export async function getServerSideProps({ query }) {
 		data = pickBy(data, item => item !== undefined)
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e) {
-		console.log('error api')
+		console.log('error api', `${API_LIST.TRANSACTIONS}${tx}`, e)
 		return {
 			redirect: {
 				destination: '/404',

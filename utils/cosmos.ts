@@ -2,6 +2,7 @@ import { astraToEth } from '@astradefi/address-converter'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
+import { TransacionTypeEnum } from './constants'
 
 /**
  * get last word of text with separate is dot
@@ -15,17 +16,17 @@ export const getCosmosType = (type: string) => type?.split('.').slice(-1).join('
  * @param fees
  * @returns CosmosAmountItem
  */
-export const caculateCosmosAmount = (fees: CosmosAmountItem[]): CosmosAmountItem => {
-	if (!fees) {
+export const caculateCosmosAmount = (amounts: CosmosAmountItem[]): CosmosAmountItem => {
+	if (!amounts) {
 		return { amount: undefined, denom: undefined }
 	}
 	let totalAmount = BigNumber.from('0')
-	for (let fee of fees) {
-		totalAmount = totalAmount.add(BigNumber.from(fee.amount))
+	for (let amount of amounts) {
+		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
 	}
 	return {
 		amount: totalAmount.toBigInt().toString(),
-		denom: fees[0].denom
+		denom: amounts[0].denom
 	}
 }
 
@@ -35,21 +36,32 @@ export const convertMessageToTransfer = (
 	status: boolean
 ): TransactionRowProps[] => {
 	const rows: TransactionRowProps[] = []
+	const type: TransacionTypeEnum = messages[0]?.type
 	for (let message of messages) {
-		const content = message.content as CosmosTransactionContent
-		const amountItem = caculateCosmosAmount(content?.amount)
-		rows.push({
-			style: 'inject',
-			blockNumber: content.height,
-			updatedAt: blockTime,
-			value: formatEther(amountItem.amount),
-			valueCurrency: amountItem.denom,
-			hash: content.txHash,
-			type: getCosmosType(content?.name || content?.msgName),
-			status,
-			from: astraToEth(content?.fromAddress),
-			to: astraToEth(content?.toAddress)
-		})
+		const content = message.content
+		if (type === TransacionTypeEnum.MsgSend) {
+			rows.push(_parseCosmosMsgSend(content as CosmosMsgSend, blockTime, status))
+		} else if (type === TransacionTypeEnum.MsgBeginRedelegate) {
+		} else if (type === TransacionTypeEnum.MsgDelegate) {
+		} else if (type === TransacionTypeEnum.MsgVote) {
+		} else if (type === TransacionTypeEnum.MultipleMsgWithdrawDelegatorReward) {
+		}
 	}
 	return rows
+}
+
+const _parseCosmosMsgSend = (content: CosmosMsgSend, blockTime: string, status: boolean): TransactionRowProps => {
+	const amountItem = caculateCosmosAmount(content?.amount)
+	return {
+		style: 'inject',
+		blockNumber: content.height,
+		updatedAt: blockTime,
+		value: formatEther(amountItem.amount),
+		valueCurrency: amountItem.denom,
+		hash: content.txHash,
+		type: getCosmosType(content?.msgName),
+		status,
+		from: astraToEth(content?.fromAddress),
+		to: astraToEth(content?.toAddress)
+	}
 }

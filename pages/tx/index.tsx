@@ -75,6 +75,17 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						</div>
 					)}
 				</div>
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div></div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
+				</div>
 			</Container>
 		</Layout>
 	)

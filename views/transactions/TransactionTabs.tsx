@@ -29,7 +29,7 @@ const Transactions = ({ rows }: { rows: TransactionRowProps[] }) => {
 	)
 }
 export default function TransactionTabs({ transactions, evmHash, cosmosHash, type, input }: TransactionTabsProps) {
-	const hashInternalTransactions = isEmptyRawInput(input) && type === 'evm'
+	const hashInternalTransactions = !isEmptyRawInput(input) && type === 'evm'
 	const { rows: internalTransactionRows } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})

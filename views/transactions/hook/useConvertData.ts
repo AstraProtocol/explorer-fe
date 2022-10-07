@@ -170,6 +170,55 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							contents: [{ value: data[key] }]
 						})
 						break
+					case 'voter':
+						items.push({
+							label: 'Voter:',
+							type: 'link-copy',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'proposalId':
+						items.push({
+							label: 'Proposal Id:',
+							type: 'text',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'option':
+						items.push({
+							label: 'Option:',
+							type: 'text',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'delegatorAddress':
+						items.push({
+							label: 'Delegator Address:',
+							type: 'copy',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'validatorAddress':
+						items.push({
+							label: 'Validator Address:',
+							type: 'copy',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'validatorSrcAddress':
+						items.push({
+							label: 'Validator Src Address:',
+							type: 'copy',
+							contents: [{ value: data[key] }]
+						})
+						break
+					case 'validatorDstAddress':
+						items.push({
+							label: 'Validator Dst Address:',
+							type: 'copy',
+							contents: [{ value: data[key] }]
+						})
+						break
 				}
 			}
 			const mainItems = sortArrayFollowValue(items, 'label', [
@@ -178,6 +227,17 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				'Result:',
 				'Status:',
 				'Block:',
+				//msgvote
+				'Voter:',
+				'Proposal Id:',
+				'Option:',
+				//delegate
+				'Delegator Address:',
+				'Validator Address:',
+				//MsgBeginRedelegate
+				'Validator Src Address:',
+				'Validator Dst Address:',
+
 				'Timestamp:',
 				'From:',
 				'Interacted With (To):',
@@ -199,6 +259,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				}
 			})
 			const moreItems = sortArrayFollowValue(items, 'label', ['Gas Limit:', 'Nonce', 'Raw Input:'])
+			console.log(mainItems, moreItems, items, data)
 			return [mainItems, moreItems]
 		},
 		[data, astraSummary]

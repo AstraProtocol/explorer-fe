@@ -90,7 +90,7 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 											<Typography.LinkText href={content.link || ''}>
 												{content.value as string}
 											</Typography.LinkText>
-											<CopyButton textCopy={content.link as string} />
+											<CopyButton textCopy={content.value as string} />
 										</div>
 									) : null}
 									{type === 'label' ? (
