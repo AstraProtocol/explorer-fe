@@ -1,5 +1,6 @@
 import CopyButton from 'components/Button/CopyButton'
 import Tabs from 'components/Tabs/Tabs'
+import web3 from 'web3'
 import styles from '../style.module.scss'
 
 type RawInputProps = {
@@ -20,6 +21,10 @@ const Copy = ({ text }) => {
 }
 
 export default function RawInput({ text }: RawInputProps) {
+	let utf8Text = text
+	try {
+		utf8Text = web3.utils.toAscii(text)
+	} catch (e) {}
 	return (
 		<div style={{ maxWidth: '885px' }}>
 			<Tabs
@@ -29,7 +34,7 @@ export default function RawInput({ text }: RawInputProps) {
 				]}
 				contents={{
 					'1': <Copy text={text} />,
-					'2': <Copy text={text} />
+					'2': <Copy text={utf8Text} />
 				}}
 				classes=" "
 				headerBorder={false}

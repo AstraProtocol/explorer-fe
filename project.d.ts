@@ -1,133 +1,20 @@
+/// <reference path="types/transactions.d.ts" />
+/// <reference path="types/blocks.d.ts" />
 interface SearchItemResponse {
-	address_hash?: string
-	block_hash?: string
-	block_number?: number
-	cosmos_hash?: string
-	holder_count?: number
-	inserted_at?: string
-	name?: string
-	symbol?: string
-	tx_hash?: string
-	type: 'transaction_cosmos' | 'address' | 'block' | 'transaction'
+	result: {
+		blocks: BlockItem[]
+		transactions: TransactionItem[]
+		validators: ValidatorData[]
+		accounts: never[]
+	}
 }
 
-interface Commited {
-	address: string
-	time: string
-	signature: string
-	isProposer: boolean
-}
 interface Pagination {
 	total_record: number
 	total_page: number
 	current_page: number
 	limit: number
 }
-interface BlockItem {
-	blockHeight: number
-	blockHash: string
-	blockTime: string
-	appHash: string
-	transactionCount: number
-	committedCouncilNodes: Commited[]
-	newBlock?: boolean
-}
-
-interface BlockResponse {
-	result: BlockItem[]
-	pagination: Pagination
-}
-
-interface BlockDetailResponse {
-	result: BlockItem
-}
-
-interface Signer {
-	keyInfo: {
-		type: string
-		isMultiSig: boolean
-		pubkeys: string[]
-	}
-	address: string
-	accountSequence: number
-}
-
-interface EVMTransactionContent {
-	msgIndex: number
-	name: string
-	uuid: string
-	height: number
-	params: {
-		'from': string
-		'hash': string
-		'size': number
-		'@type': TransacionTypeEnum
-		'data': {
-			'to': string
-			'gas': string
-			'r': string
-			'v': string
-			'@type': TransacionTypeEnum
-			'nonce': string
-			'value': string
-			'gasPrice': string
-			's': string
-			'data': string
-		}
-	}
-	txHash: string
-	msgName: string
-	version: number
-}
-
-interface CosmosTransactionContent {
-	amount: {
-		denom: string
-		amount: string
-	}[]
-	txHash: string
-	msgName: string
-	msgIndex: number
-	toAddress: string
-	fromAddress: string
-	name: string
-	uuid: string
-	height: number
-	version: number
-}
-
-interface TransactionItem {
-	newTransaction?: boolean
-	blockHeight: number
-	blockHash: string
-	blockTime: string
-	hash: string
-	index: number
-	success: boolean
-	code: number
-	log: string
-	fee: {
-		denom: string
-		amount: string
-	}[]
-	feePayer: string
-	feeGranter: string
-	gasWanted: number
-	gasUsed: number
-	memo: string
-	timeoutHeight: number
-	messages: {
-		type: TransacionTypeEnum
-		content: EVMTransactionContent | CosmosTransactionContent
-	}[]
-	signers: Signer[]
-}
-
-interface TransactionResponse {
-	result: TransactionItem[]
-	pagination: Pagination
-}
-
 interface TransactionDetailResponse {
 	result: TransactionItem
 	pagination: Pagination

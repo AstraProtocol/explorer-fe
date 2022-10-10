@@ -32,15 +32,15 @@ export const dateFormat = (local = 'en') => {
 	return local === 'vi' ? process.env.NEXT_PUBLIC_DATE_FORMAT_VI : process.env.NEXT_PUBLIC_DATE_FROMAT_OTHER
 }
 
-export function formatCurrencyValue(value, symbol = 'VND') {
+export function formatCurrencyValue(value: number | string, symbol = 'VND') {
 	symbol = symbol || ''
-	if (isNaN(value)) return 'NaN'
+	if (isNaN(value as number)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
-	// if (value < 0.000001) return `${window.localized['Less than']} 0.000001 ${symbol}`
+	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
 	if (value < 1000) return `${numeral(value).format('0,0')} ${symbol}`
 	if (value < 1000000) return `${numeral(value).format('0,0')} ${symbol}`
-	if (value < 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} Million ${symbol}`
-	if (value > 1000000000) return `${numeral(value / 10 ** 9).format('0,0')} Billion ${symbol}`
+	if (value < 1000000000) return `${numeral(Number(value) / 10 ** 6).format('0,0')} Million ${symbol}`
+	if (value > 1000000000) return `${numeral(Number(value) / 10 ** 9).format('0,0')} Billion ${symbol}`
 	return `${numeral(value).format('0,0')} ${symbol}`
 }
 
@@ -108,14 +108,27 @@ export class LinkMaker {
  * @returns
  */
 export const sortArrayFollowValue = (items: any[], attr: string, arr: string[]) => {
-	const newItems = []
+	let newItems = []
 	for (let value of arr) {
-		const item = items.find(item => item[attr] === value)
-		if (item) {
-			newItems.push(item)
+		const _items = items.filter(item => item[attr] === value)
+		if (_items.length > 0) {
+			newItems = newItems.concat(_items)
 		}
 	}
 	return newItems
 }
 
+/**
+ * cat dog ==> Cat Dog
+ * @param text
+ * @returns
+ */
 export const upperCaseFirstLetterOfWord = (text: string) => text?.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase())
+
+export const convertURLQueryToObject = (path: string): { [key: string]: string } => {
+	const query = path.split('?')[1]
+	if (!query) {
+		return {}
+	}
+	return JSON.parse('{"' + decodeURI(query).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+}

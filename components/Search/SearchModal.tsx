@@ -1,8 +1,6 @@
-import { astraToEth } from '@astradefi/address-converter'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
-import xss from 'xss'
 import API_LIST from '../../api/api_list'
 import useOutsideElement from '../../hooks/useOutsideElement'
 import ModalWrapper from '../Modal/ModalWrapper'
@@ -35,19 +33,19 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	const [_searchStatus, _setSearchStatus] = useState<SearchStatusEnum>(SearchStatusEnum.INPUTTING)
 
 	useOutsideElement(_searchWrapperRef, closeModal)
-	const _standardQueryInput = (value: string): string => {
-		if (!value) {
-			return value
-		}
-		if (value.toLowerCase().startsWith('astra')) {
-			value = astraToEth(value)
-		}
-		return xss(value)
-	}
+	// const _standardQueryInput = (value: string): string => {
+	// 	if (!value) {
+	// 		return value
+	// 	}
+	// 	if (value.toLowerCase().startsWith('astra')) {
+	// 		value = astraToEth(value)
+	// 	}
+	// 	return xss(value)
+	// }
 	const _fetch = () => {
 		const value = _inputRef?.current?.value
 		if (_search && value) {
-			return [API_LIST.SEARCH, { q: _standardQueryInput(value) }]
+			return [`${API_LIST.SEARCH}${value}`]
 		}
 		return null
 	}
@@ -101,7 +99,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						)}
 					</div>
 				</div>
-				<SearchResult status={_searchStatus} items={data as SearchItemResponse[]} />
+				<SearchResult status={_searchStatus} data={data as SearchItemResponse} />
 			</div>
 		</ModalWrapper>
 	)

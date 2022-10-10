@@ -1,19 +1,30 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
 import RowTitle from 'components/Typography/RowTitle'
+import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import BlockRow from 'views/block/BlockRow'
 import useBlock from 'views/block/hook/useBlock'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
-	const { fullPageData, getPropserAddress } = useBlock()
+	const [loaderTime, setLoaderTime] = useState(false)
+	const { fullPageData, getPropserAddress, pagination, changePage } = useBlock()
+	//loader display at least 1 second
+	useEffect(() => {
+		if (isEmpty(fullPageData)) {
+			setLoaderTime(true) // time for loader dispaly
+			setTimeout(() => {
+				setLoaderTime(false) // endtime
+			}, 500)
+		}
+	}, [fullPageData])
 	return (
 		<Layout>
 			<Head>
@@ -21,7 +32,19 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Head>
 			<Search />
 			<Container>
-				<Breadcumbs items={[{ label: 'Blocks' }]} />
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div>
+						<Breadcumbs items={[{ label: 'Blocks' }]} />
+					</div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
+				</div>
 				<RowTitle
 					columns={[
 						{ title: 'Block ID', col: 'padding-left-lg col-2 gutter-right' },
@@ -31,7 +54,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					]}
 				/>
 				<div>
-					{!fullPageData || fullPageData.length === 0 ? (
+					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (
 						<div>
@@ -53,6 +76,17 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 							})}
 						</div>
 					)}
+				</div>
+				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
+					<div></div>
+					<div>
+						<Pagination
+							total={pagination.total}
+							defaultCurrent={pagination.page}
+							disabled={false}
+							onChange={changePage}
+						/>
+					</div>
 				</div>
 			</Container>
 		</Layout>

@@ -4,38 +4,40 @@ import Link from 'next/link'
 import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
+export interface SearchResultViewItem {
+	type: 'Address' | 'Block' | 'Transaction' | 'Validator'
+	time?: string
+	status?: string
+	value: string
+	linkValue?: string
+}
+
 type ResultViewProps = {
-	item: SearchItemResponse
+	item: SearchResultViewItem
 }
 
 export default function ResultView({ item }: ResultViewProps) {
-	const { inserted_at, type, cosmos_hash, address_hash, block_hash, tx_hash } = item
-	const _getLabel = () => {
-		switch (type) {
-			case 'transaction_cosmos':
-				return cosmos_hash
-			default:
-				return address_hash || tx_hash || block_hash
-		}
-	}
+	const { time, type, value, status, linkValue } = item
+
 	const _link = () => {
-		if (type === 'block') {
-			return LinkMaker.block(item.block_number)
+		if (type === 'Block') {
+			return LinkMaker.block(linkValue)
 		}
 
-		if (type === 'address') {
-			return LinkMaker.address(item.address_hash)
+		if (type === 'Address') {
+			return LinkMaker.address(linkValue)
 		}
 
-		return LinkMaker.transaction(address_hash || tx_hash || block_hash)
+		return LinkMaker.transaction(linkValue)
 	}
 	return (
 		<Link href={_link()}>
-			<div className={clsx(styles.item, 'money money-sm padding-left-xs')}>
-				<div className={clsx('text-bold')}>{_getLabel()}</div>
+			<div className={clsx(styles.item, 'money money-sm padding-left-xs pointer')}>
+				<div className={clsx('text-bold')}>{value}</div>
 				<div className={clsx(styles.viewMoreInfo, 'margin-top-xs')}>
 					<div>
-						<Typography.Time time={inserted_at} />
+						{status && <span>Status: {status}</span>}
+						{time && <Typography.Time time={time} />}
 					</div>
 					<div
 						className={clsx(
