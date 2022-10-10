@@ -4,13 +4,15 @@ import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
+	key: string
 	index: number
 	token: Token
 }
 
-export default function TokenRow({ index, token }: Props) {
+export default function TokenRow({ key, index, token }: Props) {
 	return (
 		<div
+			key={key}
 			className={clsx(
 				styles.rowBrief,
 				styles.tokenRow,
