@@ -267,26 +267,9 @@ interface Token {
 }
 
 interface AstraHolder {
-	address: {
-		contract_code: any
-		decompiled: boolean
-		fetched_coin_balance: {
-			value: string
-		}
-		fetched_coin_balance_block_number: number
-		gas_used: number
-		has_decompiled_code: any
-		hash: string
-		inserted_at: string
-		nonce: number
-		state: any
-		token_transfers_count: number
-		transactions_count: number
-		updated_at: string
-		verified: boolean
-	}
-	total_supply: string
-	tx_count: number
+	address: string
+	balance: string
+	txnCount: number
 }
 
 interface UseTokenHookData {
@@ -306,5 +289,9 @@ interface TokenResponse {
 
 interface TopAstraHolderResponse {
 	hasNextPage: boolean
+	nextPageParams: {
+		offset: number
+		page: number
+	}
 	result: AstraHolder[]
 }
