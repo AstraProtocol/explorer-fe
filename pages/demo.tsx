@@ -1,5 +1,5 @@
 import Container from 'components/Container'
-import Table, { TableDataSource } from 'components/Table/Table'
+import Table, { Column } from 'components/Table/Table'
 import React, { ReactNode } from 'react'
 import CopyButton from '../components/Button/CopyButton'
 import BackgroundCard from '../components/Card/Background/BackgroundCard'
@@ -15,35 +15,32 @@ type Props = {
 
 const tableData = [
 	{
-		x: 1,
-		y: 2
+		col2: 'row1-col2',
+		col3: 'row1-col3'
 	},
 	{
-		x: 2,
-		y: 2
+		col2: 'row2-col2',
+		col3: 'row2-col3'
 	},
 	{
-		x: 3,
-		y: 2
+		col2: 'row3-col2',
+		col3: 'row3-col3'
 	}
 ]
 
-const dataSource: TableDataSource[] = [
+const dataSource: Column[] = [
 	{
-		dataIndex: 'xxx',
-		key: 'xxx',
-		render: (v, r, index) => index + 1,
+		key: 'col1',
+		render: (v, index) => `col1 - auto index ${index + 1}`,
 		title: 'STT'
 	},
 	{
-		dataIndex: 'x',
-		key: 'x',
+		key: 'col2',
 		render: v => <span>{v}</span>,
 		title: 'Test X'
 	},
 	{
-		dataIndex: 'y',
-		key: 'y',
+		key: 'col3',
 		render: v => <span style={{ color: 'red' }}>{v} </span>,
 		title: 'Test Y'
 	}
@@ -52,9 +49,12 @@ const dataSource: TableDataSource[] = [
 const DemoPage: React.FC<Props> = props => (
 	<Layout>
 		<Container>
-			<Table title="Demo Table" rowKey="x" dataSource={dataSource} data={tableData} />
+			<Table id="x" colums={dataSource} rows={tableData} />
 			<br />
-			<Table title="Demo Table" inverted rowKey="x" dataSource={dataSource} data={tableData} />
+			<Table inverted id="x" colums={dataSource} rows={tableData} />
+			<br />
+			<br />
+			<br />
 			<br />
 			<BackgroundCard>
 				<Tabs

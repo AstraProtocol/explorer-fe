@@ -5,6 +5,7 @@ const API_LIST = {
 	BLOCKS: '/blocks/',
 	TRANSACTION_OF_BLOCK: '/blocks/:id/transactions?pagination=offset&page=1&limit=20&order=height.desc',
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
+
 	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
 	ALL_HOLDERS: 'evm_/api/v1?module=account&action=getTopAddressesBalance', // &page=1&offset=20
 	ALL_TRANSACTIONS: '/transactions',
@@ -13,6 +14,8 @@ const API_LIST = {
 	EVM_TRANSACTION_DETAIL: '/api/v1?module=transaction&action=gettxinfo&txhash=', // call axios
 	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
 	COSMOS_TRANSACTION: '/api/v1?module=transaction&action=getTxCosmosInfo&txhash=', // call axios
+
+	ABI: '/api/v1?module=contract&action=getabi&address=',
 
 	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',
 

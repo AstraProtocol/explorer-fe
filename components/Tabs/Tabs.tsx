@@ -20,7 +20,7 @@ interface Props {
 	classes?: string
 	headerBorder?: boolean
 	headerPadding?: string
-	tabChange?: (tabIndex: string) => {}
+	tabChange?: (tabIndex: string) => void
 }
 
 const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tabChange }: Props) => {

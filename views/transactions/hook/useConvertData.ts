@@ -34,7 +34,6 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'result':
 						items.push({
 							label: CardInfoLabels.Result,
-
 							type: 'label',
 							contents: [
 								{

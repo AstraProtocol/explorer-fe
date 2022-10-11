@@ -23,7 +23,6 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Astra Explorer</title>
 			</Head>
-
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.token() }]} />
@@ -44,7 +43,7 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 				) : (
 					<div className="padding-bottom-sm">
 						{tokens?.map((item: Token, index: number) => {
-							return <TokenRow key={index} index={index + 1} token={item} />
+							return <TokenRow key={`${index}`} index={index + 1} token={item} />
 						})}
 						{/* <Pagination currentPage={currentPage} onChange={onPaginationChange} total={pagination.total} /> */}
 					</div>

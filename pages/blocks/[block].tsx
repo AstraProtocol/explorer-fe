@@ -2,6 +2,7 @@ import { astraToEth } from '@astradefi/address-converter'
 import { Breadcumbs } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
+import { AxiosError } from 'axios'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import Container from 'components/Container'
@@ -113,7 +114,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 							'1': (
 								<div>
 									{!transactions || transactions.length == 0 ? (
-										<Empty />
+										<Empty text="There are no transactions for this block." />
 									) : (
 										<>
 											{transactions?.map((item, index) => {
@@ -166,6 +167,9 @@ export async function getServerSideProps({ params }) {
 			return { props: { data: {} } }
 		}
 	} catch (e) {
+		if (e instanceof AxiosError) {
+			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+		}
 		return {
 			redirect: {
 				destination: '/404',

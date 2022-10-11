@@ -65,8 +65,8 @@ export function formatGasValue(value) {
 //   }
 
 export class LinkMaker {
-	static address(address?: string) {
-		if (address) return `/address/${address}`
+	static address(address?: string, query: string = '') {
+		if (address) return `/address/${address}${query}`
 		return '/accounts'
 	}
 	/**
@@ -74,8 +74,8 @@ export class LinkMaker {
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static block(blockNumber?: string | number) {
-		blockNumber = blockNumber > 0 ? `/${blockNumber}` : ''
+	static block(blockNumber?: string | number, query: string = '') {
+		blockNumber = blockNumber > 0 ? `/${blockNumber}${query}` : ''
 		return `/blocks${blockNumber}`
 	}
 

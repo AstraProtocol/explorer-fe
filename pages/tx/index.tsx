@@ -38,7 +38,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					<div>
 						<Pagination
 							total={pagination.total}
-							defaultCurrent={pagination.page}
+							currentPage={pagination.page}
 							disabled={false}
 							onChange={changePage}
 						/>
@@ -91,7 +91,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					<div>
 						<Pagination
 							total={pagination.total}
-							defaultCurrent={pagination.page}
+							currentPage={pagination.page}
 							disabled={false}
 							onChange={changePage}
 						/>

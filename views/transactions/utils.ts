@@ -65,6 +65,7 @@ export interface TransactionDetail {
 	validatorSrcAddress?: string
 	validatorDstAddress?: string
 	revertReason?: string
+	logs?: EvmLog[]
 }
 
 export enum CardInfoLabels {
@@ -146,6 +147,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			result.hash,
 			result.blockHeight
 		)
+		data.logs = result.logs
 	} else {
 		const evmRes = await evmApi.get<EVMTransactionDetailResponse>(`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`)
 		const result = evmRes.data.result
@@ -204,7 +206,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	// data.rawInput = result.input
 	// msgsend
 	_convertTransfer(data, result?.messages, result?.blockTime, result?.success)
-
+	_mapMsgSendField(data, result)
 	_mapMsgVoteField(data, result?.messages)
 	_mapMsgDelegate(data, result?.messages)
 	_mapMsgBeginRedelegate(data, result?.messages)
@@ -218,6 +220,15 @@ const _convertTransfer = (
 	success?: boolean
 ) => {
 	data.tabTokenTransfers = convertMessageToTransfer(messages, blockTime, success)
+}
+
+const _mapMsgSendField = (data: TransactionDetail, result: TransactionItem) => {
+	const type: TransacionTypeEnum = result?.messages[0]?.type
+	if (type === TransacionTypeEnum.MsgSend) {
+		const content = result?.messages[0].content as CosmosMsgSend
+		data.from = astraToEth(content.fromAddress)
+		data.to = astraToEth(content.toAddress)
+	}
 }
 const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[]) => {
 	const type: TransacionTypeEnum = messages[0]?.type

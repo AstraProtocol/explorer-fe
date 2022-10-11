@@ -1,6 +1,7 @@
 import { Breadcumbs } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
+import { AxiosError } from 'axios'
 import CardInfo from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Typography from 'components/Typography'
@@ -8,6 +9,7 @@ import { pickBy } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import DecodeInput from 'views/transactions/DecodeInput'
 import useConvertData from 'views/transactions/hook/useConvertData'
 import TransactionTabs from 'views/transactions/TransactionTabs'
 import {
@@ -44,12 +46,14 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 				</div>
 				<CardInfo items={items} classes={['margin-top-sm']} />
 				{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
+				{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} />}
 				<TransactionTabs
 					evmHash={evmHash}
 					cosmosHash={cosmosHash}
 					type={data.type}
 					transactions={data?.tabTokenTransfers}
 					input={data?.rawInput}
+					logs={data?.logs}
 				/>
 			</Container>
 		</Layout>
@@ -87,8 +91,10 @@ export async function getServerSideProps({ query }) {
 		//remove empty attribute
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
-	} catch (e) {
-		console.log('error api', `${API_LIST.TRANSACTIONS}${tx}`, e)
+	} catch (e: unknown) {
+		if (e instanceof AxiosError) {
+			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+		}
 		return {
 			redirect: {
 				destination: '/404',
