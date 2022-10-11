@@ -20,7 +20,7 @@ interface Props {
 	classes?: string
 	headerBorder?: boolean
 	headerPadding?: string
-	tabChange?: (tabIndex: string) => {}
+	tabChange?: (tabIndex: string) => void
 }
 
 const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tabChange }: Props) => {
@@ -34,7 +34,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tab
 	return (
 		<>
 			<Row
-				classes={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
+				className={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
 					'border border-bottom-base': headerBorder
 				})}
 			>

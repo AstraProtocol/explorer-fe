@@ -22,7 +22,6 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Astra Explorer</title>
 			</Head>
-
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<PageTitle>Astra Address</PageTitle>

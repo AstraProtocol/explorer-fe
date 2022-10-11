@@ -23,7 +23,6 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 			<Head>
 				<title>Astra Explorer</title>
 			</Head>
-
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<PageTitle>Tokens</PageTitle>

@@ -1,9 +1,8 @@
-.backgroundCard {
-	box-sizing: border-box;
-	border: 1px solid var(--border-color);
+.backgroundCardBlur {
 	backdrop-filter: blur(42px);
 }
 
 .background {
 	background: rgba(var(--contrast-color-theme--raw), 0.05);
+	border: 1px solid var(--border-color);
 }

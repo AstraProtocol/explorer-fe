@@ -177,6 +177,12 @@ interface EVMTransferItem {
 	tokenName: string
 	tokenSymbol: string
 }
+interface EvmLog {
+	address: string
+	data: string
+	index: string
+	topics: string[]
+}
 interface EVMTransactionDetail {
 	blockNumber: string
 	confirmations: string
@@ -186,12 +192,7 @@ interface EVMTransactionDetail {
 	gasUsed: string
 	hash: string
 	input: string
-	logs: {
-		address: string
-		data: string
-		index: string
-		topics: string[]
-	}[]
+	logs: EvmLog[]
 	tokenTransfers: EVMTransferItem[]
 	next_page_params: null
 	revertReason: string
@@ -247,12 +248,7 @@ interface EvmTransactionDetailFromCosmosHashResponse {
 		hash: string
 		index: number
 		input: string
-		logs: {
-			address: string
-			data: string
-			index: string
-			topics: string[]
-		}[]
+		logs: EvmLog[]
 		maxFeePerGas: null
 		maxPriorityFeePerGas: null
 		nonce: number
