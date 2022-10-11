@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
+import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 
 export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
@@ -32,10 +33,9 @@ export const dateFormat = (local = 'en') => {
 	return local === 'vi' ? process.env.NEXT_PUBLIC_DATE_FORMAT_VI : process.env.NEXT_PUBLIC_DATE_FROMAT_OTHER
 }
 
-export function formatCurrencyValue(value: number | string, symbol = 'VND') {
+export function formatCurrencyValue(value: number | string | undefined, symbol = 'VND') {
 	symbol = symbol || ''
-	if (!value) return 'NaN'
-	if (isNaN(value as number)) return 'NaN'
+	if (isNaN(value as number) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
 	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
 	if (value < 1000) return `${numeral(value).format('0,0')} ${symbol}`
@@ -46,8 +46,7 @@ export function formatCurrencyValue(value: number | string, symbol = 'VND') {
 }
 
 export function formatGasValue(value) {
-	if (!value) return 'NaN'
-	if (isNaN(value)) return 'NaN'
+	if (isNaN(value) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0`
 	if (value <= 1) return `${numeral(value).format('0,0')} GWEI`
 	if (value <= 1000) return `${numeral(value).format('0,0')} MWEI`

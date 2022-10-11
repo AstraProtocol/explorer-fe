@@ -5,6 +5,7 @@ import QrButton from 'components/Button/QrButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
+import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -13,7 +14,6 @@ import useAddressBalance from './hook/useAddressBalance'
 import useAddressCounter from './hook/useAddressCounter'
 import styles from './style.module.scss'
 
-// 0x54e7cca2257d7964cb3faf345a6fba5b0760301b
 interface Props {
 	address: string
 }
@@ -71,7 +71,9 @@ const AddressOverview = ({ address }: Props) => {
 				<div className="">
 					<span className="text text-base contrast-color-50">Transfers:</span>
 					<br />
-					<span className="text text-base">{addressCounter?.tokenTransferCount || 'NaN'}</span>
+					<span className="text text-base">
+						{isUndefined(addressCounter?.tokenTransferCount) ? 'NaN' : addressCounter?.tokenTransferCount}
+					</span>
 				</div>
 				<div className="">
 					<span className="text text-base contrast-color-50">Gas used:</span>
