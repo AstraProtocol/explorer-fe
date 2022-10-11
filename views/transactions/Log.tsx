@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
 import LogElement, { LogElementProps } from './LogItem'
-
-export interface AbiItemDecode extends AbiItem {
+interface AbiItemDecode extends AbiItem {
 	events: EventDecode[]
 }
 
@@ -67,7 +66,6 @@ export default function Log({ logs, display }: LogProps) {
 						item.methodParams = logObj.events
 					}
 				}
-				console.log(items)
 				setItems(items)
 			}
 			setLoad(true)

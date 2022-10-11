@@ -62,16 +62,16 @@ export function formatUnitValue(value) {
 //   }
 
 export class LinkMaker {
-	static address(address: string) {
-		return `/address/${address}`
+	static address(address: string, query: string = '') {
+		return `/address/${address}${query}`
 	}
 	/**
 	 *
 	 * @param blockNumber empty -> block homepage
 	 * @returns
 	 */
-	static block(blockNumber?: string | number) {
-		blockNumber = blockNumber > 0 ? `/${blockNumber}` : ''
+	static block(blockNumber?: string | number, query: string = '') {
+		blockNumber = blockNumber > 0 ? `/${blockNumber}${query}` : ''
 		return `/blocks${blockNumber}`
 	}
 

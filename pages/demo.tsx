@@ -1,5 +1,5 @@
 import Container from 'components/Container'
-import Table, { TableDataSource } from 'components/Table/Table'
+import Table, { Column } from 'components/Table/Table'
 import React, { ReactNode } from 'react'
 import CopyButton from '../components/Button/CopyButton'
 import BackgroundCard from '../components/Card/Background/BackgroundCard'
@@ -28,7 +28,7 @@ const tableData = [
 	}
 ]
 
-const dataSource: TableDataSource[] = [
+const dataSource: Column[] = [
 	{
 		key: 'col1',
 		render: (v, index) => `col1 - auto index ${index + 1}`,

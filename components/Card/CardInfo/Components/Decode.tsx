@@ -73,7 +73,7 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 						)
 					}
 				]}
-				rows={items}
+				rows={items as any[]}
 			/>
 		</div>
 	)

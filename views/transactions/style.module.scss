@@ -51,3 +51,18 @@
 	margin: 60px 0px;
 	border-top: 1px solid rgba(var(--contrast-color-theme--raw), 0.2);
 }
+
+.logItemLeftBorder {
+	position: relative;
+	&::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 4px;
+		height: 100%;
+		background: rgba(255, 200, 42, 0.16);
+		border: 1px solid rgba(255, 200, 42, 0.1);
+		border-radius: 8px;
+	}
+}

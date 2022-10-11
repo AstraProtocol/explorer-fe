@@ -50,14 +50,22 @@ type CardInfoProps = {
 	items?: CardRowItem[]
 	topElement?: React.ReactNode
 	background?: boolean
+	backgroundCardBlur?: boolean
 }
 
-export default function CardInfo({ items, classes = [], topElement, background = true }: CardInfoProps) {
+export default function CardInfo({
+	items,
+	classes = [],
+	topElement,
+	background = true,
+	backgroundCardBlur = true
+}: CardInfoProps) {
 	return (
 		<BackgroundCard
 			classes={`margin-bottom-md ${classes.join(' ')}`}
 			backgroundColor={background}
 			border={background}
+			backgroundCardBlur={backgroundCardBlur}
 		>
 			{topElement && topElement}
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>

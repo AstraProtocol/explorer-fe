@@ -12,7 +12,7 @@ interface Props {
 	rows: RowData[]
 	id?: string
 	inverted?: boolean
-	colums: Colum[]
+	colums: Column[]
 }
 
 export type RowRender = (value: React.ReactNode, index: number) => React.ReactNode
@@ -22,7 +22,7 @@ export type RowRender = (value: React.ReactNode, index: number) => React.ReactNo
  * @param title title of column
  * @param render custom render function
  */
-export interface Colum {
+export interface Column {
 	key: string
 	title: React.ReactNode
 	render?: RowRender
@@ -39,7 +39,7 @@ const Table = ({ rows, colums, inverted = false, id = 'table' }: Props) => {
 		<table className={clsx(styles.table, 'text text-base', { [styles.tableInverted]: inverted })}>
 			<thead>
 				<tr>
-					{colums.map((cell: Colum, index) => (
+					{colums.map((cell: Column, index) => (
 						<th
 							key={cell.key}
 							className={clsx('text-bold', {
@@ -56,7 +56,7 @@ const Table = ({ rows, colums, inverted = false, id = 'table' }: Props) => {
 			<tbody>
 				{rows.map((row, rowIdx) => (
 					<tr key={`${id}-${rowIdx}`}>
-						{colums.map((column: Colum, colIdx) => (
+						{colums.map((column: Column, colIdx) => (
 							<td
 								key={`${id}-${rowIdx}-${colIdx}`}
 								className={clsx({

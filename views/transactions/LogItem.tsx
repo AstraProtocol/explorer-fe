@@ -6,7 +6,9 @@ import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export type LogElementProps = {
-	address: string
+	address?: string
+	showAddress?: boolean
+	callRow?: string
 	verified?: boolean
 	methodId?: string
 	call?: string
@@ -15,6 +17,7 @@ export type LogElementProps = {
 	data: string
 	index: string
 	borderTop?: boolean
+	showLeftBorder?: boolean
 }
 
 export default function LogElement({
@@ -26,15 +29,27 @@ export default function LogElement({
 	topics,
 	methodParams,
 	index,
-	borderTop
+	borderTop,
+	callRow,
+	showAddress = true,
+	showLeftBorder = true
 }: LogElementProps) {
 	let items: CardRowItem[] = []
-	console.log('verify', verified)
-	items.push({
-		label: 'Address:',
-		type: 'text',
-		contents: [{ value: address }]
-	})
+	if (address && showAddress) {
+		items.push({
+			label: 'Address:',
+			type: 'text',
+			contents: [{ value: address }]
+		})
+	}
+	if (callRow) {
+		items.push({
+			label: '',
+			type: 'text',
+			contents: [{ value: callRow }]
+		})
+	}
+
 	let topElement: React.ReactNode = null
 	if (verified) {
 		items.push({
@@ -50,18 +65,12 @@ export default function LogElement({
 				}
 			]
 		})
-		topElement = (
-			<div>
-				<div className={clsx({ [styles.hr]: borderTop })}></div>
-			</div>
-		)
 	} else {
 		topElement = (
-			<div>
-				<div className={clsx({ [styles.hr]: borderTop })}></div>
+			<div className="padding-left-2xl padding-right-2xl">
 				<div className={clsx(styles.verifyContract, 'contrast-color-100')}>
 					To see accurate decoded input data, the contract must be verified. Verify the contract{' '}
-					<Link href={LinkMaker.address(address)}>
+					<Link href={LinkMaker.address(address, '/verify')}>
 						<a className="link padding-left-xs"> here</a>
 					</Link>
 					.
@@ -80,24 +89,34 @@ export default function LogElement({
 			contents: [{ value: `[${idx}] ${topics[idx]}` }]
 		})
 	}
-
-	items.push({
-		label: 'Data',
-		type: 'text',
-		contents: [{ value: data }]
-	})
-	items.push({
-		label: 'Log Index',
-		type: 'text',
-		contents: [{ value: index }]
-	})
+	if (data) {
+		items.push({
+			label: 'Data',
+			type: 'text',
+			contents: [{ value: data }]
+		})
+	}
+	if (index) {
+		items.push({
+			label: 'Log Index',
+			type: 'text',
+			contents: [{ value: index }]
+		})
+	}
 
 	return (
-		<CardInfo
-			items={items}
-			background={false}
-			topElement={topElement}
-			classes={['margin-left-2xl margin-right-2xl']}
-		/>
+		<div>
+			<div className="padding-left-2xl padding-right-2xl">
+				<div className={clsx({ [styles.hr]: borderTop })}></div>
+			</div>
+
+			<div
+				className={clsx({
+					[styles.logItemLeftBorder]: showLeftBorder
+				})}
+			>
+				<CardInfo items={items} background={false} topElement={topElement} backgroundCardBlur={false} />
+			</div>
+		</div>
 	)
 }

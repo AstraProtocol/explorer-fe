@@ -58,6 +58,7 @@ export const isEvmAddress = (address: string) => {
 
 /**
  * https://ethereum.stackexchange.com/questions/3364/encoding-decoding-contract-abi-data
+ * https://github.com/web3/web3.js/blob/9b7540d283c3c72978ebdfacc0dea2d0f3f36a05/packages/web3-eth-abi/src/index.js#L58
  * methodid is first 4 bytes
  * @param data
  */
