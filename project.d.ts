@@ -149,3 +149,44 @@ interface Proposer {
 	powerPercentage: string
 	cumulativePowerPercentage: string
 }
+
+interface Token {
+	cataloged: boolean
+	contractAddressHash: string
+	decimals: string
+	holderCount: number
+	name: string
+	symbol: string
+	totalSupply: string
+	type: string
+}
+
+interface AstraHolder {
+	address: string
+	balance: string
+	txnCount: number
+}
+
+interface UseTokenHookData {
+	result: Token[]
+	hasNextPage: boolean
+}
+
+interface UseAstraHolderData {
+	result: AstraHolder[]
+	hasNextPage: boolean
+}
+
+interface TokenResponse {
+	hasNextPage: boolean
+	result: Token[]
+}
+
+interface TopAstraHolderResponse {
+	hasNextPage: boolean
+	nextPageParams: {
+		offset: number
+		page: number
+	}
+	result: AstraHolder[]
+}
