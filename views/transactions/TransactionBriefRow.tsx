@@ -56,7 +56,7 @@ export default function TransactionBriefRow({
 								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
 								children={`${ellipseRightText(hash, 24)}`}
 								fontType="Titi"
-								fontSize="money-xs"
+								fontSize="money-2xs"
 							/>
 						</div>
 						<Timer updatedAt={updatedAt} />
@@ -73,7 +73,7 @@ export default function TransactionBriefRow({
 											>
 												From
 											</div>
-											<span className="contrast-color-70 margin-right-lg money money-xs">
+											<span className="contrast-color-70 margin-right-lg money money-2xs">
 												{ellipseBetweenText(from, 6, 6)}
 											</span>
 										</>
@@ -89,7 +89,7 @@ export default function TransactionBriefRow({
 												>
 													To
 												</div>
-												<span className="contrast-color-70 margin-right-lg money money-xs">
+												<span className="contrast-color-70 margin-right-lg money money-2xs">
 													{ellipseBetweenText(to, 6, 6)}
 												</span>
 											</>

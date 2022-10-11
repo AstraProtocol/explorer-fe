@@ -1,15 +1,22 @@
 import clsx from 'clsx'
 
-export default function Tag({ text }: { text: string }) {
+interface Props {
+	text: string
+	fontType?: 'Titi' | 'Manrope'
+	hasArrowRight?: boolean
+}
+
+export default function Tag({ text, fontType = 'Manrope', hasArrowRight = true }: Props) {
 	return (
 		<div
 			className={clsx(
-				'arrow-right',
-				'padding-left-xs padding-right-2xs',
-				'radius-tl-sm radius-bl-sm',
-				'contrast-bg-color-10',
-				'text text-base contrast-color-50',
-				'margin-left-sm'
+				'padding-left-xs ',
+				'contrast-bg-color-10 margin-left-sm',
+				hasArrowRight
+					? 'margin-left-sm arrow-right radius-tl-sm radius-bl-sm padding-right-2xs'
+					: 'radius-sm padding-right-xs',
+				fontType == 'Manrope' && 'text text-base contrast-color-50',
+				fontType == 'Titi' && 'money money-2xs contrast-color-50'
 			)}
 		>
 			{text}

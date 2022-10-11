@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
+import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 
 export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
@@ -32,9 +33,9 @@ export const dateFormat = (local = 'en') => {
 	return local === 'vi' ? process.env.NEXT_PUBLIC_DATE_FORMAT_VI : process.env.NEXT_PUBLIC_DATE_FROMAT_OTHER
 }
 
-export function formatCurrencyValue(value: number | string, symbol = 'VND') {
+export function formatCurrencyValue(value: number | string | undefined, symbol = 'VND') {
 	symbol = symbol || ''
-	if (isNaN(value as number)) return 'NaN'
+	if (isNaN(value as number) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
 	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
 	if (value < 1000) return `${numeral(value).format('0,0')} ${symbol}`
@@ -44,12 +45,13 @@ export function formatCurrencyValue(value: number | string, symbol = 'VND') {
 	return `${numeral(value).format('0,0')} ${symbol}`
 }
 
-export function formatUnitValue(value) {
-	if (isNaN(value)) return 'NaN'
+export function formatGasValue(value) {
+	if (isNaN(value) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0`
-	if (value < 1000) return `${numeral(value).format('0,0')} nano ASA`
-	if (value < 1000000) return `${numeral(value / 10 ** 3).format('0,0')} micro ASA`
-	if (value < 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} ASA`
+	if (value <= 1) return `${numeral(value).format('0,0')} GWEI`
+	if (value <= 1000) return `${numeral(value).format('0,0')} MWEI`
+	if (value <= 1000000) return `${numeral(value / 10 ** 3).format('0,0')} KWEI`
+	if (value <= 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} WEI`
 	return `${numeral(value).format('0,0')}`
 }
 
@@ -62,8 +64,9 @@ export function formatUnitValue(value) {
 //   }
 
 export class LinkMaker {
-	static address(address: string, query: string = '') {
-		return `/address/${address}${query}`
+	static address(address?: string, query: string = '') {
+		if (address) return `/address/${address}${query}`
+		return '/accounts'
 	}
 	/**
 	 *
@@ -91,7 +94,7 @@ export class LinkMaker {
 	 * @param token
 	 * @returns
 	 */
-	static token(token: string) {
+	static token(token?: string) {
 		return `/token/${token}`
 	}
 }

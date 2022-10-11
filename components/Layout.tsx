@@ -1,10 +1,12 @@
 import API_LIST from 'api/api_list'
+import clsx from 'clsx'
 import React, { ReactNode, useEffect } from 'react'
 import { setAstraSummary, setValidatorSummary } from 'slices/commonSlice'
 import useSWR from 'swr'
 import { selectTheme } from '../slices/themeSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import Footer from './Footer'
+import styles from './Layout.module.scss'
 import Navbar from './Navbar'
 
 type Props = {
@@ -45,9 +47,9 @@ const Layout: React.FC<Props> = props => {
 	}, [validatorSummary])
 
 	return (
-		<div className={theme} style={{ minHeight: '100vh' }}>
+		<div className={clsx(theme, styles.layoutContainer)}>
 			<Navbar />
-			<div className="layout">{props.children}</div>
+			<div className={styles.layout}>{props.children}</div>
 			<Footer />
 		</div>
 	)
