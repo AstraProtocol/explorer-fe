@@ -7,8 +7,8 @@ const API_LIST = {
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
 	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
 	ALL_HOLDERS: 'evm_/api/v1?module=account&action=getTopAddressesBalance', // &page=1&offset=20
-
 	ALL_TRANSACTIONS: '/transactions',
+
 	TRANSACTIONS: '/transactions/',
 	EVM_TRANSACTION_DETAIL: '/api/v1?module=transaction&action=gettxinfo&txhash=', // call axios
 	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
@@ -22,7 +22,12 @@ const API_LIST = {
 	MARKET_PRICE: 'https://api.tiki.vn/sandseel/api/v2/public/markets/astra/summary',
 	COMMON_STATS: 'evm_/api/v1/common-stats',
 	ESTIMATE_COUNTED_INFO: 'evm_/api/v1/estimate-counted-info',
-	GAS_AVG: 'evm_/api/v1/gas-price-oracle'
+	GAS_AVG: 'evm_/api/v1/gas-price-oracle',
+
+	ADDRESS_COUNTER: 'evm_/api/v1?module=account&action=getaddresscounters', // address=?
+	ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?
+	ADDRESS_TRANSACTION: 'http://128.199.238.171:8080/api/v1/accounts',
+	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=tokentx' // address=?
 }
 
 export default API_LIST

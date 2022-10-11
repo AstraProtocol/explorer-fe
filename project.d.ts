@@ -272,6 +272,29 @@ interface AstraHolder {
 	txnCount: number
 }
 
+interface TokenTransfer {
+	value: string
+	blockHash: string
+	blockNumber: string
+	confirmations: string
+	contractAddress: string
+	cumulativeGasUsed: string
+	from: string
+	gas: string
+	gasPrice: string
+	gasUsed: string
+	hash: string
+	input: string
+	logIndex: string
+	nonce: string
+	timeStamp: string
+	to: string
+	tokenDecimal: string
+	tokenName: string
+	tokenSymbol: string
+	transactionIndex: string
+}
+
 interface UseTokenHookData {
 	result: Token[]
 	hasNextPage: boolean
@@ -280,6 +303,21 @@ interface UseTokenHookData {
 interface UseAstraHolderData {
 	result: AstraHolder[]
 	hasNextPage: boolean
+}
+
+interface UseAddressTransactionData {
+	result: any[]
+	pagination: Pagination
+}
+
+interface UseAddressTokenTransferData {
+	result: TokenTransfer[]
+	hasNextPage: boolean
+}
+
+interface UseAddressBalanceData {
+	balance: string
+	lastBalanceUpdate: number
 }
 
 interface TokenResponse {
@@ -294,4 +332,23 @@ interface TopAstraHolderResponse {
 		page: number
 	}
 	result: AstraHolder[]
+}
+
+interface AddressCounterResponse {
+	gasUsageCount: number
+	tokenTransferCount: number
+	transactionCount: number
+	validationCount: number
+}
+
+interface AddressBalanceResponse {
+	message: string
+	result: UseAddressBalanceData
+	status: string
+}
+
+interface AddressTokenTransferResponse {
+	message: string
+	result: TokenTransfer[]
+	status: string
 }

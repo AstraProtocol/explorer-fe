@@ -13,7 +13,7 @@ type TransactionTabsProps = {
 	input?: string
 }
 
-const Transactions = ({ rows }: { rows: TransactionRowProps[] }) => {
+export const Transactions = ({ rows }: { rows: TransactionRowProps[] }) => {
 	return (
 		<div>
 			{!rows || rows.length == 0 ? (

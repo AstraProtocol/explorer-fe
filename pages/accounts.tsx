@@ -1,12 +1,12 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { Breadcumbs, PaginationLite } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
-import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
+import { LinkMaker } from 'utils/helper'
 import HolderRow from 'views/accounts/HolderRow'
 import useAccounts from 'views/accounts/hook/useAccounts'
 import Layout from '../components/Layout'
@@ -25,7 +25,7 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
-					<PageTitle>Astra Address</PageTitle>
+					<Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.address() }]} />
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</Row>
 				<RowTitle

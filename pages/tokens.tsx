@@ -1,13 +1,13 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { Breadcumbs, PaginationLite } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
-import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { NextPage } from 'next'
 // import {Pagination} from '@astraprotocol/astra-ui'
 import Head from 'next/head'
 import React, { useState } from 'react'
+import { LinkMaker } from 'utils/helper'
 import useTokens from 'views/tokens/hook/useTokens'
 import TokenRow from 'views/tokens/TokenRow'
 import Layout from '../components/Layout'
@@ -26,7 +26,7 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
-					<PageTitle>Tokens</PageTitle>
+					<Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.token() }]} />
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</Row>
 				<RowTitle

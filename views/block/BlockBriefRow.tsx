@@ -50,7 +50,7 @@ export default function BlockBriefRow({
 							<span className={clsx('contrast-color-30 text text-sm padding-right-2xs')}>
 								Block Proposer
 							</span>
-							<span className="contrast-color-70 money money-xs">
+							<span className="contrast-color-70 money money-2xs">
 								{proposerName} ({ellipseBetweenText(proposerAddress, 6, 6)})
 							</span>
 							{/* <DotSpace /> */}

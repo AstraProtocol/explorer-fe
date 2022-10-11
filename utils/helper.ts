@@ -34,6 +34,7 @@ export const dateFormat = (local = 'en') => {
 
 export function formatCurrencyValue(value: number | string, symbol = 'VND') {
 	symbol = symbol || ''
+	if (!value) return 'NaN'
 	if (isNaN(value as number)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
 	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
@@ -44,12 +45,14 @@ export function formatCurrencyValue(value: number | string, symbol = 'VND') {
 	return `${numeral(value).format('0,0')} ${symbol}`
 }
 
-export function formatUnitValue(value) {
+export function formatGasValue(value) {
+	if (!value) return 'NaN'
 	if (isNaN(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0`
-	if (value < 1000) return `${numeral(value).format('0,0')} nano ASA`
-	if (value < 1000000) return `${numeral(value / 10 ** 3).format('0,0')} micro ASA`
-	if (value < 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} ASA`
+	if (value <= 1) return `${numeral(value).format('0,0')} GWEI`
+	if (value <= 1000) return `${numeral(value).format('0,0')} MWEI`
+	if (value <= 1000000) return `${numeral(value / 10 ** 3).format('0,0')} KWEI`
+	if (value <= 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} WEI`
 	return `${numeral(value).format('0,0')}`
 }
 
@@ -62,8 +65,9 @@ export function formatUnitValue(value) {
 //   }
 
 export class LinkMaker {
-	static address(address: string) {
-		return `/address/${address}`
+	static address(address?: string) {
+		if (address) return `/address/${address}`
+		return '/accounts'
 	}
 	/**
 	 *
@@ -91,7 +95,7 @@ export class LinkMaker {
 	 * @param token
 	 * @returns
 	 */
-	static token(token: string) {
+	static token(token?: string) {
 		return `/token/${token}`
 	}
 }

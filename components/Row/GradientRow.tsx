@@ -4,16 +4,19 @@ import RowType from './RowType'
 import styles from './style.module.scss'
 
 interface Props {
-	children: React.ReactNode
+	children: React.ReactNode | React.ReactNode[]
 	type: 'success' | 'error'
-	classes?: string[]
+	classes?: string
+	style?: any
 	gradient?: 'normal' | 'transparent'
 }
 
-const GradientRow = ({ children, type, classes = ['radius-lg'], gradient = 'normal' }: Props) => {
+const GradientRow = ({ style, children, type, classes = 'radius-lg', gradient = 'normal' }: Props) => {
+	// const arrayChildren = React.Children.toArray(children)
 	return (
 		<div
-			className={clsx(styles.row, styles.blockRow, styles.gradientRow, ...classes, {
+			style={style}
+			className={clsx(styles.row, styles.blockRow, styles.gradientRow, classes, {
 				[styles.gradientRowError]: type === 'error' && gradient === 'normal',
 				[styles.gradientRowSuccess]: type === 'success' && gradient === 'normal',
 

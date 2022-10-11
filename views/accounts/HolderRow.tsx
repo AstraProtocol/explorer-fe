@@ -12,8 +12,7 @@ export default function HolderRow({ index, account }: Props) {
 	return (
 		<div
 			className={clsx(
-				styles.rowBrief,
-				styles.tokenRow,
+				styles.holderRow,
 				'row padding-left-lg',
 				'padding-right-lg padding-top-sm padding-bottom-sm',
 				'radius-lg',
@@ -34,7 +33,7 @@ export default function HolderRow({ index, account }: Props) {
 			<div
 				className={clsx(
 					styles.borderLeft,
-					'padding-left-lg text-center money money-xs contrast-color-70 block-ver-center col-2'
+					'padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center col-2'
 				)}
 			>
 				{account.txnCount}

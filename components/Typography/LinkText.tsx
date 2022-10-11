@@ -5,12 +5,12 @@ type LinkFont = 'Titi' | 'Manrope'
 interface Props {
 	fontType?: LinkFont
 	children: React.ReactNode
-	className?: string[]
+	classes?: string
 	href: string
 	fontSize?: string
 }
 
-export const LinkText = ({ fontType = 'Manrope', children, className = [], href, fontSize }: Props) => {
+export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSize }: Props) => {
 	return (
 		<Link href={href}>
 			<span
@@ -18,7 +18,7 @@ export const LinkText = ({ fontType = 'Manrope', children, className = [], href,
 					'link',
 					'alert-color-primary ',
 					fontSize || (fontType == 'Titi' ? 'money-sm' : 'text-base'),
-					...className,
+					classes,
 					{
 						'text font-500': fontType === 'Manrope',
 						'money font-500': fontType === 'Titi'

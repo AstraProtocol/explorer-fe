@@ -83,7 +83,7 @@ export default function TransactionRow({
 									backgroundShape="rectangle"
 									color="contrast-color-70"
 									radius="radius-xs"
-									font="money-xs"
+									font="money-2xs"
 								/>
 							)}
 						</div>
@@ -94,7 +94,7 @@ export default function TransactionRow({
 										<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
 											From
 										</span>
-										<span className="contrast-color-70 margin-right-lg money-xs money">
+										<span className="contrast-color-70 margin-right-lg money-2xs money">
 											{ellipseBetweenText(from, 6, 6)}
 										</span>
 									</>
@@ -104,7 +104,7 @@ export default function TransactionRow({
 										<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>
 											To
 										</span>
-										<span className="contrast-color-70 margin-right-lg  money-xs money">
+										<span className="contrast-color-70 margin-right-lg  money-2xs money">
 											{ellipseBetweenText(to, 6, 6)}
 										</span>
 									</>

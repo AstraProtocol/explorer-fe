@@ -9,7 +9,7 @@ interface Props {
 
 const Tag = ({ text, type, classes }: Props) => {
 	return (
-		<span className={clsx(style.tag, style[type], 'money money-xs', 'money-bold', `alert-color-${type}`, classes)}>
+		<span className={clsx(style.tag, style[type], 'money money-2xs money-bold', `alert-color-${type}`, classes)}>
 			{text}
 		</span>
 	)

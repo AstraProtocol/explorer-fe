@@ -36,8 +36,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 					icon={Icon.Recovery}
 					title="Average Block Time"
 				/>
-				{/* </div>
-			<div className={clsx('col col-6')}> */}
+
 				<StaticsCard
 					content={estimateCountedData?.total_transactions}
 					contentClasses="money-2sm"
@@ -54,8 +53,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 					icon={Icon.Database}
 					title="Total Blocks"
 				/>
-				{/* </div>
-			<div className={clsx('col col-6')}> */}
+
 				<StaticsCard
 					content={estimateCountedData?.wallet_addresses}
 					contentClasses="money-2sm"

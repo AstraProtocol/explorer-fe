@@ -1,3 +1,4 @@
+import Container from 'components/Container'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React from 'react'
@@ -11,7 +12,12 @@ const Home: React.FC<NextPage> = _ => {
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
-			<div className="block-center text text-2xl padding-xl">404 | This page could not be found.</div>
+			<Container>
+				<div className="text text-2xl padding-xl">
+					<h1>404</h1> <br />
+					<h4>This page could not be found.</h4>
+				</div>
+			</Container>
 		</Layout>
 	)
 }

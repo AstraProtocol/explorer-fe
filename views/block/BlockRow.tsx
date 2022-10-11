@@ -87,7 +87,7 @@ export default function BlockRow({
 							<Timer updatedAt={updatedAt} />
 						</div>
 
-						<div className="money money-xs contrast-color-70 block-ver-center">{transactions}</div>
+						<div className="money money-2xs contrast-color-70 block-ver-center">{transactions}</div>
 					</>
 				)}
 			</div>
