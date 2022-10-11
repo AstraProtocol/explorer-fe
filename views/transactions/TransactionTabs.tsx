@@ -45,7 +45,6 @@ export default function TransactionTabs({
 	const { rows: internalTransactionRows } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})
-
 	const _tabChange = (tabId: string) => {
 		setTabId(tabId)
 	}
@@ -97,7 +96,7 @@ export default function TransactionTabs({
 	}
 	return (
 		<BackgroundCard>
-			<Tabs tabs={tabs} contents={contents} tabChange={_tabChange}></Tabs>
+			<Tabs tabs={tabs} contents={contents} tabChange={_tabChange}></Tabs>\
 		</BackgroundCard>
 	)
 }

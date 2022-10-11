@@ -15,7 +15,7 @@ interface Props {
 
 const StaticsCard = ({ icon, title, content, classes, contentClasses }: Props) => (
 	<div className={clsx(styles.staticsCard, classes)}>
-		<Row className={'block-ver-center'}>
+		<Row classes={'block-ver-center'}>
 			<div className={clsx(styles.iconBlock, 'block-center')}>
 				{/* <span className={icon}></span> */}
 				<Image alt={icon} src={`/images/icons/${icon}.svg`} width={48} height={48} />

@@ -1,0 +1,33 @@
+.rowBrief {
+	display: flex;
+	align-items: center;
+	.countIndex {
+		display: flex;
+		align-items: center;
+	}
+	.content {
+		width: 100%;
+		.info {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+}
+
+.tokenRow {
+	background: rgba(var(--contrast-color-theme--raw), 0.05);
+	border: 1px solid rgba(var(--contrast-color-theme--raw), 0.05);
+	backdrop-filter: blur(42px);
+
+	.currency {
+		color: var(--contrast-color-theme-70);
+	}
+}
+.borderLeft {
+	border-left: 1px solid rgba(var(--contrast-color-theme--raw), 0.05);
+}
+
+.topRow {
+	display: flex;
+	justify-content: space-between;
+}

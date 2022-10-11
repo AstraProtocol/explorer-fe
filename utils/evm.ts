@@ -51,7 +51,6 @@ export const evmInternalTransactionType = (type: string) => {
 			return type
 	}
 }
-
 export const isEvmAddress = (address: string) => {
 	return address && address.startsWith('0x')
 }

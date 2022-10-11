@@ -77,13 +77,60 @@ export class LinkMaker {
 
 	/**
 	 *
-	 * @param blockNumber empty -> block homepage
+	 * @param hash
+	 * @param query
 	 * @returns
 	 */
 	static transaction(hash?: string, query: string = '') {
 		hash = hash ? `/${hash}${query}` : ''
 		return `/tx${hash}`
 	}
+
+	/**
+	 *
+	 * @param token
+	 * @returns
+	 */
+	static token(token: string) {
+		return `/token/${token}`
+	}
+}
+
+/**
+ * sort element of array follow a sorted array value
+ * ex: items = [{a: 1}, {a: 3}, {b:5}]
+ *     attr = a
+ *     arr = [5,1,3]
+ * =====> [{a: 5}, {a: 1}, {b:3}]
+ * @param items array items
+ * @param attr  attribute of one item of items
+ * @param arr array value of attr need sort
+ * @returns
+ */
+export const sortArrayFollowValue = (items: any[], attr: string, arr: string[]) => {
+	let newItems = []
+	for (let value of arr) {
+		const _items = items.filter(item => item[attr] === value)
+		if (_items.length > 0) {
+			newItems = newItems.concat(_items)
+		}
+	}
+	return newItems
+}
+
+/**
+ * cat dog ==> Cat Dog
+ * @param text
+ * @returns
+ */
+export const upperCaseFirstLetterOfWord = (text: string) => text?.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase())
+
+export const convertURLQueryToObject = (path: string): { [key: string]: string } => {
+	const query = path.split('?')[1]
+	if (!query) {
+		return {}
+	}
+	return JSON.parse('{"' + decodeURI(query).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
 
 /**

@@ -177,7 +177,6 @@ interface EVMTransferItem {
 	tokenName: string
 	tokenSymbol: string
 }
-
 interface EvmLog {
 	address: string
 	data: string
