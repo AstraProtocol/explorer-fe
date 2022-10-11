@@ -149,4 +149,3 @@ interface Proposer {
 	powerPercentage: string
 	cumulativePowerPercentage: string
 }
-

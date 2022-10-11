@@ -66,6 +66,8 @@ export interface TransactionDetail {
 	validatorDstAddress?: string
 	revertReason?: string
 	logs?: EvmLog[]
+}
+
 export enum CardInfoLabels {
 	Transaction_Hash = 'Transaction Hash:',
 	Transaction_Cosmos = 'Transaction Cosmos:',

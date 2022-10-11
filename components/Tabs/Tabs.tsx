@@ -34,7 +34,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tab
 	return (
 		<>
 			<Row
-				className={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
+				classes={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
 					'border border-bottom-base': headerBorder
 				})}
 			>
