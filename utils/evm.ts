@@ -51,3 +51,22 @@ export const evmInternalTransactionType = (type: string) => {
 			return type
 	}
 }
+
+export const isEvmAddress = (address: string) => {
+	return address && address.startsWith('0x')
+}
+
+/**
+ * https://ethereum.stackexchange.com/questions/3364/encoding-decoding-contract-abi-data
+ * methodid is first 4 bytes
+ * @param data
+ */
+export const evmMethodId = (data: string) => {
+	if (!data) {
+		return ''
+	}
+	if (data.startsWith('0x')) {
+		return data.slice(0, 10)
+	}
+	return data.slice(0, 8)
+}

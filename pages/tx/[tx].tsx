@@ -1,6 +1,7 @@
 import { Breadcumbs } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
+import { AxiosError } from 'axios'
 import CardInfo from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Typography from 'components/Typography'
@@ -50,6 +51,7 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 					type={data.type}
 					transactions={data?.tabTokenTransfers}
 					input={data?.rawInput}
+					logs={data?.logs}
 				/>
 			</Container>
 		</Layout>
@@ -87,8 +89,10 @@ export async function getServerSideProps({ query }) {
 		//remove empty attribute
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
-	} catch (e) {
-		console.log('error api', `${API_LIST.TRANSACTIONS}${tx}`, e)
+	} catch (e: unknown) {
+		if (e instanceof AxiosError) {
+			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+		}
 		return {
 			redirect: {
 				destination: '/404',

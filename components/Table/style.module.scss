@@ -1,25 +1,57 @@
+$border: 1px solid rgba(var(--contrast-color-theme--raw), 0.05);
 .table {
-	box-sizing: border-box;
-
-	background: var(--border-color);
-	// border: 1px solid rgba(255, 255, 255, 0.1);
-	// border-radius: 8px;
-	border-collapse: collapse;
-
+	border-collapse: inherit;
 	th,
 	td {
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		padding: 16px 24px;
+		border-bottom: $border;
+		border-left: $border;
+		padding: var(--offset-md) var(--offset-lg);
+		background: var(--border-color);
+		&:last-child {
+			border-right: $border;
+		}
+	}
+	th {
+		border-top: $border;
 	}
 }
 
 .tableInverted {
-	tr {
-		display: block;
-		float: left;
+	display: inline-flex;
+	thead {
+		display: flex;
+		flex-flow: column;
+		th {
+			display: block;
+			text-align: left;
+			&:first-child {
+				border-top: $border;
+			}
+			&:last-child {
+				border-right: unset;
+			}
+			border-top: unset;
+			border-right: unset;
+		}
 	}
-	th,
-	td {
-		display: block;
+	tbody {
+		display: flex;
+		tr {
+			display: flex;
+			flex-flow: column;
+			td {
+				&:first-child {
+					border-top: $border;
+				}
+				&:last-child {
+					border-right: unset;
+				}
+			}
+			&:last-child {
+				td {
+					border-right: $border;
+				}
+			}
+		}
 	}
 }

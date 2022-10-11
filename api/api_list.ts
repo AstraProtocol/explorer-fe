@@ -12,6 +12,8 @@ const API_LIST = {
 	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
 	COSMOS_TRANSACTION: '/api/v1?module=transaction&action=getTxCosmosInfo&txhash=', // call axios
 
+	ABI: '/api/v1?module=contract&action=getabi&address=',
+
 	VALIDATORS: 'http://128.199.238.171:8080/api/v1/validators',
 
 	MARKET_HISTORY_PRICE: 'evm_/api/v1/market-history-chart',

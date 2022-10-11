@@ -1,37 +1,76 @@
 import clsx from 'clsx'
 import styles from './style.module.scss'
 
+/**
+ * column-key: value
+ */
+export interface RowData {
+	[key: string]: React.ReactNode
+}
+
 interface Props {
-	rowKey: string
-	data: any[]
-	title?: string
+	rows: RowData[]
+	id?: string
 	inverted?: boolean
-	dataSource: TableDataSource[]
+	colums: Colum[]
 }
 
-export interface TableDataSource {
+export type RowRender = (value: React.ReactNode, index: number) => React.ReactNode
+
+/**
+ * @param key key of column
+ * @param title title of column
+ * @param render custom render function
+ */
+export interface Colum {
 	key: string
-	title: string
-	dataIndex: string
-	render: (value: any, object: any, index) => JSX.Element
+	title: React.ReactNode
+	render?: RowRender
 }
 
-const Table = ({ rowKey, title, data, dataSource, inverted = false }: Props) => {
+const Table = ({ rows, colums, inverted = false, id = 'table' }: Props) => {
+	const _defaultRender = (value: React.ReactNode, index: number, rowRender: RowRender) => {
+		if (rowRender) {
+			return rowRender(value, index)
+		}
+		return <span>{value}</span>
+	}
 	return (
-		<table className={clsx(styles.table, inverted && styles.tableInverted)}>
-			<caption>{title}</caption>
-			<tr>
-				{dataSource.map((d: TableDataSource) => (
-					<th key={d.key}>{d.title}</th>
-				))}
-			</tr>
-			{data.map((d: any, index: number) => (
-				<tr key={d[rowKey]}>
-					{dataSource.map((k: TableDataSource) => (
-						<td key={`${rowKey}-${d[rowKey]}-${k.key}`}>{k.render(d[k.dataIndex], d, index)}</td>
+		<table className={clsx(styles.table, 'text text-base', { [styles.tableInverted]: inverted })}>
+			<thead>
+				<tr>
+					{colums.map((cell: Colum, index) => (
+						<th
+							key={cell.key}
+							className={clsx('text-bold', {
+								'radius-tl-sm': index === 0,
+								'radius-tr-sm': !inverted && index === colums.length - 1,
+								'radius-bl-sm': inverted && index === colums.length - 1
+							})}
+						>
+							{cell.title}
+						</th>
 					))}
 				</tr>
-			))}
+			</thead>
+			<tbody>
+				{rows.map((row, rowIdx) => (
+					<tr key={`${id}-${rowIdx}`}>
+						{colums.map((column: Colum, colIdx) => (
+							<td
+								key={`${id}-${rowIdx}-${colIdx}`}
+								className={clsx({
+									'radius-bl-sm': !inverted && rowIdx === rows.length - 1 && colIdx === 0,
+									'radius-br-sm': rowIdx === rows.length - 1 && colIdx === colums.length - 1,
+									'radius-tr-sm': inverted && rowIdx === rows.length - 1 && colIdx === 0
+								})}
+							>
+								{_defaultRender(row[column.key], rowIdx, column.render)}
+							</td>
+						))}
+					</tr>
+				))}
+			</tbody>
 		</table>
 	)
 }

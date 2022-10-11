@@ -33,3 +33,21 @@
 		transform: translateX(-50%);
 	}
 }
+
+.verifyContract {
+	display: flex;
+	align-items: center;
+	padding: 6px 16px;
+	min-height: 48px;
+	background: rgba(255, 200, 42, 0.16);
+	border: 1px solid rgba(255, 200, 42, 0.1);
+	border-radius: 8px;
+	a {
+		color: #2295ff;
+	}
+}
+
+.hr {
+	margin: 60px 0px;
+	border-top: 1px solid rgba(var(--contrast-color-theme--raw), 0.2);
+}

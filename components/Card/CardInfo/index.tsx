@@ -5,6 +5,7 @@ import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
 import Tag from 'components/Typography/Tag'
 import BackgroundCard from '../Background/BackgroundCard'
+import Decode, { DecodeProps } from './Components/Decode'
 import RawInput from './Components/RawInput'
 import Transfers from './Components/Transfers'
 import styles from './style.module.scss'
@@ -24,28 +25,45 @@ export type Content = {
 		value?: number
 		token?: string
 	}
+	decode?: DecodeProps
 }
 
 export type CardRowItem = {
 	label?: string
-	type: 'copy' | 'link-copy' | 'label' | 'link' | 'balance' | 'text' | 'time' | 'transfer' | 'raw-input' | 'nonce'
+	type:
+		| 'copy'
+		| 'link-copy'
+		| 'label'
+		| 'link'
+		| 'balance'
+		| 'text'
+		| 'time'
+		| 'transfer'
+		| 'raw-input'
+		| 'nonce'
+		| 'decode'
 	contents: Content[]
 }
 
 type CardInfoProps = {
 	classes?: string[]
 	items?: CardRowItem[]
+	topElement?: React.ReactNode
+	background?: boolean
 }
 
-export default function CardInfo({ items, classes = [] }: CardInfoProps) {
+export default function CardInfo({ items, classes = [], topElement, background = true }: CardInfoProps) {
 	return (
-		<BackgroundCard classes={`margin-bottom-md ${classes.join(' ')}`}>
+		<BackgroundCard
+			classes={`margin-bottom-md ${classes.join(' ')}`}
+			backgroundColor={background}
+			border={background}
+		>
+			{topElement && topElement}
 			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
 				{items.map(({ label, type, contents }, index) => (
 					<div key={label + index} className={clsx(styles.cardRow, 'row margin-bottom-sm')}>
-						<div
-							className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center padding-bottom-sm')}
-						>
+						<div className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm')}>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 							{type === 'nonce' && <Tag text={'Position'} />}
 						</div>
@@ -66,7 +84,10 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 										</div>
 									) : null}
 									{type === 'text' ? (
-										<span className="money money-sm contrast-color-100">
+										<span
+											className="money money-sm contrast-color-100"
+											style={{ wordBreak: 'break-all' }}
+										>
 											{content.value} {content.suffix && content.suffix}
 										</span>
 									) : null}
@@ -123,6 +144,7 @@ export default function CardInfo({ items, classes = [] }: CardInfoProps) {
 									) : null}
 									{type === 'transfer' ? <Transfers content={content} /> : null}
 									{type === 'raw-input' ? <RawInput text={content.value as string} /> : null}
+									{type === 'decode' ? <Decode {...content.decode} /> : null}
 								</div>
 							))}
 						</div>

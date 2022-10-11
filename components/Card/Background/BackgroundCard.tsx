@@ -6,11 +6,18 @@ interface Props {
 	children: React.ReactNode
 	classes?: string
 	backgroundColor?: boolean
+	border?: boolean
 }
 
-const BackgroundCard = ({ children, classes, backgroundColor = true }: Props) => {
+const BackgroundCard = ({ children, classes, backgroundColor = true, border = true }: Props) => {
 	return (
-		<div className={clsx(styles.backgroundCard, classes, 'radius-lg', { [styles.background]: backgroundColor })}>
+		<div
+			className={clsx(classes, 'radius-lg', {
+				[styles.background]: backgroundColor,
+				'border border-base': border,
+				[styles.backgroundCard]: !backgroundColor
+			})}
+		>
 			{children}
 		</div>
 	)
