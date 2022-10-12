@@ -1,7 +1,8 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
 import Link from 'next/link'
-import { LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export interface SearchResultViewItem {
@@ -18,6 +19,7 @@ type ResultViewProps = {
 
 export default function ResultView({ item }: ResultViewProps) {
 	const { time, type, value, status, linkValue } = item
+	const { isMobile } = useMobileLayout(732)
 
 	const _link = () => {
 		if (type === 'Block') {
@@ -33,8 +35,14 @@ export default function ResultView({ item }: ResultViewProps) {
 	return (
 		<Link href={_link()}>
 			<div className={clsx(styles.item, 'money money-sm padding-left-xs pointer')}>
-				<div className={clsx('text-bold')}>{value}</div>
-				<div className={clsx(styles.viewMoreInfo, 'margin-top-xs')}>
+				<div className={clsx('text-bold')}>{isMobile ? ellipseBetweenText(value, 10, 10) : value}</div>
+				<div
+					className={clsx(
+						styles.viewMoreInfo,
+						'margin-top-xs sm-wrap border border-bottom-base',
+						'margin-bottom-xs padding-bottom-xs'
+					)}
+				>
 					<div>
 						{status && <span>Status: {status}</span>}
 						{time && <Typography.Time time={time} />}
@@ -43,7 +51,7 @@ export default function ResultView({ item }: ResultViewProps) {
 						className={clsx(
 							styles.viewTag,
 							'text-xs text-bold',
-							'padding-left-sm padding-right-sm',
+							'padding-left-sm padding-right-sm sm-margin-top-xs md-margin-bottom-xs',
 							'border border-base',
 							'block-center'
 						)}

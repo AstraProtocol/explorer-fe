@@ -86,9 +86,13 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	}
 	return (
 		<ModalWrapper open={open}>
-			<div className={clsx(styles.searchModal, 'col-7 radius-2xl padding-lg')} ref={_searchWrapperRef}>
+			<div className={clsx(styles.searchModal, 'col-7 md-full radius-2xl padding-lg')} ref={_searchWrapperRef}>
 				<div className={clsx(styles.inputWrapper, 'radius-base', 'padding-sm', 'border border-lg')}>
-					<input className={clsx('text-base ', styles.input)} ref={_inputRef} onChange={_inputChange} />
+					<input
+						className={clsx('text-base padding-right-lg', styles.input)}
+						ref={_inputRef}
+						onChange={_inputChange}
+					/>
 					<div className={clsx(styles.inputPrefix)}>
 						{_searchStatus !== SearchStatusEnum.DONE && _search ? (
 							<Spinner />
