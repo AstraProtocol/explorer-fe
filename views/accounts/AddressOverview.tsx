@@ -85,9 +85,14 @@ const AddressOverview = ({ address }: Props) => {
 				<div className="">
 					<span className="text text-base contrast-color-50">Last balance updated:</span>
 					<br />
-					<LinkText href={LinkMaker.block(addressBalance.lastBalanceUpdate)}>
-						{addressBalance.lastBalanceUpdate}
-					</LinkText>
+
+					{addressBalance.lastBalanceUpdate ? (
+						<LinkText href={LinkMaker.block(addressBalance.lastBalanceUpdate)}>
+							{addressBalance.lastBalanceUpdate}
+						</LinkText>
+					) : (
+						<span className="text text-base">NaN</span>
+					)}
 				</div>
 			</Row>
 		</BackgroundCard>
