@@ -16,7 +16,7 @@ export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSi
 			<span
 				className={clsx(
 					'link',
-					'alert-color-primary ',
+					'link-color-useful ',
 					fontSize || (fontType == 'Titi' ? 'money-sm' : 'text-base'),
 					classes,
 					{

@@ -1,12 +1,16 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import ModalWrapper from 'components/Modal/ModalWrapper'
+import useOutsideElement from 'hooks/useOutsideElement'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 import Logo from '../Logo'
 import LiveIcon from './LiveIcon'
+import MoibleNavigation from './MobileNavigation'
 import Navigation, { MenuItem } from './Navigation'
 import styles from './style.module.scss'
 import SwitchTheme from './SwitchTheme'
 
-const items: MenuItem[] = [
+export const items: MenuItem[] = [
 	{
 		id: '1',
 		label: 'Blocks',
@@ -19,7 +23,7 @@ const items: MenuItem[] = [
 			{
 				id: '1.2',
 				label: 'Uncle',
-				link: '/blocks'
+				link: '/uncle'
 			},
 			{
 				id: '1.3',
@@ -84,7 +88,6 @@ const items: MenuItem[] = [
 	{
 		id: '5',
 		label: 'Astra main',
-		background: true,
 		prefixIcon: <LiveIcon />,
 		submenus: [
 			{
@@ -115,10 +118,21 @@ const items: MenuItem[] = [
 	// 		}
 	// 	]
 	// }
+	// {
+	// 	id: '7',
+	// 	label: 'Single Menu',
+	// 	link: '/accounts'
+	// }
 ]
 
 export default function Navbar() {
 	const [shadow, setShadow] = useState(false)
+	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false)
+	const [load, setLoad] = useState(false)
+
+	const _searchWrapperRef = useRef<HTMLDivElement>(null)
+	useOutsideElement(_searchWrapperRef, () => setShowHamburgerMenu(false))
+
 	useEffect(() => {
 		function scroll() {}
 		window.addEventListener('scroll', _ => {
@@ -134,17 +148,54 @@ export default function Navbar() {
 		}
 	}, [shadow])
 
+	useEffect(() => {
+		setTimeout(() => setLoad(showHamburgerMenu), 100)
+	}, [showHamburgerMenu])
+
 	return (
-		<nav className={clsx(styles.navbar, 'margin-bottom-sm', { 'shadow-xs': shadow })}>
-			<div className={clsx(styles.container, 'margin-auto')}>
-				<div className={styles.left}>
-					<Logo type="transparent" />
+		<>
+			<ModalWrapper open={showHamburgerMenu}>
+				<div
+					className={clsx(styles.hamburgerMenuContainer, 'padding-lg hamburger-enter', {
+						'hamburger-enter-active': load
+					})}
+					ref={_searchWrapperRef}
+				>
+					<div className={styles.close}>
+						<span
+							onClick={() => {
+								setLoad(false)
+								setTimeout(() => setShowHamburgerMenu(false), 500)
+							}}
+							className="close-icon contrast-color-100 pointer"
+						></span>
+					</div>
+					<div className={styles.content}>
+						<MoibleNavigation items={items} />
+					</div>
 				</div>
-				<div className={styles.right}>
-					<Navigation items={items} />
-					<SwitchTheme />
+			</ModalWrapper>
+			<nav className={clsx(styles.navbar, 'margin-bottom-sm', { 'shadow-xs': shadow })}>
+				<div className={clsx(styles.container, 'margin-auto')}>
+					<div className={styles.hamburgerMenuIcon}>
+						<div className="padding-left-lg pointer">
+							<Image
+								onClick={() => setShowHamburgerMenu(true)}
+								alt="Astra Explorer"
+								src={'/images/icons/hamburger_icon.svg'}
+								layout="fill"
+							/>
+						</div>
+					</div>
+					<div className={styles.left}>
+						<Logo type="transparent" />
+					</div>
+					<div className={styles.right}>
+						<Navigation items={items} />
+						<SwitchTheme />
+					</div>
 				</div>
-			</div>
-		</nav>
+			</nav>
+		</>
 	)
 }

@@ -5,6 +5,7 @@ import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
+import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import { CardInfoLabels, TransactionDetail } from '../utils'
 
@@ -146,8 +147,14 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								contents: [
 									{
 										transfer: {
-											from: ellipseBetweenText(transfer.fromAddress, 6, 6),
-											to: ellipseBetweenText(transfer.fromAddress, 6, 6),
+											from: evmAddressName(
+												transfer.fromAddressName,
+												ellipseBetweenText(transfer.fromAddress, 6, 6)
+											),
+											to: evmAddressName(
+												transfer.toAddressName,
+												ellipseBetweenText(transfer.fromAddress, 6, 6)
+											),
 											value: Number(formatEther(transfer.amount)),
 											token: transfer.tokenSymbol
 										}
@@ -287,7 +294,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 			//remove label of token transfer
 			let hashTransfer = false
 			mainItems.map(item => {
-				if (item.label === CardInfoLabels.Transaction_Type) {
+				if (item.label === CardInfoLabels.Tokens_Transferred) {
 					if (!hashTransfer) {
 						hashTransfer = true
 					} else {

@@ -176,6 +176,8 @@ interface EVMTransferItem {
 	tokenContractAddress: string
 	tokenName: string
 	tokenSymbol: string
+	fromAddressName: string
+	toAddressName: string
 }
 interface EvmLog {
 	address: string
@@ -223,6 +225,8 @@ interface InternalTransactionItem {
 	transactionHash: string
 	type: string
 	value: string
+	fromAddressName: string
+	toAddressName: string
 }
 interface InternalTransactionReponse {
 	message: 'OK' | string

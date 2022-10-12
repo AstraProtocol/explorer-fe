@@ -1,5 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, CryptoIconNames } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -131,7 +131,9 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 														from={''}
 														to={''}
 														value={undefined}
-														valueToken="asa"
+														valueToken={
+															process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames
+														}
 														type={getCosmosType(item?.messages[0]?.type)}
 														newBlock={item.newTransaction}
 														transactionType={item?.messages[0]?.type}

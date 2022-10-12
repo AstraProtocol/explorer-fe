@@ -29,7 +29,9 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 					type: upperCaseFirstLetterOfWord(evmInternalTransactionType(internalItem?.callType)),
 					status: internalItem?.errCode === '',
 					from: internalItem?.from,
-					to: internalItem?.to
+					to: internalItem?.to,
+					fromName: internalItem.fromAddressName,
+					toName: internalItem.toAddressName
 				})
 			}
 		}

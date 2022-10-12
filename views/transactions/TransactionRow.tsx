@@ -5,6 +5,7 @@ import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { TransacionTypeEnum } from 'utils/constants'
+import { evmAddressName } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -23,7 +24,9 @@ export type TransactionRowProps = {
 	fee?: number | string
 	feeToken?: string
 	from?: string
+	fromName?: string
 	to?: string
+	toName?: string
 	transactionType?: TransacionTypeEnum
 	order?: 'end' | 'start' | ''
 	height?: string
@@ -47,21 +50,26 @@ export default function TransactionRow({
 	transactionType,
 	style = 'normal',
 	order,
-	height
+	height,
+	fromName,
+	toName
 }: TransactionRowProps) {
 	const statusText = status ? 'success' : 'error'
 	return (
 		<RowShowAnimation action={newBlock}>
 			<GradientRow
 				type={statusText}
-				classes={[
-					clsx('padding-left-lg padding-right-lg', 'padding-top-xs padding-bottom-xs', styles.rowHeight, {
+				classes={clsx(
+					'padding-left-lg padding-right-lg',
+					'padding-top-xs padding-bottom-xs',
+					styles.rowHeight,
+					{
 						'margin-bottom-xs': style === 'normal',
 						'radius-lg': style === 'normal',
 						// 'border border-bottom-base': style === 'inject' && order === 'end',
 						[styles.borderWidthPadding]: style === 'inject'
-					})
-				]}
+					}
+				)}
 				gradient={style === 'inject' ? 'transparent' : 'normal'}
 			>
 				<div
@@ -72,7 +80,7 @@ export default function TransactionRow({
 						<div>
 							<Typography.LinkText
 								href={LinkMaker.transaction(hash)}
-								className={['margin-right-xs']}
+								classes={'margin-right-xs'}
 								fontType="Titi"
 							>
 								{ellipseRightText(hash, 30)}
@@ -95,7 +103,7 @@ export default function TransactionRow({
 											From
 										</span>
 										<span className="contrast-color-70 margin-right-lg money-2xs money">
-											{ellipseBetweenText(from, 6, 6)}
+											{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
 										</span>
 									</>
 								)}
@@ -105,7 +113,7 @@ export default function TransactionRow({
 											To
 										</span>
 										<span className="contrast-color-70 margin-right-lg  money-2xs money">
-											{ellipseBetweenText(to, 6, 6)}
+											{evmAddressName(toName, ellipseBetweenText(to, 6, 6))}
 										</span>
 									</>
 								)}

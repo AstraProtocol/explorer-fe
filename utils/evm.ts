@@ -70,3 +70,16 @@ export const evmMethodId = (data: string) => {
 	}
 	return data.slice(0, 8)
 }
+
+/**
+ * ex: Solarswap LPs (0x59cebe...bdc231)
+ * @param addressName
+ * @param addresValue
+ * @returns
+ */
+export const evmAddressName = (addressName: string, addresValue: string) => {
+	if (!addressName || !addressName.trim()) {
+		return addresValue
+	}
+	return `${addressName} (${addresValue})`
+}
