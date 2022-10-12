@@ -82,9 +82,11 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 					<div className="text-base text-bold padding-bottom-sm margin-bottom-sm">
 						{items.length} search result:
 					</div>
-					{items.map(item => (
-						<ResultView key={item.value} item={item} />
-					))}
+					<div className={styles.resultScroll}>
+						{items.map(item => (
+							<ResultView key={item.value} item={item} />
+						))}
+					</div>
 				</div>
 			)}
 		</div>

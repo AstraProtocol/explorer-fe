@@ -1,4 +1,4 @@
-import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
+import { Breadcumbs, CryptoIconNames, Pagination } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
@@ -74,7 +74,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										from={''}
 										to={''}
 										value={undefined}
-										valueToken="asa"
+										valueToken={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
 										// labelStatus="Approve"
 										type={getCosmosType(item?.messages[0]?.type)}
 										newBlock={item.newTransaction}

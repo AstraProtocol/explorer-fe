@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIcon, CryptoIconNames, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
@@ -135,7 +135,11 @@ export default function CardInfo({
 									{type === 'balance' ? (
 										<div className="block-center">
 											<TypographyUI.Balance
-												icon={<CryptoIcon name={'asa'} />}
+												icon={
+													<CryptoIcon
+														name={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
+													/>
+												}
 												value={content.value}
 												currency={content.suffix}
 												size="sm"

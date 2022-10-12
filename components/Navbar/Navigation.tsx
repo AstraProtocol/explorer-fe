@@ -7,9 +7,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import useOutsideAlerter from '../../hooks/useOutsideElement'
 import styles from './style.module.scss'
-type MenuType = 'static' | 'locale'
+export type MenuType = 'static' | 'locale'
 
-type SubMenuItem = {
+export type SubMenuItem = {
 	id: string
 	label: string
 	prefix?: JSX.Element
@@ -23,13 +23,12 @@ export type MenuItem = {
 	label?: string
 	link?: string
 	show?: boolean
-	background?: boolean
 	prefixIcon?: React.ReactNode
 	submenus?: SubMenuItem[]
 	type?: MenuType
 }
 
-type NavigationProps = {
+export type NavigationProps = {
 	items: MenuItem[]
 }
 
@@ -102,13 +101,12 @@ export default function Navigation({ items }: NavigationProps) {
 	}
 	return (
 		<ul className={styles.navigation} ref={wrapperRef}>
-			{_menuItems.map(({ link = '', prefixIcon, label, show, id, submenus: sub1, type, background }) => (
+			{_menuItems.map(({ link = '', prefixIcon, label, show, id, submenus: sub1, type }) => (
 				<li
 					key={`${link} + ${label}`}
-					className={clsx(styles.item, 'margin-left-lg', 'block-center', {
-						[styles.background]: background,
-						'padding-left-lg padding-right-lg radius-lg': background,
-						'padding-right-md': !background
+					className={clsx(styles.item, 'margin-left-lg', 'block-center', 'padding-right-lg radius-lg', {
+						[`padding-left-lg ${styles.background}`]: prefixIcon,
+						'padding-right-md padding-left-xs': !prefixIcon
 					})}
 					onClick={event => _showSubMenu(event, [id])}
 				>

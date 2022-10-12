@@ -1,5 +1,7 @@
 @use 'sass:color';
 
+$maxMobileSize: 1200px;
+$backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
 .navbar {
 	width: 100%;
 	position: sticky;
@@ -16,12 +18,15 @@
 		align-items: center;
 		height: 100%;
 	}
+	@media screen and (max-width: $maxMobileSize) {
+		justify-content: unset;
+	}
 }
 
 .navigation {
 	display: flex;
 	.background {
-		background-color: rgba(var(--contrast-color-theme--raw), 0.05);
+		background-color: $backgroundHover;
 	}
 	span[data-text='icon'] {
 		display: inline-flex;
@@ -33,6 +38,9 @@
 
 	.item {
 		position: relative;
+		&:hover {
+			background-color: $backgroundHover;
+		}
 		.show {
 			visibility: visible !important;
 			opacity: 1 !important;
@@ -81,7 +89,7 @@
 			// }
 			.submenu2 {
 				position: absolute;
-				background-color: rgba(var(--contrast-color-theme--raw), 0.05);
+				background-color: $backgroundHover;
 				left: 100%;
 				top: 0;
 				visibility: hidden;
@@ -101,4 +109,58 @@
 			cursor: pointer;
 		}
 	}
+	@media screen and (max-width: $maxMobileSize) {
+		display: none;
+	}
+}
+
+.left {
+	@media screen and (max-width: $maxMobileSize) {
+		width: 100%;
+		justify-content: center;
+		display: flex;
+	}
+}
+
+.hamburgerMenuIcon {
+	display: none;
+	width: 22px;
+	margin-left: 22px;
+	> div {
+		width: 22px;
+		height: 16px;
+		position: relative;
+	}
+	@media screen and (max-width: $maxMobileSize) {
+		display: block;
+	}
+}
+
+.hamburgerMenuContainer {
+	background: radial-gradient(106.61% 108.18% at 0% 100%, rgba(82, 120, 255, 0.2) 0%, rgba(0, 0, 0, 0) 100%), #08080a;
+	max-width: 677px;
+	width: 90%;
+	height: 100%;
+	.close {
+		text-align: right;
+	}
+	.content {
+	}
+
+	.subActive {
+		background-color: $backgroundHover;
+	}
+	.subItem {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&:hover {
+			background-color: $backgroundHover;
+		}
+	}
+}
+.link {
+	display: block;
+	color: var(--contrast-color-theme-100);
+	font-weight: bold;
 }

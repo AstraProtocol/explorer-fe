@@ -25,6 +25,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 	}
 	return (
 		<Provider store={store}>
+			<Head>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+			</Head>
 			<PersistGate loading={'loading'} persistor={persistor}>
 				<NextIntlProvider messages={(pageProps as typeof pageProps & { messages: any }).messages}>
 					<SWRConfig

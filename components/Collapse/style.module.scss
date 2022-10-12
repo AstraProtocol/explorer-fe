@@ -1,0 +1,19 @@
+.collapse {
+	overflow-y: hidden;
+	.content {
+		max-height: 0;
+		transition: max-height 0.15s ease-out;
+
+		a {
+			display: flex;
+		}
+	}
+	.show {
+		max-height: 500px;
+		transition: max-height 0.25s ease-in;
+	}
+	.header {
+		display: flex;
+		align-items: center;
+	}
+}
