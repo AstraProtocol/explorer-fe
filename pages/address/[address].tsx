@@ -18,6 +18,7 @@ const AddressDetailPage: React.FC<Props> = props => {
 	return (
 		<Layout>
 			<Head>
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 				<title>
 					Address {address} - {process.env.NEXT_PUBLIC_TITLE}
 				</title>

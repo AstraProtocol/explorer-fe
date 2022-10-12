@@ -17,7 +17,7 @@ type TransactionTabsProps = {
 	logs?: EvmLog[]
 }
 
-const Transactions = ({ rows, emptyMsg }: { rows: TransactionRowProps[]; emptyMsg: string }) => {
+export const Transactions = ({ rows, emptyMsg }: { rows: TransactionRowProps[]; emptyMsg: string }) => {
 	return (
 		<div>
 			{!rows || rows.length == 0 ? (

@@ -19,11 +19,15 @@ const BackgroundCard = ({
 }: Props) => {
 	return (
 		<div
-			className={clsx(classes, 'radius-lg', {
-				[styles.background]: backgroundColor,
-				'border border-base': border,
-				[styles.backgroundCardBlur]: backgroundCardBlur
-			})}
+			className={clsx(
+				'radius-lg',
+				{
+					[styles.background]: backgroundColor,
+					'border border-base': border,
+					[styles.backgroundCardBlur]: backgroundCardBlur
+				},
+				classes
+			)}
 		>
 			{children}
 		</div>

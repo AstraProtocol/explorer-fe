@@ -1,16 +1,16 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
-import Empty from 'components/Typography/Empty'
-import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
-import TransactionRow from 'views/transactions/TransactionRow'
+import AddressCoinBalanceTab from './tabs/AddressCoinBalanceTab'
+import AddressInternalTransactionTab from './tabs/AddressInternalTransactionTab'
+import AddressTokenTab from './tabs/AddressTokenTab'
 import AddressTokenTransferTab from './tabs/AddressTokenTransferTab'
+import AddressTransactionTab from './tabs/AddressTransactionTab'
 
 interface Props {
 	address: string
 }
 
-const AddressDetailTabs = ({ address }: Props) => {
-	const transactions = []
+const AddressDetailTab = ({ address }: Props) => {
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
 			<Tabs
@@ -23,143 +23,15 @@ const AddressDetailTabs = ({ address }: Props) => {
 					{ title: 'Coin Balance History', id: '5' }
 				]}
 				contents={{
-					'1': (
-						<div>
-							{!transactions || transactions.length == 0 ? (
-								<Empty />
-							) : (
-								<>
-									{transactions?.map((item, index) => {
-										const fee = caculateCosmosAmount(item.fee)
-										return (
-											<TransactionRow
-												key={item.hash}
-												blockNumber={item.blockHeight}
-												updatedAt={item.blockTime}
-												fee={fee.amount}
-												feeToken={fee.denom}
-												status={item.success}
-												hash={item.hash}
-												from={''}
-												to={''}
-												value={undefined}
-												valueToken="asa"
-												type={getCosmosType(item?.messages[0]?.type)}
-												newBlock={item.newTransaction}
-												transactionType={item?.messages[0]?.type}
-												style="inject"
-												order={index === transactions.length - 1 ? 'end' : ''}
-											/>
-										)
-									})}
-								</>
-							)}
-						</div>
-					),
+					'1': <AddressTransactionTab address={address} />,
 					'2': <AddressTokenTransferTab address={address} />,
-					'3': (
-						<div>
-							{!transactions || transactions.length == 0 ? (
-								<Empty />
-							) : (
-								<>
-									{transactions?.map((item, index) => {
-										const fee = caculateCosmosAmount(item.fee)
-										return (
-											<TransactionRow
-												key={item.hash}
-												blockNumber={item.blockHeight}
-												updatedAt={item.blockTime}
-												fee={fee.amount}
-												feeToken={fee.denom}
-												status={item.success}
-												hash={item.hash}
-												from={''}
-												to={''}
-												value={undefined}
-												valueToken="asa"
-												type={getCosmosType(item?.messages[0]?.type)}
-												newBlock={item.newTransaction}
-												transactionType={item?.messages[0]?.type}
-												style="inject"
-												order={index === transactions.length - 1 ? 'end' : ''}
-											/>
-										)
-									})}
-								</>
-							)}
-						</div>
-					),
-					'4': (
-						<div>
-							{!transactions || transactions.length == 0 ? (
-								<Empty />
-							) : (
-								<>
-									{transactions?.map((item, index) => {
-										const fee = caculateCosmosAmount(item.fee)
-										return (
-											<TransactionRow
-												key={item.hash}
-												blockNumber={item.blockHeight}
-												updatedAt={item.blockTime}
-												fee={fee.amount}
-												feeToken={fee.denom}
-												status={item.success}
-												hash={item.hash}
-												from={''}
-												to={''}
-												value={undefined}
-												valueToken="asa"
-												type={getCosmosType(item?.messages[0]?.type)}
-												newBlock={item.newTransaction}
-												transactionType={item?.messages[0]?.type}
-												style="inject"
-												order={index === transactions.length - 1 ? 'end' : ''}
-											/>
-										)
-									})}
-								</>
-							)}
-						</div>
-					),
-					'5': (
-						<div>
-							{!transactions || transactions.length == 0 ? (
-								<Empty />
-							) : (
-								<>
-									{transactions?.map((item, index) => {
-										const fee = caculateCosmosAmount(item.fee)
-										return (
-											<TransactionRow
-												key={item.hash}
-												blockNumber={item.blockHeight}
-												updatedAt={item.blockTime}
-												fee={fee.amount}
-												feeToken={fee.denom}
-												status={item.success}
-												hash={item.hash}
-												from={''}
-												to={''}
-												value={undefined}
-												valueToken="asa"
-												type={getCosmosType(item?.messages[0]?.type)}
-												newBlock={item.newTransaction}
-												transactionType={item?.messages[0]?.type}
-												style="inject"
-												order={index === transactions.length - 1 ? 'end' : ''}
-											/>
-										)
-									})}
-								</>
-							)}
-						</div>
-					)
+					'3': <AddressTokenTab address={address} />,
+					'4': <AddressInternalTransactionTab address={address} />,
+					'5': <AddressCoinBalanceTab address={address} />
 				}}
 			></Tabs>
 		</BackgroundCard>
 	)
 }
 
-export default AddressDetailTabs
+export default AddressDetailTab
