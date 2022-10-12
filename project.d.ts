@@ -252,6 +252,13 @@ interface UseAddressBalanceData {
 	lastBalanceUpdate: number
 }
 
+interface AddressCounterData {
+	gasUsageCount?: number
+	tokenTransferCount?: number
+	transactionCount?: number
+	validationCount?: number
+}
+
 interface UseAddressCoinBalanceHistoryData {
 	result: AddressCoinBalanceHistory[] | []
 	hasNextPage: boolean
@@ -276,10 +283,9 @@ interface TopAstraHolderResponse {
 }
 
 interface AddressCounterResponse {
-	gasUsageCount: number
-	tokenTransferCount: number
-	transactionCount: number
-	validationCount: number
+	message: string
+	result: AddressCounterData
+	status: string
 }
 
 interface AddressBalanceResponse {

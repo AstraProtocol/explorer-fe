@@ -21,7 +21,7 @@ export default function HolderRow({ index, account }: Props) {
 		>
 			<div className={clsx('text text-base contrast-color-70 text-center margin-right-lg')}>{index}</div>
 			<div className={clsx(styles.borderLeft, 'col-5 padding-left-lg block-ver-center')}>
-				<Typography.LinkText href={LinkMaker.address(account.address)} className={['text', 'text-base']}>
+				<Typography.LinkText href={LinkMaker.address(account.address)} classes={'text text-base'}>
 					{account.address}
 				</Typography.LinkText>
 			</div>

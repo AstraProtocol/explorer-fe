@@ -16,7 +16,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			}
 		]
 	}
-	const { data } = useSWR<>(_fetchCondition())
+	const { data } = useSWR<any>(_fetchCondition())
 
 	useEffect(() => {
 		if (data) {

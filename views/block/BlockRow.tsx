@@ -47,11 +47,10 @@ export default function BlockRow({
 					{mine ? (
 						<span className={clsx('money', 'money-sm')}>#{blockNumber}</span>
 					) : (
-						<Typography.LinkText
-							href={LinkMaker.block(blockNumber)}
-							children={`#${blockNumber}`}
-							className={['money', 'money-sm']}
-						/>
+						<Typography.LinkText href={LinkMaker.block(blockNumber)} classes={'money money-sm'}>
+							{' '}
+							#{blockNumber}
+						</Typography.LinkText>
 					)}
 				</div>
 				{mine ? (
@@ -64,9 +63,10 @@ export default function BlockRow({
 							<div>
 								<Typography.LinkText
 									href={LinkMaker.address(proposerAddress)}
-									children={proposerAddress}
-									className={['money', 'money-sm']}
-								/>
+									classes={'money money-sm'}
+								>
+									{proposerAddress}
+								</Typography.LinkText>
 							</div>
 							<div className={clsx('block-ver-center', styles.info)}>
 								<div className="block-ver-center">
