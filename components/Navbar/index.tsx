@@ -167,7 +167,7 @@ export default function Navbar() {
 								setLoad(false)
 								setTimeout(() => setShowHamburgerMenu(false), 500)
 							}}
-							className="close-icon contrast-color-100 pointer"
+							className="icon-close contrast-color-100 pointer"
 						></span>
 					</div>
 					<div className={styles.content}>

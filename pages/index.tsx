@@ -21,7 +21,7 @@ const Home: React.FC<NextPage> = _ => {
 				<Search />
 				<Overview />
 				<div className="row md-wrap">
-					<div className={clsx('col col-6 gutter-right')}>
+					<div className={clsx('col col-6 gutter-right md')}>
 						<HomeBlock />
 					</div>
 					<div className={clsx('col col-6')}>

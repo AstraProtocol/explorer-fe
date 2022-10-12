@@ -99,7 +99,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						) : _searchStatus === SearchStatusEnum.DONE ? (
 							<span className={styles.clearInput} onClick={_clearSearch}></span>
 						) : (
-							<span className={clsx('search-icon', styles.searchIcon)}></span>
+							<span className={clsx('icon-search', styles.searchIcon)}></span>
 						)}
 					</div>
 				</div>

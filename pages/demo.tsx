@@ -75,7 +75,7 @@ const DemoPage: React.FC<Props> = props => (
 			/>
 			<CopyButton textCopy="alsdkfjalkdsfjlakds" />
 			<div />
-			<Typography.PageTitle icon="copy-icon">Test</Typography.PageTitle>
+			<Typography.PageTitle icon="icon-copy">Test</Typography.PageTitle>
 			<div />
 			<Typography.SuccessText icon="success">Sucess</Typography.SuccessText>
 			<div />

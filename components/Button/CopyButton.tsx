@@ -38,8 +38,8 @@ const CopyButton = ({ textCopy, textTitle, onCopy, textColor, textClasses }: Pro
 				{textTitle && <span className={clsx(styles.text, textClasses)}>{textTitle}</span>}
 				<span
 					className={clsx('padding-left-xs pointer', {
-						'copy-icon contrast-color-100': !copied,
-						'checked-icon alert-color-success': copied
+						'icon-copy contrast-color-100': !copied,
+						'icon-checked alert-color-success': copied
 					})}
 				/>
 			</div>

@@ -25,7 +25,7 @@ const QrButton = ({ textTitle, textClasses, content, classes }: Props) => {
 	return (
 		<a onClick={onShowQr} className={clsx('link block-hor-center contrast-color-100')}>
 			{textTitle && <span className={clsx(styles.text, textClasses)}>{textTitle}</span>}
-			<span className={clsx('padding-left-xs pointer qr-icon contrast-color-100')} />
+			<span className={clsx('padding-left-xs pointer icon-qrcode contrast-color-100')} />
 		</a>
 	)
 }
