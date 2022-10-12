@@ -1,4 +1,5 @@
 import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
@@ -7,6 +8,7 @@ import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import numeral from 'numeral'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import style from './style.module.scss'
 
 interface Props {
 	data: TokenTransfer
@@ -18,7 +20,10 @@ const AddressTokenTransfer = ({ data }: Props) => {
 			style={{ justifyContent: 'space-between' }}
 			type="success"
 			gradient="normal"
-			classes="padding-left-lg padding-right-lg padding-top-xs padding-bottom-xs border border-bottom-base"
+			classes={clsx(
+				'padding-left-lg padding-right-lg padding-top-xs padding-bottom-xs',
+				style.borderWidthPadding
+			)}
 		>
 			<div style={{ textAlign: 'left' }} className="col-5">
 				<Row style={{ justifyContent: 'space-between' }}>

@@ -54,14 +54,17 @@ export default function TransactionRow({
 		<RowShowAnimation action={newBlock}>
 			<GradientRow
 				type={statusText}
-				classes={[
-					clsx('padding-left-lg padding-right-lg', 'padding-top-xs padding-bottom-xs', styles.rowHeight, {
+				classes={clsx(
+					'padding-left-lg padding-right-lg',
+					'padding-top-xs padding-bottom-xs',
+					styles.rowHeight,
+					{
 						'margin-bottom-xs': style === 'normal',
 						'radius-lg': style === 'normal',
 						// 'border border-bottom-base': style === 'inject' && order === 'end',
 						[styles.borderWidthPadding]: style === 'inject'
-					})
-				]}
+					}
+				)}
 				gradient={style === 'inject' ? 'transparent' : 'normal'}
 			>
 				<div
@@ -72,7 +75,7 @@ export default function TransactionRow({
 						<div>
 							<Typography.LinkText
 								href={LinkMaker.transaction(hash)}
-								className={['margin-right-xs']}
+								classes={'margin-right-xs'}
 								fontType="Titi"
 							>
 								{ellipseRightText(hash, 30)}

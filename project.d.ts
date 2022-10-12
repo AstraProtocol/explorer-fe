@@ -151,10 +151,10 @@ interface Proposer {
 }
 
 interface Token {
-	cataloged: boolean
+	cataloged?: boolean
 	contractAddressHash: string
 	decimals: string
-	holderCount: number
+	holderCount?: number
 	name: string
 	symbol: string
 	totalSupply: string
@@ -190,6 +190,33 @@ interface TokenTransfer {
 	transactionIndex: string
 }
 
+interface AddressToken {
+	balance: string
+	contractAddress: string
+	decimals: string
+	name: string
+	symbol: string
+	type: string
+}
+
+interface AddressCoinBalanceHistory {
+	addressHash: string
+	blockNumber: number
+	blockTimestamp: string
+	delta: string
+	insertedAt: string
+	transactionHash: string
+	transactionValue: string
+	updatedAt: string
+	value: string
+	valueFetchedAt: string
+}
+
+interface AddressCoinBalanceHistoryChartData {
+	date: string
+	value: number
+}
+
 interface UseTokenHookData {
 	result: Token[]
 	hasNextPage: boolean
@@ -210,9 +237,28 @@ interface UseAddressTokenTransferData {
 	hasNextPage: boolean
 }
 
+interface UseAddressTokenData {
+	result: AddressToken[]
+	hasNextPage: boolean
+}
+
+interface UseAddressInternalTransactionData {
+	result: TransactionRowProps[] | []
+	hasNextPage: boolean
+}
+
 interface UseAddressBalanceData {
 	balance: string
 	lastBalanceUpdate: number
+}
+
+interface UseAddressCoinBalanceHistoryData {
+	result: AddressCoinBalanceHistory[] | []
+	hasNextPage: boolean
+}
+
+interface UseAddressCoinBalanceHistoryChartData {
+	result: AddressCoinBalanceHistoryChartData[] | []
 }
 
 interface TokenResponse {
@@ -246,4 +292,22 @@ interface AddressTokenTransferResponse {
 	message: string
 	result: TokenTransfer[]
 	status: string
+}
+
+interface AddressTokenResponse {
+	hasNextPage: boolean
+	nextPageParams: any
+	result: AddressToken[]
+}
+
+interface AddressInternalTransactionResponse {
+	message: string
+	result: InternalTransactionItem[]
+	status: string
+}
+
+interface AddressCoinBalanceHistoryResponse {
+	hasNextPage: boolean
+	nextPageParams: any
+	result: AddressCoinBalanceHistory[]
 }

@@ -1,0 +1,24 @@
+.noRadius {
+	border-radius: 0;
+}
+
+.container {
+	position: relative;
+	.chart {
+		margin: var(--offset-lg) 0;
+	}
+	.blurBlock {
+		opacity: 0.5;
+	}
+	.spinner {
+		opacity: 1;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+	}
+}
+
+.pagination {
+	display: flex;
+	justify-content: flex-end;
+}
