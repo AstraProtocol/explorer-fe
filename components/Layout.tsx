@@ -39,11 +39,11 @@ const Layout: React.FC<Props> = props => {
 	const marketPrice = getMarketPriceData(marketPriceDataRaw)
 
 	useEffect(() => {
-		dispatch(setAstraSummary(marketPrice))
+		if (marketPrice) dispatch(setAstraSummary(marketPrice))
 	}, [marketPrice])
 
 	useEffect(() => {
-		dispatch(setValidatorSummary(validatorSummary))
+		if (validatorSummary) dispatch(setValidatorSummary(validatorSummary))
 	}, [validatorSummary])
 
 	return (
