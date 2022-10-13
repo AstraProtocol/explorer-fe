@@ -1,7 +1,6 @@
 import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
-import QrButton from 'components/Button/QrButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
@@ -27,7 +26,7 @@ const TokenOverview = ({ token }: Props) => {
 				</div>
 				<div>
 					<CopyButton textCopy={token} />
-					<QrButton textTitle="qrcode" content={token} />
+					{/* <QrButton textTitle="qrcode" content={token} /> */}
 				</div>
 			</Row>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">

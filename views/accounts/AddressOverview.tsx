@@ -1,7 +1,6 @@
 import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
-import QrButton from 'components/Button/QrButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
@@ -33,7 +32,7 @@ const AddressOverview = ({ address }: Props) => {
 				</div>
 				<div>
 					<CopyButton textCopy={address} />
-					<QrButton textTitle="qrcode" content={address} />
+					{/* <QrButton textTitle="qrcode" content={address} /> */}
 				</div>
 			</Row>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
