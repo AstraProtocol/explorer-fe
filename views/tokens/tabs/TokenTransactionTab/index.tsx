@@ -1,8 +1,5 @@
 import Row from 'components/Grid/Row'
-import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
-import useTokenTransactions from 'views/tokens/hook/useTokenTransactions'
-import AddressTransaction from './TokenTransaction'
 
 interface Props {
 	token: string
@@ -10,7 +7,7 @@ interface Props {
 
 const TokenTransactionTab = ({ token }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, pagination } = useTokenTransactions(token)
+	// const { data, pagination } = useTokenTransactions(token)
 
 	const onPagingChange = (value: number) => setPage(value)
 
@@ -24,7 +21,7 @@ const TokenTransactionTab = ({ token }: Props) => {
 				</div>
 			</Row>
 
-			{!data || data.length == 0 ? (
+			{/* {!data || data.length == 0 ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<>
@@ -32,7 +29,7 @@ const TokenTransactionTab = ({ token }: Props) => {
 						<AddressTransaction key={item.hash + index} transaction={item} />
 					))}
 				</>
-			)}
+			)} */}
 		</div>
 	)
 }

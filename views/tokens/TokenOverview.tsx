@@ -1,4 +1,3 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -38,7 +37,7 @@ const TokenOverview = ({ token }: Props) => {
 				<div className="">
 					<span className="text text-base contrast-color-50">Total Supply:</span>
 					<br />
-					<TypographyUI.Balance
+					{/* <TypographyUI.Balance
 						size="sm"
 						currency={'Symbol'}
 						icon={<CryptoIcon name="asa" size="sm" />}
@@ -48,7 +47,7 @@ const TokenOverview = ({ token }: Props) => {
 						// 		: addressBalance.balance
 						// }
 						fixNumber={5}
-					/>
+					/> */}
 				</div>
 				<div className="">
 					<span className="text text-base contrast-color-50">Holders:</span>
