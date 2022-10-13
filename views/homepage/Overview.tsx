@@ -23,6 +23,10 @@ function getGasAvgData(gasAvgData): GasTracker {
 }
 
 const Overview = () => {
+	// const { isMobile } = useMobileLayout(940)
+	// console.log(isMobile)
+	const isMobile = true
+
 	const _fetchCondition = key => {
 		switch (key) {
 			case 'estimate_counted_info':
@@ -48,10 +52,10 @@ const Overview = () => {
 	return (
 		<div className={clsx(styles.overview)}>
 			<div className={styles.moon1}>
-				<Image src={'/images/background/moon1.png'} layout="fill" />
+				<Image alt="moon1" src={'/images/background/moon1.png'} layout="fill" />
 			</div>
 			<div className={styles.moon2}>
-				<Image src={'/images/background/moon2.png'} layout="fill" />
+				<Image alt="moon2" src={'/images/background/moon2.png'} layout="fill" />
 			</div>
 			<BackgroundCard>
 				<div className="row md-wrap">
