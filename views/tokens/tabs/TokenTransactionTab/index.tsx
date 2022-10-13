@@ -1,16 +1,16 @@
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
-import useAddressTransactions from 'views/accounts/hook/useAddressTransaction'
-import AddressTransaction from './AddressTransaction'
+import useTokenTransactions from 'views/tokens/hook/useTokenTransactions'
+import AddressTransaction from './TokenTransaction'
 
 interface Props {
-	address: string
+	token: string
 }
 
-const AddressTransactionTab = ({ address }: Props) => {
+const TokenTransactionTab = ({ token }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, pagination } = useAddressTransactions(address, currentPage)
+	const { data, pagination } = useTokenTransactions(token)
 
 	const onPagingChange = (value: number) => setPage(value)
 
@@ -37,4 +37,4 @@ const AddressTransactionTab = ({ address }: Props) => {
 	)
 }
 
-export default AddressTransactionTab
+export default TokenTransactionTab

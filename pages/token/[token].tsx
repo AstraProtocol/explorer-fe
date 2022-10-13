@@ -2,7 +2,9 @@ import { Breadcumbs } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import Head from 'next/head'
 import React from 'react'
-import { LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import TokenDetailTab from 'views/tokens/TokenDetailTabs'
+import TokenOverview from 'views/tokens/TokenOverview'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -21,7 +23,11 @@ const TokenDetailPage: React.FC<Props> = props => {
 				</title>
 			</Head>
 			<Container>
-				<Breadcumbs items={[{ label: 'Address', link: LinkMaker.token() }, { label: '' }]} />
+				<Breadcumbs
+					items={[{ label: 'Address', link: LinkMaker.token() }, { label: ellipseBetweenText(token) }]}
+				/>
+				<TokenOverview token={token} />
+				<TokenDetailTab token={token} />
 			</Container>
 		</Layout>
 	)

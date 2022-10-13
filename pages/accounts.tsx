@@ -40,8 +40,8 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm">
-						{accounts?.map((item: AstraHolder, index: number) => {
-							return <HolderRow key={index} index={index + 1} account={item} />
+						{accounts?.map((item: Holder, index: number) => {
+							return <HolderRow key={item.address} index={index + 1} account={item} />
 						})}
 					</div>
 				)}

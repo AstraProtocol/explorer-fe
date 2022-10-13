@@ -8,6 +8,27 @@ interface Signer {
 	accountSequence: number
 }
 
+interface TokenAmount {
+	denom: string
+	amount: string
+}
+
+interface Message {
+	type: string
+	content: {
+		name: string
+		txHash: string
+		msgIndex: number
+		msgName: string
+		version: number
+		toAddress: string
+		fromAddress: string
+		uuid: string
+		amount: TokenAmount[]
+		height: number
+	}
+}
+
 interface EVMTransactionContent {
 	msgIndex: number
 	name: string
