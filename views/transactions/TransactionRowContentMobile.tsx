@@ -39,7 +39,7 @@ export default function TransactionRowContentMobile({
 							{ellipseRightText(hash, isSmallDevice ? 20 : 100)}
 						</Typography.LinkText>
 					</div>
-					<div className={clsx('col-1 block-ver-center')}>
+					<div className={clsx(' block-ver-center')}>
 						<Timer updatedAt={updatedAt} />
 					</div>
 				</div>
@@ -58,7 +58,7 @@ export default function TransactionRowContentMobile({
 							#{blockNumber}
 						</Typography.LinkText>
 					</div>
-					<div className={clsx('col-1 block-ver-center')}>
+					<div className={clsx('block-ver-center')}>
 						<Typography.Label
 							text={type}
 							titleText={type}

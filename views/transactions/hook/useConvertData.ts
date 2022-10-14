@@ -159,7 +159,10 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 											token: transfer.tokenSymbol
 										}
 									}
-								]
+								],
+								responsive: {
+									wrap: 'md'
+								}
 							})
 						}
 						break
