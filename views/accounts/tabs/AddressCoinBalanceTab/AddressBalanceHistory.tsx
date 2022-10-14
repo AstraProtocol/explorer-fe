@@ -29,15 +29,15 @@ const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) =>
 				'text text-base padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm border border-bottom-base'
 			)}
 		>
-			<div style={{ width: '15%' }}>
+			<div className="col-2">
 				<LinkText href={LinkMaker.block(data.blockNumber)}>#{data.blockNumber}</LinkText>
 			</div>
-			<div style={{ width: '20%' }}>
+			<div className="col-3">
 				<LinkText href={LinkMaker.address(data.transactionHash)}>
 					{ellipseBetweenText(data.transactionHash)}
 				</LinkText>
 			</div>
-			<div style={{ width: '45%', display: 'flex', alignItems: 'center' }}>
+			<div className="col-5" style={{ display: 'flex', alignItems: 'center' }}>
 				<TypographyUI.Balance
 					size="sm"
 					currency=""
@@ -50,7 +50,7 @@ const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) =>
 				<span className="padding-left-xs money money-sm contrast-color-70">ASA</span>
 				<Tag classes="margin-left-xs" type={deltaStyle} text={`${deltaText}%`} />
 			</div>
-			<div style={{ width: '20%' }}>
+			<div className="col-2">
 				{/* <span className="padding-right-xs money money-sm contrast-color-70">
 					{dayjs(data.blockTimestamp).format('DD/MM/YYYY, hh:mm')}
 				</span> */}

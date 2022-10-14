@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Typography from 'components/Typography'
-import { LinkMaker } from 'utils/helper'
+import { convertBalanceToView, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -35,7 +35,9 @@ export default function TokenRow({ index, token }: Props) {
 			</div>
 
 			<div className={clsx(styles.borderLeft, 'padding-left-lg col-4')}>
-				<span className={clsx('money money-sm money-bold padding-right-xs')}>{token.totalSupply}</span>
+				<span className={clsx('money money-sm money-bold padding-right-xs')}>
+					{convertBalanceToView(token.totalSupply)}
+				</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>{token.symbol}</span>
 			</div>
 

@@ -1,7 +1,6 @@
 import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
-import QrButton from 'components/Button/QrButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
@@ -33,7 +32,7 @@ const AddressOverview = ({ address }: Props) => {
 				</div>
 				<div>
 					<CopyButton textCopy={address} />
-					<QrButton textTitle="qrcode" content={address} />
+					{/* <QrButton textTitle="qrcode" content={address} /> */}
 				</div>
 			</Row>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
@@ -63,9 +62,9 @@ const AddressOverview = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Transactions:</span>
 					<br />
 					<span className="text text-base">
-						{addressCounter.transactionCount
-							? numeral(addressCounter.transactionCount).format('0,0')
-							: 'NaN'}
+						{isUndefined(addressCounter.transactionCount)
+							? 'NaN'
+							: numeral(addressCounter.transactionCount).format('0,0')}
 					</span>
 				</div>
 				<div className="">
@@ -79,15 +78,22 @@ const AddressOverview = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />
 					<span className="text text-base">
-						{addressCounter.transactionCount ? numeral(addressCounter.gasUsageCount).format('0,0') : 'NaN'}
+						{isUndefined(addressCounter.transactionCount)
+							? 'NaN'
+							: numeral(addressCounter.gasUsageCount).format('0,0')}
 					</span>
 				</div>
 				<div className="">
 					<span className="text text-base contrast-color-50">Last balance updated:</span>
 					<br />
-					<LinkText href={LinkMaker.block(addressBalance.lastBalanceUpdate)}>
-						{addressBalance.lastBalanceUpdate}
-					</LinkText>
+
+					{addressBalance.lastBalanceUpdate ? (
+						<LinkText href={LinkMaker.block(addressBalance.lastBalanceUpdate)}>
+							{addressBalance.lastBalanceUpdate}
+						</LinkText>
+					) : (
+						<span className="text text-base">NaN</span>
+					)}
 				</div>
 			</Row>
 		</BackgroundCard>

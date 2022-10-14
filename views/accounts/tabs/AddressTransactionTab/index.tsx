@@ -1,8 +1,9 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { Pagination } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
+import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
-import useAddressTokenTransfers from 'views/accounts/hook/useAddressTokenTransfer'
-import { Transactions } from 'views/transactions/TransactionTabs'
+import useAddressTransactions from 'views/accounts/hook/useAddressTransaction'
+import AddressTransaction from './AddressTransaction'
 
 interface Props {
 	address: string
@@ -10,7 +11,7 @@ interface Props {
 
 const AddressTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressTokenTransfers(address, currentPage)
+	const { data, pagination } = useAddressTransactions(address, currentPage)
 
 	const onPagingChange = (value: number) => setPage(value)
 
@@ -20,11 +21,41 @@ const AddressTransactionTab = ({ address }: Props) => {
 				<span className="text text-xl">Transactions</span>
 				<div>
 					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					<Pagination
+						total={pagination.total_page}
+						currentPage={pagination.current_page}
+						disabled={false}
+						limit={pagination.limit}
+						onChange={onPagingChange}
+					/>
 				</div>
 			</Row>
-
-			<Transactions rows={[]} emptyMsg="There are no transactions." />
+			<div style={{ overflowY: 'scroll' }}>
+				{!data || data.length == 0 ? (
+					<Empty text={'There are no transactions.'} />
+				) : (
+					<>
+						{data?.map((item, index) => (
+							<AddressTransaction key={item.hash + index} transaction={item} />
+						))}
+					</>
+				)}
+			</div>
+			<div
+				style={{ justifyContent: 'space-between', display: 'flex' }}
+				className="padding-right-xl padding-left-xl"
+			>
+				<div></div>
+				<div>
+					<Pagination
+						total={pagination.total_page}
+						currentPage={pagination.current_page}
+						disabled={false}
+						limit={pagination.limit}
+						onChange={onPagingChange}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }

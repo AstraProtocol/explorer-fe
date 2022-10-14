@@ -82,7 +82,7 @@ export async function getServerSideProps({ query }) {
 			cosmosHash = _data.hash
 			// evm
 			if (type === TransacionTypeEnum.Ethermint) {
-				evmHash = (_data?.messages[0]?.content as EVMTransactionContent)?.params.hash
+				evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
 				data = await evmTransactionDetail(evmHash, cosmosHash)
 			} else {
 				data = await cosmsTransactionDetail(_data)

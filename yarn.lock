@@ -20,8 +20,10 @@
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@astraprotocol/astra-ui@file:../../Github/astra-ui":
-  version "1.0.7"
+"@astraprotocol/astra-ui@^1.0.10":
+  version "1.0.10"
+  resolved "https://npm.pkg.github.com/download/@astraprotocol/astra-ui/1.0.10/fb77d8285d56494856ef04618c281535c1bd3510#fb77d8285d56494856ef04618c281535c1bd3510"
+  integrity sha512-fBjiYPPwZdhwI/FY0XyizOy9S0CXMctV3B4hqbBCNng5bQf6fuAM5jZRfHP263OJbWw0qMHoCVtwB16JIwkHsg==
   dependencies:
     clsx "^1.2.1"
     react "^18.2.0"

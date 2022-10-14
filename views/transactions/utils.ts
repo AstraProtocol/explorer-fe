@@ -5,7 +5,7 @@ import API_LIST from 'api/api_list'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import numeral from 'numeral'
 import { TransacionTypeEnum } from 'utils/constants'
-import { caculateCosmosAmount, convertMessageToTransfer, getCosmosType } from 'utils/cosmos'
+import { caculateCosmosAmount, convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
 import { TransactionRowProps } from './TransactionRow'
 
@@ -181,7 +181,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	const data: TransactionDetail = {}
 	const fee = caculateCosmosAmount(result.fee)
 	data.type = 'cosmos'
-	data.pageTitle = getCosmosType(result?.messages[0]?.type as string)
+	data.pageTitle = getTransactionType(result?.messages[0]?.type)
 	data.evmHash = undefined
 	data.cosmosHash = result.hash
 	data.result = result.success ? 'Success' : 'Error'
@@ -225,7 +225,7 @@ const _convertTransfer = (
 const _mapMsgSendField = (data: TransactionDetail, result: TransactionItem) => {
 	const type: TransacionTypeEnum = result?.messages[0]?.type
 	if (type === TransacionTypeEnum.MsgSend) {
-		const content = result?.messages[0].content as CosmosMsgSend
+		const content = result?.messages[0].content as unknown as MsgSendContent
 		data.from = astraToEth(content.fromAddress)
 		data.to = astraToEth(content.toAddress)
 	}
@@ -233,7 +233,7 @@ const _mapMsgSendField = (data: TransactionDetail, result: TransactionItem) => {
 const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[]) => {
 	const type: TransacionTypeEnum = messages[0]?.type
 	if (type === TransacionTypeEnum.MsgVote) {
-		const content = messages[0].content as CosmosMsgVote
+		const content = messages[0].content as unknown as MsgVoteContent
 		data.voter = astraToEth(content.voter)
 		data.proposalId = content.proposalId
 		data.option = content.option
@@ -243,7 +243,7 @@ const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[
 const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
 	const type: TransacionTypeEnum = messages[0]?.type
 	if (type === TransacionTypeEnum.MsgDelegate) {
-		const content = messages[0].content as CosmosMsgDelegate
+		const content = messages[0].content as unknown as MsgDelegateContent
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorAddress = content.validatorAddress
 	}
@@ -252,7 +252,7 @@ const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]
 const _mapMsgBeginRedelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
 	const type: TransacionTypeEnum = messages[0]?.type
 	if (type === TransacionTypeEnum.MsgBeginRedelegate) {
-		const content = messages[0].content as CosmosMsgBeginRedelegate
+		const content = messages[0].content as MsgBeginRedelegateContent
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorSrcAddress = content.validatorSrcAddress
 		data.validatorDstAddress = content.validatorDstAddress

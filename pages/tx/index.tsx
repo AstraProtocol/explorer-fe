@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
+import { caculateCosmosAmount, getTransactionType } from 'utils/cosmos'
 import useTransaction from 'views/transactions/hook/useTransaction'
 import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
@@ -86,7 +86,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										value={undefined}
 										valueToken={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
 										// labelStatus="Approve"
-										type={getCosmosType(item?.messages[0]?.type)}
+										type={getTransactionType(item?.messages[0]?.type)}
 										newBlock={item.newTransaction}
 										height="auto"
 									/>

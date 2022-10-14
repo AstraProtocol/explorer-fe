@@ -30,9 +30,8 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					<LinkText fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
 					</LinkText>
-					<Tag hasArrowRight={false} fontType="Titi" text={'Function Name'} />
+					{data.type && <Tag hasArrowRight={false} fontType="Titi" text={data.type} />}
 				</Row>
-				{/* <br /> */}
 				<div>
 					<span className="margin-right-lg">
 						<span className="text text-sm contrast-color-30">From </span>

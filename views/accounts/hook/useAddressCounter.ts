@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
 export default function useAddressCounter(address: string) {
-	const [hookData, setState] = useState<AddressCounterResponse>({})
+	const [hookData, setState] = useState<AddressCounterData>({})
 
 	const _fetchCondition = () => {
 		return [
