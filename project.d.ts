@@ -1,5 +1,9 @@
 /// <reference path="types/transactions.d.ts" />
 /// <reference path="types/blocks.d.ts" />
+/// <reference path="types/message.d.ts" />
+/// <reference path="types/token.d.ts" />
+/// <reference path="types/address.d.ts" />
+
 interface SearchItemResponse {
 	result: {
 		blocks: BlockItem[]

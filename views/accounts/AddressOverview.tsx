@@ -62,9 +62,9 @@ const AddressOverview = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Transactions:</span>
 					<br />
 					<span className="text text-base">
-						{addressCounter.transactionCount
-							? numeral(addressCounter.transactionCount).format('0,0')
-							: 'NaN'}
+						{isUndefined(addressCounter.transactionCount)
+							? 'NaN'
+							: numeral(addressCounter.transactionCount).format('0,0')}
 					</span>
 				</div>
 				<div className="">
@@ -78,7 +78,9 @@ const AddressOverview = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />
 					<span className="text text-base">
-						{addressCounter.transactionCount ? numeral(addressCounter.gasUsageCount).format('0,0') : 'NaN'}
+						{isUndefined(addressCounter.transactionCount)
+							? 'NaN'
+							: numeral(addressCounter.gasUsageCount).format('0,0')}
 					</span>
 				</div>
 				<div className="">

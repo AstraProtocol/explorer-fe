@@ -1,8 +1,9 @@
+import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
-import { ellipseRightText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -22,10 +23,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 			)}
 			gradient={'transparent'}
 		>
-			<div
-				className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}
-				// style={{ minHeight: style === 'inject' ? 'auto' : height }}
-			>
+			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
 				<div className={clsx('col-4')}>
 					<div>
 						<Typography.LinkText
@@ -35,13 +33,6 @@ const AddressTransaction = ({ transaction }: Props) => {
 						>
 							{ellipseRightText(transaction.hash, 30)}
 						</Typography.LinkText>
-						<Typography.Label
-							text={'Function Name'}
-							backgroundShape="rectangle"
-							color="contrast-color-70"
-							radius="radius-xs"
-							font="money-2xs"
-						/>
 					</div>
 					{/* {(transaction.from || transaction.to) && (
 							<div className="margin-top-xs">
@@ -70,7 +61,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
-						text={'Dontknow'}
+						text={transaction.type}
 						// titleText={type}
 						backgroundShape="rectangle"
 						radius="radius-2xl"
@@ -83,31 +74,31 @@ const AddressTransaction = ({ transaction }: Props) => {
 					</Typography.LinkText>
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
-					{/* <div>
-							{Number(value) >= 0 && (
-								<>
-									<TypographyLib.Balance
-										size="xs"
-										value={value}
-										currency={valueCurrency?.toUpperCase()}
-										icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
-									/>
-									<br />
-								</>
+					<div>
+						{Number(transaction.amount) >= 0 && (
+							<>
+								<TypographyLib.Balance
+									size="xs"
+									value={transaction.amount}
+									currency={''}
+									icon={<CryptoIcon name={'asa'} size="sm" />}
+								/>
+								<br />
+							</>
+						)}
+						<span>
+							{Number(transaction.fee) >= 0 && (
+								<TypographyLib.Balance
+									icon={<span>Fee:</span>}
+									size="2xs"
+									value={convertBalanceToView(transaction.fee)}
+									fixNumber={7}
+									currency="ASA"
+									classes="contrast-color-70"
+								/>
 							)}
-							<span>
-								{Number(fee) >= 0 && (
-									<TypographyLib.Balance
-										icon={<span>Fee:</span>}
-										size="2xs"
-										value={convertBalanceToView(fee)}
-										fixNumber={7}
-										currency={feeToken.toUpperCase()}
-										classes="contrast-color-70"
-									/>
-								)}
-							</span>
-						</div> */}
+						</span>
+					</div>
 				</div>
 				<div className={clsx('col-1 block-ver-center')}>
 					<Timer updatedAt={transaction.blockTime} />

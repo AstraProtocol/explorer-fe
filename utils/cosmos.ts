@@ -9,14 +9,14 @@ import { TransacionTypeEnum } from './constants'
  * @param type
  * @returns
  */
-export const getCosmosType = (type: string) => type?.split('.').slice(-1).join('') || ''
+export const getTransactionType = (type: TransacionTypeEnum) => type?.split('.').slice(-1).join('') || ''
 
 /**
  * return fee with format
  * @param fees
- * @returns CosmosAmountItem
+ * @returns TokenAmount
  */
-export const caculateCosmosAmount = (amounts: CosmosAmountItem[]): CosmosAmountItem => {
+export const caculateCosmosAmount = (amounts: TokenAmount[]): TokenAmount => {
 	if (!amounts) {
 		return { amount: undefined, denom: undefined }
 	}
@@ -40,7 +40,7 @@ export const convertMessageToTransfer = (
 	for (let message of messages) {
 		const content = message.content
 		if (type === TransacionTypeEnum.MsgSend) {
-			rows.push(_parseCosmosMsgSend(content as CosmosMsgSend, blockTime, status))
+			rows.push(_parseCosmosMsgSend(content as MsgSendContent, blockTime, status))
 		} else if (type === TransacionTypeEnum.MsgBeginRedelegate) {
 		} else if (type === TransacionTypeEnum.MsgDelegate) {
 		} else if (type === TransacionTypeEnum.MsgVote) {
@@ -50,7 +50,7 @@ export const convertMessageToTransfer = (
 	return rows
 }
 
-const _parseCosmosMsgSend = (content: CosmosMsgSend, blockTime: string, status: boolean): TransactionRowProps => {
+const _parseCosmosMsgSend = (content: MsgSendContent, blockTime: string, status: boolean): TransactionRowProps => {
 	const amountItem = caculateCosmosAmount(content?.amount)
 	return {
 		style: 'inject',
@@ -59,7 +59,7 @@ const _parseCosmosMsgSend = (content: CosmosMsgSend, blockTime: string, status: 
 		value: formatEther(amountItem.amount),
 		valueCurrency: amountItem.denom,
 		hash: content.txHash,
-		type: getCosmosType(content?.msgName),
+		type: getTransactionType(content?.msgName),
 		status,
 		from: astraToEth(content?.fromAddress),
 		to: astraToEth(content?.toAddress)

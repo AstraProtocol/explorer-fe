@@ -22,9 +22,34 @@ export default function useAddressTransactions(address: string, page: number) {
 	}
 	const { data } = useSWR<AddressTransactionResponse>(_fetchCondition())
 
+	const convertData = (rawData: AddressTransactionResponse): AddressTransactionData[] => {
+		return rawData.result.map(d => {
+			let type
+
+			const numberOfMsgTypes = d.messageTypes.length
+			const msgTypeSplit = d.messageTypes[0].split('.')
+			const msgTypeShort = msgTypeSplit[msgTypeSplit.length - 1]
+			if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`
+			else type = msgTypeShort
+
+			return {
+				account: d.account,
+				blockHash: d.blockHash,
+				blockHeight: d.blockHeight,
+				blockTime: d.blockTime,
+				fee: d.fee.length > 0 ? d.fee[0]?.amount : '',
+				hash: d.hash,
+				messageTypes: d.messageTypes,
+				success: d.success,
+				type
+			}
+		})
+	}
+
 	useEffect(() => {
 		if (data) {
-			setState(data)
+			const newData: AddressTransactionData[] = convertData(data)
+			setState({ result: newData, pagination: data.pagination })
 		}
 	}, [data])
 	return {

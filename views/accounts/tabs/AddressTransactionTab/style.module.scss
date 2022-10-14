@@ -1,6 +1,6 @@
 .rowBrief {
 	display: flex;
-	min-height: 88.9px;
+	min-height: 50px;
 	align-items: center;
 	.iconCetner {
 		display: flex;
@@ -14,11 +14,6 @@
 			width: 100%;
 		}
 	}
-}
-
-.rowHeight {
-	display: flex;
-	min-height: 70px;
 }
 
 .borderWidthPadding {

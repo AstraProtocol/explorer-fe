@@ -11,7 +11,7 @@ import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
-import { caculateCosmosAmount, getCosmosType } from 'utils/cosmos'
+import { caculateCosmosAmount, getTransactionType } from 'utils/cosmos'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
 import { CardInfoLabels } from 'views/transactions/utils'
@@ -134,7 +134,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 														valueToken={
 															process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames
 														}
-														type={getCosmosType(item?.messages[0]?.type)}
+														type={getTransactionType(item?.messages[0]?.type)}
 														newBlock={item.newTransaction}
 														transactionType={item?.messages[0]?.type}
 														style="inject"
