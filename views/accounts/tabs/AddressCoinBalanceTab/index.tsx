@@ -44,10 +44,10 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 					)}
 				>
 					<Row>
-						<div style={{ width: '15%' }}>Blocks</div>
-						<div style={{ width: '20%' }}>Tx Hash</div>
-						<div style={{ width: '45%' }}>Value</div>
-						<div style={{ width: '20%' }}>Time</div>
+						<div className="col-2">Blocks</div>
+						<div className="col-3">Tx Hash</div>
+						<div className="col-5">Value</div>
+						<div className="col-2">Time</div>
 					</Row>
 				</BackgroundCard>
 				<div className="">

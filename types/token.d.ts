@@ -65,4 +65,5 @@ interface TokenTransfer {
 	tokenName: string
 	tokenSymbol: string
 	transactionIndex: string
+	type?: string
 }
