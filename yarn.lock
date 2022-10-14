@@ -21,7 +21,7 @@
     shx "^0.3.4"
 
 "@astraprotocol/astra-ui@file:../../Github/astra-ui":
-  version "1.0.10"
+  version "1.0.12"
   dependencies:
     clsx "^1.2.1"
     react "^18.2.0"

@@ -26,3 +26,11 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.card {
+	justify-content: flex-end;
+	overflow: hidden;
+	display: flex;
+	flex-flow: column;
+	min-height: 720px;
+}

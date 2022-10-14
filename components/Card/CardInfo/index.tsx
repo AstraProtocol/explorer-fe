@@ -1,9 +1,10 @@
-import { CryptoIcon, CryptoIconNames, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIcon, CryptoIconNames, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
 import Tag from 'components/Typography/Tag'
+import { ellipseRightText } from 'utils/helper'
 import BackgroundCard from '../Background/BackgroundCard'
 import Decode, { DecodeProps } from './Components/Decode'
 import RawInput from './Components/RawInput'
@@ -43,6 +44,10 @@ export type CardRowItem = {
 		| 'nonce'
 		| 'decode'
 	contents: Content[]
+	responsive?: {
+		wrap?: 'sm' | 'md'
+		ellipsis?: boolean
+	}
 }
 
 type CardInfoProps = {
@@ -60,6 +65,11 @@ export default function CardInfo({
 	background = true,
 	backgroundCardBlur = true
 }: CardInfoProps) {
+	const { isMobile: isSmallDevice } = useMobileLayout('small')
+	const { isMobile: isMediumDevice } = useMobileLayout('medium')
+	const _ellipsis = (text: string | number) =>
+		ellipseRightText(`${text}`, isSmallDevice ? 27 : isMediumDevice ? 45 : 80)
+
 	return (
 		<BackgroundCard
 			classes={`margin-bottom-md ${classes.join(' ')}`}
@@ -68,10 +78,20 @@ export default function CardInfo({
 			backgroundCardBlur={backgroundCardBlur}
 		>
 			{topElement && topElement}
-			<div className={'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg'}>
-				{items.map(({ label, type, contents }, index) => (
-					<div key={label + index} className={clsx(styles.cardRow, 'row margin-bottom-sm')}>
-						<div className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm')}>
+			<div
+				className={clsx(
+					'margin-left-2xl margin-right-2xl margin-top-lg margin-bottom-lg',
+					'sm-margin-left-md sm-margin-right-md'
+				)}
+			>
+				{items.map(({ label, type, contents, responsive = { wrap: 'sm' } }, index) => (
+					<div
+						key={label + index}
+						className={clsx(styles.cardRow, 'row margin-bottom-sm', {
+							[`${responsive?.wrap}-flex-column`]: responsive
+						})}
+					>
+						<div className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm ')}>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 							{type === 'nonce' && <Tag text={'Position'} />}
 						</div>
@@ -80,11 +100,12 @@ export default function CardInfo({
 								styles.rightColumn,
 								'col-10',
 								'block-ver-center margin-right-sm padding-bottom-sm',
-								'border border-bottom-base'
+								'border border-bottom-base',
+								{ [`${responsive?.wrap}-full`]: responsive?.wrap }
 							)}
 						>
 							{(contents as Content[]).map((content, index) => (
-								<div key={(content.value as string) + index}>
+								<div key={(content.value as string) + index} style={{ overflowX: 'auto' }}>
 									{type === 'nonce' ? (
 										<div className="block-ver-center money money-sm contrast-color-70">
 											{content.value}
@@ -92,17 +113,14 @@ export default function CardInfo({
 										</div>
 									) : null}
 									{type === 'text' ? (
-										<span
-											className="money money-sm contrast-color-100"
-											style={{ wordBreak: 'break-all' }}
-										>
-											{content.value} {content.suffix && content.suffix}
+										<span className="money money-sm contrast-color-100 word-break-all">
+											{_ellipsis(content.value)} {content.suffix && content.suffix}
 										</span>
 									) : null}
 									{type === 'copy' ? (
 										<CopyButton
-											textCopy={content?.value as string}
-											textTitle={content?.value as string}
+											textCopy={_ellipsis(content?.value as string)}
+											textTitle={_ellipsis(content?.value as string)}
 										/>
 									) : null}
 									{type === 'link' ? (
@@ -111,13 +129,13 @@ export default function CardInfo({
 											fontType="Titi"
 											fontSize="text-500"
 										>
-											{content.value as string}
+											{_ellipsis(content.value as string)}
 										</Typography.LinkText>
 									) : null}
 									{type === 'link-copy' ? (
 										<div className="block-center">
 											<Typography.LinkText href={content.link || ''}>
-												{content.value as string}
+												{_ellipsis(content.value as string)}
 											</Typography.LinkText>
 											<CopyButton textCopy={content.value as string} />
 										</div>

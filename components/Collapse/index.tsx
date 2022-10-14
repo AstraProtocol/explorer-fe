@@ -35,9 +35,9 @@ export default function Collapse({ title, items, classes, open }: CollapseProps)
 				>
 					<span className="padding-right-md text-lg">{title}</span>
 					<span
-						className={clsx('text-sm', {
-							'right-arrow-icon': !_open,
-							'dropdown-icon': _open
+						className={clsx('text-xl', {
+							'icon-arrow-right': !_open,
+							'icon-arrow-down': _open
 						})}
 					></span>
 				</div>

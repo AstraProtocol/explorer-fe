@@ -22,7 +22,7 @@ export function consensusPubkeyToHexAddress(consensusPubkey): string {
 
 export function getStakingValidatorByHex(hex): Proposer | string {
 	const locals = localStorage.getItem(`validators`)
-	if (locals) {
+	if (locals && locals !== 'undefined') {
 		const val = JSON.parse(locals).find(
 			x =>
 				consensusPubkeyToHexAddress({

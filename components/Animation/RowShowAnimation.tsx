@@ -8,9 +8,8 @@ import { CSSTransition } from 'react-transition-group'
 type RowShowAnimationProps = {
 	children: React.ReactNode
 	action: boolean
-	minHeight?: string
 }
-export default function RowShowAnimation({ children, action, minHeight = 'unset' }: RowShowAnimationProps) {
+export default function RowShowAnimation({ children, action }: RowShowAnimationProps) {
 	const [show, setShow] = useState(false)
 	useEffect(() => {
 		if (action) {
@@ -22,19 +21,17 @@ export default function RowShowAnimation({ children, action, minHeight = 'unset'
 	return (
 		<>
 			{action ? (
-				<div style={{ overflowY: 'hidden', minHeight: minHeight }}>
-					<CSSTransition
-						in={show}
-						timeout={5000}
-						classNames="alert"
-						// nodeRef={childrenRef}
-						unmountOnExit
-						// onEnter={() => setShowButton(false)}
-						// onExited={() => setShowButton(true)}
-					>
-						{children}
-					</CSSTransition>
-				</div>
+				<CSSTransition
+					in={show}
+					timeout={5000}
+					classNames="alert"
+					// nodeRef={childrenRef}
+					unmountOnExit
+					// onEnter={() => setShowButton(false)}
+					// onExited={() => setShowButton(true)}
+				>
+					{children}
+				</CSSTransition>
 			) : (
 				children
 			)}

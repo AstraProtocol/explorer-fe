@@ -1,11 +1,14 @@
 .footer {
 	background-color: rgba(var(--contrast-color-theme--raw), 0.05);
-	margin-top: 72px;
 }
 .footerInfo {
 	display: flex;
+	@media screen and (max-width: 1220px) {
+		flex-wrap: wrap;
+	}
 	.wrapperLinks {
 		display: flex;
+
 		div {
 			display: flex;
 			flex-direction: column;
@@ -17,6 +20,9 @@
 }
 
 .footerSocial {
+	@media screen and (max-width: 1220px) {
+		margin-top: var(--offset-xl);
+	}
 	div:last-child {
 		display: flex;
 	}

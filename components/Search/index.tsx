@@ -20,7 +20,7 @@ export default function Search() {
 				)}
 				onClick={() => setOpenSearchModal(true)}
 			>
-				<span className={clsx('search-icon', styles.searchIcon)}></span>
+				<span className={clsx('icon-search', styles.searchIcon)}></span>
 				<span className={clsx(styles.input, 'text text-base ', styles.input)}>
 					Search by address, token symbol name, transaction hash, or block number
 				</span>

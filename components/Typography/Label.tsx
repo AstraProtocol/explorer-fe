@@ -52,7 +52,7 @@ export function Label({
 			{icon && (
 				<span
 					className={clsx({
-						'checked-icon padding-right-xs ': icon,
+						'icon-checked padding-right-xs block-ver-center': icon,
 						'alert-color-error': type === 'error',
 						'alert-color-success': type === 'success'
 					})}
