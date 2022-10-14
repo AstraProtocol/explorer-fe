@@ -26,7 +26,7 @@ export default function BlockBriefRow({
 	border
 }: BlockBriefRowProps) {
 	return (
-		<RowShowAnimation action={newBlock} minHeight="100px">
+		<RowShowAnimation action={newBlock}>
 			<div
 				className={clsx(styles.rowBrief, 'margin-left-lg margin-right-lg margin-bottom-sm padding-top-sm', {
 					'border border-top-base': border
@@ -46,11 +46,11 @@ export default function BlockBriefRow({
 						<Timer updatedAt={updatedAt} />
 					</div>
 					<div className={clsx('margin-top-xs block-ver-center', styles.info)}>
-						<div className="block-ver-center">
-							<span className={clsx('contrast-color-30 text text-sm padding-right-2xs')}>
+						<div className="block-ver-center sm-wrap">
+							<span className={clsx('contrast-color-30 text text-sm padding-right-2xs sm-block')}>
 								Block Proposer
 							</span>
-							<span className="contrast-color-70 money money-2xs">
+							<span className="contrast-color-70 money money-2xs sm-block">
 								{proposerName} ({ellipseBetweenText(proposerAddress, 6, 6)})
 							</span>
 							{/* <DotSpace /> */}

@@ -131,7 +131,14 @@ export default function Navbar() {
 	const [load, setLoad] = useState(false)
 
 	const _searchWrapperRef = useRef<HTMLDivElement>(null)
-	useOutsideElement(_searchWrapperRef, () => setShowHamburgerMenu(false))
+
+	const _hideMenu = () => {
+		setLoad(false)
+		//time for animation
+		setTimeout(() => setShowHamburgerMenu(false), 500)
+	}
+
+	useOutsideElement(_searchWrapperRef, _hideMenu)
 
 	useEffect(() => {
 		function scroll() {}
@@ -162,13 +169,7 @@ export default function Navbar() {
 					ref={_searchWrapperRef}
 				>
 					<div className={styles.close}>
-						<span
-							onClick={() => {
-								setLoad(false)
-								setTimeout(() => setShowHamburgerMenu(false), 500)
-							}}
-							className="icon-close contrast-color-100 pointer"
-						></span>
+						<span onClick={_hideMenu} className="icon-close contrast-color-100 pointer"></span>
 					</div>
 					<div className={styles.content}>
 						<MoibleNavigation items={items} />

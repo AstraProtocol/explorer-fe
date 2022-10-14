@@ -1,10 +1,11 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
 import DotSpace from 'components/DotSpace'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
-import { LinkMaker } from 'utils/helper'
+import { ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type BlockRowProps = {
@@ -18,6 +19,14 @@ type BlockRowProps = {
 	newBlock?: boolean
 }
 
+const Mobile = ({ blockNumber, proposerAddress, transactionCounts, newBlock }) => {
+	return (
+		<RowShowAnimation action={newBlock}>
+			<div></div>
+		</RowShowAnimation>
+	)
+}
+
 export default function BlockRow({
 	blockNumber,
 	updatedAt,
@@ -28,6 +37,8 @@ export default function BlockRow({
 	value,
 	newBlock
 }: BlockRowProps) {
+	const { isMobile } = useMobileLayout('medium')
+	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	return (
 		<RowShowAnimation action={newBlock}>
 			<div
@@ -37,52 +48,64 @@ export default function BlockRow({
 					'row padding-left-lg',
 					'padding-right-lg padding-top-sm padding-bottom-sm',
 					'radius-lg',
-					'margin-bottom-xs'
+					'margin-bottom-xs',
+					'md-flex-column'
 				)}
 			>
-				<div className={clsx(styles.iconCetner, 'margin-right-sm')}>
-					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
+				<div className={clsx(styles.iconCetner, 'margin-right-sm md-flex-justify-space-between')}>
+					<div className="block-ver-center">
+						<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
+						{isMobile && (
+							<div className="col-2 block-ver-center md-padding-left-xs">
+								<Typography.LinkText
+									href={LinkMaker.block(blockNumber)}
+									children={`#${blockNumber}`}
+									classes={clsx('money', 'money-sm')}
+								/>
+							</div>
+						)}
+					</div>
+					{isMobile && (
+						<div className="col-1 block-ver-center">
+							<Timer updatedAt={updatedAt} />
+						</div>
+					)}
 				</div>
-				<div className="col-2 block-ver-center">
-					{mine ? (
-						<span className={clsx('money', 'money-sm')}>#{blockNumber}</span>
-					) : (
+				{!isMobile && (
+					<div className="col-2 block-ver-center">
 						<Typography.LinkText
 							href={LinkMaker.block(blockNumber)}
 							children={`#${blockNumber}`}
-							className={['money', 'money-sm']}
+							classes={clsx('money', 'money-sm')}
 						/>
-					)}
-				</div>
-				{mine ? (
-					<div className="col-9 gutter-left">
-						<div className="contrast-color-70">Block mined, awaiting import...</div>
 					</div>
-				) : (
-					<>
-						<div className={clsx('col-6 padding-left-lg', styles.borderLeft)}>
-							<div>
-								<Typography.LinkText
-									href={LinkMaker.address(proposerAddress)}
-									children={proposerAddress}
-									className={['money', 'money-sm']}
-								/>
-							</div>
-							<div className={clsx('block-ver-center', styles.info)}>
-								<div className="block-ver-center">
-									<span className={clsx('text text-sm contrast-color-30 padding-right-2xs')}>
-										{transactions} Transactions
-									</span>
-									{!!size && (
-										<>
-											<DotSpace />
-											<span className="text text-sm contrast-color-30">{size} bytes</span>
-										</>
-									)}
-								</div>
-							</div>
+				)}
+				<div
+					className={clsx('col-6 padding-left-lg', styles.borderLeft, 'md-padding-left-0', 'md-border-none')}
+				>
+					<div>
+						<Typography.LinkText
+							href={LinkMaker.address(proposerAddress)}
+							children={isSmallDevice ? ellipseRightText(proposerAddress, 20) : proposerAddress}
+							classes={clsx('money', 'money-sm')}
+						/>
+					</div>
+					<div className={clsx('block-ver-center', styles.info)}>
+						<div className="block-ver-center">
+							<span className={clsx('text text-sm contrast-color-30 padding-right-2xs')}>
+								{transactions} Transactions
+							</span>
+							{!!size && (
+								<>
+									<DotSpace />
+									<span className="text text-sm contrast-color-30">{size} bytes</span>
+								</>
+							)}
 						</div>
-
+					</div>
+				</div>
+				{!isMobile && (
+					<>
 						<div className="col-2 block-ver-center">
 							<Timer updatedAt={updatedAt} />
 						</div>

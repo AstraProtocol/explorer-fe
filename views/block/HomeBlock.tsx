@@ -10,6 +10,8 @@ import { LinkMaker } from 'utils/helper'
 import BlockBriefRow from './BlockBriefRow'
 import useBlock from './hook/useBlock'
 
+import styles from './style.module.scss'
+
 export function HomeBlock() {
 	const { top10, getPropserAddress } = useBlock()
 
@@ -18,13 +20,17 @@ export function HomeBlock() {
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Latest Block</span>
 				<DotSpace />
-				<Typography.LinkText href={LinkMaker.block()}>View all Blocks</Typography.LinkText>
+				<Typography.LinkText href={LinkMaker.block()}>
+					<span className="secondary-color-lighter">
+						View all <span className="md-hide">Blocks</span>
+					</span>
+				</Typography.LinkText>
 			</div>
 
 			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
-				<BackgroundCard classes="padding-bottom-sm">
+				<BackgroundCard classes={clsx(styles.card, 'padding-bottom-sm', 'md-min-height-unset')}>
 					{top10?.map((item, index) => {
 						const proposerHash = getPropserAddress(item.committedCouncilNodes)?.address
 						const proposer = getStakingValidatorByHex(proposerHash) as Proposer

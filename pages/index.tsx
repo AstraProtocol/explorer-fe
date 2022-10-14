@@ -17,14 +17,14 @@ const Home: React.FC<NextPage> = _ => {
 			<Head>
 				<title>{process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
+			<Search />
 			<Container>
-				<Search />
 				<Overview />
 				<div className="row md-wrap">
-					<div className={clsx('col col-6 gutter-right md')}>
+					<div className={clsx('col col-6 gutter-right md-full')}>
 						<HomeBlock />
 					</div>
-					<div className={clsx('col col-6')}>
+					<div className={clsx('col col-6 md-full')}>
 						<HomeTransactions />
 					</div>
 				</div>

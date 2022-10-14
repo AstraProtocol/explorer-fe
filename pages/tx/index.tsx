@@ -55,7 +55,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						{ title: 'Status', col: 'col-1 padding-left-md gutter-left' }
 					]}
 				/>
-				<div>
+				<div style={{ overflow: 'hidden' }}>
 					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (
