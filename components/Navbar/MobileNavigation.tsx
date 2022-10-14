@@ -15,7 +15,7 @@ type LinkItem = {
 	link?: string
 }
 
-const Checked = () => <span className="checked-icon alert-color-success block-ver-center"></span>
+const Checked = () => <span className="icon-checked alert-color-success block-ver-center"></span>
 
 const LinkMenuItem = ({
 	link,

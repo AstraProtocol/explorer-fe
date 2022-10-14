@@ -73,7 +73,7 @@ export default function Log({ logs, display }: LogProps) {
 		data()
 	}, [logs])
 	return (
-		<div>
+		<div className="width-100">
 			{!load ? (
 				<RowLoader row={5} />
 			) : isEmpty(items) ? (

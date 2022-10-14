@@ -8,20 +8,29 @@ import { LinkMaker } from 'utils/helper'
 import useTransaction from './hook/useTransaction'
 import RowBrief from './TransactionBriefRow'
 
+import styles from './style.module.scss'
+
 export function HomeTransactions() {
 	const { top10 } = useTransaction()
 	return (
-		<Container>
-			<div className="block-ver-center margin-bottom-md">
+		<Container classes={['height-100 flex flex-column']}>
+			<div
+				className="block-ver-center margin-bottom-md  md-inline-margin-top"
+				style={{ ['--md-margin-top' as string]: '56px' }}
+			>
 				<span className={clsx('contrast-color-70')}>Latest Transactions</span>
 				<DotSpace />
-				<Typography.LinkText href={LinkMaker.transaction()}>View all transactions</Typography.LinkText>
+				<Typography.LinkText href={LinkMaker.transaction()}>
+					<span className="secondary-color-lighter">
+						View all <span className="md-hide">Transactions</span>
+					</span>
+				</Typography.LinkText>
 			</div>
 
 			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
-				<BackgroundCard>
+				<BackgroundCard classes={clsx(styles.card, 'height-100 flex flex-column padding-bottom-sm')}>
 					{top10?.map((item, index) => (
 						<RowBrief
 							key={item.hash}

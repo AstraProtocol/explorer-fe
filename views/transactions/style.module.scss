@@ -1,7 +1,7 @@
 .rowBrief {
 	display: flex;
-	min-height: 88.9px;
 	align-items: center;
+	flex: 1;
 	.iconCetner {
 		display: flex;
 		align-items: center;
@@ -64,4 +64,11 @@
 		border: 1px solid rgba(255, 200, 42, 0.1);
 		border-radius: 8px;
 	}
+}
+
+.card {
+	justify-content: flex-end;
+	overflow: hidden;
+	display: flex;
+	flex-flow: column;
 }

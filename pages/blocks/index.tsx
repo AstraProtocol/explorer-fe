@@ -1,5 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs, Pagination } from '@astraprotocol/astra-ui'
+import { Breadcumbs, Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
@@ -16,6 +16,7 @@ import Layout from '../../components/Layout'
 const BlockDetailPage: React.FC<NextPage> = _ => {
 	const [loaderTime, setLoaderTime] = useState(false)
 	const { fullPageData, getPropserAddress, pagination, changePage } = useBlock()
+	const { isMobile } = useMobileLayout()
 	//loader display at least 1 second
 	useEffect(() => {
 		if (isEmpty(fullPageData)) {
@@ -32,9 +33,12 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Head>
 			<Search />
 			<Container>
-				<div style={{ justifyContent: 'space-between', display: 'flex' }}>
-					<div>
-						<Breadcumbs items={[{ label: 'Blocks' }]} />
+				<div
+					className="flex sm-flex-column sm-margin-bottom-lg flex-align-center sm-flex-align-start"
+					style={{ justifyContent: 'space-between' }}
+				>
+					<div className="sm-margin-bottom-lg">
+						<Breadcumbs items={[{ label: 'Blocks' }]} size="3xl" />
 					</div>
 					<div>
 						<Pagination
@@ -45,15 +49,17 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						/>
 					</div>
 				</div>
-				<RowTitle
-					columns={[
-						{ title: 'Block ID', col: 'padding-left-lg col-2 gutter-right' },
-						{ title: 'Block Proposer', col: 'padding-left-xl gutter-left col-6' },
-						{ title: 'Time', col: 'padding-left-sm col-2' },
-						{ title: 'Total Transaction', col: 'padding-left-sm' }
-					]}
-				/>
-				<div>
+				{!isMobile && (
+					<RowTitle
+						columns={[
+							{ title: 'Block ID', col: 'padding-left-lg col-2 gutter-right' },
+							{ title: 'Block Proposer', col: 'padding-left-xl gutter-left col-6' },
+							{ title: 'Time', col: 'padding-left-sm col-2' },
+							{ title: 'Total Transaction', col: 'padding-left-sm' }
+						]}
+					/>
+				)}
+				<div style={{ overflow: 'hidden' }}>
 					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (

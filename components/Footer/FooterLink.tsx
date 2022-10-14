@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import Link from 'next/link'
 import styles from './style.module.scss'
 
 type LinkItem = {
@@ -33,9 +32,13 @@ type FooterLinkProps = {
 
 export default function FooterLink({ classes }: FooterLinkProps) {
 	return (
-		<div className={clsx(styles.wrapperLinks, 'margin-top-lg', classes)}>
+		<div className={clsx(styles.wrapperLinks, 'md-wrap', classes)}>
 			{footerLinks.map((rows, index) => (
-				<div key={index} className="col-4">
+				<div
+					key={index}
+					className="col-4 md-margin-top-xl md-width-auto md-inline-margin-right"
+					style={{ ['--md-margin-right' as string]: '100px' }}
+				>
 					{rows.map((row, index) => (
 						<span
 							key={row.link}

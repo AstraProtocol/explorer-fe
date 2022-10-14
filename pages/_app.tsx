@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import '@astraprotocol/astra-ui/lib/shared/style.css'
 import { cosmosFetcher, evmFetcher } from 'api'
+import PageLoader from 'components/Loader/PageLoader'
 import Head from 'next/head'
 import { SWRConfig } from 'swr'
 import store, { persistor } from '../store'
@@ -45,6 +46,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 							<Head>
 								<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 							</Head>
+							<PageLoader />
 							<Component {...pageProps} />
 						</>
 					</SWRConfig>

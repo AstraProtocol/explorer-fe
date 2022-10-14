@@ -55,7 +55,10 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 					items.push({
 						label: CardInfoLabels.Block_Height,
 						type: 'text',
-						contents: [{ value: data[key] }]
+						contents: [{ value: data[key] }],
+						responsive: {
+							wrap: 'sm'
+						}
 					})
 					items.push({
 						label: CardInfoLabels.Block,
@@ -136,9 +139,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 														}
 														type={getTransactionType(item?.messages[0]?.type)}
 														newBlock={item.newTransaction}
-														transactionType={item?.messages[0]?.type}
 														style="inject"
-														order={index === transactions.length - 1 ? 'end' : ''}
 													/>
 												)
 											})}

@@ -7,7 +7,7 @@ import styles from '../style.module.scss'
 
 const Transfers = ({ content }: { content: Content }) => {
 	return (
-		<div className="block-center">
+		<div className="block-center sm-wrap flex-justify-start">
 			<span
 				className={clsx(
 					styles.smallCard,
@@ -29,7 +29,8 @@ const Transfers = ({ content }: { content: Content }) => {
 					'radius-sm block-center',
 					'contrast-color-100',
 					'padding-left-sm padding-right-sm padding-top-xs padding-bottom-xs',
-					'margin-right-md'
+					'margin-right-md',
+					'sm-margin-top-xs'
 				)}
 			>
 				<span className="padding-right-xs">To</span>
@@ -44,7 +45,8 @@ const Transfers = ({ content }: { content: Content }) => {
 					'radius-sm block-center',
 					'contrast-color-100',
 					'padding-left-sm padding-right-sm padding-top-xs padding-bottom-xs',
-					'margin-right-md'
+					'margin-right-md',
+					'sm-margin-top-xs'
 				)}
 			>
 				<span className="padding-right-xs">For</span>
