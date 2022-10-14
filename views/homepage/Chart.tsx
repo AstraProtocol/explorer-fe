@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import {
 	CategoryScale,
@@ -73,6 +74,8 @@ function getTxHistoryData(transactionHistory) {
 }
 
 const OverviewChart = ({}) => {
+	const { isMobile } = useMobileLayout('small')
+
 	const _fetchCondition = key => {
 		switch (key) {
 			case 'market_history_price':
@@ -235,7 +238,7 @@ const OverviewChart = ({}) => {
 		)
 	}
 
-	return <Line className={styles.chart} height={100} options={options} data={data} />
+	return <Line className={styles.chart} height={isMobile ? 190 : 150} options={options} data={data} />
 }
 
 export default OverviewChart

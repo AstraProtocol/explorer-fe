@@ -1,6 +1,8 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
+import Row from 'components/Grid/Row'
 import Logo from 'components/Logo'
 import Image from 'next/image'
 import useSWR from 'swr'
@@ -23,9 +25,7 @@ function getGasAvgData(gasAvgData): GasTracker {
 }
 
 const Overview = () => {
-	// const { isMobile } = useMobileLayout(940)
-	// console.log(isMobile)
-	const isMobile = true
+	const { isMobile } = useMobileLayout('small')
 
 	const _fetchCondition = key => {
 		switch (key) {
@@ -57,31 +57,28 @@ const Overview = () => {
 			<div className={styles.moon2}>
 				<Image alt="moon2" src={'/images/background/moon2.png'} layout="fill" />
 			</div>
-			<BackgroundCard>
-				<div className="row md-wrap">
-					<div className={clsx('col col-5', styles.leftBlock)}>
-						<div className={clsx('row', 'block-ver-center')}>
-							<div className={clsx('col col-6')}>
-								<Logo text="Astra" type="transparent" />
-							</div>
-							<div className={clsx('col col-6')}>
-								<Price />
-							</div>
-						</div>
-						<div className={styles.separateBlock} />
-						<MarketStatistics estimateCountedData={estimateCountedData} commonStatsData={commonStatsData} />
-					</div>
-					<div className={clsx('col', styles.centerBlock)} />
-					<div className={clsx('col col-7', styles.rightBlock)}>
-						<OverviewChart />
-						<ChainStatistics
-							gasTracker={gasAvgData}
-							estimateCountedData={estimateCountedData}
-							commonStatsData={commonStatsData}
-						/>
-					</div>
-				</div>
-			</BackgroundCard>
+			<div className="row md-wrap">
+				<BackgroundCard
+					radius={false}
+					classes={clsx(isMobile && 'margin-bottom-md', styles.leftBlock, isMobile && styles.leftMobileBlock)}
+				>
+					<Row style={{ justifyContent: 'space-between' }}>
+						<Logo text="Astra" type="transparent" />
+						<Price />
+					</Row>
+					<div className={styles.separateBlock} />
+					<MarketStatistics estimateCountedData={estimateCountedData} commonStatsData={commonStatsData} />
+				</BackgroundCard>
+				{!isMobile && <div className={clsx('col', styles.centerBlock)} />}
+				<BackgroundCard classes={styles.rightBlock} radius={false}>
+					<OverviewChart />
+					<ChainStatistics
+						gasTracker={gasAvgData}
+						estimateCountedData={estimateCountedData}
+						commonStatsData={commonStatsData}
+					/>
+				</BackgroundCard>
+			</div>
 		</div>
 	)
 }

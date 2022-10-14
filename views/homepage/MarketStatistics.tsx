@@ -1,6 +1,8 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import StaticsCard from 'components/Card/Layout/StaticsCard'
+import numeral from 'numeral'
 import useSWR from 'swr'
 import { Icon } from 'utils/enum'
 
@@ -15,6 +17,7 @@ function getLastestBlock(latestBlock: LatestBlock) {
 }
 
 const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Props) => {
+	const { isMobile } = useMobileLayout('small')
 	const _fetchCondition = key => {
 		switch (key) {
 			case 'latest_block':
@@ -27,10 +30,10 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 	const latestBlock = getLastestBlock(latestBlockRaw)
 
 	return (
-		<div className="md-wrap">
-			<div className={clsx('row margin-bottom-2xl')}>
+		<div>
+			<div className={clsx('row md-wrap', !isMobile && 'margin-bottom-2xl')}>
 				<StaticsCard
-					classes="margin-right-xl"
+					classes={isMobile ? 'margin-bottom-lg' : 'margin-right-xl'}
 					contentClasses="money-2sm"
 					content={`${commonStatsData?.average_block_time} seconds`}
 					icon={Icon.Recovery}
@@ -38,24 +41,26 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 				/>
 
 				<StaticsCard
-					content={estimateCountedData?.total_transactions}
+					classes={isMobile ? 'margin-bottom-lg' : ''}
+					content={numeral(estimateCountedData?.total_transactions).format('0,0')}
 					contentClasses="money-2sm"
 					icon={Icon.Analytics}
 					title="Total Transactions"
 				/>
 			</div>
 
-			<div className={clsx('row')}>
+			<div className={clsx('row md-wrap')}>
 				<StaticsCard
-					classes="margin-right-xl"
+					classes={isMobile ? 'margin-bottom-lg' : 'margin-right-xl'}
 					contentClasses="money-2sm"
-					content={latestBlock || estimateCountedData?.total_blocks}
+					content={numeral(latestBlock || estimateCountedData?.total_blocks).format('0,0')}
 					icon={Icon.Database}
 					title="Total Blocks"
 				/>
 
 				<StaticsCard
-					content={estimateCountedData?.wallet_addresses}
+					classes={isMobile ? 'margin-bottom-lg' : ''}
+					content={numeral(estimateCountedData?.wallet_addresses).format('0,0')}
 					contentClasses="money-2sm"
 					icon={Icon.Wallet}
 					title="Wallet Addresses"

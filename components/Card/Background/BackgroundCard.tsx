@@ -7,6 +7,7 @@ interface Props {
 	classes?: string
 	backgroundCardBlur?: boolean
 	backgroundColor?: boolean
+	radius?: boolean
 	border?: boolean
 }
 
@@ -15,12 +16,13 @@ const BackgroundCard = ({
 	classes,
 	backgroundCardBlur = true,
 	backgroundColor = true,
+	radius = true,
 	border = true
 }: Props) => {
 	return (
 		<div
 			className={clsx(
-				'radius-lg',
+				radius && 'radius-lg',
 				{
 					[styles.background]: backgroundColor,
 					'border border-base': border,

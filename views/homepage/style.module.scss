@@ -15,21 +15,18 @@
 			background-color: var(--border-color);
 		}
 	}
+	.leftMobileBlock {
+		border-top-left-radius: var(----radius-lg) solid var(--border-color);
+	}
 
 	.centerBlock {
-		position: absolute;
-		top: var(--offset-lg);
-		left: 40.5%;
-		height: 90%;
-		// margin: var(--offset-lg) var(--offset-sm);
 		width: 1px;
 		background-color: var(--border-color);
-		// color: var(--border-color);
 	}
 
 	.rightBlock {
 		position: relative;
-		margin: var(--offset-lg) var(--offset-lg);
+		padding: var(--offset-2xl) var(--offset-lg);
 		.chart {
 			margin: var(--offset-lg) 0;
 		}
