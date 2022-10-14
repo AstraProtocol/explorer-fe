@@ -41,7 +41,7 @@ interface AddressCoinBalanceHistoryResponse {
 }
 
 interface AddressTransactionResponse {
-	result: AddressTransactionData[]
+	result: AddressTransactionResponse[]
 	pagination: Pagination
 }
 
@@ -126,6 +126,21 @@ interface AddressTransactionData {
 	hash: string
 	messageTypes: string[]
 	success: boolean
+	fee: string
+	amount?: string
+	from?: string
+	to?: string
+	type: string
+}
+
+interface AddressTransactionResponse {
+	account: string
+	blockHeight: number
+	blockHash: string
+	blockTime: string
+	hash: string
+	messageTypes: string[]
+	success: boolean
 	code: number
 	log: string
 	fee: TokenAmount[]
@@ -135,5 +150,5 @@ interface AddressTransactionData {
 	gasUsed: number
 	memo: string
 	timeoutHeight: number
-	messages: Message
+	messages: TransactionMessage[]
 }

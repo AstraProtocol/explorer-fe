@@ -1,3 +1,4 @@
+import { Pagination } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
@@ -20,19 +21,41 @@ const AddressTransactionTab = ({ address }: Props) => {
 				<span className="text text-xl">Transactions</span>
 				<div>
 					{/* Select Component */}
-					{/* <PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} /> */}
+					<Pagination
+						total={pagination.total_page}
+						currentPage={pagination.current_page}
+						disabled={false}
+						limit={pagination.limit}
+						onChange={onPagingChange}
+					/>
 				</div>
 			</Row>
-
-			{!data || data.length == 0 ? (
-				<Empty text={'There are no transactions.'} />
-			) : (
-				<>
-					{data?.map((item, index) => (
-						<AddressTransaction key={item.hash + index} transaction={item} />
-					))}
-				</>
-			)}
+			<div style={{ overflowY: 'scroll' }}>
+				{!data || data.length == 0 ? (
+					<Empty text={'There are no transactions.'} />
+				) : (
+					<>
+						{data?.map((item, index) => (
+							<AddressTransaction key={item.hash + index} transaction={item} />
+						))}
+					</>
+				)}
+			</div>
+			<div
+				style={{ justifyContent: 'space-between', display: 'flex' }}
+				className="padding-right-xl padding-left-xl"
+			>
+				<div></div>
+				<div>
+					<Pagination
+						total={pagination.total_page}
+						currentPage={pagination.current_page}
+						disabled={false}
+						limit={pagination.limit}
+						onChange={onPagingChange}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }
