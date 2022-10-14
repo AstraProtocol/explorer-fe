@@ -101,7 +101,6 @@ export default function BlockRow({
 									<span className="text text-sm contrast-color-30">{size} bytes</span>
 								</>
 							)}
-
 						</div>
 					</div>
 				</div>
