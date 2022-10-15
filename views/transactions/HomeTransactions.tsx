@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
-import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import Typography from 'components/Typography'
@@ -13,7 +12,7 @@ import styles from './style.module.scss'
 export function HomeTransactions() {
 	const { top10 } = useTransaction()
 	return (
-		<Container classes={['height-100 flex flex-column']}>
+		<div className={'height-100 flex flex-column'}>
 			<div
 				className="block-ver-center margin-bottom-md  md-inline-margin-top"
 				style={{ ['--md-margin-top' as string]: '56px' }}
@@ -46,6 +45,6 @@ export function HomeTransactions() {
 					))}
 				</BackgroundCard>
 			)}
-		</Container>
+		</div>
 	)
 }

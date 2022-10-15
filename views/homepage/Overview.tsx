@@ -25,7 +25,7 @@ function getGasAvgData(gasAvgData): GasTracker {
 }
 
 const Overview = () => {
-	const { isMobile } = useMobileLayout('small')
+	const { isMobile } = useMobileLayout('medium')
 
 	const _fetchCondition = key => {
 		switch (key) {
@@ -69,10 +69,15 @@ const Overview = () => {
 					<div className={styles.separateBlock} />
 					<MarketStatistics estimateCountedData={estimateCountedData} commonStatsData={commonStatsData} />
 				</BackgroundCard>
-				{!isMobile && <div className={clsx('col', styles.centerBlock)} />}
-				<BackgroundCard classes={styles.rightBlock} radius={false}>
+				{!isMobile && (
+					<div className={clsx('col', styles.centerBlock)}>
+						<div className={styles.line} />
+					</div>
+				)}
+				<BackgroundCard classes={clsx(styles.rightBlock, isMobile && styles.rightMobileBlock)} radius={false}>
 					<OverviewChart />
 					<ChainStatistics
+						classes="padding-right-lg padding-left-lg"
 						gasTracker={gasAvgData}
 						estimateCountedData={estimateCountedData}
 						commonStatsData={commonStatsData}

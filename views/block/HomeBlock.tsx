@@ -1,7 +1,6 @@
 import { astraToEth } from '@astradefi/address-converter'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
-import Container from 'components/Container'
 import DotSpace from 'components/DotSpace'
 import RowLoader from 'components/Loader/RowLoader'
 import Typography from 'components/Typography'
@@ -16,7 +15,7 @@ export function HomeBlock() {
 	const { top10, getPropserAddress } = useBlock()
 
 	return (
-		<Container>
+		<div>
 			<div className="block-ver-center margin-bottom-md">
 				<span className={clsx('contrast-color-70')}>Latest Block</span>
 				<DotSpace />
@@ -49,6 +48,6 @@ export function HomeBlock() {
 					})}
 				</BackgroundCard>
 			)}
-		</Container>
+		</div>
 	)
 }

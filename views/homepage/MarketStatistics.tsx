@@ -35,7 +35,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 				<StaticsCard
 					classes={isMobile ? 'margin-bottom-lg' : 'margin-right-xl'}
 					contentClasses="money-2sm"
-					content={`${commonStatsData?.average_block_time} seconds`}
+					content={`${commonStatsData?.average_block_time || 0} seconds`}
 					icon={Icon.Recovery}
 					title="Average Block Time"
 				/>

@@ -1,4 +1,5 @@
 import { useMobileLayout } from '@astraprotocol/astra-ui'
+import clsx from 'clsx'
 import StaticsCard from 'components/Card/Layout/StaticsCard'
 import Row from 'components/Grid/Row'
 import { Icon } from 'utils/enum'
@@ -14,7 +15,7 @@ interface Props {
 const ChainStatistics = ({ classes, commonStatsData, estimateCountedData, gasTracker }: Props) => {
 	const { isMobile } = useMobileLayout('small')
 	return (
-		<Row classes="md-wrap" style={{ alignItem: 'space-between' }}>
+		<Row classes={clsx('md-wrap', classes)} style={{ alignItem: 'space-between' }}>
 			<StaticsCard
 				classes={isMobile ? 'margin-bottom-lg' : 'margin-right-xl'}
 				content={formatCurrencyValue(commonStatsData?.token_stats?.market_cap)}
