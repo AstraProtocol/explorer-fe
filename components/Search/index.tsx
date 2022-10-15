@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Container from 'components/Container'
 import { useState } from 'react'
@@ -5,6 +6,7 @@ import SearchModal from './SearchModal'
 import styles from './style.module.scss'
 
 export default function Search() {
+	const { isMobile } = useMobileLayout('small')
 	const [_openSearchModal, setOpenSearchModal] = useState(false)
 
 	return (
@@ -16,7 +18,7 @@ export default function Search() {
 					'margin-auto',
 					'padding-left-lg padding-right-lg',
 					'padding-top-md padding-bottom-md',
-					'margin-top-2xl margin-bottom-2xl'
+					isMobile ? 'margin-top-lg margin-bottom-lg' : 'margin-top-2xl margin-bottom-2xl'
 				)}
 				onClick={() => setOpenSearchModal(true)}
 			>
