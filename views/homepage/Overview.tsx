@@ -50,7 +50,7 @@ const Overview = () => {
 	const gasAvgData = getGasAvgData(gasAvgRaw)
 
 	return (
-		<div className={clsx(styles.overview)}>
+		<div className={clsx(styles.overview, isMobile && 'margin-bottom-2xl')}>
 			<div className={styles.moon1}>
 				<Image alt="moon1" src={'/images/background/moon1.png'} layout="fill" />
 			</div>
