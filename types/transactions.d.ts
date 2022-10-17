@@ -51,6 +51,7 @@ interface TransactionDetailResponse {
 interface EVMTransferItem {
 	amount: string
 	fromAddress: string
+	decimals: string
 	logIndex: string
 	toAddress: string
 	tokenContractAddress: string
@@ -61,6 +62,7 @@ interface EVMTransferItem {
 }
 interface EvmLog {
 	address: string
+	addressName: string
 	data: string
 	index: string
 	topics: string[]

@@ -7,6 +7,7 @@ import styles from './style.module.scss'
 
 export type LogElementProps = {
 	address?: string
+	addressName?: string
 	showAddress?: boolean
 	callRow?: string
 	verified?: boolean
@@ -23,6 +24,7 @@ export type LogElementProps = {
 
 export default function LogElement({
 	address,
+	addressName,
 	verified,
 	methodId,
 	call,
@@ -41,7 +43,7 @@ export default function LogElement({
 		items.push({
 			label: 'Address:',
 			type: 'text',
-			contents: [{ value: address }],
+			contents: [{ value: `${`${addressName} | `}${address}` }],
 			responsive: {
 				ellipsis: false,
 				wrap: 'sm'
