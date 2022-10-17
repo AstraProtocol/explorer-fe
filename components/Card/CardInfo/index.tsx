@@ -67,8 +67,8 @@ export default function CardInfo({
 }: CardInfoProps) {
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	const { isMobile: isMediumDevice } = useMobileLayout('medium')
-	const _ellipsis = (text: string | number) =>
-		ellipseRightText(`${text}`, isSmallDevice ? 27 : isMediumDevice ? 45 : 80)
+	const _ellipsis = (text: string | number, cut = true): string =>
+		cut ? ellipseRightText(`${text}`, isSmallDevice ? 27 : isMediumDevice ? 45 : 150) : (text as string)
 
 	return (
 		<BackgroundCard
@@ -114,13 +114,14 @@ export default function CardInfo({
 									) : null}
 									{type === 'text' ? (
 										<span className="money money-sm contrast-color-100 word-break-all">
-											{_ellipsis(content.value)} {content.suffix && content.suffix}
+											{_ellipsis(content.value, responsive.ellipsis)}{' '}
+											{content.suffix && content.suffix}
 										</span>
 									) : null}
 									{type === 'copy' ? (
 										<CopyButton
-											textCopy={_ellipsis(content?.value as string)}
-											textTitle={_ellipsis(content?.value as string)}
+											textCopy={_ellipsis(content?.value as string, responsive.ellipsis)}
+											textTitle={_ellipsis(content?.value as string, responsive.ellipsis)}
 										/>
 									) : null}
 									{type === 'link' ? (
@@ -129,13 +130,13 @@ export default function CardInfo({
 											fontType="Titi"
 											fontSize="text-500"
 										>
-											{_ellipsis(content.value as string)}
+											{_ellipsis(content.value as string, responsive.ellipsis)}
 										</Typography.LinkText>
 									) : null}
 									{type === 'link-copy' ? (
 										<div className="block-center">
 											<Typography.LinkText href={content.link || ''}>
-												{_ellipsis(content.value as string)}
+												{_ellipsis(content.value as string, responsive.ellipsis)}
 											</Typography.LinkText>
 											<CopyButton textCopy={content.value as string} />
 										</div>

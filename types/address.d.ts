@@ -4,6 +4,14 @@ interface AbiResponse {
 	status: string
 }
 
+interface HashAbiResponse {
+	message: string
+	result: {
+		abi: any
+	}
+	status: string
+}
+
 interface AddressCounterResponse {
 	message: string
 	result: AddressCounterData

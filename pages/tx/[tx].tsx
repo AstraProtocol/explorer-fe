@@ -46,7 +46,7 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 				</div>
 				<CardInfo items={items} classes={['margin-top-sm']} />
 				{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
-				{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} />}
+				{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
 				<TransactionTabs
 					evmHash={evmHash}
 					cosmosHash={cosmosHash}
