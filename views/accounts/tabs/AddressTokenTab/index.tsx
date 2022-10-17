@@ -19,11 +19,18 @@ interface Props {
 
 const AddressTokenTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressToken(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressToken(address, currentPage)
 	const astraSummary = useAppSelector(getAstraSummary)
 	const addressBalance = useAddressBalance(address)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	const netWorth = numeral((astraSummary.last * parseInt(addressBalance.balance)) / 10 ** 18).format('0,0.00000')
 
@@ -49,7 +56,7 @@ const AddressTokenTab = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Token</span>
 					<br />
 					<AmountUnit classes="padding-right-sm border border-right-base" amount={0} unit="VND" />
-					<AmountUnit classes="padding-left-sm" amount={result?.length} unit="Tokens" />
+					<AmountUnit classes="padding-left-sm" amount={data.result?.length} unit="Tokens" />
 				</BackgroundCard>
 			</Row>
 			<div style={{ overflowY: 'scroll' }}>
@@ -70,11 +77,11 @@ const AddressTokenTab = ({ address }: Props) => {
 					</Row>
 				</BackgroundCard>
 				<div>
-					{!result || result.length == 0 ? (
+					{!data.result || data.result.length == 0 ? (
 						<Empty classes="margin-top-xl" />
 					) : (
 						<>
-							{result?.map((item, index) => {
+							{data.result?.map((item, index) => {
 								return <AddressTokenRow key={item.contractAddress} data={item} />
 							})}
 						</>
@@ -82,7 +89,7 @@ const AddressTokenTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

@@ -10,7 +10,7 @@ export default function useAccounts(page: number) {
 			API_LIST.ALL_HOLDERS,
 			{
 				page,
-				offset: 20
+				offset: 10
 			}
 		]
 	}

@@ -11,9 +11,15 @@ interface Props {
 
 const AddressTokenTransferTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressTokenTransfers(address, currentPage)
-
-	const onPagingChange = (value: number) => setPage(value)
+	const { data, makeNextPage, makePrevPage } = useAddressTokenTransfers(address, currentPage)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	return (
 		<div>
@@ -21,14 +27,14 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 				<span className="text text-xl">Token Transfers</span>
 				<div>
 					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
-			{!result || result.length == 0 ? (
+			{!data.result || data.result.length == 0 ? (
 				<Empty classes="margin-top-xl" />
 			) : (
 				<>
-					{result?.map((item, index) => {
+					{data.result?.map((item, index) => {
 						return <AddressTokenTransfer key={item.hash} data={item} />
 					})}
 				</>

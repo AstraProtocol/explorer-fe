@@ -10,7 +10,7 @@ export default function useTokens(page: number) {
 			API_LIST.ALL_TOKENS,
 			{
 				page,
-				offset: 20
+				offset: 10
 			}
 		]
 	}

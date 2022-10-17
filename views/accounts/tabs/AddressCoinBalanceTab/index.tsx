@@ -18,11 +18,18 @@ interface Props {
 
 const AddressCoinBalanceTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressCoinBalanceHistory(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressCoinBalanceHistory(address)
 	const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	return (
 		<div className="margin-left-xl margin-right-xl">
@@ -51,11 +58,11 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 					</Row>
 				</BackgroundCard>
 				<div className="">
-					{!result || result.length == 0 ? (
+					{!data.result || data.result.length == 0 ? (
 						<Empty classes="margin-top-lg" />
 					) : (
 						<>
-							{result?.map((item: AddressCoinBalanceHistory, index) => {
+							{data.result?.map((item: AddressCoinBalanceHistory, index) => {
 								return (
 									<AddressBalanceHistory
 										addressBalance={addressBalance}
@@ -70,7 +77,7 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

@@ -10,7 +10,7 @@ export default function useTokenTransactions(page: number) {
 			API_LIST.TOKEN_TRANSACTIONS,
 			{
 				page,
-				offset: 20
+				offset: 10
 			}
 		]
 	}

@@ -11,7 +11,7 @@ export default function useTokenHolders(token: string, page: number) {
 			{
 				contractaddress: token,
 				page,
-				offset: 20
+				offset: 10
 			}
 		]
 	}
