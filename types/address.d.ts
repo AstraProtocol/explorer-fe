@@ -25,14 +25,14 @@ interface AddressBalanceResponse {
 }
 
 interface AddressTokenTransferResponse {
-	message: string
+	hasNextPage: boolean
 	result: TokenTransfer[]
-	status: string
+	nextPagePath: string
 }
 
 interface AddressTokenResponse {
 	hasNextPage: boolean
-	nextPageParams: any
+	nextPagePath: string
 	result: AddressToken[]
 }
 
@@ -44,7 +44,7 @@ interface AddressInternalTransactionResponse {
 
 interface AddressCoinBalanceHistoryResponse {
 	hasNextPage: boolean
-	nextPageParams: any
+	nextPagePath: any
 	result: AddressCoinBalanceHistory[]
 }
 
@@ -64,13 +64,21 @@ interface UseAddressTransactionData {
 }
 
 interface UseAddressTokenTransferData {
-	result: TokenTransfer[]
-	hasNextPage: boolean
+	data: {
+		result: TokenTransfer[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseAddressTokenData {
-	result: AddressToken[]
-	hasNextPage: boolean
+	data: {
+		result: AddressToken[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseAddressInternalTransactionData {
@@ -84,8 +92,12 @@ interface UseAddressBalanceData {
 }
 
 interface UseAddressCoinBalanceHistoryData {
-	result: AddressCoinBalanceHistory[] | []
-	hasNextPage: boolean
+	data: {
+		result: AddressCoinBalanceHistory[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseAddressCoinBalanceHistoryChartData {
@@ -134,7 +146,7 @@ interface AddressTransactionData {
 	hash: string
 	messageTypes: string[]
 	success: boolean
-	fee: string
+	fee: string | number
 	amount?: string
 	from?: string
 	to?: string

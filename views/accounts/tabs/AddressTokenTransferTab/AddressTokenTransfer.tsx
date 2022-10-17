@@ -1,4 +1,3 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -7,7 +6,7 @@ import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import numeral from 'numeral'
-import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import style from './style.module.scss'
 
 interface Props {
@@ -19,18 +18,20 @@ const AddressTokenTransfer = ({ data }: Props) => {
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
 			type="success"
-			gradient="normal"
+			gradient="transparent"
 			classes={clsx(
 				'padding-left-lg padding-right-lg padding-top-xs padding-bottom-xs',
 				style.borderWidthPadding
 			)}
 		>
 			<div style={{ textAlign: 'left' }} className="col-5">
-				<Row style={{ justifyContent: 'space-between' }}>
-					<LinkText fontType="Titi" href={LinkMaker.transaction(data.hash)}>
+				<Row>
+					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
 					</LinkText>
-					{data.type && <Tag hasArrowRight={false} fontType="Titi" text={data.type} />}
+					{data.contractMethodName && (
+						<Tag hasArrowRight={false} fontType="Titi" text={data.contractMethodName} />
+					)}
 				</Row>
 				<div>
 					<span className="margin-right-lg">
@@ -43,35 +44,30 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					</span>
 				</div>
 			</div>
-			<div>
-				{/* <Tag text="Contract call" /> */}
+			<div className="col-2 ">
 				<LinkText classes="margin-left-lg" href={LinkMaker.block(data.blockNumber)}>
 					#{data.blockNumber}
 				</LinkText>
 			</div>
-			<div>
-				<TypographyUI.Balance
+			<div className="col-2 margin-left-xs">
+				{/* <TypographyUI.Balance
 					size="sm"
 					currency=""
 					icon={<CryptoIcon name="asa" size="sm" />}
 					value={data.value ? convertBalanceToView(data.value) : data.value}
 					fixNumber={5}
 				/>
-				<br />
+				<br /> */}
 				<span className="text text-xs contrast-color-70">Fee: </span>
 				<span className="money money-xs contrast-color-70">
 					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA
 				</span>
 			</div>
-			<div>
+			<div className="col-2 margin-left-xs">
 				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
 			</div>
-			<div>
-				{data.confirmations ? (
-					<Typography.SuccessText>Success</Typography.SuccessText>
-				) : (
-					<Typography.ErrorText>Error</Typography.ErrorText>
-				)}
+			<div className="col-2 margin-left-xs">
+				<Typography.SuccessText>Success</Typography.SuccessText>
 			</div>
 		</GradientRow>
 	)

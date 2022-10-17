@@ -1,7 +1,6 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
-import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
@@ -18,11 +17,18 @@ interface Props {
 
 const AddressCoinBalanceTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressCoinBalanceHistory(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressCoinBalanceHistory(address)
 	const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	return (
 		<div className="margin-left-xl margin-right-xl">
@@ -40,22 +46,20 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 				<BackgroundCard
 					classes={clsx(
 						styles.noRadius,
-						'text text-base  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
+						'text text-base row  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
 					)}
 				>
-					<Row>
-						<div className="col-2">Blocks</div>
-						<div className="col-3">Tx Hash</div>
-						<div className="col-5">Value</div>
-						<div className="col-2">Time</div>
-					</Row>
+					<div className={clsx('col-2', styles.colBlockNumber)}>Blocks</div>
+					<div className={clsx('col-3', styles.colTransactionHash)}>Tx Hash</div>
+					<div className={clsx('col-5', styles.colValue)}>Value</div>
+					<div className={clsx('col-2', styles.colTimer)}>Time</div>
 				</BackgroundCard>
 				<div className="">
-					{!result || result.length == 0 ? (
+					{!data.result || data.result.length == 0 ? (
 						<Empty classes="margin-top-lg" />
 					) : (
 						<>
-							{result?.map((item: AddressCoinBalanceHistory, index) => {
+							{data.result?.map((item: AddressCoinBalanceHistory, index) => {
 								return (
 									<AddressBalanceHistory
 										addressBalance={addressBalance}
@@ -70,7 +74,7 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

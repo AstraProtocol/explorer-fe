@@ -23,7 +23,7 @@ const AddressOverview = ({ address }: Props) => {
 	const astraSummary = useAppSelector(getAstraSummary)
 
 	return (
-		<BackgroundCard classes="padding-lg margin-top-2xl">
+		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
 				<div>
 					<span className="text text-base contrast-color-50">Wallet Address:</span>
@@ -36,7 +36,7 @@ const AddressOverview = ({ address }: Props) => {
 				</div>
 			</Row>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
-				<div className="">
+				<div className={styles.colBalance}>
 					<span className="text text-base contrast-color-50">Balance:</span>
 					<br />
 					<TypographyUI.Balance
@@ -58,7 +58,7 @@ const AddressOverview = ({ address }: Props) => {
 						fixNumber={5}
 					/>
 				</div>
-				<div className="">
+				<div className={styles.colTransaction}>
 					<span className="text text-base contrast-color-50">Transactions:</span>
 					<br />
 					<span className="text text-base">
@@ -67,14 +67,14 @@ const AddressOverview = ({ address }: Props) => {
 							: numeral(addressCounter.transactionCount).format('0,0')}
 					</span>
 				</div>
-				<div className="">
+				<div className={styles.colTransfer}>
 					<span className="text text-base contrast-color-50">Transfers:</span>
 					<br />
 					<span className="text text-base">
 						{isUndefined(addressCounter?.tokenTransferCount) ? 'NaN' : addressCounter?.tokenTransferCount}
 					</span>
 				</div>
-				<div className="">
+				<div className={styles.colGasUsed}>
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />
 					<span className="text text-base">
@@ -83,7 +83,7 @@ const AddressOverview = ({ address }: Props) => {
 							: numeral(addressCounter.gasUsageCount).format('0,0')}
 					</span>
 				</div>
-				<div className="">
+				<div className={styles.colLastBalanceUpdated}>
 					<span className="text text-base contrast-color-50">Last balance updated:</span>
 					<br />
 

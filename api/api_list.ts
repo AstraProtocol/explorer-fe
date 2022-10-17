@@ -35,7 +35,7 @@ const API_LIST = {
 	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'evm_/address', // address, page, offset=?
 	ADDRESS_TRANSACTION: 'http://128.199.238.171:8080/api/v1/accounts',
 	ADDRESS_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal', // address, page, offset
-	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=tokentx', // address=?
+	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=getlisttokentransfers', // address=?
 
 	TOKEN_DETAIL: '',
 	TOKEN_TRANSACTIONS: '',

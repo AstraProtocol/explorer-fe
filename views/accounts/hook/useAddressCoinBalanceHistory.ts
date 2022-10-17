@@ -2,16 +2,32 @@ import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function useAddressCoinBalanceHistory(address: string, page: number) {
-	const [hookData, setState] = useState<UseAddressCoinBalanceHistoryData>({ result: [], hasNextPage: false })
+export default function useAddressCoinBalanceHistory(address: string): UseAddressCoinBalanceHistoryData {
+	const [hookData, setState] = useState({
+		result: [],
+		hasNextPage: false,
+		nextPagePath: undefined
+	})
+
+	const [currentParams, setParams] = useState(undefined)
+	const prevParams = []
 
 	const _fetchCondition = () => {
+		if (currentParams) {
+			return [
+				`${API_LIST.ADDRESS_COIN_BALANCE_HISTORY}${currentParams}`,
+				{
+					address
+				}
+			]
+		}
+
 		return [
 			API_LIST.ADDRESS_COIN_BALANCE_HISTORY,
 			{
 				address,
-				page,
-				offset: 20
+				page: 1,
+				offset: 10
 			}
 		]
 	}
@@ -19,14 +35,21 @@ export default function useAddressCoinBalanceHistory(address: string, page: numb
 
 	useEffect(() => {
 		if (data?.result) {
-			setState({
-				result: data.result,
-				hasNextPage: data.hasNextPage
-			})
+			setState(data)
 		}
 	}, [data])
 	return {
-		result: hookData.result,
-		hasNextPage: hookData.hasNextPage
+		data: {
+			result: hookData.result,
+			hasNextPage: hookData.hasNextPage
+		},
+		makeNextPage: () => {
+			if (currentParams) prevParams.push(currentParams)
+			setParams(hookData.nextPagePath)
+		},
+		makePrevPage: () => {
+			const prevParam = prevParams.pop()
+			setParams(prevParam)
+		}
 	}
 }

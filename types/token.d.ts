@@ -45,11 +45,12 @@ interface Holder {
 }
 
 interface TokenTransfer {
-	value: string
+	// value: string
 	blockHash: string
 	blockNumber: string
+	contractMethodName?: string
 	confirmations: string
-	contractAddress: string
+	// contractAddress: string
 	cumulativeGasUsed: string
 	from: string
 	gas: string
@@ -57,13 +58,25 @@ interface TokenTransfer {
 	gasUsed: string
 	hash: string
 	input: string
-	logIndex: string
+	// logIndex: string
 	nonce: string
 	timeStamp: string
 	to: string
-	tokenDecimal: string
-	tokenName: string
-	tokenSymbol: string
+	// tokenDecimal: string
+	// tokenName: string
+	// tokenSymbol: string
 	transactionIndex: string
-	type?: string
+	tokenTransfers: {
+		amount: string
+		decimals: string
+		fromAddress: string
+		fromAddressName: string
+		logIndex: string
+		toAddress: string
+		toAddressName: string
+		tokenContractAddress: string
+		tokenName: string
+		tokenSymbol: string
+	}[]
+	// type?: string
 }

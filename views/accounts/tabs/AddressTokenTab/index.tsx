@@ -19,18 +19,30 @@ interface Props {
 
 const AddressTokenTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressToken(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressToken(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 	const addressBalance = useAddressBalance(address)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	const netWorth = numeral((astraSummary.last * parseInt(addressBalance.balance)) / 10 ** 18).format('0,0.00000')
 
 	return (
 		<div className="margin-left-xl margin-right-xl">
-			<Row classes="margin-top-xl margin-bottom-xl">
-				<BackgroundCard classes="radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md">
+			<Row classes="margin-top-xl margin-bottom-xl" style={{ overflowY: 'scroll' }}>
+				<BackgroundCard
+					classes={clsx(
+						'radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md',
+						styles.cardUnitBalance
+					)}
+				>
 					<span className="text text-base contrast-color-50">Net Worth</span>
 					<br />
 					<AmountUnit amount={netWorth} unit="VND" />
@@ -45,36 +57,39 @@ const AddressTokenTab = ({ address }: Props) => {
 						unit="Astra"
 					/>
 				</BackgroundCard> */}
-				<BackgroundCard classes="radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md">
+				<BackgroundCard
+					classes={clsx(
+						'radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md',
+						styles.cardUnitToken
+					)}
+				>
 					<span className="text text-base contrast-color-50">Token</span>
 					<br />
 					<AmountUnit classes="padding-right-sm border border-right-base" amount={0} unit="VND" />
-					<AmountUnit classes="padding-left-sm" amount={result?.length} unit="Tokens" />
+					<AmountUnit classes="padding-left-sm" amount={data.result?.length} unit="Tokens" />
 				</BackgroundCard>
 			</Row>
 			<div style={{ overflowY: 'scroll' }}>
 				<BackgroundCard
 					classes={clsx(
 						styles.noRadius,
-						'text text-base  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
+						'text text-base row padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
 					)}
 				>
-					<Row>
-						<div style={{ width: '10%' }}>Assets</div>
-						<div style={{ width: '10%' }}>Type</div>
-						<div style={{ width: '20%' }}>Amount</div>
-						<div style={{ width: '10%' }}>Symbol</div>
-						<div style={{ width: '10%' }}>Price</div>
-						<div style={{ width: '10%' }}>Value</div>
-						<div style={{ width: '20%' }}>Contract Address</div>
-					</Row>
+					<div className={clsx('col-2 margin-right-xs', styles.colSymbol)}>Assets</div>
+					<div className={clsx('col-1 margin-right-xs', styles.colType)}>Type</div>
+					<div className={clsx('col-3 margin-right-xs', styles.colAmount)}>Amount</div>
+					<div className={clsx('col-1 margin-right-xs', styles.colSymbol)}>Symbol</div>
+					<div className={clsx('col-1', styles.colPrice)}>Price</div>
+					<div className={clsx('col-1', styles.colValue)}>Value</div>
+					<div className={clsx('col-3', styles.colAddress)}>Contract Address</div>
 				</BackgroundCard>
 				<div>
-					{!result || result.length == 0 ? (
+					{!data.result || data.result.length == 0 ? (
 						<Empty classes="margin-top-xl" />
 					) : (
 						<>
-							{result?.map((item, index) => {
+							{data.result?.map((item, index) => {
 								return <AddressTokenRow key={item.contractAddress} data={item} />
 							})}
 						</>
@@ -82,7 +97,7 @@ const AddressTokenTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

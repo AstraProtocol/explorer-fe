@@ -104,7 +104,7 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 		<Layout>
 			<Head>
 				<title>
-					BLock {blockHeight} | {process.env.NEXT_PUBLIC_TITLE}
+					Block #{blockHeight} | {process.env.NEXT_PUBLIC_TITLE}
 				</title>
 			</Head>
 			<Container>

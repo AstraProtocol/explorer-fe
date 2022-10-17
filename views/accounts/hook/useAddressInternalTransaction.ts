@@ -14,7 +14,7 @@ export default function useAddressInternalTransaction(address: string, page: num
 			{
 				address,
 				page,
-				offset: 20
+				offset: 10
 			}
 		]
 	}
