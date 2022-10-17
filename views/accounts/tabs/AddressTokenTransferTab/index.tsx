@@ -30,15 +30,17 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
-			{!data.result || data.result.length == 0 ? (
-				<Empty classes="margin-top-xl" />
-			) : (
-				<>
-					{data.result?.map((item, index) => {
-						return <AddressTokenTransfer key={item.hash} data={item} />
-					})}
-				</>
-			)}
+			<div style={{ overflowY: 'scroll' }}>
+				{!data.result || data.result.length == 0 ? (
+					<Empty classes="margin-top-xl" />
+				) : (
+					<>
+						{data.result?.map((item, index) => {
+							return <AddressTokenTransfer key={item.hash} data={item} />
+						})}
+					</>
+				)}
+			</div>
 		</div>
 	)
 }

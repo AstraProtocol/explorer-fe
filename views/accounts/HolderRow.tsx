@@ -13,19 +13,20 @@ export default function HolderRow({ index, account }: Props) {
 		<div
 			className={clsx(
 				styles.holderRow,
-				'row padding-left-lg',
+				'row',
+				'padding-left-lg',
 				'padding-right-lg padding-top-sm padding-bottom-sm',
 				'radius-lg',
 				'margin-bottom-xs'
 			)}
 		>
-			<div className={clsx('text text-base contrast-color-70 text-center margin-right-lg')}>{index}</div>
-			<div className={clsx(styles.borderLeft, 'col-5 padding-left-lg block-ver-center')}>
+			<div className={clsx('text text-base contrast-color-70 text-center', styles.colIndex)}>{index}</div>
+			<div className={clsx(styles.borderLeft, styles.colAddress, 'col-5 padding-left-lg block-ver-center')}>
 				<Typography.LinkText href={LinkMaker.address(account.address)} classes={'text text-base'}>
 					{account.address}
 				</Typography.LinkText>
 			</div>
-			<div className={clsx(styles.borderLeft, 'col-5 padding-left-lg ')}>
+			<div className={clsx(styles.borderLeft, styles.colBalance, 'col-5 padding-left-lg ')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
 					{convertBalanceToView(account.balance)}
 				</span>
@@ -35,6 +36,7 @@ export default function HolderRow({ index, account }: Props) {
 			<div
 				className={clsx(
 					styles.borderLeft,
+					styles.colTxCount,
 					'padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center col-2'
 				)}
 			>

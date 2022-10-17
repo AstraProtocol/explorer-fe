@@ -22,7 +22,7 @@ export const ellipseLeftText = (address: string, to: number) => {
 
 export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	const big = BigNumber.from(value)
-	return formatUnits(big, decimals)
+	return numeral(formatUnits(big, decimals).valueOf()).format('0,0.0000')
 }
 /**
  * return format text of date

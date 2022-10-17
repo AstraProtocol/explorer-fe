@@ -1,7 +1,6 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
-import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
@@ -47,15 +46,13 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 				<BackgroundCard
 					classes={clsx(
 						styles.noRadius,
-						'text text-base  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
+						'text text-base row  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
 					)}
 				>
-					<Row>
-						<div className="col-2">Blocks</div>
-						<div className="col-3">Tx Hash</div>
-						<div className="col-5">Value</div>
-						<div className="col-2">Time</div>
-					</Row>
+					<div className={clsx('col-2', styles.colBlockNumber)}>Blocks</div>
+					<div className={clsx('col-3', styles.colTransactionHash)}>Tx Hash</div>
+					<div className={clsx('col-5', styles.colValue)}>Value</div>
+					<div className={clsx('col-2', styles.colTimer)}>Time</div>
 				</BackgroundCard>
 				<div className="">
 					{!data.result || data.result.length == 0 ? (

@@ -18,15 +18,15 @@ const AddressTokenTransfer = ({ data }: Props) => {
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
 			type="success"
-			gradient="normal"
+			gradient="transparent"
 			classes={clsx(
 				'padding-left-lg padding-right-lg padding-top-xs padding-bottom-xs',
 				style.borderWidthPadding
 			)}
 		>
 			<div style={{ textAlign: 'left' }} className="col-5">
-				<Row style={{ justifyContent: 'space-between' }}>
-					<LinkText fontType="Titi" href={LinkMaker.transaction(data.hash)}>
+				<Row>
+					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
 					</LinkText>
 					{data.contractMethodName && (
@@ -44,12 +44,12 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					</span>
 				</div>
 			</div>
-			<div>
+			<div className="col-2 ">
 				<LinkText classes="margin-left-lg" href={LinkMaker.block(data.blockNumber)}>
 					#{data.blockNumber}
 				</LinkText>
 			</div>
-			<div>
+			<div className="col-2 margin-left-xs">
 				{/* <TypographyUI.Balance
 					size="sm"
 					currency=""
@@ -63,10 +63,10 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA
 				</span>
 			</div>
-			<div>
+			<div className="col-2 margin-left-xs">
 				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
 			</div>
-			<div>
+			<div className="col-2 margin-left-xs">
 				<Typography.SuccessText>Success</Typography.SuccessText>
 			</div>
 		</GradientRow>

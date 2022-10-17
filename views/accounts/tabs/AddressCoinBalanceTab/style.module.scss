@@ -22,3 +22,18 @@
 	display: flex;
 	justify-content: flex-end;
 }
+
+.colBlockNumber {
+	min-width: 90px;
+}
+.colTransactionHash {
+	min-width: 300px;
+}
+.colValue {
+	min-width: 350px;
+	display: flex;
+	align-items: center;
+}
+.colTimer {
+	min-width: 90px;
+}

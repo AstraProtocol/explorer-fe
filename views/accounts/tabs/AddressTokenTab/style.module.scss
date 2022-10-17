@@ -6,3 +6,29 @@
 	display: flex;
 	justify-content: flex-end;
 }
+
+.colType {
+	min-width: 80px;
+}
+.colSymbol {
+	min-width: 110px;
+}
+.colAmount {
+	min-width: 200px;
+}
+.colSymbol {
+	min-width: 100px;
+}
+.colPrice,
+.colValue {
+	min-width: 80px;
+}
+.colAddress {
+	min-width: 300px;
+}
+.cardUnitBalance {
+	min-width: 230px;
+}
+.cardUnitToken {
+	min-width: 170px;
+}
