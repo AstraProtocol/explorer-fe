@@ -2,7 +2,7 @@ import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 
-export default function useAddressToken(address: string, page: number): UseAddressTokenData {
+export default function useAddressToken(address: string): UseAddressTokenData {
 	const [hookData, setState] = useState({
 		result: [],
 		hasNextPage: false,

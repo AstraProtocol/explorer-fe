@@ -19,7 +19,7 @@ interface Props {
 
 const AddressTokenTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressToken(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressToken(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 	const addressBalance = useAddressBalance(address)
 

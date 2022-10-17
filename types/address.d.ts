@@ -138,7 +138,7 @@ interface AddressTransactionData {
 	hash: string
 	messageTypes: string[]
 	success: boolean
-	fee: string
+	fee: string | number
 	amount?: string
 	from?: string
 	to?: string

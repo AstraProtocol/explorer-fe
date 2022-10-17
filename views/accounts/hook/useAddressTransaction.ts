@@ -37,7 +37,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				blockHash: d.blockHash,
 				blockHeight: d.blockHeight,
 				blockTime: d.blockTime,
-				fee: d.fee.length > 0 ? d.fee[0]?.amount : '',
+				fee: d.fee.length > 0 ? d.fee[0]?.amount : 0,
 				hash: d.hash,
 				messageTypes: d.messageTypes,
 				success: d.success,

@@ -11,7 +11,7 @@ interface Props {
 
 const AddressTokenTransferTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressTokenTransfers(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressTokenTransfers(address)
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
 			makePrevPage()
