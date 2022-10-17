@@ -238,7 +238,7 @@ const OverviewChart = ({}) => {
 		)
 	}
 
-	return <Line className={styles.chart} height={isMobile ? 190 : 150} options={options} data={data} />
+	return <Line className={styles.chart} height={isMobile ? 190 : 100} options={options} data={data} />
 }
 
 export default OverviewChart
