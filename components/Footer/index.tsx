@@ -14,8 +14,8 @@ export default function Footer() {
 					<Logo type="transparent" textSize="2xl" />
 				</div>
 				<div className={clsx(styles.footerInfo, 'row md-wrap margin-top-md md-margin-top-0')}>
-					<FooterLink classes="col col-9 md-full gutter-right" />
-					<FooterSocial classes="col col-3 md-full md-margin-top-xl" />
+					<FooterLink classes="col-9 md-full gutter-right" />
+					<FooterSocial classes="col-3 md-full md-margin-top-xl" />
 				</div>
 			</Container>
 		</footer>
