@@ -17,28 +17,37 @@ export interface AbiItemDecode extends AbiItem {
 type DecodeInputProps = {
 	dataInput: string
 	address: string
+	evmHash?: string
 }
 
-export default function DecodeInput({ dataInput, address }: DecodeInputProps) {
+export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
 	if (!dataInput || !address) {
 		return null
 	}
 	const [load, setLoad] = useState(false)
 	const [items, setItems] = useState<LogElementProps[]>()
 
-	const getAbi = async (address: string): Promise<AbiItem[]> => {
-		const res = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
-		if (res.data.message === 'OK') {
-			return JSON.parse(res?.data?.result)
+	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasAbi: boolean }> => {
+		const addressAbiRes = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
+		if (addressAbiRes.data.message === 'OK') {
+			return { abi: JSON.parse(addressAbiRes?.data?.result), hasAbi: true }
 		}
-		return undefined
+		// datainput from hash
+		if (evmHash) {
+			const hashAbiRes = await evmApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+			if (hashAbiRes.data.message === 'OK') {
+				return { abi: [hashAbiRes?.data?.result?.abi], hasAbi: false }
+			}
+		}
+
+		return { abi: undefined, hasAbi: false }
 	}
 
 	useEffect(() => {
 		async function data() {
 			if (!isEmpty(dataInput)) {
 				const items: LogElementProps[] = []
-				const abi = await getAbi(address)
+				const { abi, hasAbi } = await getAbi(address)
 				const item: LogElementProps = {
 					address: address,
 					data: '',
@@ -48,11 +57,14 @@ export default function DecodeInput({ dataInput, address }: DecodeInputProps) {
 				}
 				items.push(item)
 				item.methodId = evmMethodId(dataInput)
+
+				item.verified = hasAbi
+				item.useDraftAbiToDecode = !hasAbi && !!abi
+
 				if (Array.isArray(abi)) {
-					item.verified = true
 					abiDecoder.addABI(abi)
-					const logObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
-					const name = logObj.name
+					const inputObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
+					const name = inputObj.name
 					const interfaceItem = abi.find(item => item.name === name)
 					const params = interfaceItem.inputs
 					const call = `${interfaceItem.name}(${interfaceItem.inputs
@@ -61,12 +73,12 @@ export default function DecodeInput({ dataInput, address }: DecodeInputProps) {
 					item.call = call
 					item.callRow = call
 					for (let para of params) {
-						const input = logObj?.params.find(input => input.name === para.name)
+						const input = inputObj?.params.find(input => input.name === para.name)
 						if (input) {
 							input.indexed = para.indexed
 						}
 					}
-					item.methodParams = logObj.params
+					item.methodParams = inputObj.params
 				}
 				setItems(items)
 			}

@@ -21,10 +21,10 @@ const Home: React.FC<NextPage> = _ => {
 			<Container>
 				<Overview />
 				<div className="row md-wrap">
-					<div className={clsx('col col-6 gutter-right md-full')}>
+					<div className={clsx('col-6 gutter-right md-full')}>
 						<HomeBlock />
 					</div>
-					<div className={clsx('col col-6 md-full')}>
+					<div className={clsx('col-6 md-full')}>
 						<HomeTransactions />
 					</div>
 				</div>

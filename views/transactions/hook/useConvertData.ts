@@ -1,7 +1,7 @@
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
-import { formatEther } from 'ethers/lib/utils'
+import { formatUnits } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -140,8 +140,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						break
 					case 'tokenTransfers':
 						const transfers = data[key] as EVMTransferItem[]
+						const transferItems = []
 						for (let transfer of transfers) {
-							items.push({
+							transferItems.unshift({
 								label: CardInfoLabels.Tokens_Transferred,
 								type: 'transfer',
 								contents: [
@@ -153,9 +154,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 											),
 											to: evmAddressName(
 												transfer.toAddressName,
-												ellipseBetweenText(transfer.fromAddress, 6, 6)
+												ellipseBetweenText(transfer.toAddress, 6, 6)
 											),
-											value: Number(formatEther(transfer.amount)),
+											value: Number(formatUnits(transfer.amount, transfer.decimals)),
 											token: transfer.tokenSymbol
 										}
 									}
@@ -165,6 +166,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								}
 							})
 						}
+						items = items.concat(transferItems)
 						break
 					case 'nonce':
 						items.push({

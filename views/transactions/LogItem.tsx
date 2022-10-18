@@ -7,6 +7,7 @@ import styles from './style.module.scss'
 
 export type LogElementProps = {
 	address?: string
+	addressName?: string
 	showAddress?: boolean
 	callRow?: string
 	verified?: boolean
@@ -18,10 +19,12 @@ export type LogElementProps = {
 	index: string
 	borderTop?: boolean
 	showLeftBorder?: boolean
+	useDraftAbiToDecode?: boolean
 }
 
 export default function LogElement({
 	address,
+	addressName,
 	verified,
 	methodId,
 	call,
@@ -32,26 +35,35 @@ export default function LogElement({
 	borderTop,
 	callRow,
 	showAddress = true,
-	showLeftBorder = true
+	showLeftBorder = true,
+	useDraftAbiToDecode
 }: LogElementProps) {
 	let items: CardRowItem[] = []
 	if (address && showAddress) {
 		items.push({
 			label: 'Address:',
 			type: 'text',
-			contents: [{ value: address }]
+			contents: [{ value: `${`${addressName} | `}${address}` }],
+			responsive: {
+				ellipsis: false,
+				wrap: 'sm'
+			}
 		})
 	}
 	if (callRow) {
 		items.push({
 			label: '',
 			type: 'text',
-			contents: [{ value: callRow }]
+			contents: [{ value: callRow }],
+			responsive: {
+				ellipsis: false,
+				wrap: 'sm'
+			}
 		})
 	}
 
 	let topElement: React.ReactNode = null
-	if (verified) {
+	if (verified || useDraftAbiToDecode) {
 		items.push({
 			label: 'Decode:',
 			type: 'decode',
@@ -65,13 +77,20 @@ export default function LogElement({
 				}
 			]
 		})
-	} else {
+	}
+	if (useDraftAbiToDecode || !verified) {
 		topElement = (
-			<div className="padding-left-2xl padding-right-2xl">
-				<div className={clsx(styles.verifyContract, 'contrast-color-100')}>
+			<div className="padding-left-2xl padding-right-2xl sm-padding-left-md sm-padding-right-md">
+				<div
+					className={clsx(
+						styles.verifyContract,
+						'contrast-color-100',
+						'padding-top-sm padding-bottom-sm padding-left-xs padding-right-xs'
+					)}
+				>
 					To see accurate decoded input data, the contract must be verified. Verify the contract{' '}
 					<Link href={LinkMaker.address(address, '/verify')}>
-						<a className="link padding-left-xs"> here</a>
+						<a className="link"> here</a>
 					</Link>
 					.
 				</div>
@@ -86,19 +105,27 @@ export default function LogElement({
 		items.push({
 			label: label,
 			type: 'text',
-			contents: [{ value: `[${idx}] ${topics[idx]}` }]
+			contents: [{ value: `[${idx}] ${topics[idx]}` }],
+			responsive: {
+				ellipsis: false,
+				wrap: 'sm'
+			}
 		})
 	}
 	if (data) {
 		items.push({
-			label: 'Data',
+			label: 'Data:',
 			type: 'text',
-			contents: [{ value: data }]
+			contents: [{ value: data }],
+			responsive: {
+				ellipsis: false,
+				wrap: 'sm'
+			}
 		})
 	}
 	if (index) {
 		items.push({
-			label: 'Log Index',
+			label: 'Log Index:',
 			type: 'text',
 			contents: [{ value: index }]
 		})
