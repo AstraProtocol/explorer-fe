@@ -78,11 +78,29 @@
 	z-index: -1;
 }
 
+.moon1Mobile {
+	position: absolute;
+	width: 240px;
+	height: 177px;
+	top: -80px;
+	left: -155px;
+	z-index: -1;
+}
+
 .moon2 {
 	position: absolute;
 	width: 171px;
 	height: 128px;
 	bottom: -20px;
 	right: -102px;
+	z-index: -1;
+}
+
+.moon2Mobile {
+	position: absolute;
+	width: 171px;
+	height: 128px;
+	bottom: -80px;
+	right: -10px;
 	z-index: -1;
 }
