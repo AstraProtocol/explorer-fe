@@ -51,10 +51,10 @@ const Overview = () => {
 
 	return (
 		<div className={clsx(styles.overview, isMobile && 'margin-bottom-2xl')}>
-			<div className={styles.moon1}>
+			<div className={isMobile ? styles.moon1Mobile : styles.moon1}>
 				<Image alt="moon1" src={'/images/background/moon1.png'} layout="fill" />
 			</div>
-			<div className={styles.moon2}>
+			<div className={isMobile ? styles.moon2Mobile : styles.moon2}>
 				<Image alt="moon2" src={'/images/background/moon2.png'} layout="fill" />
 			</div>
 			<div className="row md-wrap">
