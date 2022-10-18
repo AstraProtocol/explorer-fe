@@ -19,7 +19,7 @@ const Transfers = ({ content }: { content: Content }) => {
 			>
 				<span className="padding-right-xs">From</span>
 				<Typography.LinkText href={LinkMaker.address(content?.transfer?.from)}>
-					{content?.transfer?.from}
+					{content?.transfer?.fromText}
 				</Typography.LinkText>
 				<CopyButton textCopy={content?.transfer?.from} />
 			</span>
@@ -35,7 +35,7 @@ const Transfers = ({ content }: { content: Content }) => {
 			>
 				<span className="padding-right-xs">To</span>
 				<Typography.LinkText href={LinkMaker.address(content?.transfer?.to)}>
-					{content?.transfer?.to}
+					{content?.transfer?.toText}
 				</Typography.LinkText>
 				<CopyButton textCopy={content?.transfer?.to} />
 			</span>

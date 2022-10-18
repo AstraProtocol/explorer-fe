@@ -22,7 +22,9 @@ export type Content = {
 	backgroundType?: LabelBackgroundTypes
 	transfer?: {
 		from?: string
+		fromText?: string
 		to?: string
+		toText?: string
 		value?: number
 		token?: string
 	}
@@ -120,7 +122,7 @@ export default function CardInfo({
 									) : null}
 									{type === 'copy' ? (
 										<CopyButton
-											textCopy={_ellipsis(content?.value as string, responsive.ellipsis)}
+											textCopy={content?.value as string}
 											textTitle={_ellipsis(content?.value as string, responsive.ellipsis)}
 										/>
 									) : null}

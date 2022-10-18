@@ -28,8 +28,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'cosmosHash':
 						items.push({
 							label: CardInfoLabels.Transaction_Cosmos,
-							type: 'link-copy',
-							contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
+							type: 'copy',
+							contents: [{ value: data[key] }]
+							// contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
 						})
 						break
 					case 'result':
@@ -148,11 +149,13 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								contents: [
 									{
 										transfer: {
-											from: evmAddressName(
+											from: transfer.fromAddress,
+											fromText: evmAddressName(
 												transfer.fromAddressName,
 												ellipseBetweenText(transfer.fromAddress, 6, 6)
 											),
-											to: evmAddressName(
+											to: transfer.toAddress,
+											toText: evmAddressName(
 												transfer.toAddressName,
 												ellipseBetweenText(transfer.toAddress, 6, 6)
 											),
