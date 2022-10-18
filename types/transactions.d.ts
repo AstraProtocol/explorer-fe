@@ -69,6 +69,7 @@ interface EvmLog {
 }
 interface EVMTransactionDetail {
 	blockNumber: string
+	blockTime: string
 	confirmations: string
 	from: string
 	gasLimit: string
@@ -113,6 +114,14 @@ interface InternalTransactionItem {
 interface InternalTransactionReponse {
 	message: 'OK' | string
 	result: InternalTransactionItem[]
+	status: string
+}
+
+interface TransactionRawTraceResponse {
+	message: string
+	result: {
+		rawTrace: any[]
+	}
 	status: string
 }
 

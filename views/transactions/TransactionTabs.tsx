@@ -4,6 +4,7 @@ import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
 import { isEmptyRawInput } from 'utils/evm'
 import useInternalTransactions from './hook/useInternalTransactions'
+import useTxRawTrace from './hook/useTxRawTrace'
 import Log from './Log'
 import RawTrace from './RawTrace'
 import TransactionRow, { TransactionRowProps } from './TransactionRow'
@@ -45,6 +46,8 @@ export default function TransactionTabs({
 	const { rows: internalTransactionRows } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})
+
+	const rawTrace = useTxRawTrace(evmHash, type)
 	const _tabChange = (tabId: string) => {
 		setTabId(tabId)
 	}
@@ -55,23 +58,7 @@ export default function TransactionTabs({
 	]
 	const contents = {
 		log: <Log logs={logs} display={tabId === 'log'} />,
-		trace: (
-			<RawTrace
-				text={JSON.stringify(
-					{
-						address: '0xefd086f56311a6dd26df0951cdd215f538689b3a',
-						data: '0x000000000000000000000000000000000000000000000003ccfcb41749b871c6',
-						index: '0',
-						topics: [
-							'0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c',
-							'0x0000000000000000000000001fab8bdf244da099ac719fb4d393644d5fa4c6c4'
-						]
-					},
-					null,
-					'\t'
-				)}
-			/>
-		)
+		trace: <RawTrace text={JSON.stringify(rawTrace, null, '\t')} />
 	}
 
 	if (type === 'cosmos') {

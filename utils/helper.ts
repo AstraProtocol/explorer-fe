@@ -48,10 +48,10 @@ export function formatCurrencyValue(value: number | string | undefined, symbol =
 export function formatGasValue(value) {
 	if (isNaN(value) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0`
-	if (value <= 1000) return `${numeral(value).format('0,0')} GWEI`
+	if (value <= 1000) return `${numeral(value).format('0,0')} NanoAstra`
 	// if (value <= 1000) return `${numeral(value).format('0,0')} MWEI`
-	if (value <= 1000000) return `${numeral(value / 10 ** 3).format('0,0')} KWEI`
-	if (value <= 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} WEI`
+	if (value <= 1000000) return `${numeral(value / 10 ** 3).format('0,0')} MicroAstra`
+	if (value <= 1000000000) return `${numeral(value / 10 ** 6).format('0,0')} Astra`
 	return `${numeral(value).format('0,0')}`
 }
 
@@ -85,7 +85,7 @@ export class LinkMaker {
 	 * @returns
 	 */
 	static transaction(hash?: string, query: string = '') {
-		hash = hash ? `/${hash}${query}` : ''
+		hash = hash ? `/${hash}?${query}` : ''
 		return `/tx${hash}`
 	}
 

@@ -74,7 +74,7 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 						)
 					}
 				]}
-				rows={items as any[]}
+				rows={(items as any[]) || []}
 				classes={{ wapper: styles.table }}
 			/>
 		</div>

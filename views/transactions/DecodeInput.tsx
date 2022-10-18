@@ -21,9 +21,6 @@ type DecodeInputProps = {
 }
 
 export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
-	if (!dataInput || !address) {
-		return null
-	}
 	const [load, setLoad] = useState(false)
 	const [items, setItems] = useState<LogElementProps[]>()
 
@@ -64,28 +61,34 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				if (Array.isArray(abi)) {
 					abiDecoder.addABI(abi)
 					const inputObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
-					const name = inputObj.name
+					const name = inputObj?.name
 					const interfaceItem = abi.find(item => item.name === name)
-					const params = interfaceItem.inputs
-					const call = `${interfaceItem.name}(${interfaceItem.inputs
-						.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
-						.join(', ')})`
-					item.call = call
-					item.callRow = call
-					for (let para of params) {
-						const input = inputObj?.params.find(input => input.name === para.name)
-						if (input) {
-							input.indexed = para.indexed
+					if (interfaceItem) {
+						const params = interfaceItem.inputs
+						const call = `${interfaceItem.name}(${interfaceItem.inputs
+							.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
+							.join(', ')})`
+						item.call = call
+						item.callRow = call
+						for (let para of params) {
+							const input = inputObj?.params.find(input => input.name === para.name)
+							if (input) {
+								input.indexed = para.indexed
+							}
 						}
 					}
-					item.methodParams = inputObj.params
+					item.methodParams = inputObj?.params
 				}
 				setItems(items)
 			}
 			setLoad(true)
 		}
 		data()
-	}, [dataInput])
+	}, [address, dataInput])
+
+	if (!dataInput || !address) {
+		return null
+	}
 
 	return (
 		<div>

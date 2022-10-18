@@ -32,7 +32,7 @@ export default function TransactionRowContentMobile({
 				<div className="flex flex-justify-space-between width-100">
 					<div>
 						<Typography.LinkText
-							href={LinkMaker.transaction(hash)}
+							href={LinkMaker.transaction(hash, type === 'MsgEthereumTx' ? 'type=evm' : 'type=cosmos')}
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
