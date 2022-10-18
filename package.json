@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"@astradefi/address-converter": "^0.4.1",
-		"@astraprotocol/astra-ui": "^1.0.12",
+		"@astraprotocol/astra-ui": "file:../../Github/astra-ui",
 		"@cosmjs/crypto": "^0.29.0",
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
