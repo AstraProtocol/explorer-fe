@@ -40,7 +40,7 @@ const API_LIST = {
 	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=getlisttokentransfers', // address=?
 
 	TOKEN_DETAIL: '',
-	TOKEN_TRANSACTIONS: '',
+	TOKEN_TRANSACTIONS: 'evm_/api/v1?module=token&action=getlisttokentransfers',
 	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders' // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
 }
 

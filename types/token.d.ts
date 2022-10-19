@@ -1,6 +1,7 @@
-interface TokenResponse {
+interface TokenTransactionResponse {
 	hasNextPage: boolean
-	result: Token[]
+	nextPagePath: any
+	result: TokenTransaction[]
 }
 
 interface TokenHolderResponse {
@@ -17,14 +18,34 @@ interface TopAstraHolderResponse {
 	result: Holder[]
 }
 
-interface UseTokenHookData {
-	result: Token[]
-	hasNextPage: boolean
+interface UseTokenTransactionHookData {
+	data: {
+		result: TokenTransaction[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseTokenHolderData {
 	result: Holder[]
 	hasNextPage: boolean
+}
+
+interface TokenTransaction {
+	amount: string
+	blockHash: string
+	blockNumber: string
+	decimals: string
+	fromAddress: string
+	fromAddressName: string
+	timestamp: string
+	toAddress: string
+	toAddressName: string
+	tokenContractAddress: string
+	tokenName: string
+	tokenSymbol: string
+	transactionHash: string
 }
 
 interface Token {
