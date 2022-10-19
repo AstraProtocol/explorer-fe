@@ -17,12 +17,12 @@ export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSi
 				className={clsx(
 					'link',
 					'link-color-useful ',
-					fontSize || (fontType == 'Titi' ? 'money-sm' : 'text-base'),
-					classes,
 					{
 						'text font-500': fontType === 'Manrope',
 						'money font-500': fontType === 'Titi'
-					}
+					},
+					fontSize || (fontType == 'Titi' ? 'money-sm' : 'text-base'),
+					classes
 				)}
 			>
 				{children}

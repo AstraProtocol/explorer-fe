@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TokenOverview = ({ token }: Props) => {
+	const { isMobile } = useMobileLayout()
 	// const addressCounter = useAddressCounter(token)
 	// const addressBalance = useAddressBalance(token)
 	// const astraSummary = useAppSelector(getAstraSummary)
@@ -21,14 +23,15 @@ const TokenOverview = ({ token }: Props) => {
 				<div>
 					<span className="text text-base contrast-color-50">Wallet Address:</span>
 					<br />
-					<span className="text text-lg">{token}</span>
+					<span className={clsx('text', 'text-lg')}>{token}</span>
+					{/* <span className={clsx('text', isMobile ? 'text-xs' : 'text-lg')}>{token}</span> */}
 				</div>
 				<div>
 					<CopyButton textCopy={token} />
 					{/* <QrButton textTitle="qrcode" content={token} /> */}
 				</div>
 			</Row>
-			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
+			<Row style={{ justifyContent: 'space-between' }} classes="md-wrap padding-top-lg">
 				<div className="">
 					<span className="text text-base contrast-color-50">Contract:</span>
 					<br />

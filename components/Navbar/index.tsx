@@ -89,8 +89,9 @@ export const items: MenuItem[] = [
 	// },
 	{
 		id: '5',
-		label: 'Astra main',
-		prefixIcon: <LiveIcon />
+		label: 'Astra Mainnet',
+		prefixIcon: <LiveIcon />,
+		link: '/'
 		// submenus: [
 		// 	{
 		// 		id: '5.1',
