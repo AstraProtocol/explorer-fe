@@ -58,7 +58,7 @@ export default function useBlock() {
 	}, [data])
 
 	const _changePage = (page: number) => {
-		_setBlockItem([])
+		// _setBlockItem([])
 		setPagination({ page })
 	}
 

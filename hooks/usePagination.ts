@@ -30,7 +30,7 @@ export default function usePagination(rootPath: string) {
 			..._pagination,
 			...data
 		})
-		if (page !== undefined && page > 1) {
+		if (page !== undefined && page >= 1) {
 			router.push(
 				{
 					pathname: rootPath,
