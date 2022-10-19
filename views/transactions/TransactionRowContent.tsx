@@ -76,7 +76,9 @@ export default function TransactionRowContent({
 						<div className="margin-top-xs">
 							{from && (
 								<>
-									<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>From</span>
+									<span className={clsx('contrast-color-30 margin-right-2xs text text-sm')}>
+										From
+									</span>
 									<span className="contrast-color-70 margin-right-lg money-2xs money">
 										{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
 									</span>

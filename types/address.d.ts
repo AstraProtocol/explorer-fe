@@ -37,9 +37,9 @@ interface AddressTokenResponse {
 }
 
 interface AddressInternalTransactionResponse {
-	message: string
 	result: InternalTransactionItem[]
-	status: string
+	hasNextPage: boolean
+	nextPagePath: any
 }
 
 interface AddressCoinBalanceHistoryResponse {
@@ -82,8 +82,12 @@ interface UseAddressTokenData {
 }
 
 interface UseAddressInternalTransactionData {
-	result: TransactionRowProps[] | []
-	hasNextPage: boolean
+	data: {
+		result: TransactionRowProps[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseAddressBalanceData {

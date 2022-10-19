@@ -10,20 +10,27 @@ interface Props {
 
 const AddressInternalTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { result, hasNextPage } = useAddressInternalTransaction(address, currentPage)
+	const { data, makeNextPage, makePrevPage } = useAddressInternalTransaction(address, currentPage)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage()
+		}
+		setPage(value)
+	}
 
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Internal Transactions</span>
 				<div>
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
 
-			<Transactions rows={result} emptyMsg="There are no internal transactions for this transaction." />
+			<Transactions rows={data.result} emptyMsg="There are no internal transactions for this transaction." />
 		</div>
 	)
 }

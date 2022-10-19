@@ -47,7 +47,7 @@ export default function TransactionRow({
 	fromName,
 	toName
 }: TransactionRowProps) {
-	const { isMobile } = useMobileLayout(1220)
+	const { isMobile } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	return (
 		<RowShowAnimation action={newBlock}>

@@ -151,7 +151,6 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.logs = result.logs
 	} else if (evmHash.startsWith('0x')) {
 		const evmRes = await evmApi.get<EVMTransactionDetailResponse>(`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`)
-
 		const result = evmRes.data.result
 		data.evmHash = result.hash
 		// data.cosmosHash = undefined

@@ -5,15 +5,34 @@ import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
 import { upperCaseFirstLetterOfWord } from 'utils/helper'
 
-export default function useAddressInternalTransaction(address: string, page: number) {
-	const [hookData, setState] = useState<UseAddressInternalTransactionData>({ result: [], hasNextPage: false })
+export default function useAddressInternalTransaction(
+	address: string,
+	page: number
+): UseAddressInternalTransactionData {
+	const [hookData, setState] = useState({
+		result: [],
+		hasNextPage: false,
+		nextPagePath: undefined
+	})
+
+	const [currentParams, setParams] = useState(undefined)
+	const prevParams = []
 
 	const _fetchCondition = () => {
+		if (currentParams) {
+			return [
+				`${API_LIST.ADDRESS_INTERNAL_TRANSACTION}${currentParams}`,
+				{
+					address
+				}
+			]
+		}
+
 		return [
 			API_LIST.ADDRESS_INTERNAL_TRANSACTION,
 			{
 				address,
-				page,
+				page: 1,
 				offset: 10
 			}
 		]
@@ -35,13 +54,25 @@ export default function useAddressInternalTransaction(address: string, page: num
 				type: upperCaseFirstLetterOfWord(evmInternalTransactionType(d?.callType)),
 				status: d?.errCode === '',
 				from: d?.from,
-				to: d?.to
+				to: d?.to,
+				fromName: d?.fromAddressName,
+				toName: d?.toAddressName
 			}))
-			setState({ result: internalItems, hasNextPage: false })
+			setState({ hasNextPage: data.hasNextPage, nextPagePath: data.nextPagePath, result: internalItems })
 		}
 	}, [data])
 	return {
-		result: hookData.result || [],
-		hasNextPage: hookData.hasNextPage || false
+		data: {
+			result: hookData.result,
+			hasNextPage: hookData.hasNextPage
+		},
+		makeNextPage: () => {
+			if (currentParams) prevParams.push(currentParams)
+			setParams(hookData.nextPagePath)
+		},
+		makePrevPage: () => {
+			const prevParam = prevParams.pop()
+			setParams(prevParam)
+		}
 	}
 }
