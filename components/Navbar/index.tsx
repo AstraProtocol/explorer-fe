@@ -66,43 +66,43 @@ export const items: MenuItem[] = [
 			}
 		]
 	},
-	{
-		id: '4',
-		label: 'APIs',
-		submenus: [
-			{
-				id: '4.1',
-				label: 'GraphQL',
-				link: '/graphql'
-			},
-			{
-				id: '4.2',
-				label: 'RPC',
-				link: '/astra'
-			},
-			{
-				id: '4.3',
-				label: 'Eth RPC',
-				link: '/eth-rpc'
-			}
-		]
-	},
+	// {
+	// 	id: '4',
+	// 	label: 'APIs',
+	// 	submenus: [
+	// 		{
+	// 			id: '4.1',
+	// 			label: 'GraphQL',
+	// 			link: '/graphql'
+	// 		},
+	// 		{
+	// 			id: '4.2',
+	// 			label: 'RPC',
+	// 			link: '/astra'
+	// 		},
+	// 		{
+	// 			id: '4.3',
+	// 			label: 'Eth RPC',
+	// 			link: '/eth-rpc'
+	// 		}
+	// 	]
+	// },
 	{
 		id: '5',
 		label: 'Astra main',
-		prefixIcon: <LiveIcon />,
-		submenus: [
-			{
-				id: '5.1',
-				label: 'GraphQL',
-				link: '/graphql'
-			},
-			{
-				id: '5.2',
-				label: 'RPC',
-				link: '/astra'
-			}
-		]
+		prefixIcon: <LiveIcon />
+		// submenus: [
+		// 	{
+		// 		id: '5.1',
+		// 		label: 'GraphQL',
+		// 		link: '/graphql'
+		// 	},
+		// 	{
+		// 		id: '5.2',
+		// 		label: 'RPC',
+		// 		link: '/astra'
+		// 	}
+		// ]
 	}
 	// {
 	// 	id: '6',

@@ -12,6 +12,7 @@ function PageLoader() {
 	useEffect(() => {
 		const handleStart = url => url !== router.asPath && setLoading(true)
 		const handleComplete = url => {
+			console.log(url, router.asPath, typeof url)
 			if (!url) return setLoading(false)
 			return url?.includes(router.asPath) && setLoading(false)
 		}
