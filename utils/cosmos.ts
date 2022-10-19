@@ -17,7 +17,7 @@ export const getTransactionType = (type: TransacionTypeEnum) => type?.split('.')
  * @returns TokenAmount
  */
 export const caculateCosmosAmount = (amounts: TokenAmount[]): TokenAmount => {
-	if (!amounts) {
+	if (!amounts || amounts.length == 0) {
 		return { amount: undefined, denom: undefined }
 	}
 	let totalAmount = BigNumber.from('0')

@@ -5,7 +5,8 @@ import DotSpace from 'components/DotSpace'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
-import { ellipseRightText, LinkMaker } from 'utils/helper'
+import { getStakingValidatorByAstraAddress } from 'utils/address'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type BlockRowProps = {
@@ -39,6 +40,11 @@ export default function BlockRow({
 }: BlockRowProps) {
 	const { isMobile } = useMobileLayout('medium')
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
+	const proposer = getStakingValidatorByAstraAddress(proposerAddress)
+	const proposerName = proposer?.moniker
+	const proposerDisplay = proposerName
+		? `${proposerName} (${ellipseBetweenText(proposerAddress, 10, 10)})`
+		: proposerAddress
 	return (
 		<RowShowAnimation action={newBlock}>
 			<div
@@ -54,14 +60,15 @@ export default function BlockRow({
 			>
 				<div className={clsx(styles.iconCetner, 'margin-right-sm md-flex-justify-space-between')}>
 					<div className="block-ver-center">
-						<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
+						<Image alt="nothing" src={'/images/icons/blockchain.png'} height={24} width={24} />
 						{isMobile && (
 							<div className="col-2 block-ver-center md-padding-left-xs">
 								<Typography.LinkText
 									href={LinkMaker.block(blockNumber)}
-									children={`#${blockNumber}`}
 									classes={clsx('money', 'money-sm')}
-								/>
+								>
+									{`#${blockNumber}`}
+								</Typography.LinkText>
 							</div>
 						)}
 					</div>
@@ -73,11 +80,9 @@ export default function BlockRow({
 				</div>
 				{!isMobile && (
 					<div className="col-2 block-ver-center">
-						<Typography.LinkText
-							href={LinkMaker.block(blockNumber)}
-							children={`#${blockNumber}`}
-							classes={clsx('money', 'money-sm')}
-						/>
+						<Typography.LinkText href={LinkMaker.block(blockNumber)} classes={clsx('money', 'money-sm')}>
+							{`#${blockNumber}`}
+						</Typography.LinkText>
 					</div>
 				)}
 				<div
@@ -86,9 +91,10 @@ export default function BlockRow({
 					<div>
 						<Typography.LinkText
 							href={LinkMaker.address(proposerAddress)}
-							children={isSmallDevice ? ellipseRightText(proposerAddress, 20) : proposerAddress}
 							classes={clsx('money', 'money-sm')}
-						/>
+						>
+							{proposerDisplay}
+						</Typography.LinkText>
 					</div>
 					<div className={clsx('block-ver-center', styles.info)}>
 						<div className="block-ver-center">

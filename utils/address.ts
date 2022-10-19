@@ -1,3 +1,4 @@
+import { ethToAstra } from '@astradefi/address-converter'
 import { sha256 } from '@cosmjs/crypto'
 import { fromBase64, fromBech32, fromHex, toHex } from '@cosmjs/encoding'
 import RIPEMD160 from 'ripemd160'
@@ -36,6 +37,17 @@ export function getStakingValidatorByHex(hex): Proposer | string {
 	}
 	// return abbr(hex)
 	return hex
+}
+
+export function getStakingValidatorByAstraAddress(astraAddress: string): Proposer {
+	const locals = localStorage.getItem(`validators`)
+	if (locals && locals !== 'undefined') {
+		const val = JSON.parse(locals).find((x: Proposer) => x.initialDelegatorAddress === ethToAstra(astraAddress))
+		if (val) {
+			return val as Proposer
+		}
+	}
+	return null
 }
 
 export function abbr(string, length = 6, suffix = '...'): string {

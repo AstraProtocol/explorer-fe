@@ -14,39 +14,41 @@ export const items: MenuItem[] = [
 	{
 		id: '1',
 		label: 'Blocks',
-		submenus: [
-			{
-				id: '1.1',
-				label: 'Blocks',
-				link: '/blocks'
-			},
-			{
-				id: '1.2',
-				label: 'Uncle',
-				link: '/uncle'
-			},
-			{
-				id: '1.3',
-				label: 'Forked Blocks (Reorgs)',
-				link: '/reorgs'
-			}
-		]
+		link: '/blocks'
+		// submenus: [
+		// 	{
+		// 		id: '1.1',
+		// 		label: 'Blocks',
+		// 		link: '/blocks'
+		// 	},
+		// 	{
+		// 		id: '1.2',
+		// 		label: 'Uncle',
+		// 		link: '/uncle'
+		// 	},
+		// 	{
+		// 		id: '1.3',
+		// 		label: 'Forked Blocks (Reorgs)',
+		// 		link: '/reorgs'
+		// 	}
+		// ]
 	},
 	{
 		id: '2',
 		label: 'Transactions',
-		submenus: [
-			{
-				id: '2.1',
-				label: 'Validated',
-				link: '/tx'
-			},
-			{
-				id: '2.2',
-				label: 'Pending',
-				link: '/pending'
-			}
-		]
+		link: '/tx'
+		// submenus: [
+		// 	{
+		// 		id: '2.1',
+		// 		label: 'Validated',
+		// 		link: '/tx'
+		// 	},
+		// 	{
+		// 		id: '2.2',
+		// 		label: 'Pending',
+		// 		link: '/pending'
+		// 	}
+		// ]
 	},
 	{
 		id: '3',

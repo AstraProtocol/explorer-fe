@@ -78,7 +78,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										blockNumber={item.blockHeight}
 										updatedAt={item.blockTime}
 										fee={fee.amount}
-										feeToken={fee.denom}
+										feeToken={'asa'}
 										status={item.success}
 										hash={item.hash}
 										from={''}
