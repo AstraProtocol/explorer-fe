@@ -32,7 +32,9 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 	return (
 		<Layout>
 			<Head>
-				<title>Transaction | {process.env.NEXT_PUBLIC_TITLE}</title>
+				<title>
+					Transaction {evmHash || cosmosHash} | {process.env.NEXT_PUBLIC_TITLE}
+				</title>
 			</Head>
 			<Container>
 				<Breadcumbs

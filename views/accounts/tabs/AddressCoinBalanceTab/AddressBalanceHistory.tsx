@@ -17,7 +17,7 @@ interface Props {
 
 const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) => {
 	const deltaNumber = BigNumber(data.delta).div(BigNumber(data.value)).toNumber()
-	const deltaNumberHandled = Math.abs(deltaNumber * 100) < 10 ** -3 ? 0 : deltaNumber * 100
+	const deltaNumberHandled = Math.abs(deltaNumber * 100) < 10 ** -6 ? 0 : deltaNumber * 100
 
 	const deltaNumberFormat = deltaNumberHandled ? numeral(deltaNumberHandled).format('0,0.00') : '0.00'
 	const deltaText = deltaNumberHandled >= 0 ? `+${deltaNumberFormat}` : deltaNumberFormat
