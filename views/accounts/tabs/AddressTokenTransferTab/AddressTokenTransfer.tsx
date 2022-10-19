@@ -24,7 +24,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 				style.borderWidthPadding
 			)}
 		>
-			<div style={{ textAlign: 'left' }} className="col-5">
+			<div style={{ textAlign: 'left' }} className={clsx('col-7', style.colAddress)}>
 				<Row>
 					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
@@ -44,12 +44,12 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					</span>
 				</div>
 			</div>
-			<div className="col-2 ">
+			<div className={clsx('col-2', style.colBlock)}>
 				<LinkText classes="margin-left-lg" href={LinkMaker.block(data.blockNumber)}>
 					#{data.blockNumber}
 				</LinkText>
 			</div>
-			<div className="col-2 margin-left-xs">
+			<div className={clsx('col-2 margin-left-xs', style.colFee)}>
 				{/* <TypographyUI.Balance
 					size="sm"
 					currency=""
@@ -63,10 +63,10 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA
 				</span>
 			</div>
-			<div className="col-2 margin-left-xs">
+			<div className={clsx('col-1 margin-left-xs', style.colTimer)}>
 				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
 			</div>
-			<div className="col-2 margin-left-xs">
+			<div className={clsx('col-1 margin-left-xs', style.colStatus)}>
 				<Typography.SuccessText>Success</Typography.SuccessText>
 			</div>
 		</GradientRow>
