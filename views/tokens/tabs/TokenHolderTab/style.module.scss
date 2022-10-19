@@ -4,6 +4,7 @@
 	backdrop-filter: blur(42px);
 	display: flex;
 	align-items: center;
+	width: fit-content;
 	.indexCenter {
 		display: flex;
 		align-items: center;
@@ -27,6 +28,20 @@
 	.topRow {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.colIndex {
+		width: 10px;
+		margin-right: var(--offset-lg);
+	}
+	.colAddress {
+		min-width: 350px;
+	}
+	.colBalance {
+		min-width: 250px;
+	}
+	.colPower {
+		min-width: 80px;
 	}
 }
 

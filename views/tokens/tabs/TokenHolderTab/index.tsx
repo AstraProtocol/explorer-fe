@@ -28,7 +28,7 @@ const TokenHolderTab = ({ token }: Props) => {
 			{!tokens || tokens.length == 0 ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
-				<div className="padding-bottom-sm">
+				<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
 					{tokens?.map((item: Holder, index: number) => {
 						return <TokenHolder key={item.address} index={index + 1} account={item} />
 					})}
