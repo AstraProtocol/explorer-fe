@@ -4,7 +4,7 @@ export default function Document() {
 	return (
 		<Html>
 			<Head>
-				<link rel="shortcut icon" href="/images/logo/white_logo.svg" />
+				<link rel="shortcut icon" href="/images/logo/astra.svg" />
 			</Head>
 			<body>
 				<Main />
