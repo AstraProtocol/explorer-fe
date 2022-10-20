@@ -1,6 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
-import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
 import { NextPage } from 'next'
@@ -14,7 +12,7 @@ import Layout from '../components/Layout'
 
 const AllTokensPage: React.FC<NextPage> = _ => {
 	const [currentPage, setPage] = useState(1)
-	const { tokens, hasNextPage } = useTokens(currentPage)
+	const { tokens } = useTokens(currentPage)
 
 	const onPagingChange = (value: number) => setPage(value)
 
@@ -24,11 +22,11 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 				<title>Astra Explorer</title>
 			</Head>
 			<Container>
-				<Row style={{ justifyContent: 'space-between' }}>
-					{/* <Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.token() }]} /> */}
-					<PageTitle>Tokens</PageTitle>
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
-				</Row>
+				{/* <Row style={{ justifyContent: 'space-between' }}> */}
+				{/* <Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.token() }]} /> */}
+				<PageTitle>Tokens</PageTitle>
+				{/* <PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} /> */}
+				{/* </Row> */}
 
 				{!tokens || tokens.length === 0 ? (
 					<RowLoader row={10} />

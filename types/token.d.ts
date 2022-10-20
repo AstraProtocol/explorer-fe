@@ -32,6 +32,14 @@ interface UseTokenHolderData {
 	hasNextPage: boolean
 }
 
+interface UseTokenHookData {
+	result: Token[]
+}
+
+interface TokenResponse {
+	result: Token[]
+}
+
 interface TokenTransaction {
 	amount: string
 	blockHash: string

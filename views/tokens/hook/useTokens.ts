@@ -22,7 +22,7 @@ export default function useTokens(page: number) {
 		}
 	}, [data])
 	return {
-		tokens: hookData?.result,
-		hasNextPage: hookData?.hasNextPage
+		tokens: hookData?.result
+		// hasNextPage: hookData?.hasNextPage
 	}
 }
