@@ -23,6 +23,7 @@ export type TransactionRowProps = {
 	from?: string
 	fromName?: string
 	to?: string
+	contractAddress?: string
 	toName?: string
 	height?: string
 }
@@ -42,6 +43,7 @@ export default function TransactionRow({
 	feeToken,
 	from,
 	to,
+	contractAddress,
 	style = 'normal',
 	height,
 	fromName,
@@ -90,6 +92,7 @@ export default function TransactionRow({
 						feeToken={feeToken}
 						from={from}
 						to={to}
+						contractAddress={contractAddress}
 						style={style}
 						height={height}
 						fromName={fromName}

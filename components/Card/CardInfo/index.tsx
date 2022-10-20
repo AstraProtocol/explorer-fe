@@ -14,6 +14,7 @@ import styles from './style.module.scss'
 export type Content = {
 	link?: string
 	value?: string | number
+	text?: string
 	prefix?: string
 	suffix?: string
 	icon?: boolean
@@ -138,7 +139,10 @@ export default function CardInfo({
 									{type === 'link-copy' ? (
 										<div className="block-center">
 											<Typography.LinkText href={content.link || ''}>
-												{_ellipsis(content.value as string, responsive.ellipsis)}
+												{_ellipsis(
+													content.text || (content.value as string),
+													responsive.ellipsis
+												)}
 											</Typography.LinkText>
 											<CopyButton textCopy={content.value as string} />
 										</div>

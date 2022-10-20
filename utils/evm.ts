@@ -45,8 +45,20 @@ export const evmInternalTransactionType = (type: string) => {
 	switch (type) {
 		case 'call':
 			return 'Call'
+		case 'callcode':
+			return 'Call Code'
+		case 'delegatecall':
+			return 'Delegate Call'
 		case 'staticcall':
 			return 'Static Call'
+		case 'selfdestruct':
+			return 'Self Destruct'
+		case 'create':
+			return 'Create'
+		case 'create2':
+			return 'Create2'
+		case 'reward':
+			return 'Reward'
 		default:
 			return type
 	}

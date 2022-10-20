@@ -30,6 +30,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 					status: internalItem?.errCode === '',
 					from: internalItem?.from,
 					to: internalItem?.to,
+					contractAddress: internalItem?.contractAddress,
 					fromName: internalItem.fromAddressName,
 					toName: internalItem.toAddressName
 				})

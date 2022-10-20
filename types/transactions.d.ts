@@ -84,6 +84,7 @@ interface EVMTransactionDetail {
 	success: boolean
 	timeStamp: string
 	to: string
+	createdContractAddressHash?: string
 	value: string
 }
 interface EVMTransactionDetailResponse {
@@ -105,6 +106,7 @@ interface InternalTransactionItem {
 	isError: string
 	timeStamp: string
 	to: string
+	contractAddress?: string
 	transactionHash: string
 	type: string
 	value: string
@@ -152,6 +154,7 @@ interface EvmTransactionDetailFromCosmosHashResponse {
 		s: string
 		success: boolean
 		to: string
+		createdContractAddressHash?: string
 		tokenTransfers: EVMTransferItem[]
 		type: number
 		v: string

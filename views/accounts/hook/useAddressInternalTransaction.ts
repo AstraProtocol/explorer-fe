@@ -51,10 +51,11 @@ export default function useAddressInternalTransaction(
 				valueToken: 'asa',
 				// valueCurrency: d.
 				hash: d?.transactionHash,
-				type: upperCaseFirstLetterOfWord(evmInternalTransactionType(d?.callType)),
+				type: upperCaseFirstLetterOfWord(evmInternalTransactionType(d?.callType || d?.type)),
 				status: d?.errCode === '',
 				from: d?.from,
 				to: d?.to,
+				contractAddress: d?.contractAddress,
 				fromName: d?.fromAddressName,
 				toName: d?.toAddressName
 			}))

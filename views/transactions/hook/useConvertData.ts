@@ -12,6 +12,7 @@ import { CardInfoLabels, TransactionDetail } from '../utils'
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
 	const astraPrice = formatNumber(astraSummary?.last || 0, 0)
+
 	const _convertRawDataToCardData = useCallback(
 		data => {
 			const keys = Object.keys(data)
@@ -80,12 +81,25 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							]
 						})
 						break
-					case 'to': //from
+					case 'to': //to
 						items.push({
 							label: CardInfoLabels.To,
 							type: 'link-copy',
 							contents: [
 								{
+									value: data[key],
+									link: LinkMaker.address(data[key])
+								}
+							]
+						})
+						break
+					case 'createdContractAddressHash': //to
+						items.push({
+							label: CardInfoLabels.CreatedContractAddressHash,
+							type: 'link-copy',
+							contents: [
+								{
+									text: `[Contract ${data[key]} created]`,
 									value: data[key],
 									link: LinkMaker.address(data[key])
 								}
@@ -293,6 +307,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.Timestamp,
 				CardInfoLabels.From,
 				CardInfoLabels.To,
+				CardInfoLabels.CreatedContractAddressHash,
 				CardInfoLabels.Tokens_Transferred,
 				CardInfoLabels.Value,
 				CardInfoLabels.Transaction_Fee,

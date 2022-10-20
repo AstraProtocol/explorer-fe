@@ -35,6 +35,7 @@ export interface TransactionDetail {
 	time?: string | number
 	from?: string
 	to?: string
+	createdContractAddressHash?: string
 	value?: string
 	valueToken?: string
 	fee?: string
@@ -77,6 +78,7 @@ export enum CardInfoLabels {
 	Block = 'Block:',
 	From = 'From:',
 	To = 'Interacted With (To):',
+	CreatedContractAddressHash = 'To',
 	Timestamp = 'Timestamp:',
 	Value = 'Value:',
 	Transaction_Fee = 'Transaction Fee:',
@@ -120,6 +122,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.time = result.blockTime
 		data.from = result.from
 		data.to = result.to
+		data.createdContractAddressHash = result.createdContractAddressHash
 		data.value = formatEther(result.value)
 		data.fee = undefined
 		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
@@ -160,6 +163,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.time = dayjs(result.blockTime).valueOf()
 		data.from = result.from
 		data.to = result.to
+		data.createdContractAddressHash = result.createdContractAddressHash
 		// data.tokenTransfer = []
 		data.value = formatEther(result.value)
 		data.fee = undefined
@@ -186,6 +190,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.time = dayjs(result.blockTime).valueOf()
 		data.from = result.from
 		data.to = result.to
+		data.createdContractAddressHash = result.createdContractAddressHash
 		// data.tokenTransfer = []
 		data.value = formatEther(result.value)
 		data.fee = undefined
