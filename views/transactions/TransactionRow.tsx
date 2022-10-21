@@ -1,4 +1,5 @@
-import { CryptoIconNames, useMobileLayout } from '@astraprotocol/astra-ui'
+import { useMobileLayout } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
 import GradientRow from 'components/Row/GradientRow'

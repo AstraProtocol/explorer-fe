@@ -1,4 +1,5 @@
-import { CryptoIcon, CryptoIconNames, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
 import Timer from 'components/Timer'

@@ -1,5 +1,6 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs, CryptoIconNames } from '@astraprotocol/astra-ui'
+import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
