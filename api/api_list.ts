@@ -30,6 +30,7 @@ const API_LIST = {
 	ESTIMATE_COUNTED_INFO: 'evm_/api/v1/estimate-counted-info',
 	GAS_AVG: 'evm_/api/v1/gas-price-oracle',
 
+	ADDRESS_DETAIL: '/api/v1?module=account&action=getaddress&address=',
 	ADDRESS_TOKEN: 'evm_/api/v1?module=account&action=tokenlist', // address = ?
 	ADDRESS_COUNTER: 'evm_/api/v1?module=account&action=getaddresscounters', // address=?
 	ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?

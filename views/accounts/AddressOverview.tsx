@@ -15,18 +15,22 @@ import styles from './style.module.scss'
 
 interface Props {
 	address: string
+	addressData: Address
 }
 
-const AddressOverview = ({ address }: Props) => {
+const AddressOverview = ({ address, addressData }: Props) => {
 	const addressCounter = useAddressCounter(address)
 	const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
+	const isContract = addressData.type === 'contractaddress'
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
 				<div>
-					<span className="text text-base contrast-color-50">Wallet Address:</span>
+					<span className="text text-base contrast-color-50">
+						{isContract ? 'Contract' : 'Wallet Address'}
+					</span>
 					<br />
 					<span className="text text-lg">{address}</span>
 				</div>
@@ -35,6 +39,25 @@ const AddressOverview = ({ address }: Props) => {
 					{/* <QrButton textTitle="qrcode" content={address} /> */}
 				</div>
 			</Row>
+			{isContract && (
+				<div
+					style={{ justifyContent: 'space-between' }}
+					className={clsx(styles.borderBottom, 'padding-bottom-lg padding-top-lg')}
+				>
+					<div>
+						<span className="text text-base contrast-color-50">Owner</span>
+						<br />
+						<LinkText href={LinkMaker.address(addressData.creator)}>{addressData.creator}</LinkText>
+					</div>
+					<div>
+						<span className="text text-base contrast-color-50">Transaction Hash</span>
+						<br />
+						<LinkText href={LinkMaker.transaction(addressData.creationTransaction)}>
+							{addressData.creationTransaction}
+						</LinkText>
+					</div>
+				</div>
+			)}
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
 				<div className={styles.colBalance}>
 					<span className="text text-base contrast-color-50">Balance:</span>

@@ -1,3 +1,13 @@
+interface Address {
+	balance: string
+	creationTransaction: string
+	creator: string
+	lastBalanceUpdate: number
+	tokenName: string
+	tokenSymbol: string
+	type: 'address' | 'contractaddress' // string
+}
+
 interface AbiResponse {
 	message: string
 	result: string
