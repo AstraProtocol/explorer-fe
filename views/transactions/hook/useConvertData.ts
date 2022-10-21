@@ -20,268 +20,301 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 			for (let key of keys) {
 				switch (key) {
 					case 'evmHash':
-						items.push({
-							label: CardInfoLabels.Transaction_Hash,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Transaction_Hash,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'cosmosHash':
-						items.push({
-							label: CardInfoLabels.Transaction_Cosmos,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-							// contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Transaction_Cosmos,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+								// contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
+							})
 						break
 					case 'result':
-						items.push({
-							label: CardInfoLabels.Result,
-							type: 'label',
-							contents: [
-								{
-									value: data[key],
-									icon: true,
-									type: (data[key] as string).toLowerCase() as LabelTypes,
-									backgroundType: 'unset'
-								}
-							]
-						})
-						break
-					case 'confirmations':
-						items.push({
-							label: CardInfoLabels.Status,
-							type: 'label',
-							contents: [
-								{ value: 'Confirmed', type: 'success', backgroundType: 'rectangle' },
-								{
-									value: 'Confirmed by ' + formatNumber(data[key], 0),
-									type: 'unset',
-									backgroundType: 'specialShape'
-								}
-							]
-						})
-						break
-					case 'blockHeight':
-						items.push({
-							label: CardInfoLabels.Block,
-							type: 'link',
-							contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
-						})
-						break
-					case 'from': //from
-						items.push({
-							label: CardInfoLabels.From,
-							type: 'link-copy',
-							contents: [
-								{
-									value: data[key],
-									link: LinkMaker.address(data[key])
-								}
-							]
-						})
-						break
-					case 'to': //to
-						items.push({
-							label: CardInfoLabels.To,
-							type: 'link-copy',
-							contents: [
-								{
-									value: data[key],
-									link: LinkMaker.address(data[key])
-								}
-							]
-						})
-						break
-					case 'createdContractAddressHash': //to
-						items.push({
-							label: CardInfoLabels.CreatedContractAddressHash,
-							type: 'link-copy',
-							contents: [
-								{
-									text: `[Contract ${data[key]} created]`,
-									value: data[key],
-									link: LinkMaker.address(data[key])
-								}
-							]
-						})
-						break
-					case 'time':
-						items.push({
-							label: CardInfoLabels.Timestamp,
-							type: 'time',
-							contents: [{ value: data[key], type: data[key], suffix: '' }]
-						})
-						break
-					case 'value':
-						let money = Number(astraPrice) * parseFloat(data[key])
-						let moneyFormat = formatCurrencyValue(money)
-						items.push({
-							label: CardInfoLabels.Value,
-							type: 'balance',
-							contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
-						})
-						break
-					case 'fee':
-						money = Number(astraPrice) * parseFloat(data[key])
-						moneyFormat = formatCurrencyValue(money)
-
-						items.push({
-							label: CardInfoLabels.Transaction_Fee,
-							type: 'balance',
-							contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
-						})
-						break
-					case 'gasPrice':
-						items.push({
-							label: CardInfoLabels.Gas_Price,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
-						break
-					case 'gasLimit':
-						items.push({
-							label: CardInfoLabels.Gas_Limit,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
-						break
-					case 'rawInput':
-						items.push({
-							label: CardInfoLabels.Raw_Input,
-							type: 'raw-input',
-							contents: [{ value: data[key] }]
-						})
-						break
-					case 'tokenTransfers':
-						const transfers = data[key] as EVMTransferItem[]
-						const transferItems = []
-						for (let transfer of transfers) {
-							transferItems.unshift({
-								label: CardInfoLabels.Tokens_Transferred,
-								type: 'transfer',
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Result,
+								type: 'label',
 								contents: [
 									{
-										transfer: {
-											from: transfer.fromAddress,
-											fromText: evmAddressName(
-												transfer.fromAddressName,
-												ellipseBetweenText(transfer.fromAddress, 6, 6)
-											),
-											to: transfer.toAddress,
-											toText: evmAddressName(
-												transfer.toAddressName,
-												ellipseBetweenText(transfer.toAddress, 6, 6)
-											),
-											value: Number(formatUnits(transfer.amount, transfer.decimals)),
-											token: transfer.tokenSymbol
-										}
+										value: data[key],
+										icon: true,
+										type: (data[key] as string).toLowerCase() as LabelTypes,
+										backgroundType: 'unset'
 									}
-								],
-								responsive: {
-									wrap: 'md'
-								}
+								]
+							})
+						break
+					case 'confirmations':
+						if (data[key] !== undefined && data[key] !== null)
+							if (data[key])
+								items.push({
+									label: CardInfoLabels.Status,
+									type: 'label',
+									contents: [
+										{ value: 'Confirmed', type: 'success', backgroundType: 'rectangle' },
+										{
+											value: 'Confirmed by ' + formatNumber(data[key], 0),
+											type: 'unset',
+											backgroundType: 'specialShape'
+										}
+									]
+								})
+						break
+					case 'blockHeight':
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Block,
+								type: 'link',
+								contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
+							})
+						break
+					case 'from': //from
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.From,
+								type: 'link-copy',
+								contents: [
+									{
+										value: data[key],
+										link: LinkMaker.address(data[key])
+									}
+								]
+							})
+						break
+					case 'to': //to
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.To,
+								type: 'link-copy',
+								contents: [
+									{
+										value: data[key],
+										link: LinkMaker.address(data[key])
+									}
+								]
+							})
+						break
+					case 'createdContractAddressHash': //to
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.CreatedContractAddressHash,
+								type: 'link-copy',
+								contents: [
+									{
+										text: `[Contract ${data[key]} created]`,
+										value: data[key],
+										link: LinkMaker.address(data[key])
+									}
+								]
+							})
+						break
+					case 'time':
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Timestamp,
+								type: 'time',
+								contents: [{ value: data[key], type: data[key], suffix: '' }]
+							})
+						break
+					case 'value':
+						if (data[key] !== undefined && data[key] !== null) {
+							let money = Number(astraPrice) * parseFloat(data[key])
+							let moneyFormat = formatCurrencyValue(money)
+							items.push({
+								label: CardInfoLabels.Value,
+								type: 'balance',
+								contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 							})
 						}
-						items = items.concat(transferItems)
+						break
+					case 'fee':
+						if (data[key] !== undefined && data[key] !== null) {
+							let money = Number(astraPrice) * parseFloat(data[key])
+							let moneyFormat = formatCurrencyValue(money)
+
+							items.push({
+								label: CardInfoLabels.Transaction_Fee,
+								type: 'balance',
+								contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
+							})
+						}
+						break
+					case 'gasPrice':
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Gas_Price,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
+						break
+					case 'gasLimit':
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Gas_Limit,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
+						break
+					case 'rawInput':
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Raw_Input,
+								type: 'raw-input',
+								contents: [{ value: data[key] }]
+							})
+						break
+					case 'tokenTransfers':
+						if (data[key] !== undefined && data[key] !== null) {
+							const transfers = data[key] as EVMTransferItem[]
+							const transferItems = []
+							for (let transfer of transfers) {
+								transferItems.unshift({
+									label: CardInfoLabels.Tokens_Transferred,
+									type: 'transfer',
+									contents: [
+										{
+											transfer: {
+												from: transfer.fromAddress,
+												fromText: evmAddressName(
+													transfer.fromAddressName,
+													ellipseBetweenText(transfer.fromAddress, 6, 6)
+												),
+												to: transfer.toAddress,
+												toText: evmAddressName(
+													transfer.toAddressName,
+													ellipseBetweenText(transfer.toAddress, 6, 6)
+												),
+												value: Number(formatUnits(transfer.amount, transfer.decimals)),
+												token: transfer.tokenSymbol
+											}
+										}
+									],
+									responsive: {
+										wrap: 'md'
+									}
+								})
+							}
+							items = items.concat(transferItems)
+						}
 						break
 					case 'nonce':
-						items.push({
-							label: CardInfoLabels.Nonce,
-							type: 'nonce',
-							contents: [{ value: data[key], suffix: data.index }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Nonce,
+								type: 'nonce',
+								contents: [{ value: data[key], suffix: data.index }]
+							})
 						break
 					case 'typeOfTransfer':
-						items.push({
-							label: CardInfoLabels.Transaction_Type,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Transaction_Type,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'voter':
-						items.push({
-							label: CardInfoLabels.Voter,
-							type: 'link-copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Voter,
+								type: 'link-copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'proposalId':
-						items.push({
-							label: CardInfoLabels.Proposal_Id,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Proposal_Id,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'option':
-						items.push({
-							label: CardInfoLabels.Option,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Option,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'delegatorAddress':
-						items.push({
-							label: CardInfoLabels.Delegator_Address,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Delegator_Address,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'validatorAddress':
-						items.push({
-							label: CardInfoLabels.Validator_Address,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Validator_Address,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'validatorSrcAddress':
-						items.push({
-							label: CardInfoLabels.Validator_Src_Address,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Validator_Src_Address,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'validatorDstAddress':
-						items.push({
-							label: CardInfoLabels.Validator_Dst_Address,
-							type: 'copy',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Validator_Dst_Address,
+								type: 'copy',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'failLog':
-						items.push({
-							label: CardInfoLabels.Fail_Reason,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Fail_Reason,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'revertReason':
-						items.push({
-							label: CardInfoLabels.Revert_Reason,
-							type: 'raw-input',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Revert_Reason,
+								type: 'raw-input',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'maxFeePerGas':
-						items.push({
-							label: CardInfoLabels.Max_Fee_Gas,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Max_Fee_Gas,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'maxPriorityFeePerGas':
-						items.push({
-							label: CardInfoLabels.Max_Priority_Fer_Gas,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Max_Priority_Fer_Gas,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 					case 'gasUsedByTransaction':
-						items.push({
-							label: CardInfoLabels.Gas_Used_by_Transaction,
-							type: 'text',
-							contents: [{ value: data[key] }]
-						})
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels.Gas_Used_by_Transaction,
+								type: 'text',
+								contents: [{ value: data[key] }]
+							})
 						break
 				}
 			}
