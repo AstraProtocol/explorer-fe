@@ -1,4 +1,4 @@
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import Head from 'next/head'
 import React from 'react'
@@ -13,6 +13,7 @@ type Props = {
 }
 
 const AddressDetailPage: React.FC<Props> = props => {
+	const { isMobile } = useMobileLayout()
 	const { address } = props
 
 	return (
@@ -25,7 +26,10 @@ const AddressDetailPage: React.FC<Props> = props => {
 			</Head>
 			<Container>
 				<Breadcumbs
-					items={[{ label: 'Address', link: LinkMaker.address() }, { label: ellipseBetweenText(address) }]}
+					items={[
+						{ label: 'Address', link: LinkMaker.address() },
+						{ label: isMobile ? ellipseBetweenText(address) : address }
+					]}
 				/>
 				<AddressOverview address={address} />
 				<AddressDetailTabs address={address} />

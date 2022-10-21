@@ -1,15 +1,17 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
+import numeral from 'numeral'
 import { convertBalanceToView, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
 	index: number
 	account: Holder
+	tokenData: Token
 }
 
-export default function TokenHolder({ index, account }: Props) {
+export default function TokenHolder({ index, account, tokenData }: Props) {
 	return (
 		<div
 			className={clsx(
@@ -27,14 +29,9 @@ export default function TokenHolder({ index, account }: Props) {
 				</Typography.LinkText>
 			</div>
 			<div className={clsx(styles.borderLeft, styles.colBalance, 'col-4 padding-left-lg ')}>
-				{/* <span className={clsx('money money-sm  padding-right-xs')}>
-					{convertBalanceToView(account.balance)}
-				</span>
-				<span className={clsx(styles.currency, 'money money-sm ')}>ASA</span> */}
 				<TypographyUI.Balance
 					size="sm"
-					currency={'ASA'}
-					icon={<CryptoIcon name="asa" size="sm" />}
+					currency={tokenData.symbol}
 					value={account.balance ? convertBalanceToView(account.balance) : account.balance}
 					fixNumber={5}
 				/>
@@ -47,7 +44,7 @@ export default function TokenHolder({ index, account }: Props) {
 					'padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center col-2'
 				)}
 			>
-				aa/totalsupply %{/* {account.txnCount} */}
+				{numeral((parseFloat(account.balance) / parseFloat(tokenData.totalSupply)) * 100).format('0,0.00')}%
 			</div>
 		</div>
 	)

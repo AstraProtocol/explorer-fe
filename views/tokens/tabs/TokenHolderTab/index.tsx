@@ -7,9 +7,10 @@ import TokenHolder from './TokenHolder'
 
 interface Props {
 	token: string
+	tokenData: Token
 }
 
-const TokenHolderTab = ({ token }: Props) => {
+const TokenHolderTab = ({ token, tokenData }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { tokens, hasNextPage } = useTokenHolders(token, currentPage)
 
@@ -30,7 +31,7 @@ const TokenHolderTab = ({ token }: Props) => {
 			) : (
 				<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
 					{tokens?.map((item: Holder, index: number) => {
-						return <TokenHolder key={item.address} index={index + 1} account={item} />
+						return <TokenHolder key={item.address} tokenData={tokenData} index={index + 1} account={item} />
 					})}
 				</div>
 			)}

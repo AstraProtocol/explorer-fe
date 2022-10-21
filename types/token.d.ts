@@ -58,9 +58,11 @@ interface TokenTransaction {
 
 interface Token {
 	cataloged?: boolean
-	contractAddressHash: string
+	contractAddressHash?: string
+	contractAddress?: string
 	decimals: string
 	holderCount?: number
+	holdersCount?: number
 	name: string
 	symbol: string
 	totalSupply: string
@@ -108,4 +110,10 @@ interface TokenTransfer {
 		tokenSymbol: string
 	}[]
 	// type?: string
+}
+
+interface TokenDetailResponse {
+	message: string
+	result: Token
+	status: string
 }

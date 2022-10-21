@@ -5,9 +5,10 @@ import AddressTransactionTab from './tabs/TokenTransactionTab'
 
 interface Props {
 	token: string
+	tokenData: Token
 }
 
-const TokenDetailTab = ({ token }: Props) => {
+const TokenDetailTab = ({ token, tokenData }: Props) => {
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
 			<Tabs
@@ -18,7 +19,7 @@ const TokenDetailTab = ({ token }: Props) => {
 				]}
 				contents={{
 					'1': <AddressTransactionTab token={token} />,
-					'2': <TokenHolderTab token={token} />
+					'2': <TokenHolderTab token={token} tokenData={tokenData} />
 				}}
 			></Tabs>
 		</BackgroundCard>
