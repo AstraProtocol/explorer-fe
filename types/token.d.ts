@@ -63,6 +63,7 @@ interface Token {
 	decimals: string
 	holderCount?: number
 	holdersCount?: number
+	transfersCount?: number
 	name: string
 	symbol: string
 	totalSupply: string

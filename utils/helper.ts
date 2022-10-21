@@ -24,7 +24,7 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	const big = BigNumber.from(value)
 	const valueInWei = formatUnits(big, decimals).valueOf()
 	if (parseFloat(valueInWei) < 10 ** -6) return 0
-	return numeral(valueInWei).format('0.0000')
+	return numeral(valueInWei).format('0,0.0000')
 }
 /**
  * return format text of date

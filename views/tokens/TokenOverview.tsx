@@ -52,14 +52,19 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 					</span>
 				</div>
 				<div className="">
-					<span className="text text-base contrast-color-50">Decimals:</span>
+					<span className="text text-base contrast-color-50">Transfers Count:</span>
 					<br />
-					<span className="text text-base">{tokenData.decimals}</span>
+					<span className="text text-base">{numeral(tokenData.transfersCount || 0).format('0,0')}</span>
 				</div>
 				<div className="">
 					<span className="text text-base contrast-color-50">Token Type:</span>
 					<br />
 					<span className="text text-base">{tokenData.type}</span>
+				</div>
+				<div className="">
+					<span className="text text-base contrast-color-50">Decimals:</span>
+					<br />
+					<span className="text text-base">{tokenData.decimals}</span>
 				</div>
 			</Row>
 		</BackgroundCard>
