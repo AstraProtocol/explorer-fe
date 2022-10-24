@@ -1,32 +1,38 @@
+import { PaginationLite, Row } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { NextPage } from 'next'
 // import {Pagination} from '@astraprotocol/astra-ui'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React from 'react'
+import { getEnvNumber } from 'utils/helper'
 import useTokens from 'views/tokens/hook/useTokens'
 import TokenHeadTitle from 'views/tokens/TokenHeadTitle'
 import TokenRow from 'views/tokens/TokenRow'
 import Layout from '../components/Layout'
 
 const AllTokensPage: React.FC<NextPage> = _ => {
-	const [currentPage, setPage] = useState(1)
-	const { tokens } = useTokens(currentPage)
+	const { page, setPage } = usePaginationLite('/tokens')
+	const { tokens, hasNextPage } = useTokens(page)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		setPage(value)
+	}
 
 	return (
 		<Layout>
 			<Head>
-				<title>Astra Explorer</title>
+				<title>Tokens | {process.env.NEXT_PUBLIC_TITLE}</title>
 			</Head>
 			<Container>
-				{/* <Row style={{ justifyContent: 'space-between' }}> */}
-				{/* <Breadcumbs items={[{ label: 'Astra Address', link: LinkMaker.token() }]} /> */}
-				<PageTitle>Tokens</PageTitle>
-				{/* <PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} /> */}
-				{/* </Row> */}
+				<Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+					<PageTitle>Tokens</PageTitle>
+					<div>
+						<PaginationLite currentPage={page} hasNext={hasNextPage} onChange={onPagingChange} />
+					</div>
+				</Row>
 
 				{!tokens || tokens.length === 0 ? (
 					<RowLoader row={10} />
@@ -34,9 +40,14 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 					<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
 						<TokenHeadTitle />
 						{tokens?.map((item: Token, index: number) => {
-							return <TokenRow key={item.contractAddressHash} index={index + 1} token={item} />
+							return (
+								<TokenRow
+									key={item.contractAddressHash}
+									index={index + (page - 1) * getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET') + 1}
+									token={item}
+								/>
+							)
 						})}
-						{/* <Pagination currentPage={currentPage} onChange={onPaginationChange} total={pagination.total} /> */}
 					</div>
 				)}
 			</Container>

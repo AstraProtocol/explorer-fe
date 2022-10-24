@@ -139,3 +139,12 @@ export const convertURLQueryToObject = (path: string): { [key: string]: string }
 	}
 	return JSON.parse('{"' + decodeURI(query).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
+
+export const getEnvNumber = (key): number => {
+	switch (key) {
+		case 'NEXT_PUBLIC_PAGE_OFFSET':
+			return parseInt(process.env.NEXT_PUBLIC_PAGE_OFFSET, 10) || 10
+		default:
+			return 0
+	}
+}

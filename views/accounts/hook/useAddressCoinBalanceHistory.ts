@@ -1,6 +1,7 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { getEnvNumber } from 'utils/helper'
 
 export default function useAddressCoinBalanceHistory(address: string): UseAddressCoinBalanceHistoryData {
 	const [hookData, setState] = useState({
@@ -27,7 +28,7 @@ export default function useAddressCoinBalanceHistory(address: string): UseAddres
 			{
 				address,
 				page: 1,
-				offset: 10
+				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
 		]
 	}

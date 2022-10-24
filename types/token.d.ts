@@ -33,11 +33,13 @@ interface UseTokenHolderData {
 }
 
 interface UseTokenHookData {
-	result: Token[]
+	tokens: Token[]
+	hasNextPage: boolean
 }
 
 interface TokenResponse {
 	result: Token[]
+	hasNextPage: boolean
 }
 
 interface TokenTransaction {

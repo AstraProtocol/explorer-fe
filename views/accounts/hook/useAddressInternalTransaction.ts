@@ -3,7 +3,7 @@ import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
-import { upperCaseFirstLetterOfWord } from 'utils/helper'
+import { getEnvNumber, upperCaseFirstLetterOfWord } from 'utils/helper'
 
 export default function useAddressInternalTransaction(
 	address: string,
@@ -33,7 +33,7 @@ export default function useAddressInternalTransaction(
 			{
 				address,
 				page: 1,
-				offset: 10
+				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
 		]
 	}

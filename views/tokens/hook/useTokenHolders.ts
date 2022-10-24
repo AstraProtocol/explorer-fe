@@ -1,6 +1,7 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { getEnvNumber } from 'utils/helper'
 
 export default function useTokenHolders(token: string, page: number) {
 	const [hookData, setState] = useState<TokenHolderResponse>()
@@ -11,7 +12,7 @@ export default function useTokenHolders(token: string, page: number) {
 			{
 				contractaddress: token,
 				page,
-				offset: 10
+				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
 		]
 	}

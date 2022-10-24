@@ -1,16 +1,17 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { getEnvNumber } from 'utils/helper'
 
-export default function useTokens(page: number) {
-	const [hookData, setState] = useState<UseTokenHookData>()
+export default function useTokens(page: number): UseTokenHookData {
+	const [hookData, setState] = useState<any>({ tokens: [], hasNextPage: false })
 
 	const _fetchCondition = () => {
 		return [
 			API_LIST.ALL_TOKENS,
 			{
 				page,
-				offset: 10
+				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
 		]
 	}
@@ -18,11 +19,11 @@ export default function useTokens(page: number) {
 
 	useEffect(() => {
 		if (data?.result) {
-			setState(data)
+			setState({ tokens: data.result, hasNextPage: data.hasNextPage })
 		}
 	}, [data])
 	return {
-		tokens: hookData?.result
-		// hasNextPage: hookData?.hasNextPage
+		tokens: hookData.tokens,
+		hasNextPage: hookData.hasNextPage
 	}
 }
