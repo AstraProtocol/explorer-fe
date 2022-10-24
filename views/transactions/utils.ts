@@ -2,7 +2,6 @@ import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi, evmApi } from 'api'
 import API_LIST from 'api/api_list'
-import dayjs from 'dayjs'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import numeral from 'numeral'
 import { TransacionTypeEnum } from 'utils/constants'
@@ -195,33 +194,6 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			result.blockHeight
 		)
 		data.logs = result.logs
-	} else {
-		const evmRes = await cosmosApi.get<EVMTransactionDetailResponse>(
-			`${API_LIST.EVM_TRANSACTION_DETAIL_WITH_COSMOSHASH}/${evmHash}?type=evm`
-		)
-		const result = evmRes.data.result
-		data.evmHash = result.hash
-		// data.cosmosHash = undefined
-		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result.confirmations
-		data.blockHeight = result.blockNumber
-		data.time = dayjs(result.blockTime).valueOf()
-		data.from = result.from
-		data.to = result.to
-		data.createdContractAddressHash = result.createdContractAddressHash
-		// data.tokenTransfer = []
-		data.value = formatEther(result.value)
-		data.fee = undefined
-		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
-		data.gasLimit = formatNumber(result.gasLimit, 0)
-		data.gasUsed = result.gasUsed
-		// data.maxFeePerGas = undefined
-		// data.maxPriorityFeePerGas = undefined
-		// data.priorityFeePerGas = undefined
-		// data.gasUsedByTransaction = undefined
-		// data.nonce = undefined
-		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		// data.tokenTransfers = result?.tokenTransfers
 	}
 
 	return data

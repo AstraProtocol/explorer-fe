@@ -74,9 +74,12 @@ export async function getServerSideProps({ query }) {
 	try {
 		let data: TransactionDetail = {}
 		//evm
-		if (tx.startsWith('0x') || type == 'evm') {
+		if (tx.startsWith('0x')) {
 			data = await evmTransactionDetail(tx)
-			evmHash = tx.startsWith('0x') ? tx : data.evmHash
+			evmHash = tx
+		} else if (type == 'evm') {
+			data = await evmTransactionDetail('', tx)
+			evmHash = data.evmHash
 		} else {
 			// get detail from cosmos hash
 			const cosmosDetailRes = await cosmosApi.get<TransactionDetailResponse>(`${API_LIST.TRANSACTIONS}/${tx}`)

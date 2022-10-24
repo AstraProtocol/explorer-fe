@@ -2,7 +2,7 @@
 const nextConfig = {
 	reactStrictMode: false,
 	env: {
-		NEXT_PUBLIC_COSMOS_API: 'https://chainindexing.astranaut.dev',
+		NEXT_PUBLIC_COSMOS_API: 'http://128.199.238.171:8080',
 		NEXT_PUBLIC_EVM_API: 'https://blockscout.astranaut.dev',
 		NEXT_PUBLIC_BLOCK_INTERVAL: '5000',
 		NEXT_PUBLIC_TRANSACTION_INTERVAL: '5000',
