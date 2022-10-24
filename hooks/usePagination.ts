@@ -17,7 +17,7 @@ export default function usePagination(rootPath: string) {
 	const query = convertURLQueryToObject(asPath)
 	const [_pagination, _setPagination] = useState<CustomRouter>({
 		page: Number(query?.page) || 1,
-		total: Number(query?.total) | 0,
+		total: Number(query?.total) || 0,
 		limit: 20,
 		pagination: 'offset',
 		order: 'height.desc'
@@ -30,7 +30,7 @@ export default function usePagination(rootPath: string) {
 			..._pagination,
 			...data
 		})
-		if (page !== undefined && page >= 1) {
+		if (page !== undefined && page >= 1 && router.asPath !== '/') {
 			router.push(
 				{
 					pathname: rootPath,

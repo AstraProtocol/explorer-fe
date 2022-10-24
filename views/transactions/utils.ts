@@ -153,30 +153,48 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		)
 		data.logs = result.logs
 	} else if (evmHash.startsWith('0x')) {
-		const evmRes = await evmApi.get<EVMTransactionDetailResponse>(`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`)
+		const evmRes = await evmApi.get<EvmTransactionDetailFromCosmosHashResponse>(
+			`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`
+		)
 		const result = evmRes.data.result
 		data.evmHash = result.hash
-		// data.cosmosHash = undefined
+		data.cosmosHash = result?.cosmosHash
 		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result.confirmations
-		data.blockHeight = result.blockNumber
-		data.time = dayjs(result.blockTime).valueOf()
+		data.confirmations = `${result.confirmations}`
+		data.blockHeight = `${result.blockHeight}`
+		data.time = result.blockTime
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		// data.tokenTransfer = []
 		data.value = formatEther(result.value)
 		data.fee = undefined
 		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
 		data.gasLimit = formatNumber(result.gasLimit, 0)
 		data.gasUsed = result.gasUsed
-		// data.maxFeePerGas = undefined
-		// data.maxPriorityFeePerGas = undefined
-		// data.priorityFeePerGas = undefined
-		// data.gasUsedByTransaction = undefined
-		// data.nonce = undefined
+		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
+		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
+			? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
+			: undefined
+		data.gasUsedByTransaction = result.cumulativeGasUsed
+			? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
+					parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
+			  ).format('0.00%')}`
+			: undefined
+		data.nonce = `${result.nonce}`
 		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		// data.tokenTransfers = result?.tokenTransfers
+		data.tokenTransfers = result?.tokenTransfers
+		data.index = result.index
+		data.failLog = result.error
+		data.revertReason = result.revertReason
+		data.typeOfTransfer = evmTransactionType(result.type)
+		data.tabTokenTransfers = evmConvertTokenTransferToTransactionRow(
+			result?.tokenTransfers,
+			result.blockTime,
+			result.success,
+			result.hash,
+			result.blockHeight
+		)
+		data.logs = result.logs
 	} else {
 		const evmRes = await cosmosApi.get<EVMTransactionDetailResponse>(
 			`${API_LIST.EVM_TRANSACTION_DETAIL_WITH_COSMOSHASH}/${evmHash}?type=evm`
