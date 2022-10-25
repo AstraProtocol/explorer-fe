@@ -36,7 +36,7 @@ export default function TokenRow({ index, token }: Props) {
 
 			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'padding-left-lg col-3')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
-					{convertBalanceToView(token.totalSupply)}
+					{convertBalanceToView(token.totalSupply, parseInt(token.decimals))}
 				</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>{token.symbol}</span>
 			</div>

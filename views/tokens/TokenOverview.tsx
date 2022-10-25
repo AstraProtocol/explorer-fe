@@ -35,7 +35,11 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 					<TypographyUI.Balance
 						size="sm"
 						currency={tokenData.symbol}
-						value={tokenData.totalSupply ? convertBalanceToView(tokenData.totalSupply) : 'NaN'}
+						value={
+							tokenData.totalSupply
+								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.symbol))
+								: 'NaN'
+						}
 						fixNumber={5}
 					/>
 				</div>
