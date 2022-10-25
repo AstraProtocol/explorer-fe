@@ -51,7 +51,7 @@ const Transfers = ({ content }: { content: Content }) => {
 			>
 				<span className="padding-right-xs">For</span>
 				<span className="padding-right-xs">{content?.transfer.value}</span>
-				<Typography.LinkText href={LinkMaker.address(content?.transfer?.to)}>
+				<Typography.LinkText href={LinkMaker.token(content?.transfer?.tokenAddress)}>
 					{content?.transfer?.token}
 				</Typography.LinkText>
 			</span>

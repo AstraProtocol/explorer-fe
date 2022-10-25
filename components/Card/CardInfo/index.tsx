@@ -28,6 +28,7 @@ export type Content = {
 		to?: string
 		toText?: string
 		value?: number
+		tokenAddress?: string
 		token?: string
 	}
 	decode?: DecodeProps

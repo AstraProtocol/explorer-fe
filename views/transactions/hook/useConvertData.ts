@@ -192,6 +192,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 													ellipseBetweenText(transfer.toAddress, 6, 6)
 												),
 												value: Number(formatUnits(transfer.amount, transfer.decimals)),
+												tokenAddress: transfer.tokenContractAddress,
 												token: transfer.tokenSymbol
 											}
 										}
