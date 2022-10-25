@@ -1,6 +1,7 @@
+import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
-import { convertBalanceToView, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, getEnvNumber, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -28,7 +29,10 @@ export default function HolderRow({ index, account }: Props) {
 			</div>
 			<div className={clsx(styles.borderLeft, styles.colBalance, 'col-5 padding-left-lg ')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
-					{convertBalanceToView(account.balance)}
+					{formatNumber(
+						convertBalanceToView(account.balance),
+						getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
+					)}
 				</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>ASA</span>
 			</div>

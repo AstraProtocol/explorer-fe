@@ -37,7 +37,7 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 						currency={tokenData.symbol}
 						value={
 							tokenData.totalSupply
-								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.symbol))
+								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals))
 								: 'NaN'
 						}
 						fixNumber={5}

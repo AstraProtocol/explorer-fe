@@ -22,12 +22,10 @@ export const ellipseLeftText = (address: string, to: number) => {
 
 export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	const big = BigNumber.from(value)
-	const valueInWei = parseFloat(formatUnits(big, decimals).valueOf())
-
-	if (valueInWei < 10 ** -6) return 0
-	if (valueInWei > 10 ** 6) return numeral(valueInWei).format('0')
-	return numeral(valueInWei).format('0,0.0000')
+	const valueInWei = formatUnits(big, decimals).valueOf()
+	return valueInWei
 }
+
 /**
  * return format text of date
  * @param local
@@ -144,6 +142,8 @@ export const getEnvNumber = (key): number => {
 	switch (key) {
 		case 'NEXT_PUBLIC_PAGE_OFFSET':
 			return parseInt(process.env.NEXT_PUBLIC_PAGE_OFFSET, 10) || 10
+		case 'NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS':
+			return parseInt(process.env.NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS, 10) || 4
 		default:
 			return 0
 	}

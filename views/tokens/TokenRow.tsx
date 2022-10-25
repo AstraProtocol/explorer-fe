@@ -1,6 +1,7 @@
+import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
-import { convertBalanceToView, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, getEnvNumber, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -36,7 +37,10 @@ export default function TokenRow({ index, token }: Props) {
 
 			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'padding-left-lg col-3')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
-					{convertBalanceToView(token.totalSupply, parseInt(token.decimals))}
+					{formatNumber(
+						convertBalanceToView(token.totalSupply, parseInt(token.decimals)),
+						getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
+					)}
 				</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>{token.symbol}</span>
 			</div>

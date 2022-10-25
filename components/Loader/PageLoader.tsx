@@ -15,10 +15,11 @@ function PageLoader() {
 			if (!url || typeof url !== 'string') return setLoading(false)
 			return url?.includes(router.asPath) && setLoading(false)
 		}
+		const handleError = e => setLoading(false)
 
 		router.events.on('routeChangeStart', handleStart)
 		router.events.on('routeChangeComplete', handleComplete)
-		router.events.on('routeChangeError', handleComplete)
+		router.events.on('routeChangeError', handleError)
 
 		return () => {
 			router.events.off('routeChangeStart', handleStart)

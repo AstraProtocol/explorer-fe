@@ -1,7 +1,8 @@
+import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
-import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, getEnvNumber, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -22,7 +23,12 @@ const AddressTokenRow = ({ data }: Props) => {
 				<span>{data.type}</span>
 			</div>
 			<div className={clsx('col-3 margin-right-xs', styles.colAmount)}>
-				<span>{convertBalanceToView(data.balance)}</span>
+				<span>
+					{formatNumber(
+						convertBalanceToView(data.balance),
+						getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
+					)}
+				</span>
 			</div>
 			<div className={clsx('col-1 margin-right-xs', styles.colSymbol)}>
 				<span>{data.symbol}</span>
