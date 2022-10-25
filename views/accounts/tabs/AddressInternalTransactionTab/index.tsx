@@ -1,5 +1,6 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import useAddressInternalTransaction from 'views/accounts/hook/useAddressInternalTransaction'
 import { Transactions } from 'views/transactions/TransactionTabs'
@@ -10,13 +11,14 @@ interface Props {
 
 const AddressInternalTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressInternalTransaction(address, currentPage)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useAddressInternalTransaction(address, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -26,11 +28,11 @@ const AddressInternalTransactionTab = ({ address }: Props) => {
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Internal Transactions</span>
 				<div>
-					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
+					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
 
-			<Transactions rows={data.result} emptyMsg="There are no internal transactions for this transaction." />
+			<Transactions rows={result} emptyMsg="There are no internal transactions for this transaction." />
 		</div>
 	)
 }

@@ -3,6 +3,7 @@ import Container from 'components/Container'
 import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
@@ -15,13 +16,14 @@ import Layout from '../components/Layout'
 const AstraHolderPage: React.FC<NextPage> = _ => {
 	// const { page, setPage } = usePaginationLite('/accounts')
 	const [page, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAccounts()
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useAccounts(currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < page) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -35,16 +37,16 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 				<Row style={{ justifyContent: 'space-between' }}>
 					<PageTitle>Astra Address</PageTitle>
 					<div>
-						<PaginationLite currentPage={page} hasNext={data.hasNextPage} onChange={onPagingChange} />
+						<PaginationLite currentPage={page} hasNext={hasNextPage} onChange={onPagingChange} />
 					</div>
 				</Row>
 
-				{!data.result || data.result.length === 0 ? (
+				{!result || result.length === 0 ? (
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
 						<HolderHeadTitle />
-						{data.result?.map((item: Holder, index: number) => {
+						{result?.map((item: Holder, index: number) => {
 							return (
 								<HolderRow
 									key={item.address}

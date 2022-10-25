@@ -3,20 +3,20 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getEnvNumber } from 'utils/helper'
 
-export default function useAddressCoinBalanceHistory(address: string): UseAddressCoinBalanceHistoryData {
+export default function useAddressCoinBalanceHistory(
+	address: string,
+	params: string | undefined
+): UseAddressCoinBalanceHistoryData {
 	const [hookData, setState] = useState({
 		result: [],
 		hasNextPage: false,
 		nextPagePath: undefined
 	})
 
-	const [currentParams, setParams] = useState(undefined)
-	const prevParams = []
-
 	const _fetchCondition = () => {
-		if (currentParams) {
+		if (params) {
 			return [
-				`${API_LIST.ADDRESS_COIN_BALANCE_HISTORY}${currentParams}`,
+				`${API_LIST.ADDRESS_COIN_BALANCE_HISTORY}${params}`,
 				{
 					address
 				}
@@ -40,17 +40,8 @@ export default function useAddressCoinBalanceHistory(address: string): UseAddres
 		}
 	}, [data])
 	return {
-		data: {
-			result: hookData.result,
-			hasNextPage: hookData.hasNextPage
-		},
-		makeNextPage: () => {
-			if (currentParams) prevParams.push(currentParams)
-			setParams(hookData.nextPagePath)
-		},
-		makePrevPage: () => {
-			const prevParam = prevParams.pop()
-			setParams(prevParam)
-		}
+		result: hookData.result,
+		hasNextPage: hookData.hasNextPage,
+		nextPagePath: hookData.nextPagePath
 	}
 }

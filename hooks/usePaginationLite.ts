@@ -1,29 +1,29 @@
-import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { convertURLQueryToObject } from 'utils/helper'
 
-export default function usePaginationLite(rootPath: string) {
-	const router = useRouter()
-	const { asPath } = router
-	const query = convertURLQueryToObject(asPath)
-	const initPage = Number(query?.page) >= 1 ? Number(query?.page) : 1
-	const [_page, _setPage] = useState<number>(initPage)
-	const setPage = (page: number) => {
-		_setPage(page)
-		if (page !== undefined && page >= 1 && router.asPath !== '/') {
-			router.push(
-				{
-					pathname: rootPath,
-					query: { page }
-				},
-				undefined,
-				{ shallow: true }
-			)
-		}
+const usePaginationLite = () => {
+	const [currentParam, setCurrentParam] = useState('')
+	const [params, setParams] = useState([])
+
+	const makeNextPage = (nextParam: string) => {
+		const newParams = [...params]
+		newParams.push(currentParam)
+
+		if (currentParam) setParams(newParams)
+		setCurrentParam(nextParam)
+	}
+	const makePrevPage = () => {
+		const newParams = [...params]
+		const newCurrentParam = newParams.pop()
+
+		setParams(newParams)
+		setCurrentParam(newCurrentParam)
 	}
 
 	return {
-		page: _page,
-		setPage
+		currentParam,
+		makeNextPage,
+		makePrevPage
 	}
 }
+
+export default usePaginationLite

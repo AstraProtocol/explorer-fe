@@ -3,19 +3,16 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getEnvNumber } from 'utils/helper'
 
-export default function useAccounts(): UseAstraHolderData {
+export default function useAccounts(params: string | undefined): UseAstraHolderData {
 	const [hookData, setState] = useState({
 		result: [],
 		hasNextPage: false,
 		nextPagePath: undefined
 	})
 
-	const [currentParams, setParams] = useState(undefined)
-	const prevParams = []
-
 	const _fetchCondition = () => {
-		if (currentParams) {
-			return [`${API_LIST.ALL_HOLDERS}${currentParams}`]
+		if (params) {
+			return [`${API_LIST.ALL_HOLDERS}${params}`]
 		}
 
 		return [
@@ -34,17 +31,8 @@ export default function useAccounts(): UseAstraHolderData {
 		}
 	}, [data])
 	return {
-		data: {
-			result: hookData.result,
-			hasNextPage: hookData.hasNextPage
-		},
-		makeNextPage: () => {
-			if (currentParams) prevParams.push(currentParams)
-			setParams(hookData.nextPagePath)
-		},
-		makePrevPage: () => {
-			const prevParam = prevParams.pop()
-			setParams(prevParam)
-		}
+		result: hookData.result,
+		hasNextPage: hookData.hasNextPage,
+		nextPagePath: hookData.nextPagePath
 	}
 }

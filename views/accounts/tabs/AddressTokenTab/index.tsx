@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
+import usePaginationLite from 'hooks/usePaginationLite'
 import numeral from 'numeral'
 import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
@@ -19,7 +20,8 @@ interface Props {
 
 const AddressTokenTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressToken(address)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useAddressToken(address, currentParam)
 	const astraSummary = useAppSelector(getAstraSummary)
 	const addressBalance = useAddressBalance(address)
 
@@ -27,7 +29,7 @@ const AddressTokenTab = ({ address }: Props) => {
 		if (value < currentPage) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -66,7 +68,7 @@ const AddressTokenTab = ({ address }: Props) => {
 					<span className="text text-base contrast-color-50">Token</span>
 					<br />
 					<AmountUnit classes="padding-right-sm border border-right-base" amount={0} unit="VND" />
-					<AmountUnit classes="padding-left-sm" amount={data.result?.length} unit="Tokens" />
+					<AmountUnit classes="padding-left-sm" amount={result?.length} unit="Tokens" />
 				</BackgroundCard>
 			</Row>
 			<div style={{ overflowY: 'scroll' }}>
@@ -85,11 +87,11 @@ const AddressTokenTab = ({ address }: Props) => {
 					<div className={clsx('col-3', styles.colAddress)}>Contract Address</div>
 				</BackgroundCard>
 				<div>
-					{!data.result || data.result.length == 0 ? (
+					{!result || result.length == 0 ? (
 						<Empty classes="margin-top-xl" />
 					) : (
 						<>
-							{data.result?.map((item, index) => {
+							{result?.map((item, index) => {
 								return <AddressTokenRow key={item.contractAddress} data={item} />
 							})}
 						</>
@@ -97,7 +99,7 @@ const AddressTokenTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

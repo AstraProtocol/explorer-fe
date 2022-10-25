@@ -1,6 +1,7 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import useTokenTransactions from 'views/tokens/hook/useTokenTransactions'
 import AddressTransaction from './TokenTransaction'
@@ -11,13 +12,14 @@ interface Props {
 
 const TokenTransactionTab = ({ token }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makePrevPage, makeNextPage } = useTokenTransactions(token)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useTokenTransactions(token, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -28,15 +30,15 @@ const TokenTransactionTab = ({ token }: Props) => {
 				<span className="text text-xl">Transactions</span>
 				<div>
 					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
+					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
 
-			{!data.result || data.result.length == 0 ? (
+			{!result || result.length == 0 ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<div style={{ overflowY: 'scroll' }}>
-					{data.result.map((item, index) => (
+					{result.map((item, index) => (
 						<AddressTransaction key={item.transactionHash} transaction={item} />
 					))}
 				</div>

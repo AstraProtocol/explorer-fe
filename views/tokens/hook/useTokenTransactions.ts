@@ -3,20 +3,17 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getEnvNumber } from 'utils/helper'
 
-export default function useTokenTransactions(token): UseTokenTransactionHookData {
+export default function useTokenTransactions(token: string, params: string | undefined): UseTokenTransactionHookData {
 	const [hookData, setState] = useState({
 		result: [],
 		hasNextPage: false,
 		nextPagePath: undefined
 	})
 
-	const [currentParams, setParams] = useState(undefined)
-	const prevParams = []
-
 	const _fetchCondition = () => {
-		if (currentParams) {
+		if (params) {
 			return [
-				`${API_LIST.TOKEN_TRANSACTIONS}${currentParams}`,
+				`${API_LIST.TOKEN_TRANSACTIONS}${params}`,
 				{
 					contractaddress: token
 				}
@@ -41,17 +38,8 @@ export default function useTokenTransactions(token): UseTokenTransactionHookData
 	}, [data])
 
 	return {
-		data: {
-			result: hookData.result,
-			hasNextPage: hookData.hasNextPage
-		},
-		makeNextPage: () => {
-			if (currentParams) prevParams.push(currentParams)
-			setParams(hookData.nextPagePath)
-		},
-		makePrevPage: () => {
-			const prevParam = prevParams.pop()
-			setParams(prevParam)
-		}
+		result: hookData.result,
+		hasNextPage: hookData.hasNextPage,
+		nextPagePath: hookData.nextPagePath
 	}
 }

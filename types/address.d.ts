@@ -64,12 +64,9 @@ interface AddressTransactionResponse {
 }
 
 interface UseAstraHolderData {
-	data: {
-		result: Holder[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: Holder[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressTransactionData {
@@ -78,30 +75,21 @@ interface UseAddressTransactionData {
 }
 
 interface UseAddressTokenTransferData {
-	data: {
-		result: TokenTransfer[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: TokenTransfer[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressTokenData {
-	data: {
-		result: AddressToken[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: AddressToken[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressInternalTransactionData {
-	data: {
-		result: TransactionRowProps[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: TransactionRowProps[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressBalanceData {
@@ -110,12 +98,9 @@ interface UseAddressBalanceData {
 }
 
 interface UseAddressCoinBalanceHistoryData {
-	data: {
-		result: AddressCoinBalanceHistory[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: AddressCoinBalanceHistory[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressCoinBalanceHistoryChartData {

@@ -1,6 +1,7 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import useAddressTokenTransfers from 'views/accounts/hook/useAddressTokenTransfer'
 import AddressTokenTransfer from './AddressTokenTransfer'
@@ -11,12 +12,13 @@ interface Props {
 
 const AddressTokenTransferTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressTokenTransfers(address)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useAddressTokenTransfers(address, currentParam)
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -27,15 +29,15 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 				<span className="text text-xl">Token Transfers</span>
 				<div>
 					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
+					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
 			<div style={{ overflowY: 'scroll' }}>
-				{!data.result || data.result.length == 0 ? (
+				{!result || result.length == 0 ? (
 					<Empty classes="margin-top-xl" />
 				) : (
 					<>
-						{data.result?.map((item, index) => {
+						{result?.map((item, index) => {
 							return <AddressTokenTransfer key={item.hash} data={item} />
 						})}
 					</>

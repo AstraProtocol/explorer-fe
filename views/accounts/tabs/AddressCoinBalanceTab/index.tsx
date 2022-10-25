@@ -2,6 +2,7 @@ import { PaginationLite } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Empty from 'components/Typography/Empty'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -17,7 +18,8 @@ interface Props {
 
 const AddressCoinBalanceTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, makeNextPage, makePrevPage } = useAddressCoinBalanceHistory(address)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { hasNextPage, nextPagePath, result } = useAddressCoinBalanceHistory(address, currentParam)
 	const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
@@ -25,7 +27,7 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 		if (value < currentPage) {
 			makePrevPage()
 		} else {
-			makeNextPage()
+			makeNextPage(nextPagePath)
 		}
 		setPage(value)
 	}
@@ -55,11 +57,11 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 					<div className={clsx('col-2', styles.colTimer)}>Time</div>
 				</BackgroundCard>
 				<div className="">
-					{!data.result || data.result.length == 0 ? (
+					{!result || result.length == 0 ? (
 						<Empty classes="margin-top-lg" />
 					) : (
 						<>
-							{data.result?.map((item: AddressCoinBalanceHistory, index) => {
+							{result?.map((item: AddressCoinBalanceHistory, index) => {
 								return (
 									<AddressBalanceHistory
 										addressBalance={addressBalance}
@@ -74,7 +76,7 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 				</div>
 			</div>
 			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={data.hasNextPage} onChange={onPagingChange} />
+				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

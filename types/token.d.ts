@@ -16,12 +16,9 @@ interface TopAstraHolderResponse {
 }
 
 interface UseTokenTransactionHookData {
-	data: {
-		result: TokenTransaction[] | []
-		hasNextPage: boolean
-	}
-	makeNextPage: Function
-	makePrevPage: Function
+	result: TokenTransaction[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseTokenHolderData {
