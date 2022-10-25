@@ -25,7 +25,7 @@ const TokenDetailPage: React.FC<Props> = props => {
 			<Head>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 				<title>
-					Token {token} - {process.env.NEXT_PUBLIC_TITLE}
+					{tokenData.name} ({tokenData.symbol}) - {process.env.NEXT_PUBLIC_TITLE}
 				</title>
 			</Head>
 			<Container>

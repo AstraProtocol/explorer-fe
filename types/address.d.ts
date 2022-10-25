@@ -64,8 +64,12 @@ interface AddressTransactionResponse {
 }
 
 interface UseAstraHolderData {
-	result: Holder[]
-	hasNextPage: boolean
+	data: {
+		result: Holder[] | []
+		hasNextPage: boolean
+	}
+	makeNextPage: Function
+	makePrevPage: Function
 }
 
 interface UseAddressTransactionData {

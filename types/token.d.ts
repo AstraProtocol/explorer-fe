@@ -11,10 +11,7 @@ interface TokenHolderResponse {
 
 interface TopAstraHolderResponse {
 	hasNextPage: boolean
-	nextPageParams: {
-		offset: number
-		page: number
-	}
+	nextPagePath: any
 	result: Holder[]
 }
 
