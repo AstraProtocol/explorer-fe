@@ -2,7 +2,7 @@ import { PaginationLite, Row } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
-import usePaginationLite from 'hooks/usePaginationLite'
+import usePageQuery from 'hooks/usePageQuery'
 import { NextPage } from 'next'
 // import {Pagination} from '@astraprotocol/astra-ui'
 import Head from 'next/head'
@@ -14,7 +14,7 @@ import TokenRow from 'views/tokens/TokenRow'
 import Layout from '../components/Layout'
 
 const AllTokensPage: React.FC<NextPage> = _ => {
-	const { page, setPage } = usePaginationLite('/tokens')
+	const { page, setPage } = usePageQuery('/tokens')
 	const { tokens, hasNextPage } = useTokens(page)
 
 	const onPagingChange = (value: number) => {
