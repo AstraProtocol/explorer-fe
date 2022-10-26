@@ -72,7 +72,7 @@ export default function TransactionBriefRow({
 					className={clsx(styles.icon, 'margin-right-sm', 'sm-hide')}
 					style={{ alignSelf: !to && !from ? '' : 'baseline' }}
 				>
-					<Image src={'/images/icons/transaction.png'} height={24} width={24} />
+					<Image src={'/images/icons/transaction.png'} alt="transactions" height={24} width={24} />
 				</div>
 				<div className={clsx(styles.content)}>
 					<div className={clsx('block-ver-center', styles.info, 'sm-wrap')}>
@@ -82,10 +82,11 @@ export default function TransactionBriefRow({
 							</span>
 							<Typography.LinkText
 								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
-								children={`${ellipseRightText(hash, 24)}`}
 								fontType="Titi"
 								fontSize="money-2xs"
-							/>
+							>
+								{ellipseRightText(hash, 24)}
+							</Typography.LinkText>
 						</div>
 						<Timer updatedAt={updatedAt} />
 					</div>

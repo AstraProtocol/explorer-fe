@@ -50,20 +50,22 @@ export default function TransactionRowContent({
 }: TransactionRowContentProps) {
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
+	const isEvm = type === 'MsgEthereumTx'
+	const addressQuery = isEvm ? '&type=evm' : ''
 	return (
 		<>
 			<div
 				className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}
 				style={{ minHeight: style === 'inject' ? 'auto' : height }}
 			>
-				<div className={clsx('col-4')}>
+				<div className={clsx('col-4')} style={{ alignItems: 'center', display: 'flex' }}>
 					<div>
 						<Typography.LinkText
-							href={LinkMaker.transaction(hash)}
+							href={LinkMaker.transaction(hash, addressQuery)}
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseRightText(hash, 30)}
+							{ellipseBetweenText(hash, 15, 15)}
 						</Typography.LinkText>
 						{!!labelStatus && (
 							<Typography.Label

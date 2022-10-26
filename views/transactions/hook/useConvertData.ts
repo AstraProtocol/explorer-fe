@@ -33,7 +33,6 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								label: CardInfoLabels.Transaction_Cosmos,
 								type: 'copy',
 								contents: [{ value: data[key] }]
-								// contents: [{ value: data[key], link: LinkMaker.transaction(data[key]) }]
 							})
 						break
 					case 'result':

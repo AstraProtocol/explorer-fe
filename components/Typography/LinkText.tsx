@@ -8,12 +8,15 @@ interface Props {
 	classes?: string
 	href: string
 	fontSize?: string
+	openInNewPage?: boolean
 }
 
-export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSize }: Props) => {
+export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSize, openInNewPage }: Props) => {
 	return (
-		<Link href={href}>
-			<span
+		<Link href={href} passHref>
+			<a
+				target={openInNewPage ? '_blank' : '_self'}
+				rel="noreferrer"
 				className={clsx(
 					'link',
 					'link-color-useful ',
@@ -26,7 +29,7 @@ export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSi
 				)}
 			>
 				{children}
-			</span>
+			</a>
 		</Link>
 	)
 }

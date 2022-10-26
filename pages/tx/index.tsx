@@ -75,7 +75,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 								const fee = caculateCosmosAmount(item.fee)
 								return (
 									<TransactionRow
-										key={item.hash}
+										key={`${item.blockHeight}-${item.hash}`}
 										blockNumber={item.blockHeight}
 										updatedAt={item.blockTime}
 										fee={fee.amount}
