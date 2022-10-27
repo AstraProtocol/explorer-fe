@@ -33,15 +33,13 @@ export default function BlockBriefRow({
 				})}
 			>
 				<div className={clsx(styles.icon, 'margin-right-sm')}>
-					<Image src={'/images/icons/blockchain.png'} height={24} width={24} />
+					<Image src={'/images/icons/blockchain.png'} alt="height" height={24} width={24} />
 				</div>
 				<div className={styles.content}>
 					<div className={styles.topRow}>
-						<Typography.LinkText
-							href={LinkMaker.block(blockNumber)}
-							children={`#${blockNumber}`}
-							fontType="Titi"
-						/>
+						<Typography.LinkText href={LinkMaker.block(blockNumber)} fontType="Titi">
+							#{blockNumber}
+						</Typography.LinkText>
 
 						<Timer updatedAt={updatedAt} />
 					</div>
@@ -50,9 +48,14 @@ export default function BlockBriefRow({
 							<span className={clsx('contrast-color-30 text text-sm padding-right-2xs sm-block')}>
 								Block Proposer
 							</span>
-							<span className="contrast-color-70 money money-2xs sm-block">
-								{proposerName} ({ellipseBetweenText(proposerAddress, 6, 6)})
-							</span>
+							<Typography.LinkText
+								href={LinkMaker.address(proposerAddress)}
+								fontSize="money-2xs"
+								fontType="Titi"
+								classes="sm-block"
+							>
+								{proposerName} ({ellipseBetweenText(proposerAddress, 10, 10)})
+							</Typography.LinkText>
 							{/* <DotSpace /> */}
 						</div>
 					</div>

@@ -32,7 +32,7 @@ export function HomeTransactions() {
 				<BackgroundCard classes={clsx(styles.card, 'height-100 flex flex-column padding-bottom-sm')}>
 					{top10?.map((item, index) => (
 						<RowBrief
-							key={item.hash}
+							key={`${item.blockHeight}-${item.hash}`}
 							hash={item.hash}
 							balance={{ value: '' }} //{{ value: convertBalanceToView('000'), token: 'ASA' }}
 							from=""

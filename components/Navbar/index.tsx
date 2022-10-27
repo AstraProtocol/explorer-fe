@@ -179,7 +179,12 @@ export default function Navbar() {
 					</div>
 				</div>
 			</ModalWrapper>
-			<nav className={clsx(styles.navbar, 'margin-bottom-sm', { 'shadow-xs': shadow })}>
+			<nav
+				className={clsx(styles.navbar, 'margin-bottom-sm', {
+					'shadow-xs': shadow,
+					[styles.navbarScroll]: shadow
+				})}
+			>
 				<div className={clsx(styles.container, 'margin-auto')}>
 					<div className={styles.hamburgerMenuIcon}>
 						<div className="padding-left-lg pointer">

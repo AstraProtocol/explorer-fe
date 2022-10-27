@@ -2,6 +2,7 @@
 
 $maxMobileSize: 1200px;
 $backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
+
 .navbar {
 	width: 100%;
 	position: sticky;
@@ -10,7 +11,8 @@ $backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
 	width: 100%;
 	z-index: 99;
 	height: 80px;
-	background-color: var(--theme-backgorund-mode);
+	// background-color: var(--theme-backgorund-mode);
+
 	.container {
 		max-width: 1400px;
 		display: flex;
@@ -18,9 +20,15 @@ $backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
 		align-items: center;
 		height: 100%;
 	}
+
 	@media screen and (max-width: $maxMobileSize) {
 		justify-content: unset;
 	}
+}
+.navbarScroll {
+	background-color: var(--theme-backgorund-mode);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(22px);
 }
 
 .navigation {
