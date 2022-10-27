@@ -7,7 +7,7 @@
 }
 
 .dark--mode {
-	background: radial-gradient(106.61% 108.18% at 0% 100%, rgba(82, 120, 255, 0.2) 0%, rgba(0, 0, 0, 0) 100%), #08080a;
+	background: radial-gradient(100% 90% at 10% 0%, rgba(82, 120, 255, 0.2) 0%, rgba(23, 31, 60, 0.096) 100%), #08080a;
 }
 
 .hamburger-enter {
