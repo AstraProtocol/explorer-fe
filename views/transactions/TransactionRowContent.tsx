@@ -19,7 +19,6 @@ export type TransactionRowContentProps = {
 	labelStatus?: string
 	status?: boolean
 	fee?: number | string
-	feeToken?: string
 	from?: string
 	fromName?: string
 	to?: string
@@ -39,7 +38,6 @@ export default function TransactionRowContent({
 	labelStatus,
 	status,
 	fee,
-	feeToken,
 	from,
 	to,
 	contractAddress,
@@ -58,7 +56,7 @@ export default function TransactionRowContent({
 				className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}
 				style={{ minHeight: style === 'inject' ? 'auto' : height }}
 			>
-				<div className={clsx('col-4')} style={{ alignItems: 'center', display: 'flex' }}>
+				<div className={clsx('col-4')} style={{ alignItems: 'center' }}>
 					<div>
 						<Typography.LinkText
 							href={LinkMaker.transaction(hash, addressQuery)}
@@ -126,7 +124,11 @@ export default function TransactionRowContent({
 								<TypographyLib.Balance
 									size="xs"
 									value={value}
-									currency={valueCurrency?.toUpperCase()}
+									currency={
+										valueCurrency.toLowerCase() == 'aastra'
+											? process.env.NEXT_PUBLIC_FEE_TOKEN
+											: valueCurrency?.toUpperCase()
+									}
 									icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
 								/>
 								<br />
@@ -139,7 +141,7 @@ export default function TransactionRowContent({
 									size="2xs"
 									value={convertBalanceToView(fee)}
 									fixNumber={7}
-									currency={feeToken.toUpperCase()}
+									currency={process.env.NEXT_PUBLIC_FEE_TOKEN}
 									classes="contrast-color-70"
 								/>
 							)}

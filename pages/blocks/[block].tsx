@@ -129,7 +129,6 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 														blockNumber={item.blockHeight}
 														updatedAt={item.blockTime}
 														fee={fee.amount}
-														feeToken={'asa'}
 														status={item.success}
 														hash={item.hash}
 														from={''}

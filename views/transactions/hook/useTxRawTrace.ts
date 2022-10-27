@@ -18,7 +18,7 @@ export default function useTxRawTrace(txhash: string, type: 'evm' | 'cosmos') {
 	const { data } = useSWR<TransactionRawTraceResponse>(_fetchCondition())
 
 	useEffect(() => {
-		if (data) {
+		if (data?.result) {
 			setState({ result: data.result.rawTrace })
 		}
 	}, [data])

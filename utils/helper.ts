@@ -86,9 +86,13 @@ export class LinkMaker {
 	 * @param query
 	 * @returns
 	 */
-	static transaction(hash?: string, query: string = '') {
-		hash = hash ? `/${hash}?${query}` : ''
-		return `/tx${hash}`
+	static transaction(hash?: string, query?: string) {
+		if (!hash) {
+			return '/tx'
+		}
+
+		if (query) return `/tx/${hash}?${query}`
+		return `/tx/${hash}`
 	}
 
 	/**

@@ -20,7 +20,6 @@ export type TransactionRowProps = {
 	labelStatus?: string
 	status?: boolean
 	fee?: number | string
-	feeToken?: string
 	from?: string
 	fromName?: string
 	to?: string
@@ -41,7 +40,6 @@ export default function TransactionRow({
 	labelStatus,
 	status,
 	fee,
-	feeToken,
 	from,
 	to,
 	contractAddress,
@@ -90,7 +88,6 @@ export default function TransactionRow({
 						labelStatus={labelStatus}
 						status={status}
 						fee={fee}
-						feeToken={feeToken}
 						from={from}
 						to={to}
 						contractAddress={contractAddress}

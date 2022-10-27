@@ -116,16 +116,16 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.evmHash = result.hash
 		data.cosmosHash = result?.cosmosHash
 		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = `${result.confirmations}`
+		data.confirmations = result?.confirmations ? result.confirmations.toString() : ''
 		data.blockHeight = `${result.blockHeight}`
 		data.time = result.blockTime
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = formatEther(result.value)
+		data.value = result.value ? formatEther(result.value) : '0'
 		data.fee = undefined
-		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
-		data.gasLimit = formatNumber(result.gasLimit, 0)
+		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
+		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
 		data.gasUsed = result.gasUsed
 		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
 		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
@@ -136,20 +136,23 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 					parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
 			  ).format('0.00%')}`
 			: undefined
-		data.nonce = `${result.nonce}`
+		data.nonce = result.nonce ? result.nonce.toString() : ''
 		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 		data.tokenTransfers = result?.tokenTransfers
 		data.index = result.index
 		data.failLog = result.error
 		data.revertReason = result.revertReason
-		data.typeOfTransfer = evmTransactionType(result.type)
-		data.tabTokenTransfers = evmConvertTokenTransferToTransactionRow(
-			result?.tokenTransfers,
-			result.blockTime,
-			result.success,
-			result.hash,
-			result.blockHeight
-		)
+		data.typeOfTransfer = result.type ? evmTransactionType(result.type) : ''
+		data.tabTokenTransfers =
+			result.tokenTransfers &&
+			result.tokenTransfers.length &&
+			evmConvertTokenTransferToTransactionRow(
+				result.tokenTransfers,
+				result.blockTime,
+				result.success,
+				result.hash,
+				result.blockHeight
+			)
 		data.logs = result.logs
 	} else if (evmHash.startsWith('0x')) {
 		const evmRes = await evmApi.get<EvmTransactionDetailFromCosmosHashResponse>(
@@ -159,16 +162,16 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.evmHash = result.hash
 		data.cosmosHash = result?.cosmosHash
 		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = `${result.confirmations}`
+		data.confirmations = result?.confirmations ? result.confirmations.toString() : ''
 		data.blockHeight = `${result.blockHeight}`
 		data.time = result.blockTime
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = formatEther(result.value)
+		data.value = result.value ? formatEther(result.value) : ''
 		data.fee = undefined
-		data.gasPrice = formatUnits(result.gasPrice, 9) + ' NanoAstra'
-		data.gasLimit = formatNumber(result.gasLimit, 0)
+		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
+		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
 		data.gasUsed = result.gasUsed
 		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
 		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
@@ -186,13 +189,16 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.failLog = result.error
 		data.revertReason = result.revertReason
 		data.typeOfTransfer = evmTransactionType(result.type)
-		data.tabTokenTransfers = evmConvertTokenTransferToTransactionRow(
-			result?.tokenTransfers,
-			result.blockTime,
-			result.success,
-			result.hash,
-			result.blockHeight
-		)
+		data.tabTokenTransfers =
+			result.tokenTransfers &&
+			result.tokenTransfers.length > 0 &&
+			evmConvertTokenTransferToTransactionRow(
+				result.tokenTransfers,
+				result.blockTime,
+				result.success,
+				result.hash,
+				result.blockHeight
+			)
 		data.logs = result.logs
 	}
 

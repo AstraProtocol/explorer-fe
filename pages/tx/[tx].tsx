@@ -98,6 +98,7 @@ export async function getServerSideProps({ query }) {
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e: unknown) {
+		console.log(e)
 		if (e instanceof AxiosError) {
 			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 		}

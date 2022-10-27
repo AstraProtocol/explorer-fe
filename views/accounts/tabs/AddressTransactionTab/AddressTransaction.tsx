@@ -93,7 +93,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 									size="2xs"
 									value={convertBalanceToView(transaction.fee)}
 									fixNumber={7}
-									currency="ASA"
+									currency={process.env.NEXT_PUBLIC_FEE_TOKEN}
 									classes="contrast-color-70"
 								/>
 							)}
