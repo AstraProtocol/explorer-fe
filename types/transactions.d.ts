@@ -139,12 +139,14 @@ interface EvmTransactionDetailFromCosmosHashResponse {
 		cumulativeGasUsed: string
 		error: string
 		from: string
+		fee?: TokenAmount[]
 		gasLimit: string
 		gasPrice: string
 		gasUsed: string
 		hash: string
 		index: number
 		input: string
+		log?: string
 		logs: EvmLog[]
 		maxFeePerGas: null
 		maxPriorityFeePerGas: null
@@ -159,6 +161,10 @@ interface EvmTransactionDetailFromCosmosHashResponse {
 		type: number
 		v: string
 		value: string
+		messages?: {
+			type: TransacionTypeEnum
+			content: MsgEthereumTxContent
+		}[]
 	}
 	status: string
 }
