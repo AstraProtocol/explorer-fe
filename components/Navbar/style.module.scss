@@ -21,15 +21,14 @@ $backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
 		height: 100%;
 	}
 
-	.navbar-scroll {
-		background-color: var(--theme-backgorund-mode);
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-		backdrop-filter: blur(22px);
-	}
-
 	@media screen and (max-width: $maxMobileSize) {
 		justify-content: unset;
 	}
+}
+.navbarScroll {
+	background-color: var(--theme-backgorund-mode);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(22px);
 }
 
 .navigation {
