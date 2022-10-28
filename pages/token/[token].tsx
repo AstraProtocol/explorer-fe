@@ -20,13 +20,12 @@ const TokenDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, message } = props
 
+	const title = tokenData ? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}` : token
 	return (
 		<Layout>
 			<Head>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-				<title>
-					{tokenData.name} ({tokenData.symbol}) - {process.env.NEXT_PUBLIC_TITLE}
-				</title>
+				<title>{title}</title>
 			</Head>
 			<Container>
 				<Breadcumbs
@@ -51,21 +50,31 @@ const TokenDetailPage: React.FC<Props> = props => {
 export async function getServerSideProps({ params }) {
 	const { token } = params
 	if (Web3.utils.isAddress(token, 11115)) {
-		const tokenData = await evmApi.get<TokenDetailResponse>(`${API_LIST.TOKEN_DETAIL}${token}`)
-		if (tokenData.data.result) {
-			return {
-				props: {
-					message: null,
-					token,
-					tokenData: tokenData.data.result
+		try {
+			const tokenData = await evmApi.get<TokenDetailResponse>(`${API_LIST.TOKEN_DETAIL}${token}`)
+			if (tokenData.data.result) {
+				return {
+					props: {
+						message: null,
+						token,
+						tokenData: tokenData.data.result
+					}
 				}
 			}
-		}
-		return {
-			props: {
-				message: tokenData.data.message,
-				token,
-				tokenData: null
+			return {
+				props: {
+					message: tokenData.data.message,
+					token,
+					tokenData: null
+				}
+			}
+		} catch (err) {
+			return {
+				props: {
+					message: 'Fetch error!',
+					token,
+					tokenData: null
+				}
 			}
 		}
 	}
