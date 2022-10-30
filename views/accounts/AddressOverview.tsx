@@ -8,6 +8,7 @@ import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
+import { AddressTypeEnum } from 'utils/constants'
 import { convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
 import useAddressBalance from './hook/useAddressBalance'
 import useAddressCounter from './hook/useAddressCounter'
@@ -23,7 +24,7 @@ const AddressOverview = ({ address, addressData }: Props) => {
 	const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
-	const isContract = addressData.type === 'contractaddress'
+	const isContract = addressData.type === AddressTypeEnum.Contract
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>

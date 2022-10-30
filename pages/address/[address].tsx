@@ -37,7 +37,7 @@ const AddressDetailPage: React.FC<Props> = props => {
 					]}
 				/>
 				<AddressOverview address={address} addressData={addressData} />
-				<AddressDetailTabs address={address} />
+				<AddressDetailTabs address={address} addressData={addressData} />
 			</Container>
 		</Layout>
 	)

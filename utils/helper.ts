@@ -152,3 +152,7 @@ export const getEnvNumber = (key): number => {
 			return 0
 	}
 }
+
+export const capitalizeFirstLetter = (text: string) => {
+	return text.charAt(0).toUpperCase() + text.slice(1)
+}

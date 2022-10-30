@@ -63,6 +63,12 @@ interface AddressTransactionResponse {
 	pagination: Pagination
 }
 
+interface ContractTransactionResponse {
+	hasNextPage: boolean
+	nextPagePath: any
+	result: ContractTransactionData[]
+}
+
 interface UseAstraHolderData {
 	result: Holder[] | []
 	hasNextPage: boolean
@@ -72,6 +78,12 @@ interface UseAstraHolderData {
 interface UseAddressTransactionData {
 	result: AddressTransactionData[]
 	pagination: Pagination
+}
+
+interface UseContractTransactionData {
+	result: ContractTransactionData[] | []
+	hasNextPage: boolean
+	nextPagePath: string
 }
 
 interface UseAddressTokenTransferData {
@@ -154,6 +166,27 @@ interface AddressTransactionData {
 	from?: string
 	to?: string
 	type: string
+}
+
+interface ContractTransactionData {
+	blockHash: string
+	blockNumber: string
+	contractAddress?: string
+	contractMethodName: string
+	cosmosHash: string
+	cumulativeGasUsed: string
+	error?: string
+	from: string
+	fromAddressName?: string
+	gas: string
+	gasPrice: string
+	gasUsed: string
+	hash: string
+	success: boolean
+	timeStamp: string
+	to: string
+	toAddressName: string
+	value: string
 }
 
 interface AddressTransactionResponse {

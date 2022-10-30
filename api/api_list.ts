@@ -39,6 +39,7 @@ const API_LIST = {
 	ADDRESS_TRANSACTION: '/api/v1/accounts',
 	ADDRESS_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal', // address, page, offset
 	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=getlisttokentransfers', // address=?
+	CONTRACT_TRANSACTION: 'evm_/api/v1?module=account&action=txlist', // address = ?
 
 	TOKEN_DETAIL: '/api/v1?module=token&action=gettoken&contractaddress=', // SSR
 	TOKEN_TRANSACTIONS: 'evm_/api/v1?module=token&action=getlisttokentransfers',

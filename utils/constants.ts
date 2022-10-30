@@ -6,3 +6,8 @@ export enum TransacionTypeEnum {
 	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate'
 }
+
+export enum AddressTypeEnum {
+	Address = 'address',
+	Contract = 'contractaddress'
+}
