@@ -114,3 +114,11 @@ interface TokenDetailResponse {
 	result: Token
 	status: string
 }
+
+interface TokenSearchResponse {
+	addressHash: string
+	holderCount: number
+	name: string
+	symbol: string
+	insertedAt: string
+}

@@ -92,6 +92,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						className={clsx('text-base padding-right-lg', styles.input)}
 						ref={_inputRef}
 						onChange={_inputChange}
+						onSubmit={_inputChange}
 					/>
 					<div className={clsx(styles.inputPrefix)}>
 						{_searchStatus !== SearchStatusEnum.DONE && _search ? (

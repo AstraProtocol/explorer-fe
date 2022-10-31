@@ -15,7 +15,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (!data) {
 			return []
 		}
-		const { blocks, accounts, transactions, validators } = data?.result
+		const { blocks, accounts, transactions, validators, tokens } = data?.result
 		const items: SearchResultViewItem[] = []
 		if (blocks && blocks.length > 0) {
 			for (let item of blocks) {
@@ -27,15 +27,15 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 				})
 			}
 		}
-		// if (accounts && accounts.length > 0) {
-		// 	for (let item of blocks) {
-		// 		items.push({
-		// 			time: item.blockTime,
-		// 			type: 'Block',
-		// 			value: item.blockHash
-		// 		})
-		// 	}
-		// }
+		if (accounts && accounts.length > 0) {
+			for (let item of blocks) {
+				items.push({
+					time: item.blockTime,
+					type: 'Block',
+					value: item.blockHash
+				})
+			}
+		}
 		if (transactions && transactions.length > 0) {
 			for (let item of transactions) {
 				items.push({
@@ -54,6 +54,16 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 					type: 'Validator',
 					value: item.operatorAddress,
 					linkValue: item.operatorAddress
+				})
+			}
+		}
+		if (tokens && tokens.length > 0) {
+			for (let item of tokens) {
+				items.push({
+					linkValue: item.addressHash,
+					type: 'Token',
+					value: `${item.name} (${item.symbol})`,
+					time: item.insertedAt
 				})
 			}
 		}

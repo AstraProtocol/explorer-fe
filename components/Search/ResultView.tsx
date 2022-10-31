@@ -6,7 +6,7 @@ import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export interface SearchResultViewItem {
-	type: 'Address' | 'Block' | 'Transaction' | 'Validator'
+	type: 'Address' | 'Block' | 'Transaction' | 'Validator' | 'Token'
 	time?: string
 	status?: string
 	value: string

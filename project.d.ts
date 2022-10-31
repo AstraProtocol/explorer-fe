@@ -10,6 +10,7 @@ interface SearchItemResponse {
 		transactions: TransactionItem[]
 		validators: ValidatorData[]
 		accounts: never[]
+		tokens: TokenSearchResponse[]
 	}
 }
 
