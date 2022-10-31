@@ -50,9 +50,9 @@ const AddressOverview = ({ address, addressData }: Props) => {
 							)}
 						>
 							<span className="col-2 text text-base contrast-color-50">Token</span>
-							<span className="col-10 text text-base">
+							<LinkText classes="col-10" href={LinkMaker.token(address)}>
 								{addressData.tokenName} ({addressData.tokenSymbol})
-							</span>
+							</LinkText>
 						</div>
 					)}
 					<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm block-ver-center')}>
