@@ -43,9 +43,7 @@ const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) =>
 					size="sm"
 					currency=""
 					icon={<CryptoIcon name="asa" size="sm" />}
-					value={
-						addressBalance.balance ? convertBalanceToView(addressBalance.balance) : addressBalance.balance
-					}
+					value={data.value ? convertBalanceToView(data.value) : data.value}
 					fixNumber={15}
 				/>
 				<span className="padding-left-xs money money-sm contrast-color-70">ASA</span>
