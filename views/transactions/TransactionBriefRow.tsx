@@ -6,7 +6,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
 import { TransacionTypeEnum } from 'utils/constants'
-import { ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type TransactionBriefRowProps = {
@@ -85,7 +85,7 @@ export default function TransactionBriefRow({
 								fontType="Titi"
 								fontSize="money-2xs"
 							>
-								{ellipseRightText(hash, 24)}
+								{ellipseBetweenText(hash, 16, 16)}
 							</Typography.LinkText>
 						</div>
 						<Timer updatedAt={updatedAt} />

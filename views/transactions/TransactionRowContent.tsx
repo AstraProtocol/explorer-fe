@@ -75,33 +75,35 @@ export default function TransactionRowContent({
 							/>
 						)}
 					</div>
-					{/* {(from || to) && ( */}
-					<div className="margin-top-xs">
-						{from && (
-							<>
-								<span className={clsx('contrast-color-30 margin-right-2xs text text-sm')}>From</span>
-								{/* <span className="contrast-color-70 margin-right-lg money-2xs money"> */}
-								<Typography.LinkText href={LinkMaker.address(from)} classes="margin-right-2xs">
-									{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
-								</Typography.LinkText>
-								{/* </span> */}
-							</>
-						)}
-						{(to || contractAddress) && (
-							<>
-								<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-								{/* <span className="contrast-color-70 margin-right-lg  money-2xs money"> */}
-								<Typography.LinkText
-									href={LinkMaker.address(to || contractAddress)}
-									classes="margin-right-2xs"
-								>
-									{evmAddressName(toName, ellipseBetweenText(to || contractAddress, 6, 6))}
-								</Typography.LinkText>
-								{/* </span> */}
-							</>
-						)}
-					</div>
-					{/* )} */}
+					{(from || to) && (
+						<div className="margin-top-xs">
+							{from && (
+								<>
+									<span className={clsx('contrast-color-30 margin-right-2xs text text-sm')}>
+										From
+									</span>
+									{/* <span className="contrast-color-70 margin-right-lg money-2xs money"> */}
+									<Typography.LinkText href={LinkMaker.address(from)} classes="margin-right-2xs">
+										{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
+									</Typography.LinkText>
+									{/* </span> */}
+								</>
+							)}
+							{(to || contractAddress) && (
+								<>
+									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
+									{/* <span className="contrast-color-70 margin-right-lg  money-2xs money"> */}
+									<Typography.LinkText
+										href={LinkMaker.address(to || contractAddress)}
+										classes="margin-right-2xs"
+									>
+										{evmAddressName(toName, ellipseBetweenText(to || contractAddress, 6, 6))}
+									</Typography.LinkText>
+									{/* </span> */}
+								</>
+							)}
+						</div>
+					)}
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label

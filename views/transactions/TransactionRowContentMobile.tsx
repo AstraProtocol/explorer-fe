@@ -2,7 +2,7 @@ import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
-import { ellipseRightText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export type TransactionRowContentMobileProps = {
@@ -36,7 +36,7 @@ export default function TransactionRowContentMobile({
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseRightText(hash, isSmallDevice ? 20 : 100)}
+							{ellipseBetweenText(hash, 20, 20)}
 						</Typography.LinkText>
 					</div>
 					<div className={clsx(' block-ver-center')}>
