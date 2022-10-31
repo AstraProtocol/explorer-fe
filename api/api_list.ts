@@ -1,5 +1,5 @@
 const API_LIST = {
-	SEARCH: '/search?keyword=',
+	SEARCH: '/api/v1/search?keyword=',
 
 	ALL_BLOCKS: '/api/v1/blocks',
 	BLOCKS: '/api/v1/blocks/',
