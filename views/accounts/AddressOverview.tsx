@@ -41,7 +41,7 @@ const AddressOverview = ({ address, addressData }: Props) => {
 				</div>
 			</Row>
 			{isContract && (
-				<div style={{ justifyContent: 'space-between' }} className={clsx('padding-bottom-lg padding-top-lg')}>
+				<div style={{ justifyContent: 'space-between' }} className={clsx('padding-bottom-lg ')}>
 					{addressData.tokenSymbol && (
 						<div
 							className={clsx(
