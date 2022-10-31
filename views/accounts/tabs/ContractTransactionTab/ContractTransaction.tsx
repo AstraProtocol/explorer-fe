@@ -13,6 +13,8 @@ interface Props {
 }
 
 const ContractTransaction = ({ transaction }: Props) => {
+	const interactToAddress = transaction.to || transaction.createdContractAddressHash
+
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -60,17 +62,17 @@ const ContractTransaction = ({ transaction }: Props) => {
 									</LinkText>
 								</>
 							)}
-							{transaction.to && (
+							{interactToAddress && (
 								<>
 									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									<LinkText href={LinkMaker.address(transaction.to)} classes="margin-right-lg">
+									<LinkText href={LinkMaker.address(interactToAddress)} classes="margin-right-lg">
 										{transaction.toAddressName
 											? `${transaction.toAddressName} (${ellipseBetweenText(
-													transaction.to,
+													interactToAddress,
 													6,
 													6
 											  )})`
-											: ellipseBetweenText(transaction.to, 6, 6)}
+											: ellipseBetweenText(interactToAddress, 6, 6)}
 									</LinkText>
 								</>
 							)}

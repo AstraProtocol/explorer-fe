@@ -171,7 +171,7 @@ interface AddressTransactionData {
 interface ContractTransactionData {
 	blockHash: string
 	blockNumber: string
-	contractAddress?: string
+	createdContractAddressHash?: string
 	contractMethodName: string
 	cosmosHash: string
 	cumulativeGasUsed: string
