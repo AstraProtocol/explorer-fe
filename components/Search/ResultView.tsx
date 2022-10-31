@@ -31,6 +31,10 @@ export default function ResultView({ item }: ResultViewProps) {
 			return LinkMaker.address(linkValue)
 		}
 
+		if (type === 'Token') {
+			return LinkMaker.token(linkValue)
+		}
+
 		return LinkMaker.transaction(linkValue)
 	}
 	return (
