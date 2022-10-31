@@ -41,19 +41,29 @@ const AddressOverview = ({ address, addressData }: Props) => {
 				</div>
 			</Row>
 			{isContract && (
-				<div
-					style={{ justifyContent: 'space-between' }}
-					className={clsx(styles.borderBottom, 'padding-bottom-lg padding-top-lg')}
-				>
-					<div>
-						<span className="text text-base contrast-color-50">Owner</span>
-						<br />
-						<LinkText href={LinkMaker.address(addressData.creator)}>{addressData.creator}</LinkText>
+				<div style={{ justifyContent: 'space-between' }} className={clsx('padding-bottom-lg padding-top-lg')}>
+					{addressData.tokenSymbol && (
+						<div
+							className={clsx(
+								styles.borderBottom,
+								'row padding-bottom-sm padding-top-sm block-ver-center'
+							)}
+						>
+							<span className="col-2 text text-base contrast-color-50">Token</span>
+							<span className="col-10 text text-base">
+								{addressData.tokenName} ({addressData.tokenSymbol})
+							</span>
+						</div>
+					)}
+					<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm block-ver-center')}>
+						<span className="col-2 text text-base contrast-color-50">Owner</span>
+						<LinkText classes="col-10" href={LinkMaker.address(addressData.creator)}>
+							{addressData.creator}
+						</LinkText>
 					</div>
-					<div>
-						<span className="text text-base contrast-color-50">Transaction Hash</span>
-						<br />
-						<LinkText href={LinkMaker.transaction(addressData.creationTransaction)}>
+					<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm block-ver-center')}>
+						<span className="col-2 text text-base contrast-color-50">Creation Hash</span>
+						<LinkText classes="col-10" href={LinkMaker.transaction(addressData.creationTransaction)}>
 							{addressData.creationTransaction}
 						</LinkText>
 					</div>

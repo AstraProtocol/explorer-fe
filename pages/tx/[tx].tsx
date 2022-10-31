@@ -40,7 +40,7 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 				<Breadcumbs
 					items={[
 						{ label: 'Validated Transactions', link: LinkMaker.transaction() },
-						{ label: ellipseBetweenText(cosmosHash, 6, 6) }
+						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
 					]}
 				/>
 				<div className="margin-top-2xl margin-bottom-md">

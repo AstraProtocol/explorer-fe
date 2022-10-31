@@ -26,7 +26,7 @@ export default function RawInput({ text }: RawInputProps) {
 		utf8Text = web3.utils.toAscii(text)
 	} catch (e) {}
 	return (
-		<div style={{ maxWidth: '885px' }}>
+		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'scroll' }}>
 			<Tabs
 				tabs={[
 					{ title: 'Hex', id: '1', padding: ' ' },

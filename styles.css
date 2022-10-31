@@ -1,3 +1,7 @@
+div {
+	overflow-x: initial !important;
+}
+
 .alert-enter {
 	transform: translateY(-100%);
 }
