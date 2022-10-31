@@ -2,6 +2,7 @@ import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { useState } from 'react'
+import { getEnvNumber } from 'utils/helper'
 import useTokenHolders from 'views/tokens/hook/useTokenHolders'
 import TokenHolder from './TokenHolder'
 
@@ -31,7 +32,14 @@ const TokenHolderTab = ({ token, tokenData }: Props) => {
 			) : (
 				<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
 					{tokens?.map((item: Holder, index: number) => {
-						return <TokenHolder key={item.address} tokenData={tokenData} index={index + 1} account={item} />
+						return (
+							<TokenHolder
+								key={item.address}
+								tokenData={tokenData}
+								index={index + (currentPage - 1) * getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET') + 1}
+								account={item}
+							/>
+						)
 					})}
 				</div>
 			)}

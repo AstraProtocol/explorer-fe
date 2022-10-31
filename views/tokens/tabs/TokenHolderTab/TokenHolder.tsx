@@ -12,6 +12,8 @@ type Props = {
 }
 
 export default function TokenHolder({ index, account, tokenData }: Props) {
+	let percentage = (parseFloat(account.balance) / parseFloat(tokenData.totalSupply)) * 100
+	percentage = percentage < 10 ** -3 ? 0 : percentage
 	return (
 		<div
 			className={clsx(
@@ -44,7 +46,7 @@ export default function TokenHolder({ index, account, tokenData }: Props) {
 					'padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center col-2'
 				)}
 			>
-				{numeral((parseFloat(account.balance) / parseFloat(tokenData.totalSupply)) * 100).format('0,0.00')}%
+				{numeral(percentage).format('0,0.00')}%
 			</div>
 		</div>
 	)

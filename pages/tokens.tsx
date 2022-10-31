@@ -1,5 +1,6 @@
-import { PaginationLite, Row } from '@astraprotocol/astra-ui'
+import { PaginationLite } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
+import Row from 'components/Grid/Row'
 import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
 import usePageQuery from 'hooks/usePageQuery'

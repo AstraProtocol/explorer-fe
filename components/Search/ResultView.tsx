@@ -10,6 +10,7 @@ export interface SearchResultViewItem {
 	time?: string
 	status?: string
 	value: string
+	key: string | number
 	linkValue?: string
 }
 

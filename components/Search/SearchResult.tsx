@@ -22,6 +22,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 				items.push({
 					time: item.blockTime,
 					type: 'Block',
+					key: item.blockHeight,
 					value: item.blockHash,
 					linkValue: `${item.blockHeight}`
 				})
@@ -32,6 +33,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 				items.push({
 					time: item.blockTime,
 					type: 'Block',
+					key: item.blockHash,
 					value: item.blockHash
 				})
 			}
@@ -40,6 +42,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 			for (let item of transactions) {
 				items.push({
 					time: item.blockTime,
+					key: item.hash,
 					type: 'Transaction',
 					value: item.hash,
 					linkValue: item.hash
@@ -52,6 +55,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 				items.push({
 					status: item.status,
 					type: 'Validator',
+					key: item.operatorAddress,
 					value: item.operatorAddress,
 					linkValue: item.operatorAddress
 				})
@@ -62,6 +66,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 				items.push({
 					linkValue: item.addressHash,
 					type: 'Token',
+					key: item.addressHash,
 					value: `${item.name} (${item.symbol})`,
 					time: item.insertedAt
 				})
@@ -94,7 +99,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 					</div>
 					<div className={styles.resultScroll}>
 						{items.map(item => (
-							<ResultView key={item.value} item={item} />
+							<ResultView key={item.key} item={item} />
 						))}
 					</div>
 				</div>
