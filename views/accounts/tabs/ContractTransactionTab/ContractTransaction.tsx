@@ -35,12 +35,14 @@ const ContractTransaction = ({ transaction }: Props) => {
 						>
 							{ellipseBetweenText(transaction.hash, 20, 20)}
 						</Typography.LinkText>
-						<Typography.Label
-							text={capitalizeFirstLetter(transaction.contractMethodName)}
-							backgroundShape="rectangle"
-							radius="radius-2xl"
-							font="text-bold text text-sm"
-						/>
+						{transaction.contractMethodName && (
+							<Typography.Label
+								text={capitalizeFirstLetter(transaction.contractMethodName)}
+								backgroundShape="rectangle"
+								radius="radius-2xl"
+								font="text-bold text text-sm"
+							/>
+						)}
 					</Row>
 					{(transaction.from || transaction.to) && (
 						<div className="margin-top-xs">
