@@ -15,6 +15,12 @@ interface BlockItem {
 	newBlock?: boolean
 }
 
+interface BlockSearchResponse {
+	blockHash: string
+	blockNumber: number
+	insertedAt: string
+}
+
 interface BlockResponse {
 	result: BlockItem[]
 	pagination: Pagination

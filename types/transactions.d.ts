@@ -39,6 +39,12 @@ interface TransactionItem {
 	signers: Signer[]
 }
 
+interface TransactionSearchResponse {
+	evmHash: string
+	cosmosHash: string
+	insertedAt: string
+}
+
 interface TransactionResponse {
 	result: TransactionItem[]
 	pagination: Pagination

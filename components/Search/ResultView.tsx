@@ -9,7 +9,7 @@ export interface SearchResultViewItem {
 	type: 'Address' | 'Block' | 'Transaction' | 'Validator' | 'Token'
 	time?: string
 	status?: string
-	value: string
+	value: string | number
 	key: string | number
 	linkValue?: string
 }
@@ -27,7 +27,7 @@ export default function ResultView({ item }: ResultViewProps) {
 			return LinkMaker.block(linkValue)
 		}
 
-		if (type === 'Address') {
+		if (type === 'Address' || type === 'Validator') {
 			return LinkMaker.address(linkValue)
 		}
 
@@ -40,7 +40,9 @@ export default function ResultView({ item }: ResultViewProps) {
 	return (
 		<Link href={_link()}>
 			<div className={clsx(styles.item, 'money money-sm padding-left-xs pointer')}>
-				<div className={clsx('text-bold')}>{isMobile ? ellipseBetweenText(value, 10, 10) : value}</div>
+				<div className={clsx('text-bold')}>
+					{isMobile ? ellipseBetweenText(value?.toString(), 10, 10) : value}
+				</div>
 				<div
 					className={clsx(
 						styles.viewMoreInfo,

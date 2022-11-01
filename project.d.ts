@@ -6,10 +6,10 @@
 
 interface SearchItemResponse {
 	result: {
-		blocks: BlockItem[]
-		transactions: TransactionItem[]
+		blocks: BlockSearchResponse[]
+		transactions: TransactionSearchResponse[]
 		validators: ValidatorData[]
-		accounts: never[]
+		addresses: AddressSearchResponse[]
 		tokens: TokenSearchResponse[]
 	}
 }

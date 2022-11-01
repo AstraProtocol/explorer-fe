@@ -208,3 +208,10 @@ interface AddressTransactionResponse {
 	timeoutHeight: number
 	messages: TransactionMessage[]
 }
+
+interface AddressSearchResponse {
+	addressHash: string
+	address: string
+	name: string
+	insertedAt: string
+}

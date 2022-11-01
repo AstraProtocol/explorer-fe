@@ -15,37 +15,38 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (!data) {
 			return []
 		}
-		const { blocks, accounts, transactions, validators, tokens } = data?.result
+		const { blocks, addresses, transactions, validators, tokens } = data?.result
 		const items: SearchResultViewItem[] = []
 		if (blocks && blocks.length > 0) {
 			for (let item of blocks) {
 				items.push({
-					time: item.blockTime,
+					time: item.insertedAt,
 					type: 'Block',
-					key: item.blockHeight,
-					value: item.blockHash,
-					linkValue: `${item.blockHeight}`
+					key: item.blockNumber,
+					value: item.blockNumber,
+					linkValue: `${item.blockNumber}`
 				})
 			}
 		}
-		if (accounts && accounts.length > 0) {
-			for (let item of blocks) {
+		if (addresses && addresses.length > 0) {
+			for (let item of addresses) {
 				items.push({
-					time: item.blockTime,
-					type: 'Block',
-					key: item.blockHash,
-					value: item.blockHash
+					time: item.insertedAt,
+					type: 'Address',
+					key: item.addressHash,
+					value: item.addressHash,
+					linkValue: item.addressHash
 				})
 			}
 		}
 		if (transactions && transactions.length > 0) {
 			for (let item of transactions) {
 				items.push({
-					time: item.blockTime,
-					key: item.hash,
+					time: item.insertedAt,
+					key: item.evmHash || item.cosmosHash,
 					type: 'Transaction',
-					value: item.hash,
-					linkValue: item.hash
+					value: item.evmHash || item.cosmosHash,
+					linkValue: `${item.evmHash}&type=evm` || item.cosmosHash
 				})
 			}
 		}
