@@ -37,7 +37,11 @@ export function HomeBlock() {
 							<BlockBriefRow
 								key={item.blockHeight}
 								blockNumber={item.blockHeight}
-								proposerAddress={astraToEth(proposer.initialDelegatorAddress)}
+								proposerAddress={
+									proposer?.initialDelegatorAddress
+										? astraToEth(proposer?.initialDelegatorAddress)
+										: ''
+								}
 								proposerName={proposer.moniker}
 								transactions={item.transactionCount}
 								updatedAt={item.blockTime}
