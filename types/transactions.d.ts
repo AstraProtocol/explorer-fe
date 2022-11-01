@@ -15,6 +15,7 @@ interface TokenAmount {
 
 interface TransactionMessage {
 	type: TransacionTypeEnum
+	evmType?: string
 	content: MsgCreateValidatorContent | MsgUnjailContent | MsgEthereumTxContent | MsgBeginRedelegateContent
 }
 
@@ -37,6 +38,14 @@ interface TransactionItem {
 	timeoutHeight: number
 	messages: TransactionMessage[]
 	signers: Signer[]
+}
+
+interface TransactionItemModified extends TransactionItem {
+	totalFee: TokenAmount
+	evmType: string
+	from?: string
+	to?: string
+	evmHash?: string
 }
 
 interface TransactionSearchResponse {

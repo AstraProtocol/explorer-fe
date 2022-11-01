@@ -33,10 +33,11 @@ export function HomeTransactions() {
 					{top10?.map((item, index) => (
 						<RowBrief
 							key={`${item.blockHeight}-${item.hash}`}
-							hash={item.hash}
+							hash={item.evmHash || item.hash}
 							balance={{ value: '' }} //{{ value: convertBalanceToView('000'), token: 'ASA' }}
-							from=""
-							to=""
+							from={item.from}
+							to={item.to}
+							evmType={item.evmType}
 							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
 							border={index !== top10.length - 1}

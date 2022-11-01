@@ -40,6 +40,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				fee: d.fee.length > 0 ? d.fee[0]?.amount : 0,
 				hash: d.hash,
 				messageTypes: d.messageTypes,
+				messages: d.messages,
 				success: d.success,
 				type
 			}

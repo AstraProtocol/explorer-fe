@@ -1,9 +1,11 @@
 import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
+import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
-import { convertBalanceToView, ellipseRightText, LinkMaker } from 'utils/helper'
+import Tag from 'components/Typography/Tag'
+import { capitalizeFirstLetter, convertBalanceToView, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const AddressTransaction = ({ transaction }: Props) => {
+	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -25,7 +28,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 		>
 			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
 				<div className={clsx('col-4')}>
-					<div>
+					<Row>
 						<Typography.LinkText
 							href={LinkMaker.transaction(transaction.hash)}
 							classes={'margin-right-xs'}
@@ -33,7 +36,8 @@ const AddressTransaction = ({ transaction }: Props) => {
 						>
 							{ellipseRightText(transaction.hash, 30)}
 						</Typography.LinkText>
-					</div>
+						{evmType && <Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />}
+					</Row>
 					{/* {(transaction.from || transaction.to) && (
 							<div className="margin-top-xs">
 								{transaction.from && (

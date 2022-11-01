@@ -10,6 +10,8 @@ import { TransacionTypeEnum } from './constants'
  * @returns
  */
 export const getTransactionType = (type: TransacionTypeEnum) => type?.split('.').slice(-1).join('') || ''
+export const getTransactionEvmType = (messages: TransactionMessage[]) =>
+	messages.length > 0 ? messages[0].evmType : ''
 
 /**
  * return fee with format

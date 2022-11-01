@@ -1,10 +1,18 @@
 import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
+import Row from 'components/Grid/Row'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import Tag from 'components/Typography/Tag'
 import { evmAddressName } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
+import {
+	capitalizeFirstLetter,
+	convertBalanceToView,
+	ellipseBetweenText,
+	ellipseRightText,
+	LinkMaker
+} from 'utils/helper'
 import styles from './style.module.scss'
 
 export type TransactionRowContentProps = {
@@ -57,24 +65,18 @@ export default function TransactionRowContent({
 				style={{ minHeight: style === 'inject' ? 'auto' : height }}
 			>
 				<div className={clsx('col-4')} style={{ alignItems: 'center' }}>
-					<div>
+					<Row>
 						<Typography.LinkText
 							href={LinkMaker.transaction(hash, addressQuery)}
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(hash, 15, 15)}
+							{ellipseBetweenText(hash, 12, 12)}
 						</Typography.LinkText>
-						{!!labelStatus && (
-							<Typography.Label
-								text={labelStatus}
-								backgroundShape="rectangle"
-								color="contrast-color-70"
-								radius="radius-xs"
-								font="money-2xs"
-							/>
+						{labelStatus && (
+							<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(labelStatus)} />
 						)}
-					</div>
+					</Row>
 					{(from || to) && (
 						<div className="margin-top-xs">
 							{from && (

@@ -3,9 +3,11 @@ import usePagination from 'hooks/usePagination'
 import { differenceWith, isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { caculateCosmosAmount, getTransactionEvmType } from 'utils/cosmos'
+import { getFromToEvmTxFromCosmosEntry } from 'utils/evm'
 
 export default function useTransaction() {
-	const [_items, _setTransactionItem] = useState<TransactionItem[]>()
+	const [_items, _setTransactionItem] = useState<TransactionItemModified[]>()
 	const { pagination, setPagination } = usePagination('/tx')
 
 	const _fetchCondition = () => {
@@ -28,10 +30,26 @@ export default function useTransaction() {
 		refreshInterval: reloadTime()
 	})
 
+	const convertData = (transactionResult: TransactionItem[]) => {
+		return transactionResult.map((item: TransactionItem) => {
+			const totalFee = caculateCosmosAmount(item.fee)
+			const evmType = getTransactionEvmType(item.messages)
+			const { from, to, evmHash } = getFromToEvmTxFromCosmosEntry(item.messages[0])
+			return {
+				...item,
+				totalFee,
+				evmType,
+				from,
+				to,
+				evmHash
+			}
+		})
+	}
+
 	useEffect(() => {
 		if (data?.result) {
 			if (pagination.page === 1 && isEmpty(_items)) {
-				_setTransactionItem(data?.result)
+				_setTransactionItem(convertData(data?.result))
 				setPagination({
 					page: 1,
 					total: Number(data?.pagination.total_page)
@@ -46,7 +64,7 @@ export default function useTransaction() {
 						items[0].newTransaction = true
 					}
 				}
-				_setTransactionItem(data?.result)
+				_setTransactionItem(convertData(data?.result))
 				setPagination({
 					total: Number(data?.pagination.total_page)
 				})

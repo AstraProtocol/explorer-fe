@@ -160,6 +160,11 @@ interface AddressTransactionData {
 	blockTime: string
 	hash: string
 	messageTypes: string[]
+	messages: {
+		type: string
+		evmType?: string
+		content: MsgEthereumTxContent
+	}[]
 	success: boolean
 	fee: string | number
 	amount?: string

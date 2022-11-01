@@ -1,12 +1,13 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
-import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
+import Row from 'components/Grid/Row'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import { LinkText } from 'components/Typography/LinkText'
+import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
 import { TransacionTypeEnum } from 'utils/constants'
-import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { capitalizeFirstLetter, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type TransactionBriefRowProps = {
@@ -20,29 +21,30 @@ type TransactionBriefRowProps = {
 	updatedAt: number | string
 	newTransaction?: boolean
 	border?: boolean
+	evmType: string
 	transactionType: TransacionTypeEnum
 }
 
-const Address = ({ address, label }: { address: string; label: string }) => {
+const Address = ({ address, label, textClasses }: { address: string; label: string; textClasses?: string }) => {
 	return (
-		<div>
-			<>
-				<div
-					className={clsx(
-						'contrast-color-30',
-						'text-base text',
-						'inline-block inline-width',
-						'sm-inline-width sm-padding-right-2xs'
-					)}
-					style={{ ['--width' as string]: '45px', ['--sm-width' as string]: 'auto' }}
-				>
-					{label}
-				</div>
-				<span className="contrast-color-70 margin-right-lg money money-2xs">
-					{ellipseBetweenText(address, 6, 6)}
-				</span>
-			</>
-		</div>
+		<>
+			<div
+				className={clsx(
+					'contrast-color-30',
+					'text-base text',
+					'inline-block inline-width',
+					'sm-inline-width sm-padding-right-2xs'
+				)}
+				style={{ ['--width' as string]: '45px', ['--sm-width' as string]: 'auto' }}
+			>
+				{label}
+			</div>
+			{/* <span className="contrast-color-70 margin-right-lg money money-2xs"> */}
+			<LinkText href={LinkMaker.address(address)} classes={clsx('margin-right-lg', textClasses)}>
+				{ellipseBetweenText(address, 12, 12)}
+			</LinkText>
+			{/* </span> */}
+		</>
 	)
 }
 
@@ -54,6 +56,7 @@ export default function TransactionBriefRow({
 	updatedAt,
 	newTransaction,
 	border,
+	evmType,
 	transactionType
 }: TransactionBriefRowProps) {
 	return (
@@ -70,32 +73,35 @@ export default function TransactionBriefRow({
 			>
 				<div
 					className={clsx(styles.icon, 'margin-right-sm', 'sm-hide')}
-					style={{ alignSelf: !to && !from ? '' : 'baseline' }}
+					// style={{ alignSelf: !to && !from ? '' : 'baseline' }}
 				>
 					<Image src={'/images/icons/transaction.png'} alt="transactions" height={24} width={24} />
 				</div>
 				<div className={clsx(styles.content)}>
 					<div className={clsx('block-ver-center', styles.info, 'sm-wrap')}>
-						<div>
-							<span className={clsx('contrast-color-30 margin-right-xs text text-sm', 'sm-hide')}>
+						<Row>
+							{/* <span className={clsx('contrast-color-30 margin-right-xs text text-sm', 'sm-hide')}>
 								Hash
-							</span>
+							</span> */}
 							<Typography.LinkText
 								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
 								fontType="Titi"
 								fontSize="money-2xs"
 							>
-								{ellipseBetweenText(hash, 16, 16)}
+								{ellipseBetweenText(hash, 12, 12)}
 							</Typography.LinkText>
-						</div>
+							{evmType && (
+								<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />
+							)}
+						</Row>
 						<Timer updatedAt={updatedAt} />
 					</div>
-					{(!!from || !!to) && (
+					{/* {(!!from || !!to) && (
 						<div className={clsx('block-ver-center margin-top-xs', styles.info)}>
 							<div style={{ width: '100%' }}>
-								{!!from && <Address address={from} label="From" />}
+								{!!from && <Address textClasses="money-2xs" address={from} label="From" />}
 								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-									<div>{!!to && <Address address={to} label="To" />}</div>
+									<div>{!!to && <Address textClasses="money-2xs" address={to} label="To" />}</div>
 									{!!balance?.value && (
 										<TypographyUI.Balance
 											icon={
@@ -111,7 +117,7 @@ export default function TransactionBriefRow({
 								</div>
 							</div>
 						</div>
-					)}
+					)} */}
 				</div>
 			</div>
 		</RowShowAnimation>
