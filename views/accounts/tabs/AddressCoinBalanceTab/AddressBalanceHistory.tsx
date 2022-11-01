@@ -34,7 +34,7 @@ const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) =>
 				<LinkText href={LinkMaker.block(data.blockNumber)}>#{data.blockNumber}</LinkText>
 			</div>
 			<div className={clsx('col-3', styles.colTransactionHash)}>
-				<LinkText href={LinkMaker.address(data.transactionHash)}>
+				<LinkText href={LinkMaker.transaction(data.transactionHash)}>
 					{ellipseBetweenText(data.transactionHash)}
 				</LinkText>
 			</div>
