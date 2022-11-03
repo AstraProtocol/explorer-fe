@@ -31,7 +31,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				<div className={clsx('col-6')}>
 					<div>
 						<Typography.LinkText
-							href={LinkMaker.transaction(transaction.transactionHash, '&type=evm')}
+							href={LinkMaker.transaction(transaction.transactionHash, '?type=evm')}
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>

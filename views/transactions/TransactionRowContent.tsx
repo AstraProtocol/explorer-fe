@@ -57,7 +57,7 @@ export default function TransactionRowContent({
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	const isEvm = type === 'MsgEthereumTx'
-	const addressQuery = isEvm ? '&type=evm' : ''
+	const addressQuery = isEvm ? '?type=evm' : ''
 	return (
 		<>
 			<div

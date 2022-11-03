@@ -46,7 +46,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 					key: item.evmHash || item.cosmosHash,
 					type: 'Transaction',
 					value: item.evmHash || item.cosmosHash,
-					linkValue: item.evmHash ? `${item.evmHash}&type=evm` : item.cosmosHash
+					linkValue: item.evmHash ? `${item.evmHash}?type=evm` : item.cosmosHash
 				})
 			}
 		}

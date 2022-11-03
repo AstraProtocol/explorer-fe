@@ -29,6 +29,7 @@ type Props = {
 
 const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: Props) => {
 	const [items, moreItems] = useConvertData({ data })
+
 	return (
 		<Layout>
 			<Head>
