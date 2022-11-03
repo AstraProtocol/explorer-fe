@@ -13,6 +13,8 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
 	const astraPrice = formatNumber(astraSummary?.last || 0, 0)
 
+	if (!data) return [[], []]
+
 	const _convertRawDataToCardData = useCallback(
 		data => {
 			const keys = Object.keys(data)

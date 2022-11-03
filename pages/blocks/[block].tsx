@@ -19,12 +19,13 @@ import { CardInfoLabels } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {
+	errorMessage?: string
 	blockDetail: BlockItem
 	blockHeight: string
 	transactions: TransactionItem[]
 }
 
-const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactions }: Props) => {
+const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeight, transactions }: Props) => {
 	const _convertRawDataToCardData = data => {
 		const keys = Object.keys(data)
 		let items: CardRowItem[] = []
@@ -100,7 +101,6 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 		])
 	}
 
-	const items = _convertRawDataToCardData(blockDetail)
 	return (
 		<Layout>
 			<Head>
@@ -110,46 +110,52 @@ const BlockDetailPage: React.FC<Props> = ({ blockDetail, blockHeight, transactio
 			</Head>
 			<Container>
 				<Breadcumbs items={[{ label: 'Blocks', link: LinkMaker.block() }, { label: '#' + blockHeight }]} />
-				<CardInfo items={items} classes={['margin-top-sm']} />
-				<BackgroundCard>
-					<Tabs
-						tabs={[{ title: 'Transactions', id: '1' }]}
-						contents={{
-							'1': (
-								<div>
-									{!transactions || transactions.length == 0 ? (
-										<Empty text="There are no transactions for this block." />
-									) : (
-										<>
-											{transactions?.map((item, index) => {
-												const fee = caculateCosmosAmount(item.fee)
-												return (
-													<TransactionRow
-														key={item.hash}
-														blockNumber={item.blockHeight}
-														updatedAt={item.blockTime}
-														fee={fee.amount}
-														status={item.success}
-														hash={item.hash}
-														from={''}
-														to={''}
-														value={undefined}
-														valueToken={
-															process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames
-														}
-														type={getTransactionType(item?.messages[0]?.type)}
-														newBlock={item.newTransaction}
-														style="inject"
-													/>
-												)
-											})}
-										</>
-									)}
-								</div>
-							)
-						}}
-					></Tabs>
-				</BackgroundCard>
+				{blockDetail ? (
+					<>
+						<CardInfo items={_convertRawDataToCardData(blockDetail)} classes={['margin-top-sm']} />
+						<BackgroundCard>
+							<Tabs
+								tabs={[{ title: 'Transactions', id: '1' }]}
+								contents={{
+									'1': (
+										<div>
+											{!transactions || transactions.length == 0 ? (
+												<Empty text="There are no transactions for this block." />
+											) : (
+												<>
+													{transactions?.map((item, index) => {
+														const fee = caculateCosmosAmount(item.fee)
+														return (
+															<TransactionRow
+																key={item.hash}
+																blockNumber={item.blockHeight}
+																updatedAt={item.blockTime}
+																fee={fee.amount}
+																status={item.success}
+																hash={item.hash}
+																from={''}
+																to={''}
+																value={undefined}
+																valueToken={
+																	process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames
+																}
+																type={getTransactionType(item?.messages[0]?.type)}
+																newBlock={item.newTransaction}
+																style="inject"
+															/>
+														)
+													})}
+												</>
+											)}
+										</div>
+									)
+								}}
+							></Tabs>
+						</BackgroundCard>
+					</>
+				) : (
+					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Block Not Found'}</h1>
+				)}
 			</Container>
 		</Layout>
 	)
@@ -164,19 +170,30 @@ export async function getServerSideProps({ params }) {
 			`${API_LIST.TRANSACTION_OF_BLOCK.replace(':id', blockHeight)}`
 		)
 		const transactions = transactionRes.data.result
-		if (blockRes.status === 200) {
+		if (blockRes?.data?.result) {
 			return { props: { blockDetail: blockRes.data.result, blockHeight, transactions } }
 		} else {
-			return { props: { data: {} } }
+			return {
+				props: {
+					errorMessage: '404 Not Found',
+					blockDetail: null,
+					blockHeight,
+					transactions: []
+				}
+			}
 		}
 	} catch (e) {
+		let errorMessage = e.message
 		if (e instanceof AxiosError) {
 			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
 		return {
-			redirect: {
-				destination: '/404',
-				permanent: false
+			props: {
+				errorMessage,
+				blockDetail: null,
+				blockHeight,
+				transactions: []
 			}
 		}
 	}

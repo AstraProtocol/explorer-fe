@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
+import queryString from 'query-string'
 
 export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
 	!address ? '' : address.length < left * 2 ? address : `${address.slice(0, left)}...${address.slice(-right)}`
@@ -86,12 +87,12 @@ export class LinkMaker {
 	 * @param query
 	 * @returns
 	 */
-	static transaction(hash?: string, query?: string) {
+	static transaction(hash?: string, props?: any) {
 		if (!hash) {
 			return '/tx'
 		}
 
-		if (query) return `/tx/${hash}?${query}`
+		if (props) return `/tx/${hash}?${queryString.stringify(props)}`
 		return `/tx/${hash}`
 	}
 

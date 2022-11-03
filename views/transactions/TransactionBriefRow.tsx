@@ -59,6 +59,7 @@ export default function TransactionBriefRow({
 	evmType,
 	transactionType
 }: TransactionBriefRowProps) {
+	const transactionQuery = evmType ? { type: evmType } : null
 	return (
 		<RowShowAnimation action={newTransaction}>
 			<div
@@ -84,7 +85,7 @@ export default function TransactionBriefRow({
 								Hash
 							</span> */}
 							<Typography.LinkText
-								href={LinkMaker.transaction(hash, `?type=${transactionType}`)}
+								href={LinkMaker.transaction(hash, transactionQuery)}
 								fontType="Titi"
 								fontSize="money-2xs"
 							>

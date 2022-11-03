@@ -1,6 +1,7 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import { evmApi } from 'api'
 import API_LIST from 'api/api_list'
+import { AxiosError } from 'axios'
 import Container from 'components/Container'
 import Head from 'next/head'
 import React from 'react'
@@ -11,15 +12,16 @@ import web3 from 'web3'
 import Layout from '../../components/Layout'
 
 type Props = {
+	errorMessage?: string
 	address: string
 	addressData: Address
 }
 
 const AddressDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
-	const { address, addressData } = props
+	const { address, addressData, errorMessage } = props
 
-	const isContract = addressData.type === 'contractaddress'
+	const isContract = addressData?.type === 'contractaddress'
 	const title = isContract
 		? `Contract ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
 		: `Address ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
@@ -36,8 +38,14 @@ const AddressDetailPage: React.FC<Props> = props => {
 						{ label: isMobile ? ellipseBetweenText(address) : address }
 					]}
 				/>
-				<AddressOverview address={address} addressData={addressData} />
-				<AddressDetailTabs address={address} addressData={addressData} />
+				{addressData ? (
+					<>
+						<AddressOverview address={address} addressData={addressData} />
+						<AddressDetailTabs address={address} addressData={addressData} />
+					</>
+				) : (
+					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Address Not Found'}</h1>
+				)}
 			</Container>
 		</Layout>
 	)
@@ -45,10 +53,20 @@ const AddressDetailPage: React.FC<Props> = props => {
 
 export async function getServerSideProps({ params }) {
 	const { address } = params
+	let addressData
 	if (web3.utils.isAddress(address))
 		try {
 			const addressRes = await evmApi.get<BlockDetailResponse>(`${API_LIST.ADDRESS_DETAIL}${address}`)
-			const addressData = addressRes.data.result
+			addressData = addressRes.data.result
+			if (!addressData) {
+				return {
+					props: {
+						errorMessage: '404 Not Found',
+						address,
+						addressData: null
+					}
+				}
+			}
 			return {
 				props: {
 					address,
@@ -57,18 +75,25 @@ export async function getServerSideProps({ params }) {
 			}
 		} catch (e) {
 			// console.log(e.message)
+			let errorMessage = e.message
+			if (e instanceof AxiosError) {
+				console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+				if (e.code !== '200') errorMessage = '404 Not Found'
+			}
 			return {
-				redirect: {
-					destination: '/404',
-					permanent: false
+				props: {
+					errorMessage,
+					address,
+					addressData: null
 				}
 			}
 		}
 
 	return {
-		redirect: {
-			destination: '/404',
-			permanent: false
+		props: {
+			errorMessage: 'Address invalid',
+			address,
+			addressData: null
 		}
 	}
 }

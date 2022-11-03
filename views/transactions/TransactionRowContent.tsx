@@ -57,7 +57,7 @@ export default function TransactionRowContent({
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	const isEvm = type === 'MsgEthereumTx'
-	const addressQuery = isEvm ? '?type=evm' : ''
+	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
 	return (
 		<>
 			<div
@@ -71,7 +71,7 @@ export default function TransactionRowContent({
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(hash, 12, 12)}
+							{ellipseBetweenText(hash, 12, 12).toLowerCase()}
 						</Typography.LinkText>
 						{labelStatus && (
 							<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(labelStatus)} />

@@ -105,20 +105,20 @@ export enum CardInfoLabels {
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
-	const data: TransactionDetail = {
-		type: 'evm'
-	}
+	let data: TransactionDetail = {}
 	if (cosmosHash) {
 		const cosmosDetailRes = await cosmosApi.get<EvmTransactionDetailFromCosmosHashResponse>(
 			`${API_LIST.TRANSACTIONS}/${cosmosHash}?type=evm`
 		)
 		const result = cosmosDetailRes.data.result
+		if (!result) return
+
 		data.evmHash =
-			result?.messages && result?.messages.length > 0 ? result?.messages[0].content.params.hash : result.hash
-		data.pageTitle = result?.messages ? getTransactionType(result?.messages[0]?.type) : ''
-		data.cosmosHash = result?.cosmosHash || cosmosHash
+			result.messages && result.messages.length > 0 ? result.messages[0].content.params.hash : result.hash
+		data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
+		data.cosmosHash = result.cosmosHash || cosmosHash
 		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result?.confirmations ? result.confirmations.toString() : ''
+		data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 		data.blockHeight = `${result.blockHeight}`
 		data.time = result.blockTime
 		data.from = result.from
@@ -140,7 +140,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			: undefined
 		data.nonce = result.nonce ? result.nonce.toString() : ''
 		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		data.tokenTransfers = result?.tokenTransfers
+		data.tokenTransfers = result.tokenTransfers
 		data.index = result.index
 		data.failLog = result.error || result.log
 		data.revertReason = result.revertReason
@@ -156,17 +156,19 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 				result.blockHeight
 			)
 		data.logs = result.logs
-	} else if (evmHash.startsWith('0x')) {
+	} else if (evmHash?.startsWith('0x')) {
 		const evmRes = await evmApi.get<EvmTransactionDetailFromCosmosHashResponse>(
 			`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`
 		)
 		const result = evmRes.data.result
+		if (!result) return
+
 		data.evmHash =
-			result?.messages && result?.messages.length > 0 ? result?.messages[0].content.params.hash : result.hash
-		data.cosmosHash = result?.cosmosHash
-		data.pageTitle = result?.messages ? getTransactionType(result?.messages[0]?.type) : ''
+			result.messages && result.messages.length > 0 ? result.messages[0].content.params.hash : result.hash
+		data.cosmosHash = result.cosmosHash
+		data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
 		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result?.confirmations ? result.confirmations.toString() : ''
+		data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 		data.blockHeight = `${result.blockHeight}`
 		data.time = result.blockTime
 		data.from = result.from
@@ -188,7 +190,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			: undefined
 		data.nonce = `${result.nonce}`
 		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		data.tokenTransfers = result?.tokenTransfers
+		data.tokenTransfers = result.tokenTransfers
 		data.index = result.index
 		data.failLog = result.error || result.log
 		data.revertReason = result.revertReason
@@ -204,8 +206,10 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 				result.blockHeight
 			)
 		data.logs = result.logs
+	} else {
+		return null
 	}
-
+	data['type'] = 'evm'
 	return data
 }
 
@@ -214,7 +218,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	const fee = caculateCosmosAmount(result.fee)
 	data.type = 'cosmos'
 	data.pageTitle = getTransactionType(result?.messages[0]?.type)
-	data.evmHash = undefined
+	data.evmHash = ''
 	data.cosmosHash = result.hash
 	data.result = result.success ? 'Success' : 'Error'
 	data.confirmations = undefined

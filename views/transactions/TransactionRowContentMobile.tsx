@@ -23,6 +23,8 @@ export default function TransactionRowContentMobile({
 	height
 }: TransactionRowContentMobileProps) {
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
+	const isEvm = type === 'MsgEthereumTx'
+	const addressQuery = isEvm ? { type: 'evm' } : ''
 	return (
 		<>
 			<div
@@ -32,11 +34,11 @@ export default function TransactionRowContentMobile({
 				<div className="flex flex-justify-space-between width-100">
 					<div>
 						<Typography.LinkText
-							href={LinkMaker.transaction(hash, type === 'MsgEthereumTx' ? 'type=evm' : 'type=cosmos')}
+							href={LinkMaker.transaction(hash, addressQuery)}
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(hash, 20, 20)}
+							{ellipseBetweenText(hash, 20, 20).toLowerCase()}
 						</Typography.LinkText>
 					</div>
 					<div className={clsx(' block-ver-center')}>

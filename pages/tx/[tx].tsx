@@ -22,12 +22,13 @@ import Layout from '../../components/Layout'
 import { TransacionTypeEnum } from '../../utils/constants'
 
 type Props = {
+	errorMessage?: string
 	data: TransactionDetail
 	evmHash: string
 	cosmosHash: string
 }
 
-const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: Props) => {
+const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
 	const [items, moreItems] = useConvertData({ data })
 
 	return (
@@ -44,20 +45,26 @@ const TransactionDetailPage: React.FC<Props> = ({ data, evmHash, cosmosHash }: P
 						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
 					]}
 				/>
-				<div className="margin-top-2xl margin-bottom-md">
-					<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
-				</div>
-				<CardInfo items={items} classes={['margin-top-sm']} />
-				{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
-				{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
-				<TransactionTabs
-					evmHash={evmHash}
-					cosmosHash={cosmosHash}
-					type={data.type}
-					transactions={data?.tabTokenTransfers}
-					input={data?.rawInput}
-					logs={data?.logs}
-				/>
+				{data ? (
+					<>
+						<div className="margin-top-2xl margin-bottom-md">
+							<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
+						</div>
+						<CardInfo items={items} classes={['margin-top-sm']} />
+						{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
+						{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
+						<TransactionTabs
+							evmHash={evmHash}
+							cosmosHash={cosmosHash}
+							type={data.type}
+							transactions={data?.tabTokenTransfers}
+							input={data?.rawInput}
+							logs={data?.logs}
+						/>
+					</>
+				) : (
+					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
+				)}
 			</Container>
 		</Layout>
 	)
@@ -73,7 +80,7 @@ export async function getServerSideProps({ query }) {
 	let evmHash = ''
 	let cosmosHash = ''
 	try {
-		let data: TransactionDetail = {}
+		let data: TransactionDetail = null
 		//evm
 		if (tx.startsWith('0x')) {
 			data = await evmTransactionDetail(tx)
@@ -86,7 +93,7 @@ export async function getServerSideProps({ query }) {
 			const cosmosDetailRes = await cosmosApi.get<TransactionDetailResponse>(`${API_LIST.TRANSACTIONS}/${tx}`)
 			let _data = cosmosDetailRes?.data?.result
 			const type = _data?.messages[0]?.type
-			cosmosHash = _data.hash
+			cosmosHash = _data?.hash
 			// evm
 			if (type === TransacionTypeEnum.Ethermint) {
 				evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
@@ -95,20 +102,20 @@ export async function getServerSideProps({ query }) {
 				data = await cosmsTransactionDetail(_data)
 			}
 		}
+		if (data == null || data == undefined)
+			return { props: { errorMessage: '404 Not Found', data: null, evmHash: tx, cosmosHash } }
+
 		//remove empty attribute
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
-	} catch (e: unknown) {
-		console.log(e)
+	} catch (e: any) {
+		let errorMessage = e.message
 		if (e instanceof AxiosError) {
 			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
-		return {
-			redirect: {
-				destination: '/404',
-				permanent: false
-			}
-		}
+
+		return { props: { errorMessage, data: null, evmHash: tx, cosmosHash } }
 	}
 }
 
