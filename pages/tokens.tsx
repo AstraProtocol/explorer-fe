@@ -26,6 +26,34 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 		<Layout>
 			<Head>
 				<title>Tokens | {process.env.NEXT_PUBLIC_TITLE}</title>
+				<meta
+					name="description"
+					content="Transactions that have been validated and confirmed on the Astra Blockchain. The list consists of transactions from sending ASA and the transactions for interacting with a smart contract."
+				/>
+				<meta name="author" content="https://explorer.astranaut.io" />
+				<meta name="keywords" content="astra, explorer, ASA, search, blockchain, crypto, currency" />
+				<meta name="format-detection" content="telephone=no" />
+				<meta property="og:title" content="Astra Transactions Information | AstraExplorer" />
+				<meta
+					property="og:description"
+					content="Transactions that have been validated and confirmed on the Astra Blockchain. The list consists of transactions from sending ASA and the transactions for interacting with a smart contract."
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:site_name" content="Astra (ASA) Blockchain Explorer" />
+				<meta property="og:url" content="http://explorer.astranaut.io/tx" />
+				{/* <meta property="og:image" content="https://explorer.astranaut.io/images/brandassets/explorer.astranaut.ioo-circle.jpg" /> */}
+				{/* <meta property="og:image:alt" content="Visit explorer.astranaut.io" /> */}
+				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:title" content="Astra Transactions Information | AstraExplorer" />
+				<meta
+					property="twitter:description"
+					content="Transactions that have been validated and confirmed on the Astra Blockchain. The list consists of transactions from sending ASA and the transactions for interacting with a smart contract."
+				/>
+				<meta name="twitter:site" content="@AstraOfficial5" />
+				{/* <meta
+					property="twitter:image"
+					content="https://explorer.astranaut.io/images/brandassets/explorer.astranaut.ioo-circle.jpg"
+				/> */}
 			</Head>
 			<Container>
 				<Row style={{ justifyContent: 'space-between', alignItems: 'center' }}>

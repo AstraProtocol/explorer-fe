@@ -22,6 +22,9 @@ export const ellipseLeftText = (address: string, to: number) => {
 }
 
 export const convertBalanceToView = (value: number | string, decimals = 18) => {
+	if (!value) return ''
+	if (!decimals) decimals = 1
+
 	const big = BigNumber.from(value)
 	const valueInWei = formatUnits(big, decimals).valueOf()
 	return valueInWei

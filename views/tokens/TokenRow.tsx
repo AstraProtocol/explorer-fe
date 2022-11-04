@@ -38,7 +38,7 @@ export default function TokenRow({ index, token }: Props) {
 			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'padding-left-lg col-3')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
 					{formatNumber(
-						convertBalanceToView(token.totalSupply, parseInt(token.decimals)),
+						convertBalanceToView(token.totalSupply, parseInt(token.decimals || '1')),
 						getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
 					)}
 				</span>

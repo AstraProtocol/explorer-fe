@@ -4,7 +4,7 @@ import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { evmAddressName } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -35,7 +35,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseRightText(transaction.transactionHash, 30)}
+							{ellipseBetweenText(transaction.transactionHash, 16, 16)}
 						</Typography.LinkText>
 						{/* <Typography.Label
 							text={'Function Name'}
@@ -84,7 +84,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 							<>
 								<TypographyLib.Balance
 									size="xs"
-									value={convertBalanceToView(transaction.amount)}
+									value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
 									currency={transaction.tokenSymbol}
 								/>
 								<br />

@@ -1,4 +1,4 @@
-import { Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
+import { Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -14,8 +14,6 @@ interface Props {
 }
 
 const TokenOverview = ({ token, tokenData }: Props) => {
-	const { isMobile } = useMobileLayout()
-
 	return (
 		<BackgroundCard classes="padding-lg margin-top-2xl">
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
@@ -37,8 +35,8 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 						currency={tokenData.symbol}
 						value={
 							tokenData.totalSupply
-								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals))
-								: 'NaN'
+								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals || '1'))
+								: ''
 						}
 						fixNumber={5}
 					/>
@@ -65,11 +63,13 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 					<br />
 					<span className="text text-base">{tokenData.type}</span>
 				</div>
-				<div className="">
-					<span className="text text-base contrast-color-50">Decimals:</span>
-					<br />
-					<span className="text text-base">{tokenData.decimals}</span>
-				</div>
+				{tokenData.decimals && (
+					<div className="">
+						<span className="text text-base contrast-color-50">Decimals:</span>
+						<br />
+						<span className="text text-base">{tokenData.decimals}</span>
+					</div>
+				)}
 			</Row>
 		</BackgroundCard>
 	)
