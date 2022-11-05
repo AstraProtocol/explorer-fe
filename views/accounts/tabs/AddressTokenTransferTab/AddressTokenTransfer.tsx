@@ -24,7 +24,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 				style.borderWidthPadding
 			)}
 		>
-			<div style={{ textAlign: 'left' }} className={clsx('col-7', style.colAddress)}>
+			<div style={{ textAlign: 'left' }} className={clsx('col-6', style.colAddress)}>
 				<Row>
 					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
@@ -34,17 +34,25 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					)}
 				</Row>
 				<div>
-					<span className="margin-right-lg">
-						<span className="text text-sm contrast-color-30">From </span>
-						<span className="money money-2xs contrast-color-70">{ellipseBetweenText(data.from)}</span>
-					</span>
-					<span>
-						<span className="text text-sm contrast-color-30">To </span>
-						<span className="money money-2xs contrast-color-70">{ellipseBetweenText(data.to)}</span>
-					</span>
+					{data.from && (
+						<span className="margin-right-lg">
+							<span className="text text-sm contrast-color-30 margin-right-2xs">From </span>
+							<Typography.LinkText fontType="Titi" href={LinkMaker.address(data.from)}>
+								{ellipseBetweenText(data.from)}
+							</Typography.LinkText>
+						</span>
+					)}
+					{data.to && (
+						<span>
+							<span className="text text-sm contrast-color-30 margin-right-2xs">To </span>
+							<Typography.LinkText fontType="Titi" href={LinkMaker.address(data.to)}>
+								{ellipseBetweenText(data.to)}
+							</Typography.LinkText>
+						</span>
+					)}
 				</div>
 			</div>
-			<div className={clsx('col-2', style.colBlock)}>
+			<div className={clsx('col-3', style.colBlock)}>
 				<LinkText classes="margin-left-lg" href={LinkMaker.block(data.blockNumber)}>
 					#{data.blockNumber}
 				</LinkText>
@@ -63,11 +71,10 @@ const AddressTokenTransfer = ({ data }: Props) => {
 					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA
 				</span>
 			</div>
-			<div className={clsx('col-1 margin-left-xs', style.colTimer)}>
-				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
-			</div>
-			<div className={clsx('col-1 margin-left-xs', style.colStatus)}>
+
+			<div className={clsx('col col-2 margin-left-xs', style.colStatus)}>
 				<Typography.SuccessText>Success</Typography.SuccessText>
+				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
 			</div>
 		</GradientRow>
 	)

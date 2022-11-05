@@ -42,7 +42,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					)}
 				>
 					<div className="sm-margin-bottom-lg">
-						<Breadcumbs items={[{ label: 'Validated Transactions' }]} />
+						<Breadcumbs items={[{ label: 'Transactions' }]} />
 					</div>
 					<div>
 						<Pagination
@@ -61,8 +61,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 							{ title: 'Type', col: 'col-2' },
 							{ title: 'Block', col: 'col-2 padding-left-2xs' },
 							{ title: 'Amount', col: 'col-2 padding-left-2xs' },
-							{ title: 'Time', col: 'col-1' },
-							{ title: 'Status', col: 'col-1 padding-left-md gutter-left' }
+							{ title: 'Status', col: 'col-2 padding-left-md gutter-left' }
 						]}
 					/>
 				)}

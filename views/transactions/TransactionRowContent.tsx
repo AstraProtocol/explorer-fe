@@ -5,6 +5,7 @@ import Row from 'components/Grid/Row'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
+import Image from 'next/image'
 import { evmAddressName } from 'utils/evm'
 import {
 	capitalizeFirstLetter,
@@ -66,46 +67,66 @@ export default function TransactionRowContent({
 			>
 				<div className={clsx('col-4')} style={{ alignItems: 'center' }}>
 					<Row>
-						<Typography.LinkText
-							href={LinkMaker.transaction(hash, addressQuery)}
-							classes={'margin-right-xs'}
-							fontType="Titi"
-						>
-							{ellipseBetweenText(hash, 12, 12).toLowerCase()}
-						</Typography.LinkText>
-						{labelStatus && (
-							<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(labelStatus)} />
+						{isEvm ? (
+							<Image alt={'eth'} src={`/images/icons/eth.svg`} width={24} height={24} />
+						) : (
+							<Image alt={'cosmos'} src={`/images/icons/atom.svg`} width={24} height={24} />
 						)}
-					</Row>
-					{(from || to) && (
-						<div className="margin-top-xs">
-							{from && (
-								<>
-									<span className={clsx('contrast-color-30 margin-right-2xs text text-sm')}>
-										From
-									</span>
-									{/* <span className="contrast-color-70 margin-right-lg money-2xs money"> */}
-									<Typography.LinkText href={LinkMaker.address(from)} classes="margin-right-2xs">
-										{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
-									</Typography.LinkText>
-									{/* </span> */}
-								</>
-							)}
-							{(to || contractAddress) && (
-								<>
-									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									{/* <span className="contrast-color-70 margin-right-lg  money-2xs money"> */}
-									<Typography.LinkText
-										href={LinkMaker.address(to || contractAddress)}
-										classes="margin-right-2xs"
-									>
-										{evmAddressName(toName, ellipseBetweenText(to || contractAddress, 6, 6))}
-									</Typography.LinkText>
-									{/* </span> */}
-								</>
+						<div className="margin-left-xs">
+							<Row>
+								<Typography.LinkText
+									href={LinkMaker.transaction(hash, addressQuery)}
+									classes={'margin-right-sm'}
+									fontType="Titi"
+								>
+									{ellipseBetweenText(hash, 12, 12).toLowerCase()}
+								</Typography.LinkText>
+								{labelStatus && (
+									<Tag
+										hasArrowRight={false}
+										fontType="Titi"
+										text={capitalizeFirstLetter(labelStatus)}
+									/>
+								)}
+							</Row>
+							{(from || to) && (
+								<div className="margin-top-xs">
+									{from && (
+										<>
+											<span className={clsx('contrast-color-30 margin-right-xs money money-sm')}>
+												From
+											</span>
+											<Typography.LinkText
+												fontType="Titi"
+												href={LinkMaker.address(from)}
+												classes="margin-right-sm"
+											>
+												{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
+											</Typography.LinkText>
+										</>
+									)}
+									{(to || contractAddress) && (
+										<>
+											<span
+												className={clsx('contrast-color-30 padding-right-2xs money money-sm')}
+											>
+												To
+											</span>
+											<Typography.LinkText
+												fontType="Titi"
+												href={LinkMaker.address(to || contractAddress)}
+											>
+												{evmAddressName(
+													toName,
+													ellipseBetweenText(to || contractAddress, 6, 6)
+												)}
+											</Typography.LinkText>
+										</>
+									)}
+								</div>
 							)}
 						</div>
-					)}
+					</Row>
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
@@ -133,7 +154,7 @@ export default function TransactionRowContent({
 											? valueCurrency.toLowerCase() == 'aastra'
 												? process.env.NEXT_PUBLIC_FEE_TOKEN
 												: valueCurrency?.toUpperCase()
-											: ''
+											: 'ASA'
 									}
 									icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
 								/>
@@ -154,18 +175,13 @@ export default function TransactionRowContent({
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col-1 block-ver-center')}>
-					<Timer updatedAt={updatedAt} />
-				</div>
-				<div
-					className={clsx('col-1 padding-left-md gutter-left block-ver-center')}
-					style={{ textTransform: 'capitalize' }}
-				>
+				<div className={clsx('col col-2 padding-left-md gutter-left ')} style={{ textTransform: 'capitalize' }}>
 					{status ? (
 						<Typography.SuccessText>{statusText}</Typography.SuccessText>
 					) : (
 						<Typography.ErrorText>{statusText}</Typography.ErrorText>
 					)}
+					<Timer updatedAt={updatedAt} />
 				</div>
 			</div>
 		</>

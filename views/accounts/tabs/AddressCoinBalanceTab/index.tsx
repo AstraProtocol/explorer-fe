@@ -43,7 +43,14 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 			<div className={clsx('margin-top-xl margin-bottom-xl', styles.container)}>
 				<AddressBalanceHistoryChart address={address} />
 			</div>
-
+			<div className="margin-bottom-xs">
+				<PaginationLite
+					style={{ justifyContent: 'flex-end' }}
+					currentPage={currentPage}
+					hasNext={hasNextPage}
+					onChange={onPagingChange}
+				/>
+			</div>
 			<div style={{ overflowY: 'scroll' }}>
 				<BackgroundCard
 					classes={clsx(
@@ -74,9 +81,6 @@ const AddressCoinBalanceTab = ({ address }: Props) => {
 						</>
 					)}
 				</div>
-			</div>
-			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

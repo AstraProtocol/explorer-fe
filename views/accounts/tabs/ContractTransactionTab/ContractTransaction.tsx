@@ -5,6 +5,7 @@ import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import Image from 'next/image'
 import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -30,58 +31,70 @@ const ContractTransaction = ({ transaction }: Props) => {
 			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
 				<div className={clsx('col-6')}>
 					<Row>
-						<Typography.LinkText
-							href={LinkMaker.transaction(transaction.hash)}
-							classes={'margin-right-xs'}
-							fontType="Titi"
-						>
-							{ellipseBetweenText(transaction.hash, 20, 20)}
-						</Typography.LinkText>
-						{transaction.contractMethodName && (
-							<Typography.Label
-								text={capitalizeFirstLetter(transaction.contractMethodName)}
-								backgroundShape="rectangle"
-								radius="radius-2xl"
-								font="text-bold text text-sm"
-							/>
-						)}
-					</Row>
-					{(transaction.from || transaction.to) && (
-						<div className="margin-top-xs">
-							{transaction.from && (
-								<>
-									<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>From</span>
-									<LinkText href={LinkMaker.address(transaction.from)} classes="margin-right-lg ">
-										{transaction.fromAddressName
-											? `${transaction.fromAddressName} (${ellipseBetweenText(
-													transaction.from,
-													6,
-													6
-											  )})`
-											: ellipseBetweenText(transaction.from, 6, 6)}
-									</LinkText>
-								</>
-							)}
-							{interactToAddress && (
-								<>
-									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									<LinkText href={LinkMaker.address(interactToAddress)} classes="margin-right-lg">
-										{transaction.toAddressName
-											? `${transaction.toAddressName} (${ellipseBetweenText(
-													interactToAddress,
-													6,
-													6
-											  )})`
-											: ellipseBetweenText(interactToAddress, 6, 6)}
-									</LinkText>
-								</>
+						<Image alt="eth" src={`/images/icons/eth.svg`} width={24} height={24} />
+						<div className="margin-left-xs">
+							<Row>
+								<Typography.LinkText
+									href={LinkMaker.transaction(transaction.hash)}
+									classes={'margin-right-xs'}
+									fontType="Titi"
+								>
+									{ellipseBetweenText(transaction.hash, 20, 20)}
+								</Typography.LinkText>
+								{transaction.contractMethodName && (
+									<Typography.Label
+										text={capitalizeFirstLetter(transaction.contractMethodName)}
+										backgroundShape="rectangle"
+										radius="radius-2xl"
+										font="text-bold text text-sm"
+									/>
+								)}
+							</Row>
+							{(transaction.from || transaction.to) && (
+								<div className="margin-top-xs">
+									{transaction.from && (
+										<>
+											<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
+												From
+											</span>
+											<LinkText
+												href={LinkMaker.address(transaction.from)}
+												classes="margin-right-lg "
+											>
+												{transaction.fromAddressName
+													? `${transaction.fromAddressName} (${ellipseBetweenText(
+															transaction.from,
+															6,
+															6
+													  )})`
+													: ellipseBetweenText(transaction.from, 6, 6)}
+											</LinkText>
+										</>
+									)}
+									{interactToAddress && (
+										<>
+											<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>
+												To
+											</span>
+											<LinkText
+												href={LinkMaker.address(interactToAddress)}
+												classes="margin-right-lg"
+											>
+												{transaction.toAddressName
+													? `${transaction.toAddressName} (${ellipseBetweenText(
+															interactToAddress,
+															6,
+															6
+													  )})`
+													: ellipseBetweenText(interactToAddress, 6, 6)}
+											</LinkText>
+										</>
+									)}
+								</div>
 							)}
 						</div>
-					)}
+					</Row>
 				</div>
-				{/* <div className={clsx('col-2 block-ver-center')}>
-					
-				</div> */}
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.LinkText href={LinkMaker.block(transaction.blockNumber)} fontType="Titi">
 						#{transaction.blockNumber}
@@ -93,7 +106,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 							<>
 								<TypographyLib.Balance
 									size="xs"
-									value={transaction.value}
+									value={convertBalanceToView(transaction.value)}
 									currency={''}
 									icon={<CryptoIcon name={'asa'} size="sm" />}
 								/>
@@ -114,11 +127,8 @@ const ContractTransaction = ({ transaction }: Props) => {
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col-1 block-ver-center')}>
-					<Timer updatedAt={transaction.timeStamp} />
-				</div>
 				<div
-					className={clsx('col-1 padding-left-md gutter-left block-ver-center')}
+					className={clsx('col col-2 padding-left-md gutter-left block-ver-center')}
 					style={{ textTransform: 'capitalize' }}
 				>
 					{transaction.success ? (
@@ -126,6 +136,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 					) : (
 						<Typography.ErrorText>Error</Typography.ErrorText>
 					)}
+					<Timer updatedAt={transaction.timeStamp} />
 				</div>
 			</div>
 		</GradientRow>

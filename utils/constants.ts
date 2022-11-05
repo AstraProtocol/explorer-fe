@@ -11,3 +11,7 @@ export enum AddressTypeEnum {
 	Address = 'address',
 	Contract = 'contractaddress'
 }
+
+export const CONFIG = {
+	APPROXIMATE_ZERO: 10 ** -6
+}

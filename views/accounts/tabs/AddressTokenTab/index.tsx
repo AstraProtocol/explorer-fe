@@ -71,6 +71,14 @@ const AddressTokenTab = ({ address }: Props) => {
 					<AmountUnit classes="padding-left-sm" amount={result?.length} unit="Tokens" />
 				</BackgroundCard>
 			</Row>
+			<div className="margin-bottom-xs">
+				<PaginationLite
+					style={{ justifyContent: 'flex-end' }}
+					currentPage={currentPage}
+					hasNext={hasNextPage}
+					onChange={onPagingChange}
+				/>
+			</div>
 			<div style={{ overflowY: 'scroll' }}>
 				<BackgroundCard
 					classes={clsx(
@@ -97,9 +105,6 @@ const AddressTokenTab = ({ address }: Props) => {
 						</>
 					)}
 				</div>
-			</div>
-			<div className={clsx(styles.pagination, 'margin-top-xl')}>
-				<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 			</div>
 		</div>
 	)

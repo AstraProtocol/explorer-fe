@@ -20,7 +20,7 @@ export const getTransactionEvmType = (messages: TransactionMessage[]) =>
  */
 export const caculateCosmosAmount = (amounts: TokenAmount[]): TokenAmount => {
 	if (!amounts || amounts.length == 0) {
-		return { amount: undefined, denom: undefined }
+		return { amount: '0', denom: 'aastra' }
 	}
 	let totalAmount = BigNumber.from('0')
 	for (let amount of amounts) {

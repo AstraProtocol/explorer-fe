@@ -3,6 +3,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import queryString from 'query-string'
+import { CONFIG } from './constants'
 
 export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
 	!address ? '' : address.length < left * 2 ? address : `${address.slice(0, left)}...${address.slice(-right)}`
@@ -22,11 +23,12 @@ export const ellipseLeftText = (address: string, to: number) => {
 }
 
 export const convertBalanceToView = (value: number | string, decimals = 18) => {
-	if (!value) return ''
+	if (!value) return 0
 	if (!decimals) decimals = 1
 
 	const big = BigNumber.from(value)
 	const valueInWei = formatUnits(big, decimals).valueOf()
+	if (parseFloat(valueInWei) < CONFIG.APPROXIMATE_ZERO) return '0'
 	return valueInWei
 }
 

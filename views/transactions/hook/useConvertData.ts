@@ -5,6 +5,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
+import { CONFIG } from 'utils/constants'
 import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import { CardInfoLabels, TransactionDetail } from '../utils'
@@ -139,11 +140,11 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						if (data[key] !== undefined && data[key] !== null) {
 							let money = Number(astraPrice) * parseFloat(data[key])
 							let moneyFormat = formatCurrencyValue(money)
-
+							const value = data[key] < CONFIG.APPROXIMATE_ZERO ? 0 : data[key]
 							items.push({
 								label: CardInfoLabels.Transaction_Fee,
 								type: 'balance',
-								contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
+								contents: [{ value, suffix: `(${moneyFormat})` }]
 							})
 						}
 						break

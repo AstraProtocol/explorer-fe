@@ -41,7 +41,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 			<Container>
 				<Breadcumbs
 					items={[
-						{ label: 'Validated Transactions', link: LinkMaker.transaction() },
+						{ label: 'Transactions', link: LinkMaker.transaction() },
 						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
 					]}
 				/>

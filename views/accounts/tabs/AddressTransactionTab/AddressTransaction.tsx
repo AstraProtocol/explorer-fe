@@ -5,7 +5,8 @@ import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
-import { capitalizeFirstLetter, convertBalanceToView, ellipseRightText, LinkMaker } from 'utils/helper'
+import Image from 'next/image'
+import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 
 const AddressTransaction = ({ transaction }: Props) => {
 	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
+	const isEvm = transaction?.type === 'MsgEthereumTx'
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -29,16 +31,25 @@ const AddressTransaction = ({ transaction }: Props) => {
 			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
 				<div className={clsx('col-4')}>
 					<Row>
-						<Typography.LinkText
-							href={LinkMaker.transaction(transaction.hash)}
-							classes={'margin-right-xs'}
-							fontType="Titi"
-						>
-							{ellipseRightText(transaction.hash, 30)}
-						</Typography.LinkText>
-						{evmType && <Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />}
-					</Row>
-					{/* {(transaction.from || transaction.to) && (
+						{isEvm ? (
+							<Image alt={'eth'} src={`/images/icons/eth.svg`} width={24} height={24} />
+						) : (
+							<Image alt={'cosmos'} src={`/images/icons/atom.svg`} width={24} height={24} />
+						)}
+						<div className="margin-left-xs">
+							<Row>
+								<Typography.LinkText
+									href={LinkMaker.transaction(transaction.hash)}
+									classes={'margin-right-xs'}
+									fontType="Titi"
+								>
+									{ellipseBetweenText(transaction.hash, 12, 12).toLowerCase()}
+								</Typography.LinkText>
+								{evmType && (
+									<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />
+								)}
+							</Row>
+							{/* {(transaction.from || transaction.to) && (
 							<div className="margin-top-xs">
 								{transaction.from && (
 									<>
@@ -61,7 +72,10 @@ const AddressTransaction = ({ transaction }: Props) => {
 									</>
 								)}
 							</div>
+							
 						)} */}
+						</div>
+					</Row>
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
@@ -104,18 +118,14 @@ const AddressTransaction = ({ transaction }: Props) => {
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col-1 block-ver-center')}>
-					<Timer updatedAt={transaction.blockTime} />
-				</div>
-				<div
-					className={clsx('col-1 padding-left-md gutter-left block-ver-center')}
-					style={{ textTransform: 'capitalize' }}
-				>
+
+				<div className={clsx('col-2 padding-left-md gutter-left col')} style={{ textTransform: 'capitalize' }}>
 					{transaction.success ? (
 						<Typography.SuccessText>Success</Typography.SuccessText>
 					) : (
 						<Typography.ErrorText>Error</Typography.ErrorText>
 					)}
+					<Timer updatedAt={transaction.blockTime} />
 				</div>
 			</div>
 		</GradientRow>

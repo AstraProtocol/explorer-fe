@@ -89,7 +89,7 @@ export default function TransactionBriefRow({
 								fontType="Titi"
 								fontSize="money-2xs"
 							>
-								{ellipseBetweenText(hash, 12, 12)}
+								{ellipseBetweenText(hash, 12, 12).toLowerCase()}
 							</Typography.LinkText>
 							{evmType && (
 								<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />
