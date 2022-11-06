@@ -60,6 +60,7 @@ export default function TransactionBriefRow({
 	transactionType
 }: TransactionBriefRowProps) {
 	const transactionQuery = evmType ? { type: evmType } : null
+	const isEvm = transactionType === TransacionTypeEnum.Ethermint
 	return (
 		<RowShowAnimation action={newTransaction}>
 			<div
@@ -76,7 +77,11 @@ export default function TransactionBriefRow({
 					className={clsx(styles.icon, 'margin-right-sm', 'sm-hide')}
 					// style={{ alignSelf: !to && !from ? '' : 'baseline' }}
 				>
-					<Image src={'/images/icons/transaction.png'} alt="transactions" height={24} width={24} />
+					{isEvm ? (
+						<Image alt={'eth'} src={`/images/icons/eth.svg`} width={24} height={24} />
+					) : (
+						<Image alt={'cosmos'} src={`/images/icons/atom.svg`} width={24} height={24} />
+					)}
 				</div>
 				<div className={clsx(styles.content)}>
 					<div className={clsx('block-ver-center', styles.info, 'sm-wrap')}>
