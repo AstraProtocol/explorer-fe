@@ -3,15 +3,19 @@ import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import { LinkText } from 'components/Typography/LinkText'
 import { evmAddressName } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, isERC721, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
 	transaction: TokenTransaction
+	tokenData: Token
 }
 
-const AddressTransaction = ({ transaction }: Props) => {
+const TokenTransaction = ({ transaction, tokenData }: Props) => {
+	const isNFT = isERC721(tokenData.type)
+
 	return (
 		<GradientRow
 			type={'success'}
@@ -37,13 +41,13 @@ const AddressTransaction = ({ transaction }: Props) => {
 						>
 							{ellipseBetweenText(transaction.transactionHash, 16, 16)}
 						</Typography.LinkText>
-						{/* <Typography.Label
-							text={'Function Name'}
+						<Typography.Label
+							text={transaction.type}
 							backgroundShape="rectangle"
 							color="contrast-color-70"
 							radius="radius-xs"
 							font="money-2xs"
-						/> */}
+						/>
 					</div>
 					{(transaction.fromAddress || transaction.toAddress) && (
 						<div className="margin-top-xs">
@@ -61,12 +65,12 @@ const AddressTransaction = ({ transaction }: Props) => {
 							{transaction.toAddress && (
 								<>
 									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									<span className="contrast-color-70 margin-right-lg  money-2xs money">
+									<LinkText href={LinkMaker.address(transaction.toAddress)}>
 										{evmAddressName(
 											transaction.toAddressName,
 											ellipseBetweenText(transaction.toAddress, 6, 6)
 										)}
-									</span>
+									</LinkText>
 								</>
 							)}
 						</div>
@@ -84,7 +88,11 @@ const AddressTransaction = ({ transaction }: Props) => {
 							<>
 								<TypographyLib.Balance
 									size="xs"
-									value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
+									value={
+										isNFT
+											? 1
+											: convertBalanceToView(transaction.amount, parseInt(transaction.decimals))
+									}
 									currency={transaction.tokenSymbol}
 								/>
 								<br />
@@ -117,4 +125,4 @@ const AddressTransaction = ({ transaction }: Props) => {
 		</GradientRow>
 	)
 }
-export default AddressTransaction
+export default TokenTransaction

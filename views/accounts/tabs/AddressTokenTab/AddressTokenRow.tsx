@@ -40,7 +40,7 @@ const AddressTokenRow = ({ data }: Props) => {
 				<span></span>
 			</div>
 			<div className={clsx('col-3', styles.colAddress)}>
-				<LinkText href={LinkMaker.address(data.contractAddress)}>
+				<LinkText href={LinkMaker.token(data.contractAddress)}>
 					{data.name} ({ellipseBetweenText(data.contractAddress)})
 				</LinkText>
 			</div>

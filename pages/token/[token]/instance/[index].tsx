@@ -7,7 +7,7 @@ import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import Web3 from 'web3'
-import Layout from '../../../components/Layout'
+import Layout from '../../../../components/Layout'
 
 type Props = {
 	token: string

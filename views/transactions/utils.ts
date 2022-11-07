@@ -5,8 +5,8 @@ import API_LIST from 'api/api_list'
 import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import numeral from 'numeral'
-import { TransacionTypeEnum } from 'utils/constants'
 import { caculateCosmosAmount, convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
+import { TransacionTypeEnum } from 'utils/enum'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
 import { TransactionRowProps } from './TransactionRow'
 
@@ -69,41 +69,6 @@ export interface TransactionDetail {
 	validatorDstAddress?: string
 	revertReason?: string
 	logs?: EvmLog[]
-}
-
-export enum CardInfoLabels {
-	Transaction_Hash = 'Transaction Hash:',
-	Transaction_Cosmos = 'Transaction Cosmos:',
-	Result = 'Result:',
-	Status = 'Status:',
-	Block = 'Block:',
-	From = 'From:',
-	To = 'Interacted With (To):',
-	CreatedContractAddressHash = 'To',
-	Timestamp = 'Timestamp:',
-	Value = 'Value:',
-	Transaction_Fee = 'Transaction Fee:',
-	Gas_Price = 'Gas Price:',
-	Gas_Limit = 'Gas Limit:',
-	Raw_Input = 'Raw Input:',
-	Tokens_Transferred = 'Tokens Transferred:',
-	Nonce = 'Nonce',
-	Transaction_Type = 'Transaction Type:',
-	Voter = 'Voter:',
-	Proposal_Id = 'Proposal Id:',
-	Option = 'Option:',
-	Delegator_Address = 'Delegator Address:',
-	Validator_Address = 'Validator Address:',
-	Validator_Src_Address = 'Validator Src Address:',
-	Validator_Dst_Address = 'Validator Dst Address:',
-	Fail_Reason = 'Fail reason:',
-	Revert_Reason = 'Revert reason:',
-	Max_Fee_Gas = 'Max Fee/ Gas:',
-	Max_Priority_Fer_Gas = 'Max Priority Fee/ Gas:',
-	Gas_Used_by_Transaction = 'Gas Used by Transaction:',
-	hash = 'Hash:',
-	Block_Height = 'Block Height:',
-	Transaction = 'Transaction:'
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {

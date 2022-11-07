@@ -5,7 +5,7 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
-import { convertBalanceToView } from 'utils/helper'
+import { convertBalanceToView, isERC721 } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -14,6 +14,8 @@ interface Props {
 }
 
 const TokenOverview = ({ token, tokenData }: Props) => {
+	const isNFT = isERC721(tokenData.type)
+
 	return (
 		<BackgroundCard classes="padding-lg margin-top-2xl">
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
@@ -35,7 +37,9 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 						currency={tokenData.symbol}
 						value={
 							tokenData.totalSupply
-								? convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals || '1'))
+								? isNFT
+									? tokenData.totalSupply
+									: convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals || '1'))
 								: ''
 						}
 						fixNumber={5}

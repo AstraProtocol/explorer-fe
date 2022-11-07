@@ -26,7 +26,8 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 					valueToken: 'asa',
 					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,
-					type: upperCaseFirstLetterOfWord(evmInternalTransactionType(internalItem?.callType)),
+					labelStatus: upperCaseFirstLetterOfWord(evmInternalTransactionType(internalItem?.callType)),
+					type: 'MsgEthereumTx',
 					status: internalItem?.errCode === '',
 					from: internalItem?.from,
 					to: internalItem?.to,

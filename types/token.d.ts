@@ -50,6 +50,7 @@ interface TokenTransaction {
 	tokenName: string
 	tokenSymbol: string
 	transactionHash: string
+	type?: string
 }
 
 interface Token {

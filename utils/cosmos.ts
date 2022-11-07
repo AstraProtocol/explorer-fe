@@ -2,7 +2,7 @@ import { astraToEth } from '@astradefi/address-converter'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
-import { TransacionTypeEnum } from './constants'
+import { TransacionTypeEnum } from './enum'
 
 /**
  * get last word of text with separate is dot

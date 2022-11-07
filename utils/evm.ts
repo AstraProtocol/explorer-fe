@@ -1,7 +1,8 @@
 import { formatEther } from 'ethers/lib/utils'
 import { isEmpty } from 'lodash'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
-import { TransacionTypeEnum } from './constants'
+import { ZERO_ADDRESS } from './constants'
+import { TransacionTypeEnum } from './enum'
 
 export const evmTransactionType = (type: number): string => {
 	if (type === 2) {
@@ -22,6 +23,9 @@ export const evmConvertTokenTransferToTransactionRow = (
 ): TransactionRowProps[] => {
 	const rows: TransactionRowProps[] = []
 	for (let item of items) {
+		const isMint = item.fromAddress === ZERO_ADDRESS
+		const isBurn = item.toAddress === ZERO_ADDRESS
+		const labelStatus = (isMint && 'Mint') || (isBurn && 'Burn')
 		rows.push({
 			style: 'inject',
 			blockNumber: blockHeight,
@@ -31,7 +35,9 @@ export const evmConvertTokenTransferToTransactionRow = (
 			hash: hash,
 			status,
 			from: item.fromAddress,
-			to: item.toAddress
+			to: item.toAddress,
+			labelStatus,
+			type: 'MsgEthereumTx'
 		})
 	}
 

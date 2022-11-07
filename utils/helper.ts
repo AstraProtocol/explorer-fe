@@ -4,6 +4,7 @@ import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import queryString from 'query-string'
 import { CONFIG } from './constants'
+import { ErcTypeEnum } from './enum'
 
 export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
 	!address ? '' : address.length < left * 2 ? address : `${address.slice(0, left)}...${address.slice(-right)}`
@@ -163,4 +164,8 @@ export const getEnvNumber = (key): number => {
 export const capitalizeFirstLetter = (text: string) => {
 	if (!text) return ''
 	return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+export const isERC721 = (type: string): boolean => {
+	return type === ErcTypeEnum.ERC721
 }

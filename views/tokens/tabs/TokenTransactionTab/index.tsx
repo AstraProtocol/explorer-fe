@@ -4,13 +4,14 @@ import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import useTokenTransactions from 'views/tokens/hook/useTokenTransactions'
-import AddressTransaction from './TokenTransaction'
+import TokenTransaction from './TokenTransaction'
 
 interface Props {
 	token: string
+	tokenData: Token
 }
 
-const TokenTransactionTab = ({ token }: Props) => {
+const TokenTransactionTab = ({ token, tokenData }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
 	const { hasNextPage, nextPagePath, result } = useTokenTransactions(token, currentParam)
@@ -39,7 +40,7 @@ const TokenTransactionTab = ({ token }: Props) => {
 			) : (
 				<div style={{ overflowY: 'scroll' }}>
 					{result.map((item, index) => (
-						<AddressTransaction key={item.transactionHash} transaction={item} />
+						<TokenTransaction key={item.transactionHash} tokenData={tokenData} transaction={item} />
 					))}
 				</div>
 			)}

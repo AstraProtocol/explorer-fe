@@ -13,9 +13,9 @@ import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import { caculateCosmosAmount, getTransactionType } from 'utils/cosmos'
+import { CardInfoLabels } from 'utils/enum'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
-import { CardInfoLabels } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {

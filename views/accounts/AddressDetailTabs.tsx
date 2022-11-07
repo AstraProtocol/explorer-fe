@@ -1,6 +1,7 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
-import { AddressTypeEnum } from 'utils/constants'
+import { AddressTypeEnum } from 'utils/enum'
+
 import AddressCoinBalanceTab from './tabs/AddressCoinBalanceTab'
 import AddressInternalTransactionTab from './tabs/AddressInternalTransactionTab'
 import AddressTokenTab from './tabs/AddressTokenTab'

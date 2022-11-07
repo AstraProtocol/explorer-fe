@@ -18,7 +18,7 @@ const TokenDetailTab = ({ token, tokenData }: Props) => {
 					{ title: 'Token Holders', id: '2' }
 				]}
 				contents={{
-					'1': <AddressTransactionTab token={token} />,
+					'1': <AddressTransactionTab token={token} tokenData={tokenData} />,
 					'2': <TokenHolderTab token={token} tokenData={tokenData} />
 				}}
 			></Tabs>

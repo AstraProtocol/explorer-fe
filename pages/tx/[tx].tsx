@@ -8,6 +8,7 @@ import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
+import { TransacionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
 import useConvertData from 'views/transactions/hook/useConvertData'
@@ -19,7 +20,6 @@ import {
 	TransactionQuery
 } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
-import { TransacionTypeEnum } from '../../utils/constants'
 
 type Props = {
 	errorMessage?: string

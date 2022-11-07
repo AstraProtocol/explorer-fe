@@ -6,9 +6,10 @@ import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { CONFIG } from 'utils/constants'
+import { CardInfoLabels } from 'utils/enum'
 import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
-import { CardInfoLabels, TransactionDetail } from '../utils'
+import { TransactionDetail } from '../utils'
 
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)

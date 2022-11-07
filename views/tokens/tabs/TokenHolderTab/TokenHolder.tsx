@@ -2,7 +2,7 @@ import { Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
 import numeral from 'numeral'
-import { convertBalanceToView, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, isERC721, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
 }
 
 export default function TokenHolder({ index, account, tokenData }: Props) {
+	const isNFT = isERC721(tokenData.type)
 	let percentage = (parseFloat(account.balance) / parseFloat(tokenData.totalSupply)) * 100
 	percentage = percentage < 10 ** -3 ? 0 : percentage
 	return (
@@ -34,7 +35,7 @@ export default function TokenHolder({ index, account, tokenData }: Props) {
 				<TypographyUI.Balance
 					size="sm"
 					currency={tokenData.symbol}
-					value={account.balance ? convertBalanceToView(account.balance) : account.balance}
+					value={account.balance ? (isNFT ? account.balance : convertBalanceToView(account.balance)) : '0'}
 					fixNumber={5}
 				/>
 			</div>
