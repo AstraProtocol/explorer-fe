@@ -29,7 +29,10 @@ export type Content = {
 		toText?: string
 		value?: number
 		tokenAddress?: string
-		token?: string
+		tokenName?: string
+		tokenSymbol?: string
+		tokenType?: string
+		tokenId?: string
 	}
 	decode?: DecodeProps
 }
@@ -96,7 +99,9 @@ export default function CardInfo({
 							[`${responsive?.wrap}-flex-column`]: responsive
 						})}
 					>
-						<div className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm ')}>
+						<div
+							className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm block-ver-center')}
+						>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 							{type === 'nonce' && <Tag text={'Position'} />}
 						</div>

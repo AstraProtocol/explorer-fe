@@ -91,11 +91,11 @@ const AddressTransaction = ({ transaction }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<div>
-						{Number(transaction.amount || '0') >= 0 && (
+						{Number(transaction.value || '0') >= 0 && (
 							<>
 								<TypographyLib.Balance
 									size="xs"
-									value={transaction.amount}
+									value={transaction.value}
 									currency={''}
 									icon={<CryptoIcon name={'asa'} size="sm" />}
 								/>

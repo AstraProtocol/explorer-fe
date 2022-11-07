@@ -6,6 +6,8 @@ import { Content } from '../'
 import styles from '../style.module.scss'
 
 const Transfers = ({ content }: { content: Content }) => {
+	const data = content?.transfer || {}
+	const isNFT = data.tokenType === 'ERC-721'
 	return (
 		<div className="block-center sm-wrap flex-justify-start">
 			<span
@@ -18,10 +20,8 @@ const Transfers = ({ content }: { content: Content }) => {
 				)}
 			>
 				<span className="padding-right-xs">From</span>
-				<Typography.LinkText href={LinkMaker.address(content?.transfer?.from)}>
-					{content?.transfer?.fromText}
-				</Typography.LinkText>
-				<CopyButton textCopy={content?.transfer?.from} />
+				<Typography.LinkText href={LinkMaker.address(data.from)}>{data.fromText}</Typography.LinkText>
+				<CopyButton textCopy={data.from} />
 			</span>
 			<span
 				className={clsx(
@@ -34,10 +34,8 @@ const Transfers = ({ content }: { content: Content }) => {
 				)}
 			>
 				<span className="padding-right-xs">To</span>
-				<Typography.LinkText href={LinkMaker.address(content?.transfer?.to)}>
-					{content?.transfer?.toText}
-				</Typography.LinkText>
-				<CopyButton textCopy={content?.transfer?.to} />
+				<Typography.LinkText href={LinkMaker.address(data.to)}>{data.toText}</Typography.LinkText>
+				<CopyButton textCopy={data.to} />
 			</span>
 			<span
 				className={clsx(
@@ -50,10 +48,26 @@ const Transfers = ({ content }: { content: Content }) => {
 				)}
 			>
 				<span className="padding-right-xs">For</span>
-				<span className="padding-right-xs">{content?.transfer.value}</span>
-				<Typography.LinkText href={LinkMaker.token(content?.transfer?.tokenAddress)}>
-					{content?.transfer?.token}
-				</Typography.LinkText>
+				{isNFT ? (
+					<>
+						<Typography.LinkText
+							classes="padding-right-xs"
+							href={LinkMaker.token(data.tokenAddress, data.tokenId)}
+						>
+							TokenID [{data.tokenId}]
+						</Typography.LinkText>
+						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
+							{data.tokenName}
+						</Typography.LinkText>
+					</>
+				) : (
+					<>
+						<span className="padding-right-xs">{content?.transfer.value}</span>
+						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
+							{data.tokenName}
+						</Typography.LinkText>
+					</>
+				)}
 			</span>
 		</div>
 	)

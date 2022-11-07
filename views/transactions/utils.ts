@@ -2,6 +2,7 @@ import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi, evmApi } from 'api'
 import API_LIST from 'api/api_list'
+import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import numeral from 'numeral'
 import { TransacionTypeEnum } from 'utils/constants'
@@ -23,6 +24,7 @@ export interface TransferItem {
 	tokenContractAddress?: string
 	tokenName?: string
 	tokenSymbol?: string
+	tokenType?: string
 }
 export interface TransactionDetail {
 	pageTitle?: string
@@ -124,7 +126,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = formatEther(result.value || '0')
+		data.value = (result.value ? formatEther(result.value) : caculateTxAmount(result.messages)) || '0'
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
 		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
@@ -174,7 +176,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = formatEther(result.value || '0')
+		data.value = (result.value ? formatEther(result.value) : caculateTxAmount(result.messages)) || '0'
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
 		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
@@ -225,6 +227,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
 	data.failLog = !result.success ? result.log : undefined
+	data.value = caculateTxAmount(result.messages) || '0'
 	// data.from = result.from
 	// data.to = result.to
 	// data.tokenTransfer = []
@@ -249,6 +252,23 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 
 	return data
 }
+
+/**
+ * return tx amount
+ * @param tx messages
+ * @returns amount in string
+ */
+export const caculateTxAmount = (messages: TransactionMessage[]): string => {
+	if (messages && messages.length > 0) {
+		let totalAmount = BigNumber.from('0')
+		for (let message of messages) {
+			totalAmount = totalAmount.add(BigNumber.from(message.content?.params?.data?.value || '0'))
+		}
+		return formatEther(totalAmount)
+	}
+	return '0'
+}
+
 const _convertTransfer = (
 	data: TransactionDetail,
 	messages: TransactionMessage[],

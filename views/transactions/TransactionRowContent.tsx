@@ -52,6 +52,7 @@ export default function TransactionRowContent({
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	const isEvm = type === 'MsgEthereumTx'
+
 	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
 	return (
 		<>
@@ -132,7 +133,7 @@ export default function TransactionRowContent({
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<div>
-						{Number(value) >= 0 && (
+						{Number(value || '0') >= 0 && (
 							<>
 								<TypographyLib.Balance
 									size="xs"

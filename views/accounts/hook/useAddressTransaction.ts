@@ -1,7 +1,9 @@
 import { ethToAstra } from '@astradefi/address-converter'
 import API_LIST from 'api/api_list'
+import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { caculateTxAmount } from 'views/transactions/utils'
 
 export default function useAddressTransactions(address: string, page: number) {
 	const [hookData, setState] = useState<UseAddressTransactionData>({
@@ -33,6 +35,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			else type = msgTypeShort
 
 			return {
+				value: (d.value ? formatEther(d.value) : caculateTxAmount(d.messages)) || '0',
 				account: d.account,
 				blockHash: d.blockHash,
 				blockHeight: d.blockHeight,

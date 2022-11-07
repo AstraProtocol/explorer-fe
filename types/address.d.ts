@@ -167,7 +167,7 @@ interface AddressTransactionData {
 	}[]
 	success: boolean
 	fee: string | number
-	amount?: string
+	value?: string
 	from?: string
 	to?: string
 	type: string
@@ -210,6 +210,7 @@ interface AddressTransactionResponse {
 	gasWanted: number
 	gasUsed: number
 	memo: string
+	value?: string
 	timeoutHeight: number
 	messages: TransactionMessage[]
 }

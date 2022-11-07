@@ -65,7 +65,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						]}
 					/>
 				)}
-				<div style={{ overflow: 'hidden' }}>
+				<div style={{ overflow: 'hidden' }} className="margin-top-xs">
 					{loaderTime ? (
 						<RowLoader row={12} />
 					) : (

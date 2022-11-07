@@ -106,8 +106,9 @@ export class LinkMaker {
 	 * @param token
 	 * @returns
 	 */
-	static token(token?: string) {
-		return `/token/${token}`
+	static token(token?: string, instance?: number | string) {
+		if (isUndefined(instance)) return `/token/${token}`
+		return `/token/${token}/instance/${instance}`
 	}
 }
 

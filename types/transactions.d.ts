@@ -72,6 +72,8 @@ interface EVMTransferItem {
 	tokenContractAddress: string
 	tokenName: string
 	tokenSymbol: string
+	tokenId?: string
+	tokenType?: string
 	fromAddressName: string
 	toAddressName: string
 }

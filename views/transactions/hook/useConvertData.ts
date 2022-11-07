@@ -197,7 +197,10 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 													? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
 													: '',
 												tokenAddress: transfer.tokenContractAddress,
-												token: transfer.tokenSymbol
+												tokenSymbol: transfer.tokenSymbol,
+												tokenName: transfer.tokenName,
+												tokenId: transfer.tokenId,
+												tokenType: transfer.tokenType
 											}
 										}
 									],
