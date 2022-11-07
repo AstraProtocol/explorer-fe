@@ -6,7 +6,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
-import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -45,9 +45,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 								>
 									{ellipseBetweenText(transaction.hash, 12, 12).toLowerCase()}
 								</Typography.LinkText>
-								{evmType && (
-									<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />
-								)}
+								{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
 							</Row>
 							{/* {(transaction.from || transaction.to) && (
 							<div className="margin-top-xs">
@@ -93,7 +91,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<div>
-						{Number(transaction.amount) >= 0 && (
+						{Number(transaction.amount || '0') >= 0 && (
 							<>
 								<TypographyLib.Balance
 									size="xs"
@@ -104,18 +102,17 @@ const AddressTransaction = ({ transaction }: Props) => {
 								<br />
 							</>
 						)}
-						<span>
-							{Number(transaction.fee) >= 0 && (
-								<TypographyLib.Balance
-									icon={<span>Fee:</span>}
-									size="2xs"
-									value={convertBalanceToView(transaction.fee)}
-									fixNumber={7}
-									currency={process.env.NEXT_PUBLIC_FEE_TOKEN}
-									classes="contrast-color-70"
-								/>
-							)}
-						</span>
+
+						{Number(transaction.fee) >= 0 && (
+							<TypographyLib.Balance
+								icon={<span>Fee:</span>}
+								size="2xs"
+								value={convertBalanceToView(transaction.fee)}
+								fixNumber={7}
+								currency={process.env.NEXT_PUBLIC_FEE_TOKEN}
+								classes="contrast-color-70"
+							/>
+						)}
 					</div>
 				</div>
 

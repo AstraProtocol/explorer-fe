@@ -1,3 +1,4 @@
+import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -6,7 +7,7 @@ import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import numeral from 'numeral'
-import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import style from './style.module.scss'
 
 interface Props {
@@ -58,14 +59,17 @@ const AddressTokenTransfer = ({ data }: Props) => {
 				</LinkText>
 			</div>
 			<div className={clsx('col-2 margin-left-xs', style.colFee)}>
-				{/* <TypographyUI.Balance
-					size="sm"
-					currency=""
-					icon={<CryptoIcon name="asa" size="sm" />}
-					value={data.value ? convertBalanceToView(data.value) : data.value}
-					fixNumber={5}
-				/>
-				<br /> */}
+				{Number(data.value || '0') >= 0 && (
+					<TypographyUI.Balance
+						size="sm"
+						currency=""
+						icon={<CryptoIcon name="asa" size="sm" />}
+						value={data.value ? convertBalanceToView(data.value) : data.value}
+						fixNumber={5}
+					/>
+				)}
+
+				<br />
 				<span className="text text-xs contrast-color-70">Fee: </span>
 				<span className="money money-xs contrast-color-70">
 					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA

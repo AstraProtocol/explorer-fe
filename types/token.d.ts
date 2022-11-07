@@ -73,7 +73,7 @@ interface Holder {
 }
 
 interface TokenTransfer {
-	// value: string
+	value?: string
 	blockHash: string
 	blockNumber: string
 	contractMethodName?: string

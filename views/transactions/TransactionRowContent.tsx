@@ -7,13 +7,7 @@ import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
 import { evmAddressName } from 'utils/evm'
-import {
-	capitalizeFirstLetter,
-	convertBalanceToView,
-	ellipseBetweenText,
-	ellipseRightText,
-	LinkMaker
-} from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export type TransactionRowContentProps = {
@@ -81,13 +75,7 @@ export default function TransactionRowContent({
 								>
 									{ellipseBetweenText(hash, 12, 12).toLowerCase()}
 								</Typography.LinkText>
-								{labelStatus && (
-									<Tag
-										hasArrowRight={false}
-										fontType="Titi"
-										text={capitalizeFirstLetter(labelStatus)}
-									/>
-								)}
+								{labelStatus && <Tag hasArrowRight={false} fontType="Titi" text={labelStatus} />}
 							</Row>
 							{(from || to) && (
 								<div className="margin-top-xs">

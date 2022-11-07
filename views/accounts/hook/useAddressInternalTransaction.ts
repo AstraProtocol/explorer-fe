@@ -3,7 +3,7 @@ import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
-import { getEnvNumber, upperCaseFirstLetterOfWord } from 'utils/helper'
+import { getEnvNumber } from 'utils/helper'
 
 export default function useAddressInternalTransaction(
 	address: string,
@@ -37,9 +37,6 @@ export default function useAddressInternalTransaction(
 	const { data } = useSWR<AddressInternalTransactionResponse>(_fetchCondition())
 
 	useEffect(() => {
-		// if (data?.result) {
-		// 	setState({ result: data.result, hasNextPage: false })
-		// }
 		if (data && data?.result.length > 0) {
 			const internalItems = data.result.map((d: InternalTransactionItem) => ({
 				blockNumber: Number(d?.blockNumber),
@@ -48,7 +45,8 @@ export default function useAddressInternalTransaction(
 				valueToken: 'asa',
 				// valueCurrency: d.
 				hash: d?.transactionHash,
-				type: upperCaseFirstLetterOfWord(evmInternalTransactionType(d?.callType || d?.type)),
+				labelStatus: evmInternalTransactionType(d?.callType || d?.type),
+				type: 'MsgEthereumTx',
 				status: d?.errCode === '',
 				from: d?.from,
 				to: d?.to,
