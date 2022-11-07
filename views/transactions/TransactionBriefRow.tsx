@@ -6,6 +6,7 @@ import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
+import { TransacionTypeEnum } from 'utils/enum'
 import { capitalizeFirstLetter, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
