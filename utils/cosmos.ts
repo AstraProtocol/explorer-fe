@@ -58,7 +58,7 @@ const _parseCosmosMsgSend = (content: MsgSendContent, blockTime: string, status:
 		style: 'inject',
 		blockNumber: content.height,
 		updatedAt: blockTime,
-		value: formatEther(amountItem.amount),
+		value: formatEther(amountItem.amount || '0'),
 		valueCurrency: amountItem.denom,
 		hash: content.txHash,
 		type: getTransactionType(content?.msgName),

@@ -26,7 +26,7 @@ export const evmConvertTokenTransferToTransactionRow = (
 			style: 'inject',
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
-			value: formatEther(item.amount),
+			value: formatEther(item.amount || '0'),
 			valueCurrency: item.tokenSymbol,
 			hash: hash,
 			status,

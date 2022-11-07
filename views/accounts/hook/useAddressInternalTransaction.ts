@@ -44,7 +44,7 @@ export default function useAddressInternalTransaction(
 			const internalItems = data.result.map((d: InternalTransactionItem) => ({
 				blockNumber: Number(d?.blockNumber),
 				updatedAt: Number(d?.timeStamp) * 1000,
-				value: formatEther(d?.value),
+				value: formatEther(d?.value || '0'),
 				valueToken: 'asa',
 				// valueCurrency: d.
 				hash: d?.transactionHash,

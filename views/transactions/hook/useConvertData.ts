@@ -193,7 +193,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 													transfer.toAddressName,
 													ellipseBetweenText(transfer.toAddress, 6, 6)
 												),
-												value: Number(formatUnits(transfer.amount, transfer.decimals)),
+												value: transfer.amount
+													? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
+													: '',
 												tokenAddress: transfer.tokenContractAddress,
 												token: transfer.tokenSymbol
 											}

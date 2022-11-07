@@ -22,7 +22,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),
 					updatedAt: Number(internalItem?.timeStamp) * 1000,
-					value: formatEther(internalItem?.value),
+					value: formatEther(internalItem?.value || '0'),
 					valueToken: 'asa',
 					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,
