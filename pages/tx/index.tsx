@@ -9,7 +9,6 @@ import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { getTransactionType } from 'utils/cosmos'
 import useTransaction from 'views/transactions/hook/useTransaction'
 import TransactionRow from 'views/transactions/TransactionRow'
 import Layout from '../../components/Layout'
@@ -81,10 +80,10 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										hash={item.evmHash || item.hash}
 										from={item.from}
 										to={item.to}
-										value={undefined}
+										value={item.value}
 										valueToken={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
 										labelStatus={item.evmType}
-										type={getTransactionType(item?.messages[0]?.type)}
+										type={item.type}
 										newBlock={item.newTransaction}
 										height="auto"
 									/>

@@ -43,6 +43,7 @@ interface TransactionItem {
 	timeoutHeight: number
 	messages: TransactionMessage[]
 	signers: Signer[]
+	type?: string
 }
 
 interface TransactionItemModified extends TransactionItem {
@@ -50,6 +51,7 @@ interface TransactionItemModified extends TransactionItem {
 	evmType: string
 	from?: string
 	to?: string
+	value?: string
 	evmHash?: string
 }
 
