@@ -3,8 +3,9 @@ import usePagination from 'hooks/usePagination'
 import { differenceWith, isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { caculateCosmosAmount, getTransactionEvmType } from 'utils/cosmos'
+import { getTransactionEvmType } from 'utils/cosmos'
 import { getFromToEvmTxFromCosmosEntry } from 'utils/evm'
+import { caculateAmount } from '../utils'
 
 export default function useTransaction() {
 	const [_items, _setTransactionItem] = useState<TransactionItemModified[]>()
@@ -32,7 +33,7 @@ export default function useTransaction() {
 
 	const convertData = (transactionResult: TransactionItem[]) => {
 		return transactionResult.map((item: TransactionItem) => {
-			const totalFee = caculateCosmosAmount(item.fee)
+			const totalFee = caculateAmount(item.fee)
 			const evmType = getTransactionEvmType(item.messages)
 			const { from, to, evmHash } = getFromToEvmTxFromCosmosEntry(item.messages[0])
 			return {

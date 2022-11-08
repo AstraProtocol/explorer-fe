@@ -5,7 +5,7 @@ import API_LIST from 'api/api_list'
 import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
 import numeral from 'numeral'
-import { caculateCosmosAmount, convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
+import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { TransacionTypeEnum } from 'utils/enum'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
 import { TransactionRowProps } from './TransactionRow'
@@ -91,7 +91,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = (result.value ? formatEther(result.value) : caculateTxAmount(result.messages)) || '0'
+		data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
 		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
@@ -141,7 +141,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		data.from = result.from
 		data.to = result.to
 		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = (result.value ? formatEther(result.value) : caculateTxAmount(result.messages)) || '0'
+		data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
 		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
@@ -182,7 +182,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 
 export const cosmsTransactionDetail = async (result: TransactionItem): Promise<TransactionDetail> => {
 	const data: TransactionDetail = {}
-	const fee = caculateCosmosAmount(result.fee)
+	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
 	data.pageTitle = getTransactionType(result?.messages[0]?.type)
 	data.evmHash = ''
@@ -192,7 +192,7 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
 	data.failLog = !result.success ? result.log : undefined
-	data.value = caculateTxAmount(result.messages) || '0'
+	data.value = caculateCosmosTxAmount(result.messages) || '0'
 	// data.from = result.from
 	// data.to = result.to
 	// data.tokenTransfer = []
@@ -219,11 +219,11 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 }
 
 /**
- * return tx amount
+ * return ethereumtx amount
  * @param tx messages
  * @returns amount in string
  */
-export const caculateTxAmount = (messages: TransactionMessage[]): string => {
+export const caculateEthereumTxAmount = (messages: TransactionMessage[]): string => {
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
@@ -232,6 +232,41 @@ export const caculateTxAmount = (messages: TransactionMessage[]): string => {
 		return formatEther(totalAmount)
 	}
 	return '0'
+}
+
+/**
+ * return cosmos amount
+ * @param tx messages
+ * @returns amount in string
+ */
+export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string => {
+	if (messages && messages.length > 0) {
+		let totalAmount = BigNumber.from('0')
+		for (let message of messages) {
+			totalAmount = totalAmount.add(BigNumber.from(caculateAmount(message.content?.amount).amount || '0'))
+		}
+		return formatEther(totalAmount)
+	}
+	return '0'
+}
+
+/**
+ * return amount with format
+ * @param amounts
+ * @returns TokenAmount
+ */
+export const caculateAmount = (amounts: TokenAmount[]): TokenAmount => {
+	if (!amounts || amounts.length == 0) {
+		return { amount: '0', denom: 'aastra' }
+	}
+	let totalAmount = BigNumber.from('0')
+	for (let amount of amounts) {
+		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+	}
+	return {
+		amount: totalAmount.toBigInt().toString(),
+		denom: amounts[0].denom
+	}
 }
 
 const _convertTransfer = (

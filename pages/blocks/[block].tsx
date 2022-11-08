@@ -12,10 +12,11 @@ import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
-import { caculateCosmosAmount, getTransactionType } from 'utils/cosmos'
+import { getTransactionType } from 'utils/cosmos'
 import { CardInfoLabels } from 'utils/enum'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import TransactionRow from 'views/transactions/TransactionRow'
+import { caculateAmount } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -124,7 +125,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 											) : (
 												<>
 													{transactions?.map((item, index) => {
-														const fee = caculateCosmosAmount(item.fee)
+														const fee = caculateAmount(item.fee)
 														return (
 															<TransactionRow
 																key={item.hash}

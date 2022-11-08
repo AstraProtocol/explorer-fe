@@ -16,7 +16,12 @@ interface TokenAmount {
 interface TransactionMessage {
 	type: TransacionTypeEnum
 	evmType?: string
-	content: MsgCreateValidatorContent | MsgUnjailContent | MsgEthereumTxContent | MsgBeginRedelegateContent
+	content:
+		| MsgCreateValidatorContent
+		| MsgUnjailContent
+		| MsgEthereumTxContent
+		| MsgBeginRedelegateContent
+		| MsgSendContent
 }
 
 interface TransactionItem {

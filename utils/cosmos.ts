@@ -1,7 +1,7 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
+import { caculateAmount } from 'views/transactions/utils'
 import { TransacionTypeEnum } from './enum'
 
 /**
@@ -12,25 +12,6 @@ import { TransacionTypeEnum } from './enum'
 export const getTransactionType = (type: TransacionTypeEnum) => type?.split('.').slice(-1).join('') || ''
 export const getTransactionEvmType = (messages: TransactionMessage[]) =>
 	messages.length > 0 ? messages[0].evmType : ''
-
-/**
- * return fee with format
- * @param fees
- * @returns TokenAmount
- */
-export const caculateCosmosAmount = (amounts: TokenAmount[]): TokenAmount => {
-	if (!amounts || amounts.length == 0) {
-		return { amount: '0', denom: 'aastra' }
-	}
-	let totalAmount = BigNumber.from('0')
-	for (let amount of amounts) {
-		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
-	}
-	return {
-		amount: totalAmount.toBigInt().toString(),
-		denom: amounts[0].denom
-	}
-}
 
 export const convertMessageToTransfer = (
 	messages: TransactionMessage[],
@@ -53,7 +34,7 @@ export const convertMessageToTransfer = (
 }
 
 const _parseCosmosMsgSend = (content: MsgSendContent, blockTime: string, status: boolean): TransactionRowProps => {
-	const amountItem = caculateCosmosAmount(content?.amount)
+	const amountItem = caculateAmount(content?.amount)
 	return {
 		style: 'inject',
 		blockNumber: content.height,
