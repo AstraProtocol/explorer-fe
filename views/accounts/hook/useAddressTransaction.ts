@@ -3,7 +3,7 @@ import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { caculateTxAmount } from 'views/transactions/utils'
+import { caculateCosmosTxAmount, caculateEthereumTxAmount } from 'views/transactions/utils'
 
 export default function useAddressTransactions(address: string, page: number) {
 	const [hookData, setState] = useState<UseAddressTransactionData>({
@@ -28,14 +28,21 @@ export default function useAddressTransactions(address: string, page: number) {
 		return rawData.result.map(d => {
 			let type
 
-			const numberOfMsgTypes = d.messageTypes.length
+			// const numberOfMsgTypes = d.messageTypes.length
 			const msgTypeSplit = d.messageTypes[0].split('.')
 			const msgTypeShort = msgTypeSplit[msgTypeSplit.length - 1]
-			if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`
-			else type = msgTypeShort
+			// Show in detail
+			// if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`
+			// else type = msgTypeShort
+			type = msgTypeShort
 
 			return {
-				value: (d.value ? formatEther(d.value) : caculateTxAmount(d.messages)) || '0',
+				value:
+					(d.value
+						? formatEther(d.value)
+						: type === 'MsgEthereumTx'
+						? caculateEthereumTxAmount(d.messages)
+						: caculateCosmosTxAmount(d.messages)) || '0',
 				account: d.account,
 				blockHash: d.blockHash,
 				blockHeight: d.blockHeight,

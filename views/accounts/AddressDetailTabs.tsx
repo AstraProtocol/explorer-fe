@@ -7,6 +7,7 @@ import AddressInternalTransactionTab from './tabs/AddressInternalTransactionTab'
 import AddressTokenTab from './tabs/AddressTokenTab'
 import AddressTokenTransferTab from './tabs/AddressTokenTransferTab'
 import AddressTransactionTab from './tabs/AddressTransactionTab'
+import ContractCodeTab from './tabs/ContractCodeTab'
 import ContractTransactionTab from './tabs/ContractTransactionTab'
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 
 const AddressDetailTab = ({ address, addressData }: Props) => {
 	const isContract = addressData.type === AddressTypeEnum.Contract
+	// contract verify?
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
 			<Tabs
@@ -25,7 +27,8 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					{ title: 'Token Transfer', id: '2' },
 					{ title: 'Tokens', id: '3' },
 					{ title: 'Internal Transactions', id: '4' },
-					{ title: 'Coin Balance History', id: '5' }
+					{ title: 'Coin Balance History', id: '5' },
+					isContract && { title: 'Coin Balance History', id: '6' }
 				]}
 				contents={{
 					'1': isContract ? (
@@ -36,7 +39,8 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					'2': <AddressTokenTransferTab address={address} />,
 					'3': <AddressTokenTab address={address} />,
 					'4': <AddressInternalTransactionTab address={address} />,
-					'5': <AddressCoinBalanceTab address={address} />
+					'5': <AddressCoinBalanceTab address={address} />,
+					'6': <ContractCodeTab address={address} />
 				}}
 			></Tabs>
 		</BackgroundCard>
