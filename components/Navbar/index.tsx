@@ -1,5 +1,6 @@
+import { ModalWrapper } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
-import ModalWrapper from 'components/Modal/ModalWrapper'
+
 import useOutsideElement from 'hooks/useOutsideElement'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'

@@ -1,9 +1,10 @@
+import { ModalWrapper } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import API_LIST from '../../api/api_list'
 import useOutsideElement from '../../hooks/useOutsideElement'
-import ModalWrapper from '../Modal/ModalWrapper'
+
 import Spinner from '../Spinner'
 import SearchResult from './SearchResult'
 import styles from './style.module.scss'

@@ -1,4 +1,4 @@
-import ModalWrapper from 'components/Modal/ModalWrapper'
+import { ModalWrapper } from '@astraprotocol/astra-ui'
 import Spinner from 'components/Spinner'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

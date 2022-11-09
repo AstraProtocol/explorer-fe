@@ -3,7 +3,7 @@ import styles from './style.module.scss'
 
 interface Props {
 	active: boolean
-	title: string
+	title: string | React.ReactNode
 	onClick?: any
 	padding?: string
 }
