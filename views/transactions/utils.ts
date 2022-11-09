@@ -243,7 +243,7 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			totalAmount = totalAmount.add(BigNumber.from(caculateAmount(message.content?.amount).amount || '0'))
+			totalAmount = totalAmount.add(BigNumber.from(message.content?.amount?.amount || '0'))
 		}
 		return formatEther(totalAmount)
 	}
@@ -260,6 +260,7 @@ export const caculateAmount = (amounts: TokenAmount[]): TokenAmount => {
 		return { amount: '0', denom: 'aastra' }
 	}
 	let totalAmount = BigNumber.from('0')
+
 	for (let amount of amounts) {
 		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
 	}
