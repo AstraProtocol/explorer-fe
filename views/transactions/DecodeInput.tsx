@@ -9,6 +9,7 @@ import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
 import Spinner from '../../components/Spinner'
 import LogElement, { LogElementProps } from './LogItem'
+import ModalContractVerify from './verify/ModalContractVerify'
 
 export interface AbiItemDecode extends AbiItem {
 	params: EventDecode[]
@@ -21,8 +22,17 @@ type DecodeInputProps = {
 }
 
 export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
+	const [verifyVisible, setVerifiVisible] = useState(false)
+
 	const [load, setLoad] = useState(false)
 	const [items, setItems] = useState<LogElementProps[]>()
+
+	const onShowVerify = () => {
+		setVerifiVisible(true)
+	}
+	const onVerifyDone = () => {
+		setVerifiVisible(false)
+	}
 
 	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasAbi: boolean }> => {
 		const addressAbiRes = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
@@ -50,7 +60,8 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 					data: '',
 					index: '',
 					showAddress: false,
-					topics: []
+					topics: [],
+					onOpenVerify: undefined
 				}
 				items.push(item)
 				item.methodId = evmMethodId(dataInput)
@@ -90,12 +101,9 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 		data()
 	}, [address, dataInput])
 
-	if (!dataInput || !address) {
-		return null
-	}
-
-	return (
-		!isEmpty(items) && (
+	let content
+	if (dataInput && address) {
+		content = !isEmpty(items) && (
 			<div>
 				{!load ? (
 					<div className="padding-xl" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -110,11 +118,29 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 							INPUT
 						</div>
 						{items?.map((item, index) => (
-							<LogElement key={item.index} {...item} borderTop={index !== 0} showLeftBorder={false} />
+							<LogElement
+								onOpenVerify={onShowVerify}
+								key={item.index}
+								{...item}
+								borderTop={index !== 0}
+								showLeftBorder={false}
+							/>
 						))}
 					</BackgroundCard>
 				)}
 			</div>
 		)
+	}
+
+	return (
+		<div>
+			{content}
+			<ModalContractVerify
+				onClose={onVerifyDone}
+				// open
+				address={address}
+				open={verifyVisible}
+			/>
+		</div>
 	)
 }

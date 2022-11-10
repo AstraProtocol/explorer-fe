@@ -45,7 +45,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
 					]}
 				/>
-				{data ? (
+				{/* {data ? (
 					<>
 						<div className="margin-top-2xl margin-bottom-md">
 							<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
@@ -64,7 +64,23 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 					</>
 				) : (
 					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
-				)}
+				)} */}
+				<>
+					<div className="margin-top-2xl margin-bottom-md">
+						<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
+					</div>
+					<CardInfo items={items} classes={['margin-top-sm']} />
+					{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
+					<DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />
+					<TransactionTabs
+						evmHash={evmHash}
+						cosmosHash={cosmosHash}
+						type={data.type}
+						transactions={data?.tabTokenTransfers}
+						input={data?.rawInput}
+						logs={data?.logs}
+					/>
+				</>
 			</Container>
 		</Layout>
 	)

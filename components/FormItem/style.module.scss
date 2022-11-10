@@ -1,0 +1,80 @@
+.inputWrapper {
+	position: relative;
+	transition: all 0.3s ease-out;
+	height: 48px;
+	&:hover {
+		transition: all 0.3s ease-in;
+		border-width: 2px;
+	}
+	input {
+		outline: none;
+		border: none;
+		height: 100%;
+		background-color: transparent;
+		width: 100%;
+		&:hover {
+			transition: all 0.3s ease-in;
+			border-width: 2px;
+			color: var(--contrast-color-theme-100);
+			transition: all 0.3s;
+			&::placeholder {
+				color: var(--contrast-color-theme-100);
+			}
+		}
+	}
+}
+
+.textAreaWrapper {
+	position: relative;
+	transition: all 0.3s ease-out;
+	height: 100px;
+	&:hover {
+		transition: all 0.3s ease-in;
+		border-width: 2px;
+	}
+	input {
+		outline: none;
+		border: none;
+		height: 100%;
+		background-color: transparent;
+		width: 100%;
+		&:hover {
+			transition: all 0.3s ease-in;
+			border-width: 2px;
+			color: var(--contrast-color-theme-100);
+			transition: all 0.3s;
+			&::placeholder {
+				color: var(--contrast-color-theme-100);
+			}
+		}
+	}
+}
+
+.focus {
+	border: 2px solid var(--secondary-color-normal);
+	color: var(--contrast-color-theme-100);
+	transition: all 0.3s ease-in;
+	&::placeholder {
+		color: var(--contrast-color-theme-100);
+	}
+}
+
+.inputError {
+	background: rgba(255, 49, 49, 0.2);
+	/* Functional/Negative - Stressful */
+	border: 2px solid var(--alert-color-error);
+}
+.inputDisabled {
+	background: rgba(var(--contrast-color-theme--raw), 0.1);
+	border-width: 1px;
+	&:hover {
+		color: var(--contrast-color-theme-70);
+		border-width: 1px;
+	}
+	input {
+		color: var(--contrast-color-theme-70) !important;
+		&::placeholder {
+			color: var(--contrast-color-theme-70) !important;
+		}
+	}
+}
