@@ -51,6 +51,7 @@ const Layout: React.FC<Props> = props => {
 			<Navbar />
 			<div className={styles.layout}>{props.children}</div>
 			<Footer />
+			<div id="modal-root"></div>
 		</div>
 	)
 }

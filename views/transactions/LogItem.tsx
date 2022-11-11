@@ -18,7 +18,7 @@ export type LogElementProps = {
 	borderTop?: boolean
 	showLeftBorder?: boolean
 	useDraftAbiToDecode?: boolean
-	onOpenVerify: Function
+	onOpenVerify?: Function
 }
 
 export default function LogElement({

@@ -9,7 +9,7 @@ import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
 import Spinner from '../../components/Spinner'
 import LogElement, { LogElementProps } from './LogItem'
-import ModalContractVerify from './verify/ModalContractVerify'
+import ModalContractVerify from './verify'
 
 export interface AbiItemDecode extends AbiItem {
 	params: EventDecode[]
@@ -60,8 +60,7 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 					data: '',
 					index: '',
 					showAddress: false,
-					topics: [],
-					onOpenVerify: undefined
+					topics: []
 				}
 				items.push(item)
 				item.methodId = evmMethodId(dataInput)

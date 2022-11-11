@@ -19,7 +19,7 @@ const CloseButton = ({ classes, onClose }: Props) => {
 
 	return (
 		<a onClick={onClick} className={clsx('link block-hor-center', classes)}>
-			<span className={clsx('pointer icon-close text text-base same-color-100')} />
+			<span className={clsx('pointer icon-close text text-base contrast-color-100')} />
 		</a>
 	)
 }
