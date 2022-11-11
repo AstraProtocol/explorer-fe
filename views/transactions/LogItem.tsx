@@ -43,7 +43,7 @@ export default function LogElement({
 		items.push({
 			label: 'Address:',
 			type: 'text',
-			contents: [{ value: `${`${addressName} | `}${address}` }],
+			contents: [{ value: addressName ? `${addressName} | ${address}` : address }],
 			responsive: {
 				ellipsis: false,
 				wrap: 'sm'
