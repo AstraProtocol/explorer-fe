@@ -1,9 +1,10 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
-import { cosmosApi, evmApi } from 'api'
+import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
+import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { TransacionTypeEnum } from 'utils/enum'
@@ -73,109 +74,59 @@ export interface TransactionDetail {
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
 	let data: TransactionDetail = {}
-	if (cosmosHash) {
-		const cosmosDetailRes = await cosmosApi.get<EvmTransactionDetailFromCosmosHashResponse>(
-			`${API_LIST.TRANSACTIONS}/${cosmosHash}?type=evm`
-		)
-		const result = cosmosDetailRes.data.result
-		if (!result) return
+	// if (cosmosHash) {
+	const res = await cosmosApi.get<EvmTransactionDetailResponse>(
+		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
+	)
+	const result = res.data.result
+	if (!result) return
 
-		data.evmHash =
-			result.messages && result.messages.length > 0 ? result.messages[0].content.params.hash : result.hash
-		data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
-		data.cosmosHash = result.cosmosHash || cosmosHash
-		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result.confirmations ? result.confirmations.toString() : ''
-		data.blockHeight = `${result.blockHeight}`
-		data.time = result.blockTime
-		data.from = result.from
-		data.to = result.to
-		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
-		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
-		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
-		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
-		data.gasUsed = result.gasUsed
-		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
-		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
-			? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
-			: undefined
-		data.gasUsedByTransaction = result.cumulativeGasUsed
-			? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
-					parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
-			  ).format('0.00%')}`
-			: undefined
-		data.nonce = result.nonce ? result.nonce.toString() : ''
-		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		data.tokenTransfers = result.tokenTransfers
-		data.index = result.index
-		data.failLog = result.error || result.log
-		data.revertReason = result.revertReason
-		data.typeOfTransfer = result.type ? evmTransactionType(result.type) : ''
-		data.tabTokenTransfers =
-			result.tokenTransfers &&
-			result.tokenTransfers.length &&
-			evmConvertTokenTransferToTransactionRow(
-				result.tokenTransfers,
-				result.blockTime,
-				result.success,
-				result.hash,
-				result.blockHeight
-			)
-		data.logs = result.logs
-	} else if (evmHash?.startsWith('0x')) {
-		const evmRes = await evmApi.get<EvmTransactionDetailFromCosmosHashResponse>(
-			`${API_LIST.EVM_TRANSACTION_DETAIL}${evmHash}`
+	data.evmHash = isUndefined(evmHash)
+		? result.messages && result.messages.length > 0
+			? result.messages?.[0].content.params.hash
+			: result.hash
+		: evmHash
+	data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
+	data.cosmosHash = cosmosHash || result.cosmosHash
+	data.result = result.success ? 'Success' : 'Error'
+	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
+	data.blockHeight = `${result.blockHeight}`
+	data.time = result.blockTime
+	data.from = result.from
+	data.to = result.to
+	data.createdContractAddressHash = result.createdContractAddressHash
+	data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
+	data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
+	data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
+	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
+	data.gasUsed = result.gasUsed
+	data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
+	data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
+		? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
+		: undefined
+	data.gasUsedByTransaction = result.cumulativeGasUsed
+		? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
+				parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
+		  ).format('0.00%')}`
+		: undefined
+	data.nonce = result.nonce ? result.nonce.toString() : ''
+	data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
+	data.tokenTransfers = result.tokenTransfers
+	data.index = result.index
+	data.failLog = result.error || result.log
+	data.revertReason = result.revertReason
+	data.typeOfTransfer = result.type ? evmTransactionType(result.type) : ''
+	data.tabTokenTransfers =
+		result.tokenTransfers &&
+		result.tokenTransfers.length &&
+		evmConvertTokenTransferToTransactionRow(
+			result.tokenTransfers,
+			result.blockTime,
+			result.success,
+			result.hash,
+			result.blockHeight
 		)
-		const result = evmRes.data.result
-		if (!result) return
-
-		data.evmHash =
-			result.messages && result.messages.length > 0 ? result.messages[0].content.params.hash : result.hash
-		data.cosmosHash = result.cosmosHash
-		data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
-		data.result = result.success ? 'Success' : 'Error'
-		data.confirmations = result.confirmations ? result.confirmations.toString() : ''
-		data.blockHeight = `${result.blockHeight}`
-		data.time = result.blockTime
-		data.from = result.from
-		data.to = result.to
-		data.createdContractAddressHash = result.createdContractAddressHash
-		data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
-		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
-		data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
-		data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
-		data.gasUsed = result.gasUsed
-		data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
-		data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
-			? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
-			: undefined
-		data.gasUsedByTransaction = result.cumulativeGasUsed
-			? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
-					parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
-			  ).format('0.00%')}`
-			: undefined
-		data.nonce = `${result.nonce}`
-		data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
-		data.tokenTransfers = result.tokenTransfers
-		data.index = result.index
-		data.failLog = result.error || result.log
-		data.revertReason = result.revertReason
-		data.typeOfTransfer = evmTransactionType(result.type)
-		data.tabTokenTransfers =
-			result.tokenTransfers &&
-			result.tokenTransfers.length > 0 &&
-			evmConvertTokenTransferToTransactionRow(
-				result.tokenTransfers,
-				result.blockTime,
-				result.success,
-				result.hash,
-				result.blockHeight
-			)
-		data.logs = result.logs
-	} else {
-		return null
-	}
+	data.logs = result.logs
 	data['type'] = 'evm'
 	return data
 }

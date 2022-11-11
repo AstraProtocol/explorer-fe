@@ -11,8 +11,6 @@ const API_LIST = {
 	ALL_TRANSACTIONS: '/api/v1/transactions',
 
 	TRANSACTIONS: '/api/v1/transactions',
-	EVM_TRANSACTION_DETAIL_WITH_COSMOSHASH: '/api/v1/transactions', // call axios
-	EVM_TRANSACTION_DETAIL: '/api/v1?module=transaction&action=gettxinfo&txhash=', // call axios
 	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
 	COSMOS_TRANSACTION: '/api/v1?module=transaction&action=getTxCosmosInfo&txhash=', // call axios
 

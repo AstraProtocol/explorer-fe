@@ -151,7 +151,7 @@ interface TransactionRawTraceResponse {
 	status: string
 }
 
-interface EvmTransactionDetailFromCosmosHashResponse {
+interface EvmTransactionDetailResponse {
 	message: string
 	result: {
 		blockHash: string
