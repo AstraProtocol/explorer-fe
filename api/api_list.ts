@@ -43,8 +43,8 @@ const API_LIST = {
 	TOKEN_TRANSACTIONS: 'evm_/api/v1?module=token&action=getlisttokentransfers',
 	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
 
-	CONTRACT_CODE: 'http://128.199.238.171:8043/api/v1?module=contract&action=getsourcecode',
-	VERIFY_CONTRACT: 'evm_/api/v1?module=contract&action=verify'
+	CONTRACT_CODE: 'evm_/api/v1?module=contract&action=getsourcecode',
+	VERIFY_CONTRACT: 'http://128.199.238.171:8043/api/v1?module=contract&action=verify'
 }
 
 export default API_LIST

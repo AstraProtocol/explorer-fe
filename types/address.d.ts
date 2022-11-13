@@ -221,3 +221,29 @@ interface AddressSearchResponse {
 	name: string
 	insertedAt: string
 }
+
+interface ContractFile {
+	Filename: string
+	SourceCode: string
+}
+
+interface ContractCodeData {
+	ABI: string
+	AdditionalSources: ContractFile[]
+	CompilerVersion: string
+	ConstructorArguments: string
+	ContractName: string
+	EVMVersion?: string | null
+	FileName: string
+	IsProxy: string
+	OptimizationRuns: number
+	OptimizationUsed: string
+	SourceCode: string
+	Address: string
+}
+
+interface ContractCodeResponse {
+	message: string
+	result: ContractCodeData[]
+	status: string
+}

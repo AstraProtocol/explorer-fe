@@ -9,6 +9,7 @@ import { cosmosFetcher, evmFetcher } from 'api'
 import PageLoader from 'components/Loader/PageLoader'
 import Head from 'next/head'
 import { SWRConfig } from 'swr'
+import '../prism-theme/dark.scss'
 import store, { persistor } from '../store'
 import '../styles.css'
 

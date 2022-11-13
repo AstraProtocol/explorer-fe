@@ -28,6 +28,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					{ title: 'Tokens', id: '3' },
 					{ title: 'Internal Transactions', id: '4' },
 					{ title: 'Coin Balance History', id: '5' },
+
 					isContract && {
 						title: (
 							<span>
