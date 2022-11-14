@@ -247,3 +247,9 @@ interface ContractCodeResponse {
 	result: ContractCodeData[]
 	status: string
 }
+
+interface UseContractCodeData {
+	mutate: Function
+	isValidating: boolean
+	contractCode: ContractCodeData
+}

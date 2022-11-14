@@ -1,4 +1,4 @@
-import { NormalButton } from '@astraprotocol/astra-ui'
+import { NormalButton, Spinner } from '@astraprotocol/astra-ui'
 import JsonView from 'components/CodeView/JsonView'
 import SolidityView from 'components/CodeView/SolidityView'
 import Row from 'components/Grid/Row'
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ContractCodeTab = ({ address }: Props) => {
-	const { contractCode, mutate } = useContractCode(address)
+	const { contractCode, mutate, isValidating } = useContractCode(address)
 	const [verifyVisible, setVerifiVisible] = useState(false)
 
 	const onShowVerify = () => {
@@ -30,7 +30,11 @@ const ContractCodeTab = ({ address }: Props) => {
 				<span className="text text-xl">Contract Code</span>
 				<NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>
 			</Row>
-			{contractCode ? (
+			{isValidating ? (
+				<div className="margin-xl">
+					<Spinner size="md" />
+				</div>
+			) : contractCode ? (
 				<div className="margin-xl">
 					<ContractCodeOverview contractCode={contractCode} />
 					<ContractConstructorArguments

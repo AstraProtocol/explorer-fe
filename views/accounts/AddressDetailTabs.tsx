@@ -1,5 +1,6 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
+import useRouterTag from 'hooks/useRouterTag'
 import { AddressTypeEnum } from 'utils/enum'
 
 import AddressCoinBalanceTab from './tabs/AddressCoinBalanceTab'
@@ -17,17 +18,20 @@ interface Props {
 
 const AddressDetailTab = ({ address, addressData }: Props) => {
 	const isContract = addressData.type === AddressTypeEnum.Contract
+	const [defaultTag, setTag] = useRouterTag()
 	// contract verify?
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
 			<Tabs
+				tabChange={setTag}
+				defaultTab={defaultTag}
 				classes="none"
 				tabs={[
-					{ title: 'Transactions', id: '1' },
-					{ title: 'Token Transfer', id: '2' },
-					{ title: 'Tokens', id: '3' },
-					{ title: 'Internal Transactions', id: '4' },
-					{ title: 'Coin Balance History', id: '5' },
+					{ title: 'Transactions', id: 'transactions' },
+					{ title: 'Token Transfer', id: 'token-transfer' },
+					{ title: 'Tokens', id: 'tokens' },
+					{ title: 'Internal Transactions', id: 'internal-transactions' },
+					{ title: 'Coin Balance History', id: 'balance-history' },
 
 					isContract && {
 						title: (
@@ -35,20 +39,20 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 								Code <span className="icon-checked alert-color-success"></span>
 							</span>
 						),
-						id: '6'
+						id: 'code'
 					}
 				]}
 				contents={{
-					'1': isContract ? (
+					'transactions': isContract ? (
 						<ContractTransactionTab address={address} />
 					) : (
 						<AddressTransactionTab address={address} />
 					),
-					'2': <AddressTokenTransferTab address={address} />,
-					'3': <AddressTokenTab address={address} />,
-					'4': <AddressInternalTransactionTab address={address} />,
-					'5': <AddressCoinBalanceTab address={address} />,
-					'6': <ContractCodeTab address={address} />
+					'token-transfer': <AddressTokenTransferTab address={address} />,
+					'tokens': <AddressTokenTab address={address} />,
+					'internal-transactions': <AddressInternalTransactionTab address={address} />,
+					'balance-history': <AddressCoinBalanceTab address={address} />,
+					'code': <ContractCodeTab address={address} />
 				}}
 			></Tabs>
 		</BackgroundCard>
