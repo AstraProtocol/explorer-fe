@@ -1,13 +1,14 @@
 import { ModalWrapper } from '@astraprotocol/astra-ui'
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import ContractVerify from './ContractVerify'
+import ContractVerify from './ContractFlattenedVerify'
 import SelectVerifyOption from './SelectVerifyOption'
 import styles from './style.module.scss'
 
 interface Props {
 	open: boolean
 	onClose: Function
+	onSuccess: Function
 	address: string
 }
 
@@ -21,7 +22,7 @@ export enum VerifyOption {
 	STANDARD_INPUT
 }
 
-const ModalContractVerify = ({ open, onClose, address = '' }: Props) => {
+const ModalContractVerify = ({ open, onClose, onSuccess, address = '' }: Props) => {
 	const [step, setStep] = useState(Step.SELECT_OPTION)
 	const [currentOption, setOption] = useState(VerifyOption.FLATTEN_CODE)
 
@@ -31,6 +32,11 @@ const ModalContractVerify = ({ open, onClose, address = '' }: Props) => {
 
 	const onSelectOption = (_option: VerifyOption) => {
 		setOption(_option)
+	}
+
+	const onVerifySuccess = () => {
+		onReset()
+		onSuccess()
 	}
 
 	const onCancel = () => {
@@ -52,7 +58,7 @@ const ModalContractVerify = ({ open, onClose, address = '' }: Props) => {
 		/>
 	)
 	if (step === Step.VERIFY_CONTRACT) {
-		content = <ContractVerify onClose={onClose} address={address} onCancel={onCancel} />
+		content = <ContractVerify address={address} onClose={onCancel} onSuccess={onVerifySuccess} />
 	}
 
 	useEffect(() => {

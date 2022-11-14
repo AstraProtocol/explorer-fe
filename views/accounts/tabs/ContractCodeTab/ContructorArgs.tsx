@@ -18,6 +18,7 @@ const getData = (type, data) => {
 }
 
 const ContractConstructorArguments = ({ abi, constructorArgument }: Props) => {
+	if (!abi || !constructorArgument) return
 	const decodeArgs = decodeConstructorArgs(JSON.parse(abi), constructorArgument)
 	const code = `
     ${constructorArgument}

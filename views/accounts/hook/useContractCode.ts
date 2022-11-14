@@ -1,6 +1,6 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr'
 
 export default function useContractCode(address: string) {
 	const [hookData, setState] = useState<ContractCodeData>(undefined)
@@ -13,12 +13,15 @@ export default function useContractCode(address: string) {
 			}
 		]
 	}
-	const { data } = useSWR<ContractCodeResponse>(_fetchCondition())
+	const { data, mutate } = useSWRImmutable<ContractCodeResponse>(_fetchCondition())
 
 	useEffect(() => {
 		if (data?.result) {
 			setState(data.result?.[0])
 		}
 	}, [data])
-	return hookData
+	return {
+		contractCode: hookData,
+		mutate
+	}
 }

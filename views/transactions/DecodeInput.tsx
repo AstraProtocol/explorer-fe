@@ -4,12 +4,13 @@ import API_LIST from 'api/api_list'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
 import { isEmpty, isUndefined } from 'lodash'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
 import Spinner from '../../components/Spinner'
+import ModalContractVerify from '../../components/VerifyContract'
 import LogElement, { LogElementProps } from './LogItem'
-import ModalContractVerify from './verify'
 
 export interface AbiItemDecode extends AbiItem {
 	params: EventDecode[]
@@ -22,6 +23,7 @@ type DecodeInputProps = {
 }
 
 export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
+	const router = useRouter()
 	const [verifyVisible, setVerifiVisible] = useState(false)
 
 	const [load, setLoad] = useState(false)
@@ -30,8 +32,12 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	const onShowVerify = () => {
 		setVerifiVisible(true)
 	}
-	const onVerifyDone = () => {
+	const onVerifyCancel = () => {
 		setVerifiVisible(false)
+	}
+
+	const onVerifyDone = () => {
+		router.reload()
 	}
 
 	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasAbi: boolean }> => {
@@ -135,8 +141,8 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 		<div>
 			{content}
 			<ModalContractVerify
-				onClose={onVerifyDone}
-				// open
+				onClose={onVerifyCancel}
+				onSuccess={onVerifyDone}
 				address={address}
 				open={verifyVisible}
 			/>

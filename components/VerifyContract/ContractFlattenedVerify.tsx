@@ -1,10 +1,12 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
+import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
 import Row from 'components/Grid/Row'
-import { MouseEventHandler, useRef, useState } from 'react'
+import qs from 'qs'
+import { useRef, useState } from 'react'
 import AddressDisplay from './AddressDisplay'
 import Header from './Header'
 import styles from './style.module.scss'
@@ -12,7 +14,7 @@ import styles from './style.module.scss'
 interface Props {
 	address: string
 	onClose: Function
-	onCancel: MouseEventHandler<HTMLButtonElement>
+	onSuccess: Function
 }
 
 interface LibraryItem {
@@ -21,7 +23,7 @@ interface LibraryItem {
 	address: string
 }
 
-const ContractVerify = ({ address, onClose, onCancel }: Props) => {
+const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	const contractNameRef = useRef(undefined)
 	const [contractName, setContractName] = useState('')
 	const [hasNightlyBuild, setHasNightlyBuild] = useState(true)
@@ -58,7 +60,41 @@ const ContractVerify = ({ address, onClose, onCancel }: Props) => {
 	}
 
 	const onVerify = () => {
-		// Verify data
+		const params = {
+			'smart_contract[address_hash]': address,
+			'smart_contract[name]': contractName,
+			'smart_contract[nightly_builds]': hasNightlyBuild,
+			'smart_contract[compiler_version]': 'v0.8.4+commit.c7e474f2', // compiler,
+			'smart_contract[evm_version]': 'default', // evmVersion,
+			'smart_contract[optimization]': hasOptimization,
+			'smart_contract[optimization_runs]': optimizeRun,
+			'smart_contract[contract_source_code]': solidityCode,
+			'smart_contract[autodetect_constructor_args]': 'true',
+			'smart_contract[constructor_arguments]': ''
+		}
+		libs.forEach((lib: LibraryItem, index: number) => {
+			params[`external_libraries[library${index}_name]`] = lib.name
+			params[`external_libraries[library${index}_address]`] = lib.address
+		})
+		const data = qs.stringify(params)
+		var config = {
+			method: 'post',
+			url: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			data
+		}
+
+		axios(config)
+			.then(function (response) {
+				if (response.status > 200 && response.status < 300) {
+					onSuccess()
+				}
+			})
+			.catch(function (error) {
+				console.log(error)
+			})
 	}
 	return (
 		<div className={clsx(styles.modalVerify, 'radius-lg')}>
@@ -285,7 +321,7 @@ const ContractVerify = ({ address, onClose, onCancel }: Props) => {
 					<NormalButton style={{ width: 170, marginRight: 10 }} onClick={onVerify}>
 						<span className="text text-base contrast-color-100">Verify and Publish</span>
 					</NormalButton>
-					<NormalButton style={{ width: 86 }} onClick={onCancel} variant="text">
+					<NormalButton style={{ width: 86 }} onClick={() => onClose()} variant="text">
 						<span className="text text-base contrast-color-100">Cancel</span>
 					</NormalButton>
 				</div>
@@ -294,4 +330,4 @@ const ContractVerify = ({ address, onClose, onCancel }: Props) => {
 	)
 }
 
-export default ContractVerify
+export default ContractFlattenedVerify

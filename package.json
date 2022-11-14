@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"@astradefi/address-converter": "^0.4.1",
-		"@astraprotocol/astra-ui": "C:\\Users\\Tien\\Documents\\Github\\astra-ui",
+		"@astraprotocol/astra-ui": "file:../../Github/astra-ui",
 		"@cosmjs/crypto": "^0.29.0",
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
@@ -35,6 +35,7 @@
 		"next-intl": "^2.7.5",
 		"numeral": "^2.0.6",
 		"prismjs": "^1.29.0",
+		"qs": "^6.11.0",
 		"query-string": "^7.1.1",
 		"react": "18.2.0",
 		"react-chartjs-2": "^4.3.1",
