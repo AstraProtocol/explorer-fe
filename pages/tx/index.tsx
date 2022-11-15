@@ -60,7 +60,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 							{ title: 'Type', col: 'col-2' },
 							{ title: 'Block', col: 'col-2 padding-left-2xs' },
 							{ title: 'Amount', col: 'col-2 padding-left-2xs' },
-							{ title: 'Status', col: 'col-1 padding-left-md gutter-left' }
+							{ title: 'Status', col: 'col-1 padding-left-md ' }
 						]}
 					/>
 				)}

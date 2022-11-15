@@ -175,14 +175,17 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
  * @returns amount in string (bignumber)
  */
 export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
-	let totalAmount = BigNumber.from('0')
-	for (let amount of amounts) {
-		if (amount.denom === 'aastra') {
-			totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+	if (amounts && amounts.length > 0) {
+		let totalAmount = BigNumber.from('0')
+		for (let amount of amounts) {
+			if (amount.denom === 'aastra') {
+				totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+			}
 		}
-	}
 
-	return totalAmount.toString()
+		return totalAmount.toString()
+	}
+	return '0'
 }
 
 /**

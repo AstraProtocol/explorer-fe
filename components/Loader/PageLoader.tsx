@@ -11,10 +11,7 @@ function PageLoader() {
 
 	useEffect(() => {
 		const handleStart = url => url !== router.asPath && setLoading(true)
-		const handleComplete = url => {
-			if (!url || typeof url !== 'string') return setLoading(false)
-			return url?.includes(router.asPath) && setLoading(false)
-		}
+		const handleComplete = url => setLoading(false)
 		const handleError = e => setLoading(false)
 
 		router.events.on('routeChangeStart', handleStart)
@@ -26,7 +23,7 @@ function PageLoader() {
 			router.events.off('routeChangeComplete', handleComplete)
 			router.events.off('routeChangeError', handleComplete)
 		}
-	})
+	}, [])
 
 	return (
 		loading && (

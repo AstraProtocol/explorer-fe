@@ -164,7 +164,7 @@ export default function TransactionRowContent({
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col col-1 padding-left-md gutter-left ')} style={{ textTransform: 'capitalize' }}>
+				<div className={clsx('col col-1 padding-left-md ')} style={{ textTransform: 'capitalize' }}>
 					{status ? (
 						<Typography.SuccessText>{statusText}</Typography.SuccessText>
 					) : (
