@@ -56,11 +56,11 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					<RowTitle
 						classes="padding-left-lg padding-right-lg"
 						columns={[
-							{ title: 'Hash', col: 'col-4' },
+							{ title: 'Hash', col: 'col-5' },
 							{ title: 'Type', col: 'col-2' },
 							{ title: 'Block', col: 'col-2 padding-left-2xs' },
 							{ title: 'Amount', col: 'col-2 padding-left-2xs' },
-							{ title: 'Status', col: 'col-2 padding-left-md gutter-left' }
+							{ title: 'Status', col: 'col-1 padding-left-md gutter-left' }
 						]}
 					/>
 				)}

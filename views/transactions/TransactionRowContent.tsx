@@ -60,7 +60,7 @@ export default function TransactionRowContent({
 				className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}
 				style={{ minHeight: style === 'inject' ? 'auto' : height }}
 			>
-				<div className={clsx('col-4')} style={{ alignItems: 'center' }}>
+				<div className={clsx('col-5')} style={{ alignItems: 'center' }}>
 					<Row>
 						{isEvm ? (
 							<Image alt={'eth'} src={`/images/icons/eth.svg`} width={24} height={24} />
@@ -164,7 +164,7 @@ export default function TransactionRowContent({
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col col-2 padding-left-md gutter-left ')} style={{ textTransform: 'capitalize' }}>
+				<div className={clsx('col col-1 padding-left-md gutter-left ')} style={{ textTransform: 'capitalize' }}>
 					{status ? (
 						<Typography.SuccessText>{statusText}</Typography.SuccessText>
 					) : (

@@ -170,6 +170,22 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 }
 
 /**
+ *
+ * @param amounts {denom, amount}
+ * @returns amount in string (bignumber)
+ */
+export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
+	let totalAmount = BigNumber.from('0')
+	for (let amount of amounts) {
+		if (amount.denom === 'aastra') {
+			totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+		}
+	}
+
+	return totalAmount.toString()
+}
+
+/**
  * return ethereumtx amount
  * @param tx messages
  * @returns amount in string
@@ -194,7 +210,7 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			totalAmount = totalAmount.add(BigNumber.from(message.content?.amount?.amount || '0'))
+			totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content?.amount)))
 		}
 		return formatEther(totalAmount)
 	}
