@@ -83,7 +83,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		axios(config)
 			.then(function (response) {
 				if (response.status > 200 && response.status < 300) {
-					onSuccess()
+					// onSuccess()
 				}
 			})
 			.catch(function (error) {

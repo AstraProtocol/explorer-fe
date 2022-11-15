@@ -77,7 +77,7 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				if (Array.isArray(abi)) {
 					abiDecoder.addABI(abi)
 					const inputObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
-					if (!isUndefined(inputObj?.name)) {
+					if (!isUndefined(inputObj)) {
 						const name = inputObj?.name
 						const interfaceItem = abi.find(item => item.name === name)
 						if (interfaceItem) {

@@ -76,13 +76,12 @@ export interface TransactionDetail {
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
 	let data: TransactionDetail = {}
-	// if (cosmosHash) {
+
 	const res = await cosmosApi.get<EvmTransactionDetailResponse>(
 		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
 	)
 	const result = res.data.result
 	if (!result) return
-	console.log(result)
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
 			? result.messages?.[0].content.params.hash
@@ -133,7 +132,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	return data
 }
 
-export const cosmsTransactionDetail = async (result: TransactionItem): Promise<TransactionDetail> => {
+export const cosmsTransactionDetail = (result: TransactionItem): TransactionDetail => {
 	const data: TransactionDetail = {}
 	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
