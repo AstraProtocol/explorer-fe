@@ -259,3 +259,9 @@ interface LibraryItem {
 	name: string
 	address: string
 }
+
+interface VerifyStatusResponse {
+	message: string
+	result: string
+	status: string
+}

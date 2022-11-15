@@ -6,9 +6,10 @@ import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
 import Row from 'components/Grid/Row'
 import qs from 'qs'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AddressDisplay from './AddressDisplay'
 import Header from './Header'
+import useContractVerifyStatus from './hook/useContractVerifyStatus'
 import styles from './style.module.scss'
 
 interface Props {
@@ -27,7 +28,11 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	const [optimizeRun, setOptimizeRun] = useState(200)
 	const [solidityCode, setSolidityCode] = useState('')
 	const [fetchContructorArgAutomatically, setFetchContructrorArgAutomatically] = useState(true)
+	const [loading, setLoading] = useState(false)
+	const [guid, setGuid] = useState(undefined)
 	const [libs, setLib] = useState<LibraryItem[]>([])
+
+	const isValidated = useContractVerifyStatus(guid)
 
 	const addLibraryItem = () => {
 		if (libs.length > 10) return
@@ -66,9 +71,10 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 			'smart_contract[autodetect_constructor_args]': 'true',
 			'smart_contract[constructor_arguments]': ''
 		}
-		libs.forEach((lib: LibraryItem, index: number) => {
-			params[`external_libraries[library${index}_name]`] = lib.name
-			params[`external_libraries[library${index}_address]`] = lib.address
+		const paramLib = libs.length > 0 ? libs : [1, 2, 3, 4, 5]
+		paramLib.forEach((lib: LibraryItem | any, index: number) => {
+			params[`external_libraries[library${index}_name]`] = lib?.name || ''
+			params[`external_libraries[library${index}_address]`] = lib?.address || ''
 		})
 		const data = qs.stringify(params)
 		var config = {
@@ -79,17 +85,23 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 			},
 			data
 		}
-
+		setLoading(true)
 		axios(config)
 			.then(function (response) {
-				if (response.status > 200 && response.status < 300) {
-					// onSuccess()
+				if (response.data) {
+					setGuid(response.data?.guid)
 				}
 			})
 			.catch(function (error) {
+				setLoading(false)
 				console.log(error)
 			})
 	}
+
+	useEffect(() => {
+		if (isValidated) onSuccess()
+	}, [isValidated])
+
 	return (
 		<div className={clsx(styles.modalVerify, 'radius-lg')}>
 			<Header onClose={onClose} />
@@ -312,7 +324,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 					<span className="text text-base contrast-color-100">Reset</span>
 				</NormalButton>
 				<div>
-					<NormalButton style={{ width: 170, marginRight: 10 }} onClick={onVerify}>
+					<NormalButton loading={loading} style={{ width: 170, marginRight: 10 }} onClick={onVerify}>
 						<span className="text text-base contrast-color-100">Verify and Publish</span>
 					</NormalButton>
 					<NormalButton style={{ width: 86 }} onClick={() => onClose()} variant="text">

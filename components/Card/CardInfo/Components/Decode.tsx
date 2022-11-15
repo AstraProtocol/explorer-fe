@@ -32,7 +32,9 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 					{
 						title: 'Call',
 						key: 'call',
-						render: value => <span className={clsx('money money-sm', styles.primaryColor)}>{value}</span>
+						render: value => (
+							<span className={clsx('money money-sm', styles.primaryColor)}>{value || '...'}</span>
+						)
 					}
 				]}
 				rows={[{ method: methodId, call }]}
