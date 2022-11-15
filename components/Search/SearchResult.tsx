@@ -16,62 +16,73 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (!data) {
 			return []
 		}
+
 		const { blocks, addresses, transactions, validators, tokens } = data?.result
 		const items: SearchResultViewItem[] = []
 		if (blocks && blocks.length > 0) {
 			for (let item of blocks) {
-				items.push({
-					time: item.insertedAt,
-					type: 'Block',
-					key: item.blockNumber,
-					value: item.blockNumber,
-					linkValue: `${item.blockNumber}`
-				})
+				if (!items.find((i: SearchResultViewItem) => item.blockNumber === i.key)) {
+					items.push({
+						time: item.insertedAt,
+						type: 'Block',
+						key: item.blockNumber,
+						value: item.blockNumber,
+						linkValue: `${item.blockNumber}`
+					})
+				}
 			}
 		}
 		if (addresses && addresses.length > 0) {
 			for (let item of addresses) {
-				items.push({
-					time: item.insertedAt,
-					type: 'Address',
-					key: item.addressHash,
-					value: item.addressHash,
-					linkValue: item.addressHash
-				})
+				if (!items.find((i: SearchResultViewItem) => item.addressHash === i.key)) {
+					items.push({
+						time: item.insertedAt,
+						type: 'Address',
+						key: item.addressHash,
+						value: item.addressHash,
+						linkValue: item.addressHash
+					})
+				}
 			}
 		}
 		if (transactions && transactions.length > 0) {
 			for (let item of transactions) {
-				items.push({
-					time: item.insertedAt,
-					key: item.evmHash || item.cosmosHash,
-					type: 'Transaction',
-					value: item.evmHash || item.cosmosHash,
-					linkValue: item.evmHash ? `${item.evmHash}?type=evm` : item.cosmosHash
-				})
+				if (!items.find((i: SearchResultViewItem) => (item.evmHash || item.cosmosHash) === i.key)) {
+					items.push({
+						time: item.insertedAt,
+						key: item.evmHash || item.cosmosHash,
+						type: 'Transaction',
+						value: item.evmHash || item.cosmosHash,
+						linkValue: item.evmHash ? `${item.evmHash}?type=evm` : item.cosmosHash
+					})
+				}
 			}
 		}
 
 		if (validators && validators.length > 0) {
 			for (let item of validators) {
-				items.push({
-					status: item.status,
-					type: 'Validator',
-					key: item.operatorAddress,
-					value: item.operatorAddress,
-					linkValue: item.operatorAddress
-				})
+				if (!items.find((i: SearchResultViewItem) => item.operatorAddress === i.key)) {
+					items.push({
+						status: item.status,
+						type: 'Validator',
+						key: item.operatorAddress,
+						value: item.operatorAddress,
+						linkValue: item.operatorAddress
+					})
+				}
 			}
 		}
 		if (tokens && tokens.length > 0) {
 			for (let item of tokens) {
-				items.push({
-					linkValue: item.addressHash,
-					type: 'Token',
-					key: item.addressHash,
-					value: `${item.name} (${item.symbol})`,
-					time: item.insertedAt
-				})
+				if (!items.find((i: SearchResultViewItem) => item.addressHash === i.key)) {
+					items.push({
+						linkValue: item.addressHash,
+						type: 'Token',
+						key: item.addressHash,
+						value: `${item.name} (${item.symbol}) | ${item.addressHash}`,
+						time: item.insertedAt
+					})
+				}
 			}
 		}
 
