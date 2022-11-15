@@ -3,7 +3,7 @@ const API_LIST = {
 
 	ALL_BLOCKS: '/api/v1/blocks',
 	BLOCKS: '/api/v1/blocks/',
-	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions?pagination=offset&page=1&limit=20&order=height.desc',
+	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions',
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
 
 	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
