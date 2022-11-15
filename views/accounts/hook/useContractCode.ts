@@ -1,6 +1,6 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
-import useSWRImmutable from 'swr'
+import useSWRImmutable from 'swr/immutable'
 
 export default function useContractCode(address: string): UseContractCodeData {
 	const [hookData, setState] = useState<ContractCodeData>(undefined)

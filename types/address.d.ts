@@ -253,3 +253,9 @@ interface UseContractCodeData {
 	isValidating: boolean
 	contractCode: ContractCodeData
 }
+
+interface LibraryItem {
+	index: number
+	name: string
+	address: string
+}

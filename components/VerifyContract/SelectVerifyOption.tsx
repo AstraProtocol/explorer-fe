@@ -37,6 +37,7 @@ const SelectVerifyOption = ({ address, onNext, currentOption, onClose, onSelectO
 							checked={currentOption === VerifyOption.FLATTEN_CODE}
 						/>
 						<RadioButton
+							disabled
 							text="Via standard input JSON"
 							style={{ width: '100%' }}
 							onClick={() => onSelectOption(VerifyOption.STANDARD_INPUT)}

@@ -1,6 +1,5 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
-import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
 import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
@@ -17,40 +16,25 @@ interface Props {
 	onSuccess: Function
 }
 
-const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
+const ContractStandardVerify = ({ address, onClose, onSuccess }: Props) => {
 	const contractNameRef = useRef(undefined)
 	const [contractName, setContractName] = useState('')
 	const [hasNightlyBuild, setHasNightlyBuild] = useState(true)
 	const [compiler, setCompiler] = useState(undefined)
-	const [evmVersion, setEvmVersion] = useState(undefined)
 	const [hasOptimization, setOptimization] = useState(true)
 	const [optimizeRun, setOptimizeRun] = useState(200)
 	const [solidityCode, setSolidityCode] = useState('')
 	const [fetchContructorArgAutomatically, setFetchContructrorArgAutomatically] = useState(true)
-	const [libs, setLib] = useState<LibraryItem[]>([])
-
-	const addLibraryItem = () => {
-		if (libs.length > 10) return
-
-		const newLib = {
-			index: libs.length,
-			name: '',
-			address: ''
-		}
-		setLib([...libs, newLib])
-	}
 
 	const onReset = () => {
 		// Reset data
 		setContractName('')
 		setHasNightlyBuild(true)
 		setCompiler(undefined)
-		setEvmVersion(undefined)
 		setOptimization(true)
 		setOptimizeRun(200)
 		setSolidityCode('')
 		setFetchContructrorArgAutomatically(true)
-		setLib([])
 	}
 
 	const onVerify = () => {
@@ -66,10 +50,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 			'smart_contract[autodetect_constructor_args]': 'true',
 			'smart_contract[constructor_arguments]': ''
 		}
-		libs.forEach((lib: LibraryItem, index: number) => {
-			params[`external_libraries[library${index}_name]`] = lib.name
-			params[`external_libraries[library${index}_address]`] = lib.address
-		})
+
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
@@ -157,71 +138,20 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 							} as FormSelectData
 						}}
 					/>
-					<FormItem
-						label="EVM Version:"
-						type="select"
-						inputProps={{
-							props: {
-								classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
-								onSelect: v => setEvmVersion(v.value)
-							},
-							data: {
-								currentValue: evmVersion,
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
-								id: 'verify-evm-version',
-								tooltip:
-									'The EVM version the contract is written for. If the bytecode does not match the version, we try to verify using the latest EVM version. EVM version details.'
-							} as FormSelectData
-						}}
-					/>
-					<FormItem
-						label="Optimization:"
-						type="radio-button"
-						inputProps={{
-							props: {
-								style: { width: 160 },
-								onClick: value => setOptimization(value === 'yes')
-							},
-							data: {
-								currentValue: hasOptimization ? 'yes' : 'no',
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
-								id: 'verify-optimization',
-								tooltip: 'If you enabled optimization during compilation, select yes.'
-							} as FormRadioButtonData
-						}}
-					/>
 
 					<FormItem
-						label="Optimize run:"
-						type="input-number"
+						label="Standard Input JSON:"
+						type="file"
 						inputProps={{
 							props: {
-								classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
-								value: optimizeRun,
-								onValueChange: (value: any) => setOptimizeRun(value.floatValue),
-								defaultValue: 200
-							} as InputNumberProps
-						}}
-					/>
-					<FormItem
-						label="Enter the Solidity Contract Code:"
-						type="text-field"
-						inputProps={{
-							props: {
-								onChange: e => setSolidityCode(e.target.value),
-								classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
-								value: solidityCode
+								// onChange: e => setSolidityCode(e.target.value),
+								// classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
+								// value: solidityCode
 							},
 							data: {
-								id: 'verify-contract-code',
+								id: 'verify-contract-file-json',
 								tooltip:
-									'We recommend using flattened code. This is necessary if your code utilizes a library or inherits dependencies. Use the POA solidity flattener or the truffle flattener.'
+									'Drop the standard input JSON file created during contract compilation into the drop zone.'
 							}
 						}}
 					/>
@@ -243,66 +173,6 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 				</div>
-				{libs.map((lib: LibraryItem) => {
-					const updatedLibs: LibraryItem[] = [...libs]
-					return (
-						<>
-							<FormItem
-								key={lib.index}
-								label={`Library ${lib.index + 1} Name:`}
-								type="input"
-								inputProps={{
-									props: {
-										placeholder: `Name`,
-										classes: {
-											wapper: clsx('text text-base', styles.color, styles.input),
-											inputFont: clsx('text text-base', styles.color)
-										},
-
-										value: updatedLibs[lib.index].name,
-										onChange: e => {
-											updatedLibs[lib.index].name = e.target.value
-											setLib(updatedLibs)
-										},
-										ref: ref => (contractNameRef.current = ref)
-									} as InputProps,
-									data: {
-										id: `verify-contract-lib-${lib.index}-name`,
-										tooltip: `A library name called in the .sol file. <br />Multiple libraries (up to 10) may be added for each contract. <br />Click the Add Library button to add an additional one.`
-									} as InputData
-								}}
-							/>
-							<FormItem
-								key={lib.index}
-								label={`Library ${lib.index + 1} Address:`}
-								type="input"
-								inputProps={{
-									props: {
-										placeholder: `Address`,
-										classes: {
-											wapper: clsx('text text-base', styles.color, styles.input),
-											inputFont: clsx('text text-base', styles.color)
-										},
-
-										value: updatedLibs[lib.index].address,
-										onChange: e => {
-											updatedLibs[lib.index].address = e.target.value
-											setLib(updatedLibs)
-										},
-										ref: ref => (contractNameRef.current = ref)
-									} as InputProps,
-									data: {
-										id: `verify-contract-lib-${lib.index}-address`,
-										tooltip: `The 0x library address. <br />This can be found in the generated json file or Truffle output (if using truffle).`
-									} as InputData
-								}}
-							/>
-						</>
-					)
-				})}
-				<NormalButton style={{ width: 207, marginRight: 10 }} onClick={addLibraryItem}>
-					<span className="text text-base contrast-color-100">Add Contract Library</span>
-				</NormalButton>
 			</div>
 			<Row
 				style={{ justifyContent: 'space-between' }}
@@ -324,4 +194,4 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	)
 }
 
-export default ContractFlattenedVerify
+export default ContractStandardVerify

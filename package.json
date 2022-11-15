@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"@astradefi/address-converter": "^0.4.1",
-		"@astraprotocol/astra-ui": "file:../../Github/astra-ui",
+		"@astraprotocol/astra-ui": "^1.0.18",
 		"@cosmjs/crypto": "^0.29.0",
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
@@ -42,6 +42,7 @@
 		"react-code-blocks": "^0.0.9-0",
 		"react-copy-to-clipboard": "^5.1.0",
 		"react-dom": "18.2.0",
+		"react-dropzone": "^14.2.3",
 		"react-markdown": "8.0.0",
 		"react-redux": "^8.0.2",
 		"react-tooltip": "^4.5.0",

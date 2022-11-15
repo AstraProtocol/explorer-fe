@@ -5,6 +5,7 @@ import { TextAreaProps } from '@astraprotocol/astra-ui/lib/es/components/Form/In
 import { SelectProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Select'
 import { RadioButtonProps } from '@astraprotocol/astra-ui/lib/es/components/RadioButton'
 import Row from 'components/Grid/Row'
+import Dropzone from 'react-dropzone'
 import ReactTooltip from 'react-tooltip'
 import styles from './style.module.scss'
 
@@ -34,7 +35,7 @@ export interface TextAreaData extends Tooltip {}
 
 interface Props {
 	label: string
-	type: 'input' | 'select' | 'radio-button' | 'text-field' | 'input-number'
+	type: 'input' | 'select' | 'radio-button' | 'text-field' | 'input-number' | 'file'
 	inputProps: {
 		props?: InputProps | SelectProps | RadioButtonProps | TextAreaProps
 		data?: FormRadioButtonData | FormSelectData | any
@@ -95,6 +96,24 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 			props = inputProps.props as TextAreaProps
 			data = inputProps.data as TextAreaData
 			content = <Form.TextArea data-tip={data?.tooltip} data-for={data?.id} {...props} />
+			break
+		case 'file':
+			content = (
+				<Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+					{({ getRootProps, getInputProps }) => (
+						<section className="container">
+							<div {...getRootProps({ className: 'dropzone' })}>
+								<input {...getInputProps()} />
+								<p>Drag & drop some files here, or click to select files</p>
+							</div>
+							<aside>
+								<h4>Files</h4>
+								{/* <ul>{files}</ul> */}
+							</aside>
+						</section>
+					)}
+				</Dropzone>
+			)
 			break
 		default:
 			break
