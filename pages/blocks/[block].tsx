@@ -44,7 +44,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
 					const address = astraToEth(proposer.initialDelegatorAddress)
 					items.push({
-						label: CardInfoLabels.To,
+						label: CardInfoLabels.to,
 						type: 'link-copy',
 						contents: [
 							{
@@ -56,7 +56,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					break
 				case 'blockHeight':
 					items.push({
-						label: CardInfoLabels.Block_Height,
+						label: CardInfoLabels.blockHeight,
 						type: 'text',
 						contents: [{ value: data[key] }],
 						responsive: {
@@ -64,14 +64,14 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 						}
 					})
 					items.push({
-						label: CardInfoLabels.Block,
+						label: CardInfoLabels.block,
 						type: 'link',
 						contents: [{ value: data[key], link: LinkMaker.block(data[key]) }]
 					})
 					break
 				case 'blockTime':
 					items.push({
-						label: CardInfoLabels.Timestamp,
+						label: CardInfoLabels.time,
 						type: 'time',
 						contents: [{ value: data[key], type: data[key], suffix: '' }]
 					})
@@ -93,12 +93,12 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 			}
 		}
 		return sortArrayFollowValue(items, 'label', [
-			CardInfoLabels.Block_Height,
-			CardInfoLabels.Timestamp,
+			CardInfoLabels.blockHeight,
+			CardInfoLabels.time,
 			CardInfoLabels.Transaction,
-			CardInfoLabels.Block,
+			CardInfoLabels.block,
 			CardInfoLabels.hash,
-			CardInfoLabels.To
+			CardInfoLabels.to
 		])
 	}
 

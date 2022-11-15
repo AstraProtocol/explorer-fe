@@ -92,14 +92,16 @@ export async function getServerSideProps({ query }) {
 			// get detail from cosmos hash
 			const cosmosDetailRes = await cosmosApi.get<TransactionDetailResponse>(`${API_LIST.TRANSACTIONS}/${tx}`)
 			let _data = cosmosDetailRes?.data?.result
-			const type = _data?.messages[0]?.type
-			cosmosHash = _data?.hash
-			// evm
-			if (type === TransacionTypeEnum.Ethermint) {
-				evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
-				data = await evmTransactionDetail(evmHash, cosmosHash)
-			} else {
-				data = await cosmsTransactionDetail(_data)
+			if (_data) {
+				const type = _data?.messages[0]?.type
+				cosmosHash = _data?.hash
+				// evm
+				if (type === TransacionTypeEnum.Ethermint) {
+					evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
+					data = await evmTransactionDetail(evmHash, cosmosHash)
+				} else {
+					data = await cosmsTransactionDetail(_data)
+				}
 			}
 		}
 		if (data == null || data == undefined)

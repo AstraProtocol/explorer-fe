@@ -36,10 +36,10 @@ export default function RawInput({ text }: RawInputProps) {
 					hex: <Copy text={text} />,
 					utf8: <Copy text={utf8Text} />
 				}}
-				classes=" "
+				classes="padding-top-xs"
 				headerBorder={false}
 				headerPadding="padding-left-sm"
-			></Tabs>
+			/>
 		</div>
 	)
 }

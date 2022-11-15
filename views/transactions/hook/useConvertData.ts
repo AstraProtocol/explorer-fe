@@ -15,10 +15,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
 	const astraPrice = formatNumber(astraSummary?.last || 0, 0)
 
-	if (!data) return [[], []]
-
 	const _convertRawDataToCardData = useCallback(
 		data => {
+			if (!data) return [[], []]
 			const keys = Object.keys(data)
 			let items: CardRowItem[] = []
 			for (let key of keys) {
@@ -26,7 +25,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'evmHash':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Transaction_Hash,
+								label: CardInfoLabels[key],
 								type: 'copy',
 								contents: [{ value: data[key] }]
 							})
@@ -34,7 +33,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'cosmosHash':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Transaction_Cosmos,
+								label: CardInfoLabels.cosmosHash,
 								type: 'copy',
 								contents: [{ value: data[key] }]
 							})
@@ -42,7 +41,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'result':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Result,
+								label: CardInfoLabels[key],
 								type: 'label',
 								contents: [
 									{
@@ -58,7 +57,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						if (data[key] !== undefined && data[key] !== null)
 							if (data[key])
 								items.push({
-									label: CardInfoLabels.Status,
+									label: CardInfoLabels[key],
 									type: 'label',
 									contents: [
 										{ value: 'Confirmed', type: 'success', backgroundType: 'rectangle' },
@@ -73,28 +72,17 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'blockHeight':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Block,
+								label: CardInfoLabels[key],
 								type: 'link',
 								contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
 							})
 						break
+
 					case 'from': //from
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.From,
-								type: 'link-copy',
-								contents: [
-									{
-										value: data[key],
-										link: LinkMaker.address(data[key])
-									}
-								]
-							})
-						break
 					case 'to': //to
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.To,
+								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [
 									{
@@ -107,7 +95,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'createdContractAddressHash': //to
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.CreatedContractAddressHash,
+								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [
 									{
@@ -121,7 +109,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'time':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Timestamp,
+								label: CardInfoLabels[key],
 								type: 'time',
 								contents: [{ value: data[key], type: data[key], suffix: '' }]
 							})
@@ -131,7 +119,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							let money = Number(astraPrice) * parseFloat(data[key])
 							let moneyFormat = formatCurrencyValue(money)
 							items.push({
-								label: CardInfoLabels.Value,
+								label: CardInfoLabels[key],
 								type: 'balance',
 								contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 							})
@@ -143,43 +131,20 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							let moneyFormat = formatCurrencyValue(money)
 							const value = data[key] < CONFIG.APPROXIMATE_ZERO ? 0 : data[key]
 							items.push({
-								label: CardInfoLabels.Transaction_Fee,
+								label: CardInfoLabels[key],
 								type: 'balance',
 								contents: [{ value, suffix: `(${moneyFormat})` }]
 							})
 						}
 						break
-					case 'gasPrice':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Gas_Price,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
-					case 'gasLimit':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Gas_Limit,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
-					case 'rawInput':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Raw_Input,
-								type: 'raw-input',
-								contents: [{ value: data[key] }]
-							})
-						break
+
 					case 'tokenTransfers':
 						if (data[key] !== undefined && data[key] !== null) {
 							const transfers = data[key] as EVMTransferItem[]
 							const transferItems = []
 							for (let transfer of transfers) {
 								transferItems.unshift({
-									label: CardInfoLabels.Tokens_Transferred,
+									label: CardInfoLabels[key],
 									type: 'transfer',
 									contents: [
 										{
@@ -216,111 +181,55 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'nonce':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Nonce,
+								label: CardInfoLabels[key],
 								type: 'nonce',
 								contents: [{ value: data[key], suffix: data.index }]
 							})
 						break
-					case 'typeOfTransfer':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Transaction_Type,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
+
 					case 'voter':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Voter,
+								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [{ value: data[key] }]
 							})
 						break
-					case 'proposalId':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Proposal_Id,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
-					case 'option':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Option,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
+
 					case 'delegatorAddress':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Delegator_Address,
-								type: 'copy',
-								contents: [{ value: data[key] }]
-							})
-						break
 					case 'validatorAddress':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Validator_Address,
-								type: 'copy',
-								contents: [{ value: data[key] }]
-							})
-						break
 					case 'validatorSrcAddress':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Validator_Src_Address,
-								type: 'copy',
-								contents: [{ value: data[key] }]
-							})
-						break
 					case 'validatorDstAddress':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Validator_Dst_Address,
+								label: CardInfoLabels[key],
 								type: 'copy',
 								contents: [{ value: data[key] }]
 							})
 						break
-					case 'failLog':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Fail_Reason,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
+
 					case 'revertReason':
+					case 'rawInput':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Revert_Reason,
+								label: CardInfoLabels[key],
 								type: 'raw-input',
 								contents: [{ value: data[key] }]
 							})
 						break
+					case 'gasPrice':
+					case 'gasLimit':
+					case 'typeOfTransfer':
+					case 'proposalId':
+					case 'option':
+					case 'failLog':
 					case 'maxFeePerGas':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Max_Fee_Gas,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
+					case 'memo':
 					case 'maxPriorityFeePerGas':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels.Max_Priority_Fer_Gas,
-								type: 'text',
-								contents: [{ value: data[key] }]
-							})
-						break
 					case 'gasUsedByTransaction':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.Gas_Used_by_Transaction,
+								label: CardInfoLabels[key],
 								type: 'text',
 								contents: [{ value: data[key] }]
 							})
@@ -328,38 +237,39 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				}
 			}
 			const mainItems = sortArrayFollowValue(items, 'label', [
-				CardInfoLabels.Transaction_Hash,
-				CardInfoLabels.Transaction_Cosmos,
-				CardInfoLabels.Result,
-				CardInfoLabels.Fail_Reason,
-				CardInfoLabels.Revert_Reason,
-				CardInfoLabels.Status,
-				CardInfoLabels.Block,
+				CardInfoLabels.evmHash,
+				CardInfoLabels.cosmosHash,
+				CardInfoLabels.result,
+				CardInfoLabels.failLog,
+				CardInfoLabels.revertReason,
+				CardInfoLabels.memo,
+				CardInfoLabels.confirmations,
+				CardInfoLabels.block,
 				//msgvote
-				CardInfoLabels.Voter,
-				CardInfoLabels.Proposal_Id,
-				CardInfoLabels.Option,
+				CardInfoLabels.voter,
+				CardInfoLabels.proposalId,
+				CardInfoLabels.option,
 				//delegate
-				CardInfoLabels.Delegator_Address,
-				CardInfoLabels.Validator_Address,
+				CardInfoLabels.delegatorAddress,
+				CardInfoLabels.validatorAddress,
 				//MsgBeginRedelegate
-				CardInfoLabels.Validator_Src_Address,
-				CardInfoLabels.Validator_Dst_Address,
+				CardInfoLabels.validatorSrcAddress,
+				CardInfoLabels.validatorDstAddress,
 
-				CardInfoLabels.Timestamp,
-				CardInfoLabels.From,
-				CardInfoLabels.To,
-				CardInfoLabels.CreatedContractAddressHash,
-				CardInfoLabels.Tokens_Transferred,
-				CardInfoLabels.Value,
-				CardInfoLabels.Transaction_Fee,
-				CardInfoLabels.Gas_Price,
-				CardInfoLabels.Transaction_Type
+				CardInfoLabels.time,
+				CardInfoLabels.from,
+				CardInfoLabels.to,
+				CardInfoLabels.createdContractAddressHash,
+				CardInfoLabels.tokenTransfers,
+				CardInfoLabels.value,
+				CardInfoLabels.fee,
+				CardInfoLabels.gasPrice,
+				CardInfoLabels.typeOfTransfer
 			])
 			//remove label of token transfer
 			let hashTransfer = false
 			mainItems.map(item => {
-				if (item.label === CardInfoLabels.Tokens_Transferred) {
+				if (item.label === CardInfoLabels.tokenTransfers) {
 					if (!hashTransfer) {
 						hashTransfer = true
 					} else {
@@ -368,18 +278,20 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				}
 			})
 			const moreItems = sortArrayFollowValue(items, 'label', [
-				CardInfoLabels.Gas_Limit,
-				CardInfoLabels.Max_Fee_Gas,
-				CardInfoLabels.Max_Priority_Fer_Gas,
-				CardInfoLabels.Gas_Used_by_Transaction,
-				CardInfoLabels.Nonce,
-				CardInfoLabels.Raw_Input
+				CardInfoLabels.gasLimit,
+				CardInfoLabels.maxFeePerGas,
+				CardInfoLabels.maxPriorityFeePerGas,
+				CardInfoLabels.gasUsedByTransaction,
+				CardInfoLabels.nonce,
+				CardInfoLabels.rawInput
 			])
 			// console.log(mainItems, moreItems, items, data)
 			return [mainItems, moreItems]
 		},
-		[data, astraSummary]
+		[astraPrice]
 	)
+	if (!data) return [[], []]
+
 	const [mainItems, moreItems] = _convertRawDataToCardData(data)
 	return [mainItems, moreItems]
 }
