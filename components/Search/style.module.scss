@@ -55,7 +55,8 @@
 	display: flex;
 	align-self: baseline;
 	flex-direction: column;
-	background: linear-gradient(180deg, rgba(159, 159, 192, 0.08) 0%, rgba(68, 79, 118, 0.13) 100%), #101626;
+	// background: linear-gradient(180deg, rgba(159, 159, 192, 0.08) 0%, rgba(68, 79, 118, 0.13) 100%), #101626;
+	background: linear-gradient(139deg, rgb(107 107 161 / 23%) 0%, rgb(14 25 63 / 49%) 100%), #0b0e16;
 	border: 1px solid rgba(255, 255, 255, 0.05);
 	backdrop-filter: blur(42px);
 	margin-left: auto;
@@ -86,6 +87,9 @@
 				}
 			}
 		}
+	}
+	.inputActive {
+		background-color: var(--same-color-theme-50);
 	}
 	.searchResult {
 		.waitResult {

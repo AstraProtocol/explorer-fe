@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useMemo } from 'react'
 import ResultView, { SearchResultViewItem } from './ResultView'
 import { SearchStatusEnum } from './SearchModal'
 import styles from './style.module.scss'
@@ -11,7 +12,7 @@ type SearchResultProps = {
 }
 
 export default function SearchResult({ status, data }: SearchResultProps) {
-	const _convertDataToView = (): SearchResultViewItem[] => {
+	const _convertDataToView = useMemo((): SearchResultViewItem[] => {
 		if (!data) {
 			return []
 		}
@@ -75,8 +76,8 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		}
 
 		return items
-	}
-	const items = _convertDataToView()
+	}, [data])
+	const items = _convertDataToView
 	return (
 		<div className={styles.searchResult}>
 			{status === SearchStatusEnum.INPUTTING && (

@@ -1,8 +1,9 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { Breadcumbs, Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
+import { Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
+import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
@@ -38,7 +39,8 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					style={{ justifyContent: 'space-between' }}
 				>
 					<div className="sm-margin-bottom-lg">
-						<Breadcumbs items={[{ label: 'Blocks' }]} size="3xl" />
+						{/* <Breadcumbs items={[{ label: 'Blocks' }]} size="3xl" /> */}
+						<PageTitle>Blocks</PageTitle>
 					</div>
 					<div>
 						<Pagination
