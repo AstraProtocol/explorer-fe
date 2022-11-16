@@ -1,5 +1,6 @@
-import { ModalWrapper } from '@astraprotocol/astra-ui'
+import { ModalWrapper, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
+import Search from 'components/Search'
 
 import useOutsideElement from 'hooks/useOutsideElement'
 import Image from 'next/image'
@@ -130,6 +131,8 @@ export const items: MenuItem[] = [
 ]
 
 export default function Navbar() {
+	const { isMobile } = useMobileLayout('small')
+	const { isMobile: isResponsive } = useMobileLayout('large')
 	const [shadow, setShadow] = useState(false)
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false)
 	const [load, setLoad] = useState(false)
@@ -199,9 +202,12 @@ export default function Navbar() {
 					</div>
 					<div className={styles.left}>
 						<Logo type="transparent" />
+						{isMobile && <Search full={false} />}
 					</div>
+					{isResponsive && !isMobile && <Search full={false} />}
 					<div className={styles.right}>
 						<Navigation items={items} />
+						<Search full={false} />
 						<SwitchTheme />
 					</div>
 				</div>

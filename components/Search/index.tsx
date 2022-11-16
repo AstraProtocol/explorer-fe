@@ -1,37 +1,48 @@
 import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
-import Container from 'components/Container'
 import { useState } from 'react'
 import SearchModal from './SearchModal'
 import styles from './style.module.scss'
 
-export default function Search() {
+interface Props {
+	full?: boolean
+}
+
+export default function Search({ full = true }: Props) {
 	const { isMobile } = useMobileLayout('small')
+	const { isMobile: isResponsive } = useMobileLayout()
 	const [_openSearchModal, setOpenSearchModal] = useState(false)
 
 	return (
-		<Container>
+		<div className="container">
 			<div
 				className={clsx(
 					styles.search,
-					'col-7 radius-base md-full',
-					'margin-auto',
+					'radius-base md-full',
 					'padding-left-lg padding-right-lg',
 					'padding-top-md padding-bottom-md',
-					isMobile ? 'margin-top-lg margin-bottom-lg' : 'margin-top-2xl margin-bottom-2xl'
+
+					{
+						['margin-left-md']: !full && !isResponsive,
+						['col-7']: full,
+						['margin-top-lg margin-bottom-lg']: isMobile && full,
+						['margin-top-2xl margin-bottom-2xl margin-auto']: (!isMobile && full) || (isResponsive && full)
+					}
 				)}
 				onClick={() => setOpenSearchModal(true)}
 			>
 				<span className={clsx('icon-search', styles.searchIcon)}></span>
-				<span className={clsx(styles.input, 'text text-base ', styles.input)}>
-					Search by address, token symbol name, transaction hash, or block number
-				</span>
+				{full && (
+					<span className={clsx(styles.input, 'text text-base ', styles.input)}>
+						Search by address, token symbol name, transaction hash, or block number
+					</span>
+				)}
 				<SearchModal
 					key={`${_openSearchModal}`}
 					open={_openSearchModal}
 					closeModal={() => setOpenSearchModal(false)}
 				/>
 			</div>
-		</Container>
+		</div>
 	)
 }

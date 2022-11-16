@@ -1,6 +1,8 @@
 import CopyButton from 'components/Button/CopyButton'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-json'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js'
 import { useEffect } from 'react'
 
 interface Props {
