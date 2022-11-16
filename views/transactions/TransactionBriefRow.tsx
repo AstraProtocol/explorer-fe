@@ -7,7 +7,7 @@ import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
 import { TransacionTypeEnum } from 'utils/enum'
-import { capitalizeFirstLetter, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type TransactionBriefRowProps = {
@@ -96,9 +96,7 @@ export default function TransactionBriefRow({
 							>
 								{ellipseBetweenText(hash, 12, 12).toLowerCase()}
 							</Typography.LinkText>
-							{evmType && (
-								<Tag hasArrowRight={false} fontType="Titi" text={capitalizeFirstLetter(evmType)} />
-							)}
+							{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
 						</Row>
 						<Timer updatedAt={updatedAt} />
 					</div>
