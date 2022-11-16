@@ -39,7 +39,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, def
 	}, [defaultTab])
 
 	return (
-		<>
+		<div style={{ overflowX: 'auto' }}>
 			<Row
 				classes={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
 					'border border-bottom-base': headerBorder
@@ -56,7 +56,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, def
 				))}
 			</Row>
 			<div className={classes || 'margin-top-xl padding-bottom-lg'}>{contents[tabId]}</div>
-		</>
+		</div>
 	)
 }
 

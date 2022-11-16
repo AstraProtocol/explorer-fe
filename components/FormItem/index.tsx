@@ -101,7 +101,7 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 			content = (
 				<Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
 					{({ getRootProps, getInputProps }) => (
-						<section className="container">
+						<section className="container" style={{ borderWidth: 1, borderColor: 'red' }}>
 							<div {...getRootProps({ className: 'dropzone' })}>
 								<input {...getInputProps()} />
 								<p>Drag & drop some files here, or click to select files</p>

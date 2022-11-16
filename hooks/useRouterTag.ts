@@ -5,7 +5,7 @@ const useRouterTag = (): [string, (tabIndex: string) => void] => {
 	const router = useRouter()
 	const [defaultTag, setDefaultTag] = useState<string>('')
 
-	const setTag = (value: string) => router.replace(`#${value}`)
+	const setTag = (value: string) => router.replace({ hash: value })
 
 	useEffect(() => {
 		if (!defaultTag) {

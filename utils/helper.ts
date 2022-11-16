@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
-import queryString from 'query-string'
+import qs from 'qs'
 import { CONFIG } from './constants'
 import { ErcTypeEnum } from './enum'
 
@@ -98,7 +98,7 @@ export class LinkMaker {
 			return '/tx'
 		}
 
-		if (props) return `/tx/${hash}?${queryString.stringify(props)}`
+		if (props) return `/tx/${hash}?${qs.stringify(props)}`
 		return `/tx/${hash}`
 	}
 

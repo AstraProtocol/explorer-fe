@@ -28,14 +28,14 @@ const ContractCodeTab = ({ address }: Props) => {
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Contract Code</span>
-				<NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>
+				{contractCode?.Verified ? <></> : <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
 			</Row>
 			{isValidating ? (
 				<div className="margin-xl">
 					<Spinner size="md" />
 				</div>
 			) : contractCode ? (
-				<div className="margin-xl">
+				<div className="margin-left-xl margin-right-xl">
 					<ContractCodeOverview contractCode={contractCode} />
 					<ContractConstructorArguments
 						abi={contractCode.ABI}
@@ -46,8 +46,8 @@ const ContractCodeTab = ({ address }: Props) => {
 						<SolidityView code={v.SourceCode} filename={v.Filename} key={v.Filename} />
 					))}
 					<JsonView filename="Contract ABI" code={contractCode.ABI} />
-					{/* <SolidityView filename="Contract Creation Code" code={contractCode.Cre} />
-				<SolidityView filename="Deployed ByteCode" code={contractCode.ABI} /> */}
+					{/* <SolidityView filename="Contract Creation Code" code={contractCode.ContractCreationCode} /> */}
+					<SolidityView filename="Deployed ByteCode" code={contractCode.DeployedByteCode} />
 				</div>
 			) : (
 				<>
@@ -55,7 +55,6 @@ const ContractCodeTab = ({ address }: Props) => {
 						<span className="text text-xl">Contract Code</span>
 						<NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>
 					</Row>
-					{/* <ModalContractVerify onClose={onVerifyDone} address={address} open={verifyVisible} /> */}
 				</>
 			)}
 			<ModalContractVerify

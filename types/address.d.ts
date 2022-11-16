@@ -232,14 +232,18 @@ interface ContractCodeData {
 	AdditionalSources: ContractFile[]
 	CompilerVersion: string
 	ConstructorArguments: string
+	ContractCreationCode: string
 	ContractName: string
+	DeployedByteCode: string
 	EVMVersion?: string | null
 	FileName: string
-	IsProxy: string
+	IsProxy: string // boolean
 	OptimizationRuns: number
 	OptimizationUsed: string
 	SourceCode: string
 	Address: string
+	Verified: boolean
+	VerifiedAt: string
 }
 
 interface ContractCodeResponse {
