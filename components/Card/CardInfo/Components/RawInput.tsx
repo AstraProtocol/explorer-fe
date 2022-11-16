@@ -29,17 +29,17 @@ export default function RawInput({ text }: RawInputProps) {
 		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'scroll' }}>
 			<Tabs
 				tabs={[
-					{ title: 'Hex', id: '1', padding: ' ' },
-					{ title: 'UTF-8', id: '2', padding: ' ' }
+					{ title: 'Hex', id: 'hex', padding: ' ' },
+					{ title: 'UTF-8', id: 'utf8', padding: ' ' }
 				]}
 				contents={{
-					'1': <Copy text={text} />,
-					'2': <Copy text={utf8Text} />
+					hex: <Copy text={text} />,
+					utf8: <Copy text={utf8Text} />
 				}}
-				classes=" "
+				classes="padding-top-xs"
 				headerBorder={false}
 				headerPadding="padding-left-sm"
-			></Tabs>
+			/>
 		</div>
 	)
 }

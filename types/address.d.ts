@@ -221,3 +221,51 @@ interface AddressSearchResponse {
 	name: string
 	insertedAt: string
 }
+
+interface ContractFile {
+	Filename: string
+	SourceCode: string
+}
+
+interface ContractCodeData {
+	ABI: string
+	AdditionalSources: ContractFile[]
+	CompilerVersion: string
+	ConstructorArguments: string
+	ContractCreationCode: string
+	ContractName: string
+	DeployedByteCode: string
+	EVMVersion?: string | null
+	FileName: string
+	IsProxy: string // boolean
+	OptimizationRuns: number
+	OptimizationUsed: string
+	SourceCode: string
+	Address: string
+	Verified: boolean
+	VerifiedAt: string
+}
+
+interface ContractCodeResponse {
+	message: string
+	result: ContractCodeData[]
+	status: string
+}
+
+interface UseContractCodeData {
+	mutate: Function
+	isValidating: boolean
+	contractCode: ContractCodeData
+}
+
+interface LibraryItem {
+	index: number
+	name: string
+	address: string
+}
+
+interface VerifyStatusResponse {
+	message: string
+	result: string
+	status: string
+}

@@ -37,6 +37,7 @@ export default function useTransaction() {
 			const evmType = getTransactionEvmType(item.messages)
 			const type = getTransactionType(item?.messages[0]?.type)
 			const { from, to, evmHash } = getFromToEvmTxFromCosmosEntry(item.messages[0])
+
 			return {
 				...item,
 				value:

@@ -1,5 +1,6 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
+import useRouterTag from 'hooks/useRouterTag'
 import TokenHolderTab from './tabs/TokenHolderTab'
 import AddressTransactionTab from './tabs/TokenTransactionTab'
 
@@ -9,17 +10,20 @@ interface Props {
 }
 
 const TokenDetailTab = ({ token, tokenData }: Props) => {
+	const [defaultTag, setTag] = useRouterTag()
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
 			<Tabs
+				tabChange={setTag}
+				defaultTab={defaultTag}
 				classes="none"
 				tabs={[
-					{ title: 'Token Transfers', id: '1' },
-					{ title: 'Token Holders', id: '2' }
+					{ title: 'Token Transfers', id: 'token-transfers' },
+					{ title: 'Token Holders', id: 'token-holders' }
 				]}
 				contents={{
-					'1': <AddressTransactionTab token={token} tokenData={tokenData} />,
-					'2': <TokenHolderTab token={token} tokenData={tokenData} />
+					'token-transfers': <AddressTransactionTab token={token} tokenData={tokenData} />,
+					'token-holders': <TokenHolderTab token={token} tokenData={tokenData} />
 				}}
 			></Tabs>
 		</BackgroundCard>

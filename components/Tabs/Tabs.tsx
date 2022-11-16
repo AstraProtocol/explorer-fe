@@ -1,12 +1,12 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Row from '../Grid/Row'
 import styles from './style.module.scss'
 import Tab from './Tab'
 
 interface Tab {
 	id: string
-	title: string
+	title: string | React.ReactNode
 	padding?: string
 }
 
@@ -20,19 +20,26 @@ interface Props {
 	classes?: string
 	headerBorder?: boolean
 	headerPadding?: string
+	defaultTab?: string
 	tabChange?: (tabIndex: string) => void
 }
 
-const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tabChange }: Props) => {
-	const [tabId, setTabId] = useState(tabs[0].id)
+const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, defaultTab, tabChange }: Props) => {
+	const [tabId, setTabId] = useState(defaultTab || tabs[0].id)
+
 	const _changeTab = value => {
 		setTabId(value)
 		if (tabChange) {
 			tabChange(value)
 		}
 	}
+
+	useEffect(() => {
+		if (defaultTab) setTabId(defaultTab)
+	}, [defaultTab])
+
 	return (
-		<>
+		<div style={{ overflowX: 'auto' }}>
 			<Row
 				classes={clsx(styles.tabs, headerPadding || 'padding-left-xl padding-right-xl', {
 					'border border-bottom-base': headerBorder
@@ -49,7 +56,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, tab
 				))}
 			</Row>
 			<div className={classes || 'margin-top-xl padding-bottom-lg'}>{contents[tabId]}</div>
-		</>
+		</div>
 	)
 }
 

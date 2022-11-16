@@ -1,14 +1,17 @@
-import dayjs from 'dayjs'
-import { NextIntlProvider } from 'next-intl'
-import { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-
 import '@astraprotocol/astra-ui/lib/shared/style.css'
 import { cosmosFetcher, evmFetcher } from 'api'
 import PageLoader from 'components/Loader/PageLoader'
+import dayjs from 'dayjs'
+import { NextIntlProvider } from 'next-intl'
+import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { Provider } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import { SWRConfig } from 'swr'
+import '../prism-theme/dark.scss'
 import store, { persistor } from '../store'
 import '../styles.css'
 
@@ -47,6 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 								<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 							</Head>
 							<PageLoader />
+							<ToastContainer toastClassName="dark--mode" />
 							<Component {...pageProps} />
 						</>
 					</SWRConfig>

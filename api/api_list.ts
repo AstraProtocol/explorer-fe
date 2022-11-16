@@ -3,7 +3,7 @@ const API_LIST = {
 
 	ALL_BLOCKS: '/api/v1/blocks',
 	BLOCKS: '/api/v1/blocks/',
-	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions?pagination=offset&page=1&limit=20&order=height.desc',
+	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions',
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
 
 	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
@@ -41,7 +41,11 @@ const API_LIST = {
 
 	TOKEN_DETAIL: '/api/v1?module=token&action=gettoken&contractaddress=', // SSR
 	TOKEN_TRANSACTIONS: 'evm_/api/v1?module=token&action=getlisttokentransfers',
-	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders' // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
+	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
+
+	CONTRACT_CODE: 'evm_/api/v1?module=contract&action=getsourcecode',
+	VERIFY_CONTRACT: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
+	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus'
 }
 
 export default API_LIST

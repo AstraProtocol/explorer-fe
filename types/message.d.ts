@@ -4,7 +4,9 @@ enum TransacionTypeEnum {
 	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
 	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
 	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
-	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate'
+	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
+	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
+	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant'
 }
 
 interface MsgCreateValidator {
@@ -117,6 +119,38 @@ interface MsgSendContent {
 	uuid: string
 	height: number
 	version: number
+}
+
+interface MsgExecContent {
+	'@type': string
+	'amount': TokenAmount
+	'delegator_address': string
+	'validator_address': string
+}
+
+interface MsgGrantContent {
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+	uuid: string
+	height: number
+	params: {
+		maybeSendGrant: any
+		maybeStakeGrant: any
+		maybeGenericGrant: {
+			'grantee': string
+			'granter': string
+			'@type': string
+			'grant': {
+				expiration: string
+				authorization: {
+					msg: string
+				}
+			}
+		}
+	}
+	txHash: string
 }
 
 interface MsgVoteContent {

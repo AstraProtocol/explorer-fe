@@ -35,7 +35,7 @@ function setDataToLocalStorage(key, data) {
 	window.localStorage.setItem(key, JSON.stringify(data))
 }
 
-function getPriceData(address: string, marketHistoryData: AddressCoinBalanceHistoryChartData[]) {
+function getBalanceData(address: string, marketHistoryData: AddressCoinBalanceHistoryChartData[]) {
 	const key = `${address}_history_balance`
 	if (marketHistoryData.length === 0) {
 		return getDataFromLocalStorage(key)
@@ -59,9 +59,9 @@ const AddressBalanceHistoryChart = ({ address }: Props) => {
 	const data: any = {
 		datasets: [
 			{
-				label: 'Price',
-				yAxisID: 'price',
-				data: getPriceData(address, addressBalanceHistoryData),
+				label: 'Balance',
+				yAxisID: 'balance',
+				data: getBalanceData(address, addressBalanceHistoryData),
 				borderColor: '#5E5CE6',
 				backgroundColor: '#5E5CE6',
 				fill: false,
@@ -115,7 +115,7 @@ const AddressBalanceHistoryChart = ({ address }: Props) => {
 					label: context => {
 						const { label } = context.dataset
 						const { formattedValue, parsed } = context
-						if (context.dataset.yAxisID === 'price') {
+						if (context.dataset.yAxisID === 'balance') {
 							return `${label}: ${formatCurrencyValue(parsed.y, 'ASA')}`
 						}
 						return formattedValue
@@ -134,7 +134,7 @@ const AddressBalanceHistoryChart = ({ address }: Props) => {
 					stepSize: 5
 				}
 			},
-			price: {
+			balance: {
 				type: 'linear' as const,
 				display: true,
 				position: 'left' as const,

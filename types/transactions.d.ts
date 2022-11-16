@@ -22,6 +22,8 @@ interface TransactionMessage {
 		| MsgEthereumTxContent
 		| MsgBeginRedelegateContent
 		| MsgSendContent
+		| MsgExecContent
+		| MsgGrantContent
 }
 
 interface TransactionItem {

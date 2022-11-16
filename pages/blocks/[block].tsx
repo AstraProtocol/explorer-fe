@@ -1,6 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { Breadcumbs } from '@astraprotocol/astra-ui'
-import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -8,15 +7,12 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Tabs from 'components/Tabs/Tabs'
-import Empty from 'components/Typography/Empty'
 import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
-import { getTransactionType } from 'utils/cosmos'
 import { CardInfoLabels } from 'utils/enum'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
-import TransactionRow from 'views/transactions/TransactionRow'
-import { caculateAmount } from 'views/transactions/utils'
+import BlockTransactionTab from 'views/block/tabs/BlockTransactionTab'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -44,7 +40,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
 					const address = astraToEth(proposer.initialDelegatorAddress)
 					items.push({
-						label: CardInfoLabels.To,
+						label: CardInfoLabels.to,
 						type: 'link-copy',
 						contents: [
 							{
@@ -56,7 +52,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					break
 				case 'blockHeight':
 					items.push({
-						label: CardInfoLabels.Block_Height,
+						label: CardInfoLabels.blockHeight,
 						type: 'text',
 						contents: [{ value: data[key] }],
 						responsive: {
@@ -64,14 +60,14 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 						}
 					})
 					items.push({
-						label: CardInfoLabels.Block,
+						label: CardInfoLabels.block,
 						type: 'link',
 						contents: [{ value: data[key], link: LinkMaker.block(data[key]) }]
 					})
 					break
 				case 'blockTime':
 					items.push({
-						label: CardInfoLabels.Timestamp,
+						label: CardInfoLabels.time,
 						type: 'time',
 						contents: [{ value: data[key], type: data[key], suffix: '' }]
 					})
@@ -93,12 +89,12 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 			}
 		}
 		return sortArrayFollowValue(items, 'label', [
-			CardInfoLabels.Block_Height,
-			CardInfoLabels.Timestamp,
+			CardInfoLabels.blockHeight,
+			CardInfoLabels.time,
 			CardInfoLabels.Transaction,
-			CardInfoLabels.Block,
+			CardInfoLabels.block,
 			CardInfoLabels.hash,
-			CardInfoLabels.To
+			CardInfoLabels.to
 		])
 	}
 
@@ -116,40 +112,10 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 						<CardInfo items={_convertRawDataToCardData(blockDetail)} classes={['margin-top-sm']} />
 						<BackgroundCard>
 							<Tabs
+								classes="padding-bottom-lg"
 								tabs={[{ title: 'Transactions', id: '1' }]}
 								contents={{
-									'1': (
-										<div>
-											{!transactions || transactions.length == 0 ? (
-												<Empty text="There are no transactions for this block." />
-											) : (
-												<>
-													{transactions?.map((item, index) => {
-														const fee = caculateAmount(item.fee)
-														return (
-															<TransactionRow
-																key={item.hash}
-																blockNumber={item.blockHeight}
-																updatedAt={item.blockTime}
-																fee={fee.amount}
-																status={item.success}
-																hash={item.hash}
-																from={''}
-																to={''}
-																value={undefined}
-																valueToken={
-																	process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames
-																}
-																type={getTransactionType(item?.messages[0]?.type)}
-																newBlock={item.newTransaction}
-																style="inject"
-															/>
-														)
-													})}
-												</>
-											)}
-										</div>
-									)
+									'1': <BlockTransactionTab blockHeight={blockHeight} />
 								}}
 							></Tabs>
 						</BackgroundCard>
@@ -167,19 +133,15 @@ export async function getServerSideProps({ params }) {
 	const { block: blockHeight } = params
 	try {
 		const blockRes = await cosmosApi.get<BlockDetailResponse>(`${API_LIST.BLOCKS}${blockHeight}`)
-		const transactionRes = await cosmosApi.get<TransactionResponse>(
-			`${API_LIST.TRANSACTION_OF_BLOCK.replace(':id', blockHeight)}`
-		)
-		const transactions = transactionRes.data.result
+
 		if (blockRes?.data?.result) {
-			return { props: { blockDetail: blockRes.data.result, blockHeight, transactions } }
+			return { props: { blockDetail: blockRes.data.result, blockHeight } }
 		} else {
 			return {
 				props: {
 					errorMessage: '404 Not Found',
 					blockDetail: null,
-					blockHeight,
-					transactions: []
+					blockHeight
 				}
 			}
 		}
@@ -193,8 +155,7 @@ export async function getServerSideProps({ params }) {
 			props: {
 				errorMessage,
 				blockDetail: null,
-				blockHeight,
-				transactions: []
+				blockHeight
 			}
 		}
 	}

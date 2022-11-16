@@ -4,10 +4,12 @@ import API_LIST from 'api/api_list'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
 import { isEmpty, isUndefined } from 'lodash'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
 import Spinner from '../../components/Spinner'
+import ModalContractVerify from '../../components/VerifyContract'
 import LogElement, { LogElementProps } from './LogItem'
 
 export interface AbiItemDecode extends AbiItem {
@@ -21,8 +23,22 @@ type DecodeInputProps = {
 }
 
 export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
+	const router = useRouter()
+	const [verifyVisible, setVerifiVisible] = useState(false)
+
 	const [load, setLoad] = useState(false)
 	const [items, setItems] = useState<LogElementProps[]>()
+
+	const onShowVerify = () => {
+		setVerifiVisible(true)
+	}
+	const onVerifyCancel = () => {
+		setVerifiVisible(false)
+	}
+
+	const onVerifyDone = () => {
+		router.reload()
+	}
 
 	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasAbi: boolean }> => {
 		const addressAbiRes = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
@@ -61,7 +77,7 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				if (Array.isArray(abi)) {
 					abiDecoder.addABI(abi)
 					const inputObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
-					if (!isUndefined(inputObj?.name)) {
+					if (!isUndefined(inputObj)) {
 						const name = inputObj?.name
 						const interfaceItem = abi.find(item => item.name === name)
 						if (interfaceItem) {
@@ -90,12 +106,9 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 		data()
 	}, [address, dataInput])
 
-	if (!dataInput || !address) {
-		return null
-	}
-
-	return (
-		!isEmpty(items) && (
+	let content
+	if (dataInput && address) {
+		content = !isEmpty(items) && (
 			<div>
 				{!load ? (
 					<div className="padding-xl" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -110,11 +123,29 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 							INPUT
 						</div>
 						{items?.map((item, index) => (
-							<LogElement key={item.index} {...item} borderTop={index !== 0} showLeftBorder={false} />
+							<LogElement
+								onOpenVerify={onShowVerify}
+								key={item.index}
+								{...item}
+								borderTop={index !== 0}
+								showLeftBorder={false}
+							/>
 						))}
 					</BackgroundCard>
 				)}
 			</div>
 		)
+	}
+
+	return (
+		<div>
+			{content}
+			<ModalContractVerify
+				onClose={onVerifyCancel}
+				onSuccess={onVerifyDone}
+				address={address}
+				open={verifyVisible}
+			/>
+		</div>
 	)
 }

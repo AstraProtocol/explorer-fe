@@ -35,7 +35,7 @@ export interface TransactionDetail {
 	confirmations?: string
 	blockHeight?: string
 	time?: string | number
-	from?: string
+	from?: string | string[] // Multisig or unique address
 	to?: string
 	createdContractAddressHash?: string
 	value?: string
@@ -68,19 +68,20 @@ export interface TransactionDetail {
 	//MsgBeginRedelegate
 	validatorSrcAddress?: string
 	validatorDstAddress?: string
+
 	revertReason?: string
 	logs?: EvmLog[]
+	memo?: string
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
 	let data: TransactionDetail = {}
-	// if (cosmosHash) {
+
 	const res = await cosmosApi.get<EvmTransactionDetailResponse>(
 		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
 	)
 	const result = res.data.result
 	if (!result) return
-
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
 			? result.messages?.[0].content.params.hash
@@ -131,7 +132,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	return data
 }
 
-export const cosmsTransactionDetail = async (result: TransactionItem): Promise<TransactionDetail> => {
+export const cosmsTransactionDetail = (result: TransactionItem): TransactionDetail => {
 	const data: TransactionDetail = {}
 	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
@@ -144,19 +145,23 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	data.time = result.blockTime
 	data.failLog = !result.success ? result.log : undefined
 	data.value = caculateCosmosTxAmount(result.messages) || '0'
-	// data.from = result.from
+	data.memo = result.memo
+	// data.logs = result.log
+	data.from = getSignerEthAddress(result.signers)
 	// data.to = result.to
 	// data.tokenTransfer = []
 	// data.value = undefined
 	data.fee = formatEther(fee.amount || '0')
 	data.feeToken = 'asa'
 	// data.gasPrice = undefined
-	// data.gasLimit = result.gasLimit
+	data.gasLimit = result.gasWanted?.toString()
 	data.gasUsed = `${result.gasUsed}`
 	// data.maxFeePerGas = undefined
 	// data.maxPriorityFeePerGas = undefined
 	// data.priorityFeePerGas = undefined
-	// data.gasUsedByTransaction = undefined
+	data.gasUsedByTransaction = result.gasUsed
+		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(result.gasUsed / result.gasWanted).format('0.00%')}`
+		: undefined
 	// data.nonce = undefined
 	// data.rawInput = result.input
 	// msgsend
@@ -165,8 +170,28 @@ export const cosmsTransactionDetail = async (result: TransactionItem): Promise<T
 	_mapMsgVoteField(data, result?.messages)
 	_mapMsgDelegate(data, result?.messages)
 	_mapMsgBeginRedelegate(data, result?.messages)
-
+	_mapMsgExec(data, result?.messages)
+	_mapMsgGrant(data, result?.messages)
 	return data
+}
+
+/**
+ *
+ * @param amounts {denom, amount}
+ * @returns amount in string (bignumber)
+ */
+export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
+	if (amounts && amounts.length > 0) {
+		let totalAmount = BigNumber.from('0')
+		for (let amount of amounts) {
+			if (amount.denom === 'aastra') {
+				totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+			}
+		}
+
+		return totalAmount.toString()
+	}
+	return '0'
 }
 
 /**
@@ -194,7 +219,7 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			totalAmount = totalAmount.add(BigNumber.from(message.content?.amount?.amount || '0'))
+			totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content?.amount)))
 		}
 		return formatEther(totalAmount)
 	}
@@ -219,6 +244,14 @@ export const caculateAmount = (amounts: TokenAmount[]): TokenAmount => {
 		amount: totalAmount.toBigInt().toString(),
 		denom: amounts[0].denom
 	}
+}
+
+export const getSignerEthAddress = (signers: Signer[]) => {
+	const addresses = []
+	signers.forEach((s: Signer) => {
+		if (s.address) addresses.push(astraToEth(s.address))
+	})
+	return addresses
 }
 
 const _convertTransfer = (
@@ -264,5 +297,19 @@ const _mapMsgBeginRedelegate = (data: TransactionDetail, messages: TransactionMe
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorSrcAddress = content.validatorSrcAddress
 		data.validatorDstAddress = content.validatorDstAddress
+	}
+}
+
+const _mapMsgExec = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: TransacionTypeEnum = messages[0]?.type
+	if (type === TransacionTypeEnum.MsgExec) {
+	}
+}
+const _mapMsgGrant = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: TransacionTypeEnum = messages[0]?.type
+	if (type === TransacionTypeEnum.MsgGrant) {
+		// const content = messages[0].content as MsgGrantContent
+		// data.grantee = content.params.maybeGenericGrant.grantee
+		// data.granter = content.params.maybeGenericGrant.granter
 	}
 }

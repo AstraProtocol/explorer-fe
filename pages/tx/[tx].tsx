@@ -1,4 +1,4 @@
-import { Breadcumbs } from '@astraprotocol/astra-ui'
+import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -29,7 +29,9 @@ type Props = {
 }
 
 const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
+	const { isMobile } = useMobileLayout('small')
 	const [items, moreItems] = useConvertData({ data })
+	const hash = evmHash || cosmosHash
 
 	return (
 		<Layout>
@@ -42,7 +44,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 				<Breadcumbs
 					items={[
 						{ label: 'Transactions', link: LinkMaker.transaction() },
-						{ label: ellipseBetweenText(evmHash || cosmosHash, 6, 6) }
+						{ label: isMobile ? ellipseBetweenText(hash) : hash }
 					]}
 				/>
 				{data ? (
@@ -88,22 +90,24 @@ export async function getServerSideProps({ query }) {
 		} else if (type == 'evm') {
 			data = await evmTransactionDetail('', tx)
 			evmHash = data.evmHash
+			cosmosHash = tx
 		} else {
 			// get detail from cosmos hash
+			cosmosHash = tx
 			const cosmosDetailRes = await cosmosApi.get<TransactionDetailResponse>(`${API_LIST.TRANSACTIONS}/${tx}`)
 			let _data = cosmosDetailRes?.data?.result
-			const type = _data?.messages[0]?.type
-			cosmosHash = _data?.hash
-			// evm
-			if (type === TransacionTypeEnum.Ethermint) {
-				evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
-				data = await evmTransactionDetail(evmHash, cosmosHash)
-			} else {
-				data = await cosmsTransactionDetail(_data)
+			if (_data) {
+				const type = _data?.messages[0]?.type
+				if (type === TransacionTypeEnum.Ethermint) {
+					evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
+					data = await evmTransactionDetail(evmHash, cosmosHash)
+				} else {
+					data = cosmsTransactionDetail(_data)
+				}
 			}
 		}
 		if (data == null || data == undefined)
-			return { props: { errorMessage: '404 Not Found', data: null, evmHash: tx, cosmosHash } }
+			return { props: { errorMessage: '404 Not Found', data: null, evmHash, cosmosHash } }
 
 		//remove empty attribute
 		data = pickBy(data, item => item !== undefined && item !== '')

@@ -1,8 +1,6 @@
 import clsx from 'clsx'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
-import Link from 'next/link'
-import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 export type LogElementProps = {
@@ -20,6 +18,7 @@ export type LogElementProps = {
 	borderTop?: boolean
 	showLeftBorder?: boolean
 	useDraftAbiToDecode?: boolean
+	onOpenVerify?: Function
 }
 
 export default function LogElement({
@@ -34,11 +33,13 @@ export default function LogElement({
 	index,
 	borderTop,
 	callRow,
+	onOpenVerify,
 	showAddress = true,
 	showLeftBorder = true,
 	useDraftAbiToDecode
 }: LogElementProps) {
 	let items: CardRowItem[] = []
+
 	if (address && showAddress) {
 		items.push({
 			label: 'Address:',
@@ -89,10 +90,11 @@ export default function LogElement({
 					)}
 				>
 					To see accurate decoded input data, the contract must be verified. Verify the contract{' '}
-					<Link href={LinkMaker.address(address, '/verify')}>
-						<a className="link"> here</a>
-					</Link>
-					.
+					{/* <Link href={LinkMaker.address(address, '/verify')}> */}
+					<a className="link" onClick={() => onOpenVerify()}>
+						here
+					</a>
+					{/* </Link> */}.
 				</div>
 			</div>
 		)

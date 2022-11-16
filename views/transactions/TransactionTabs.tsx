@@ -1,7 +1,7 @@
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
 import Empty from 'components/Typography/Empty'
-import { useState } from 'react'
+import useRouterTag from 'hooks/useRouterTag'
 import { isEmptyRawInput } from 'utils/evm'
 import useInternalTransactions from './hook/useInternalTransactions'
 import useTxRawTrace from './hook/useTxRawTrace'
@@ -41,23 +41,20 @@ export default function TransactionTabs({
 	input,
 	logs
 }: TransactionTabsProps) {
-	const [tabId, setTabId] = useState<string>('')
+	const [defaultTag, setTag] = useRouterTag()
 	const hashInternalTransactions = !isEmptyRawInput(input) && type === 'evm'
 	const { rows: internalTransactionRows } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})
 
 	const rawTrace = useTxRawTrace(evmHash, type)
-	const _tabChange = (tabId: string) => {
-		setTabId(tabId)
-	}
 
 	const tabs = [
-		{ title: 'Logs', id: 'log' },
+		{ title: 'Logs', id: 'logs' },
 		{ title: 'Raw Trace', id: 'trace' }
 	]
 	const contents = {
-		log: <Log logs={logs} display={tabId === 'log'} />,
+		logs: <Log logs={logs} display />,
 		trace: <RawTrace text={JSON.stringify(rawTrace, null, '\t')} />
 	}
 
@@ -67,13 +64,13 @@ export default function TransactionTabs({
 			<Transactions rows={transactions} emptyMsg="There are no transfer for this transaction." />
 		)
 	} else {
-		tabs.unshift({ title: 'Internal Transactions', id: 'internalTransaction' })
+		tabs.unshift({ title: 'Internal Transactions', id: 'internal-transactions' })
 		tabs.unshift({ title: 'Token Transfer', id: 'transfers' })
 
 		contents['transfers'] = (
 			<Transactions rows={transactions} emptyMsg="There are no transfer for this transaction." />
 		)
-		contents['internalTransaction'] = (
+		contents['internal-transactions'] = (
 			<Transactions
 				rows={internalTransactionRows}
 				emptyMsg="There are no internal transactions for this transaction.
@@ -81,9 +78,10 @@ export default function TransactionTabs({
 			/>
 		)
 	}
+
 	return (
 		<BackgroundCard>
-			<Tabs tabs={tabs} contents={contents} tabChange={_tabChange}></Tabs>\
+			<Tabs defaultTab={defaultTag} tabs={tabs} contents={contents} tabChange={setTag} />
 		</BackgroundCard>
 	)
 }

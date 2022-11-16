@@ -1,9 +1,10 @@
-import { Breadcumbs, Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
+import { Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
 import Search from 'components/Search'
+import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
@@ -41,7 +42,8 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					)}
 				>
 					<div className="sm-margin-bottom-lg">
-						<Breadcumbs items={[{ label: 'Transactions' }]} />
+						{/* <Breadcumbs items={[{ label: 'Transactions' }]} /> */}
+						<PageTitle>Transactions</PageTitle>
 					</div>
 					<div>
 						<Pagination
@@ -56,11 +58,11 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 					<RowTitle
 						classes="padding-left-lg padding-right-lg"
 						columns={[
-							{ title: 'Hash', col: 'col-4' },
+							{ title: 'Hash', col: 'col-5' },
 							{ title: 'Type', col: 'col-2' },
 							{ title: 'Block', col: 'col-2 padding-left-2xs' },
 							{ title: 'Amount', col: 'col-2 padding-left-2xs' },
-							{ title: 'Status', col: 'col-2 padding-left-md gutter-left' }
+							{ title: 'Status', col: 'col-1 padding-left-md ' }
 						]}
 					/>
 				)}

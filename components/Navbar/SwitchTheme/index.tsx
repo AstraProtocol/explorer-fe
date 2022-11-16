@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import { selectTheme, switchTheme, ThemeEnum } from '../../../slices/themeSlice'
+import { toast } from 'react-toastify'
+import { selectTheme, ThemeEnum } from '../../../slices/themeSlice'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import styles from '../style.module.scss'
 import DarkIcon from './icon/dark.svg'
@@ -10,7 +11,8 @@ export default function SwitchTheme() {
 	const dispatch = useAppDispatch()
 
 	const _changeTheme = () => {
-		dispatch(switchTheme())
+		toast.warn('In Development')
+		// dispatch(switchTheme())
 	}
 	return (
 		<div className={clsx(styles.switchTheme, 'margin-right-xs margin-left-xs')}>
