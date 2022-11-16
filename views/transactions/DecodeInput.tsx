@@ -3,7 +3,7 @@ import { evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
-import { isEmpty } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
@@ -43,7 +43,7 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	useEffect(() => {
 		async function data() {
 			if (!isEmpty(dataInput)) {
-				const items: LogElementProps[] = []
+				let items: LogElementProps[] = []
 				const { abi, hasAbi } = await getAbi(address)
 				const item: LogElementProps = {
 					address: address,
@@ -61,23 +61,27 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				if (Array.isArray(abi)) {
 					abiDecoder.addABI(abi)
 					const inputObj = abiDecoder.decodeMethod(dataInput) as AbiItemDecode
-					const name = inputObj?.name
-					const interfaceItem = abi.find(item => item.name === name)
-					if (interfaceItem) {
-						const params = interfaceItem.inputs
-						const call = `${interfaceItem.name}(${interfaceItem.inputs
-							.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
-							.join(', ')})`
-						item.call = call
-						item.callRow = call
-						for (let para of params) {
-							const input = inputObj?.params.find(input => input.name === para.name)
-							if (input) {
-								input.indexed = para.indexed
+					if (!isUndefined(inputObj?.name)) {
+						const name = inputObj?.name
+						const interfaceItem = abi.find(item => item.name === name)
+						if (interfaceItem) {
+							const params = interfaceItem.inputs
+							const call = `${interfaceItem.name}(${interfaceItem.inputs
+								.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
+								.join(', ')})`
+							item.call = call
+							item.callRow = call
+							for (let para of params) {
+								const input = inputObj?.params.find(input => input.name === para.name)
+								if (input) {
+									input.indexed = para.indexed
+								}
 							}
 						}
+						item.methodParams = inputObj?.params
+					} else {
+						items = []
 					}
-					item.methodParams = inputObj?.params
 				}
 				setItems(items)
 			}
@@ -91,24 +95,26 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	}
 
 	return (
-		<div>
-			{!load ? (
-				<div className="padding-xl" style={{ display: 'flex', justifyContent: 'center' }}>
-					<Spinner />
-				</div>
-			) : (
-				<BackgroundCard classes={`margin-bottom-md`}>
-					<div
-						className="text text-xl text-bold padding-left-2xl"
-						style={{ marginTop: '30px', marginBottom: '22px' }}
-					>
-						INPUT
+		!isEmpty(items) && (
+			<div>
+				{!load ? (
+					<div className="padding-xl" style={{ display: 'flex', justifyContent: 'center' }}>
+						<Spinner />
 					</div>
-					{items?.map((item, index) => (
-						<LogElement key={item.index} {...item} borderTop={index !== 0} showLeftBorder={false} />
-					))}
-				</BackgroundCard>
-			)}
-		</div>
+				) : (
+					<BackgroundCard classes={`margin-bottom-md`}>
+						<div
+							className="text text-xl text-bold padding-left-2xl"
+							style={{ marginTop: '30px', marginBottom: '22px' }}
+						>
+							INPUT
+						</div>
+						{items?.map((item, index) => (
+							<LogElement key={item.index} {...item} borderTop={index !== 0} showLeftBorder={false} />
+						))}
+					</BackgroundCard>
+				)}
+			</div>
+		)
 	)
 }
