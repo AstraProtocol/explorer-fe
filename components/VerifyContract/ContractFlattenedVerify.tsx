@@ -1,10 +1,12 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
+import API_LIST from 'api/api_list'
 import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
 import Row from 'components/Grid/Row'
+import qs from 'qs'
 import { useEffect, useRef, useState } from 'react'
 import AddressDisplay from './AddressDisplay'
 import Header from './Header'
@@ -78,7 +80,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
-			url: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
+			url: API_LIST.VERIFY_CONTRACT,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
