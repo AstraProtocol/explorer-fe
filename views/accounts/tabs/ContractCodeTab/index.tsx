@@ -27,7 +27,11 @@ const ContractCodeTab = ({ address }: Props) => {
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
-				<span className="text text-xl">Contract Code</span>
+				<span className="text text-xl contrast-color-100">
+					<span className="text text-xl contrast-color-100">
+						{contractCode?.ContractName || 'Contract Code'}
+					</span>
+				</span>
 				{contractCode?.Verified ? <></> : <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
 			</Row>
 			{isValidating ? (

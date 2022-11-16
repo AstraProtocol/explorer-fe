@@ -12,10 +12,6 @@ const ContractCodeOverview = ({ contractCode }: Props) => {
 		<div className={clsx(styles.overview, 'margin-bottom-xl ')}>
 			<div className={isMobile ? 'col col-5' : 'col col-5 margin-right-xl'}>
 				<Row style={{ justifyContent: 'space-between' }}>
-					<span className="text text-sm contrast-color-30">Name: </span>
-					<span className="text text-base contrast-color-100">{contractCode.ContractName}</span>
-				</Row>
-				<Row style={{ justifyContent: 'space-between' }}>
 					<span className="text text-sm contrast-color-30">Compiler Version: </span>
 					<span className="text text-base contrast-color-100">{contractCode.CompilerVersion}</span>
 				</Row>
@@ -23,12 +19,6 @@ const ContractCodeOverview = ({ contractCode }: Props) => {
 					<span className="text text-sm contrast-color-30">EVM Version:</span>
 					<span className="text text-base contrast-color-100">{contractCode.EVMVersion}</span>
 				</Row>
-				{contractCode.Verified && (
-					<Row style={{ justifyContent: 'space-between' }}>
-						<span className="text text-sm contrast-color-30">Verified At: </span>
-						<span className="text text-base contrast-color-100">{contractCode.VerifiedAt}</span>
-					</Row>
-				)}
 			</div>
 			<div className="col col-5">
 				<Row style={{ justifyContent: 'space-between' }}>
@@ -37,12 +27,16 @@ const ContractCodeOverview = ({ contractCode }: Props) => {
 				</Row>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<span className="text text-sm contrast-color-30">Optimization enabled: </span>
-					<span className="text text-base contrast-color-100">{contractCode.OptimizationUsed}</span>
+					<span className="text text-base contrast-color-100">
+						{contractCode.OptimizationUsed ? `Yes with ${contractCode.OptimizationRuns} runs` : 'No'}
+					</span>
 				</Row>
-				<Row style={{ justifyContent: 'space-between' }}>
-					<span className="text text-sm contrast-color-30">Optimization runs: </span>
-					<span className="text text-base contrast-color-100">{contractCode.OptimizationRuns}</span>
-				</Row>
+				{contractCode.Verified && (
+					<Row style={{ justifyContent: 'space-between' }}>
+						<span className="text text-sm contrast-color-30">Verified At: </span>
+						<span className="text text-base contrast-color-100">{contractCode.VerifiedAt}</span>
+					</Row>
+				)}
 			</div>
 		</div>
 	)

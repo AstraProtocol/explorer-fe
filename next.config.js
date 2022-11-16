@@ -14,6 +14,9 @@ const nextConfig = {
 		NEXT_PUBLIC_PAGE_OFFSET: 10,
 		NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS: 4,
 		NEXT_PUBLIC_FEE_TOKEN: 'ASA'
+	},
+	images: {
+		domains: ['ipfs.io']
 	}
 }
 

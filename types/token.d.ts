@@ -9,6 +9,12 @@ interface TokenHolderResponse {
 	result: Holder[]
 }
 
+interface TokenInventoryResponse {
+	hasNextPage: boolean
+	nextPagePath: string
+	result: []
+}
+
 interface TopAstraHolderResponse {
 	hasNextPage: boolean
 	nextPagePath: any
@@ -71,6 +77,22 @@ interface Holder {
 	address: string
 	balance: string
 	txnCount?: number
+}
+
+interface TokenNFTAttributes {
+	trait_type: string
+	value: string
+}
+
+interface TokenNFTInstance {
+	metadata: {
+		attributes: TokenNFTAttributes[]
+		description: string
+		image: string
+		name: string
+	}
+	ownerAddress: string
+	tokenId: string
 }
 
 interface TokenTransfer {

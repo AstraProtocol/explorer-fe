@@ -53,7 +53,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					'tokens': <AddressTokenTab address={address} />,
 					'internal-transactions': <AddressInternalTransactionTab address={address} />,
 					'balance-history': <AddressCoinBalanceTab address={address} />,
-					'code': <ContractCodeTab address={address} />
+					'code': isContract ? <ContractCodeTab address={address} /> : <div />
 				}}
 			></Tabs>
 		</BackgroundCard>
