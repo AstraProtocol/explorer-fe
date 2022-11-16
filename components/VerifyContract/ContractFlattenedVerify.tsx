@@ -323,14 +323,14 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 				<NormalButton style={{ width: 78 }} onClick={onReset} variant="default">
 					<span className="text text-base contrast-color-100">Reset</span>
 				</NormalButton>
-				<div>
+				<Row style={{ flex: 0 }}>
 					<NormalButton loading={loading} style={{ width: 170, marginRight: 10 }} onClick={onVerify}>
 						<span className="text text-base contrast-color-100">Verify and Publish</span>
 					</NormalButton>
 					<NormalButton style={{ width: 86 }} onClick={() => onClose()} variant="text">
 						<span className="text text-base contrast-color-100">Cancel</span>
 					</NormalButton>
-				</div>
+				</Row>
 			</Row>
 		</div>
 	)

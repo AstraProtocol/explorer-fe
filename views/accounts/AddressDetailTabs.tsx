@@ -19,6 +19,7 @@ interface Props {
 const AddressDetailTab = ({ address, addressData }: Props) => {
 	const isContract = addressData.type === AddressTypeEnum.Contract
 	const [defaultTag, setTag] = useRouterTag()
+	const isVerify = false
 	// contract verify?
 	return (
 		<BackgroundCard classes="margin-top-lg padding-bottom-lg">
@@ -36,7 +37,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					isContract && {
 						title: (
 							<span>
-								Code <span className="icon-checked alert-color-success"></span>
+								Code <span className={isVerify ? 'icon-checked alert-color-success' : ''}></span>
 							</span>
 						),
 						id: 'code'
