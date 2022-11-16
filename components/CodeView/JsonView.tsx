@@ -15,7 +15,7 @@ const JsonView = ({ code, filename }: Props) => {
 	return (
 		<div className="margin-bottom-xl">
 			<CopyButton textCopy={code} textTitle={filename} classes="margin-bottom-sm" />
-			<pre style={{ maxHeight: 500 }}>
+			<pre className="line-numbers" style={{ maxHeight: 500 }}>
 				<code className="language-json">{code}</code>
 			</pre>
 		</div>

@@ -1,6 +1,8 @@
 import CopyButton from 'components/Button/CopyButton'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-solidity'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+
 import { useEffect } from 'react'
 
 interface Props {
@@ -13,9 +15,9 @@ const SolidityView = ({ code, filename }: Props) => {
 		Prism.highlightAll()
 	}, [])
 	return (
-		<div className="margin-bottom-xl">
+		<div className="margin-bottom-xl ">
 			<CopyButton textCopy={code} textTitle={filename} classes="margin-bottom-sm" />
-			<pre style={{ maxHeight: 500 }}>
+			<pre className="line-numbers" style={{ maxHeight: 500 }}>
 				<code className="language-solidity">{code}</code>
 			</pre>
 		</div>
