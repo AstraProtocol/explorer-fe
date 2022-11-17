@@ -17,7 +17,23 @@ const nextConfig = {
 		NEXT_PUBLIC_CHAIN_ID: 11115
 	},
 	images: {
-		domains: ['ipfs.io']
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'ipfs.io',
+				pathname: '/ipfs/**'
+			},
+			{
+				protocol: 'https',
+				hostname: 'astranaut.dev',
+				pathname: '/**'
+			},
+			{
+				protocol: 'https',
+				hostname: 'astranaut.io',
+				pathname: '/**'
+			}
+		]
 	}
 }
 
