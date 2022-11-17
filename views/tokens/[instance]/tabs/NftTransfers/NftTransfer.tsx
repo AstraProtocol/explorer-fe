@@ -1,21 +1,18 @@
-import { Typography as TypographyLib } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import { evmAddressName } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, isERC721, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
 	transaction: TokenTransaction
-	tokenData: Token
+	tokenData: TokenNFTMetadata
 }
 
-const TokenTransaction = ({ transaction, tokenData }: Props) => {
-	const isNFT = isERC721(tokenData.type)
-
+const NftTransfer = ({ transaction, tokenData }: Props) => {
 	return (
 		<GradientRow
 			type={'success'}
@@ -84,34 +81,9 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<div>
-						{isNFT ? (
-							<LinkText href={LinkMaker.token(transaction.tokenContractAddress, transaction.tokenId)}>
-								Token ID [{transaction.tokenId}] {transaction.tokenSymbol}
-							</LinkText>
-						) : (
-							Number(transaction.amount) >= 0 && (
-								<>
-									<TypographyLib.Balance
-										size="xs"
-										value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
-										currency={transaction.tokenSymbol}
-									/>
-									<br />
-								</>
-							)
-						)}
-						{/* <span>
-								{Number(fee) >= 0 && (
-									<TypographyLib.Balance
-										icon={<span>Fee:</span>}
-										size="2xs"
-										value={convertBalanceToView(fee)}
-										fixNumber={7}
-										currency={feeToken.toUpperCase()}
-										classes="contrast-color-70"
-									/>
-								)}
-							</span> */}
+						<LinkText href={LinkMaker.token(transaction.tokenContractAddress, transaction.tokenId)}>
+							Token ID [{transaction.tokenId}] {transaction.tokenSymbol}
+						</LinkText>
 					</div>
 				</div>
 				<div className={clsx('col-1 block-ver-center')}>
@@ -127,4 +99,4 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 		</GradientRow>
 	)
 }
-export default TokenTransaction
+export default NftTransfer

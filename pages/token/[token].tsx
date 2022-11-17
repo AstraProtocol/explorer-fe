@@ -21,7 +21,9 @@ const TokenDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, errorMessage } = props
 
-	const title = tokenData ? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}` : token
+	const title = tokenData
+		? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}`
+		: `Token ${token}`
 	return (
 		<Layout>
 			<Head>
@@ -31,7 +33,7 @@ const TokenDetailPage: React.FC<Props> = props => {
 			<Container>
 				<Breadcumbs
 					items={[
-						{ label: 'Address', link: LinkMaker.token() },
+						{ label: 'Token', link: LinkMaker.token() },
 						{ label: isMobile ? ellipseBetweenText(token) : token }
 					]}
 				/>
@@ -56,7 +58,7 @@ export async function getServerSideProps({ params }) {
 			if (tokenData.data.result) {
 				return {
 					props: {
-						errorMessage: '404 Not Found',
+						errorMessage: '',
 						token,
 						tokenData: tokenData.data.result
 					}

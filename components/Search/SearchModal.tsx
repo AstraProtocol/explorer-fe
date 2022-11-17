@@ -80,7 +80,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						: transactions[0].cosmosHash
 					: undefined
 				const block = blocks?.[0] ? blocks[0].blockHash : undefined
-				const address = addresses?.[0] ? addresses[0].address : undefined
+				const address = addresses?.[0] ? addresses[0].addressHash : undefined
 				const validator = validators?.[0] ? validators[0].operatorAddress : undefined
 				const token = tokens?.[0] ? tokens[0].addressHash : undefined
 

@@ -2,25 +2,42 @@ import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import { evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
+import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Head from 'next/head'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import NftDetailTab from 'views/tokens/[instance]/NftDetailTab'
+import NftOverview from 'views/tokens/[instance]/NftOverview'
 import Web3 from 'web3'
 import Layout from '../../../../components/Layout'
 
 type Props = {
 	token: string
-	tokenData: Token
+	tokenId: string
+	tokenData: TokenNFTMetadata
 	errorMessage?: string
 }
 
 const TokenInstanceDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
-	const { token, tokenData, errorMessage } = props
-	// console.log(tokenData)
+	const { token, tokenData, tokenId, errorMessage } = props
+	const title = tokenData ? `${tokenData.name} (${tokenId}) - ${process.env.NEXT_PUBLIC_TITLE}` : `Token ${token}`
 
-	const title = tokenData ? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}` : token
+	const _convertRawDataToCardData = useCallback((data: TokenNFTAttributes[]): CardRowItem[] => {
+		if (!data) return []
+		let items: CardRowItem[] = []
+		for (let item of data) {
+			if (item !== undefined && item !== null)
+				items.push({
+					label: item.trait_type,
+					type: 'text',
+					contents: [{ value: item.value }]
+				})
+		}
+
+		return items
+	}, [])
 	return (
 		<Layout>
 			<Head>
@@ -30,28 +47,46 @@ const TokenInstanceDetailPage: React.FC<Props> = props => {
 			<Container>
 				<Breadcumbs
 					items={[
-						{ label: 'Address', link: LinkMaker.token() },
-						{ label: isMobile ? ellipseBetweenText(token) : token }
+						{ label: 'Token', link: LinkMaker.token() },
+						{ label: isMobile ? ellipseBetweenText(token) : token, link: LinkMaker.token(token) },
+						{ label: tokenId }
 					]}
 				/>
 
-				<h1 className="text contrast-color-70 margin-top-sm">{'In Development'}</h1>
+				{tokenData ? (
+					<>
+						<NftOverview token={token} tokenId={tokenId} tokenData={tokenData} />
+						<CardInfo
+							topElement={<span className="text text-xl padding-2xl">Properties</span>}
+							items={_convertRawDataToCardData(tokenData.attributes)}
+							classes={['margin-top-sm padding-top-md']}
+						/>
+						<NftDetailTab token={token} tokenData={tokenData} />
+					</>
+				) : (
+					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
+				)}
 			</Container>
 		</Layout>
 	)
 }
 
 export async function getServerSideProps({ params }) {
-	const { token } = params
-	if (Web3.utils.isAddress(token, 11115)) {
+	const { token, index } = params
+
+	if (Web3.utils.isAddress(token, parseInt(process.env.NEXT_PUBLIC_CHAIN_ID) || 11115)) {
 		try {
-			const tokenData = await evmApi.get<TokenDetailResponse>(`${API_LIST.TOKEN_DETAIL}${token}`)
+			const tokenData = await evmApi.get<TokenInstanceResponse>(
+				`${API_LIST.TOKEN_METADATA}${token}&tokenid=${index}`
+			)
+
 			if (tokenData.data.result) {
 				return {
 					props: {
-						errorMessage: '404 Not Found',
+						errorMessage: '',
 						token,
-						tokenData: tokenData.data.result
+						tokenId: index,
+						tokenData: tokenData.data.result.result
 					}
 				}
 			}
@@ -59,6 +94,7 @@ export async function getServerSideProps({ params }) {
 				props: {
 					errorMessage: tokenData.data.message,
 					token,
+					tokenId: index,
 					tokenData: null
 				}
 			}
@@ -72,6 +108,7 @@ export async function getServerSideProps({ params }) {
 				props: {
 					errorMessage: err.message,
 					token,
+					tokenId: index,
 					tokenData: null
 				}
 			}

@@ -28,7 +28,7 @@ const TokenDetailTab = ({ token, tokenData }: Props) => {
 				contents={{
 					'token-transfers': <AddressTransactionTab token={token} tokenData={tokenData} />,
 					'token-holders': <TokenHolderTab token={token} tokenData={tokenData} />,
-					'inventory': isNFT ? <InventoryTab token={token} tokenData={tokenData} /> : <div />
+					'inventory': isNFT ? <InventoryTab token={token} /> : <div />
 				}}
 			></Tabs>
 		</BackgroundCard>

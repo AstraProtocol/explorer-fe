@@ -85,13 +85,15 @@ interface TokenNFTAttributes {
 	value: string
 }
 
+interface TokenNFTMetadata {
+	attributes: TokenNFTAttributes[]
+	description: string
+	image: string
+	name: string
+}
+
 interface TokenNFTInstance {
-	metadata: {
-		attributes: TokenNFTAttributes[]
-		description: string
-		image: string
-		name: string
-	}
+	metadata: TokenNFTMetadata
 	ownerAddress: string
 	tokenId: string
 }
@@ -136,6 +138,14 @@ interface TokenTransfer {
 interface TokenDetailResponse {
 	message: string
 	result: Token
+	status: string
+}
+
+interface TokenInstanceResponse {
+	message: string
+	result: {
+		result: TokenNFTMetadata
+	}
 	status: string
 }
 
