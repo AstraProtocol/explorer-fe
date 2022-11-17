@@ -134,6 +134,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 					)}
 				>
 					<input
+						autoFocus
 						className={clsx('text-base padding-right-lg', styles.input)}
 						ref={_inputRef}
 						onChange={_inputChange}
