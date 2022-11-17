@@ -13,7 +13,7 @@ interface Props {
 const JsonView = ({ code, filename }: Props) => {
 	useEffect(() => {
 		Prism.highlightAll()
-	}, [])
+	}, [code])
 	return (
 		<div className="margin-bottom-xl">
 			<CopyButton textCopy={code} textTitle={filename} classes="margin-bottom-sm" />

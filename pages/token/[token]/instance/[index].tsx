@@ -18,7 +18,7 @@ type Props = {
 const TokenInstanceDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, errorMessage } = props
-	console.log(tokenData)
+	// console.log(tokenData)
 
 	const title = tokenData ? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}` : token
 	return (
