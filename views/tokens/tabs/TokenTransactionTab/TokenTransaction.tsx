@@ -84,19 +84,21 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<div>
-						{Number(transaction.amount) >= 0 && (
-							<>
-								<TypographyLib.Balance
-									size="xs"
-									value={
-										isNFT
-											? 1
-											: convertBalanceToView(transaction.amount, parseInt(transaction.decimals))
-									}
-									currency={transaction.tokenSymbol}
-								/>
-								<br />
-							</>
+						{isNFT ? (
+							<LinkText href={LinkMaker.token(transaction.tokenContractAddress, transaction.tokenId)}>
+								Token ID [{transaction.tokenId}]
+							</LinkText>
+						) : (
+							Number(transaction.amount) >= 0 && (
+								<>
+									<TypographyLib.Balance
+										size="xs"
+										value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
+										currency={transaction.tokenSymbol}
+									/>
+									<br />
+								</>
+							)
 						)}
 						{/* <span>
 								{Number(fee) >= 0 && (

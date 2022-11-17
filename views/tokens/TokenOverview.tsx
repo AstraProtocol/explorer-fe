@@ -30,6 +30,11 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 			</Row>
 			<Row style={{ justifyContent: 'space-between' }} classes="md-wrap padding-top-lg">
 				<div className="">
+					<span className="text text-base contrast-color-50">Token Name:</span>
+					<br />
+					<span className="text text-base">{tokenData.name}</span>
+				</div>
+				<div className="">
 					<span className="text text-base contrast-color-50">Total Supply:</span>
 					<br />
 					<TypographyUI.Balance
@@ -44,11 +49,6 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 						}
 						fixNumber={5}
 					/>
-				</div>
-				<div className="">
-					<span className="text text-base contrast-color-50">Token Name:</span>
-					<br />
-					<span className="text text-base">{tokenData.name}</span>
 				</div>
 				<div className="">
 					<span className="text text-base contrast-color-50">Holders:</span>

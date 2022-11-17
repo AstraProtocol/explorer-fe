@@ -52,6 +52,7 @@ interface TokenTransaction {
 	timestamp: string
 	toAddress: string
 	toAddressName: string
+	tokenId: string
 	tokenContractAddress: string
 	tokenName: string
 	tokenSymbol: string
