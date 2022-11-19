@@ -20,10 +20,8 @@
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@astraprotocol/astra-ui@^1.0.20":
+"@astraprotocol/astra-ui@file:../../Github/astra-ui":
   version "1.0.20"
-  resolved "https://npm.pkg.github.com/download/@astraprotocol/astra-ui/1.0.20/8da9581a7fdacd4391abd80b4a09e2cc78df6d7c#8da9581a7fdacd4391abd80b4a09e2cc78df6d7c"
-  integrity sha512-fC6j6D5XRGkzTwaD4AcNouJvQHGTBBtZ5lDqsyRdHZfKikyIzuOBC+zTBSGPesct0f/hWsH5LJXtQUhsX8KpUQ==
   dependencies:
     "@types/numeral" "^2.0.2"
     "@types/react-copy-to-clipboard" "^5.0.4"
@@ -5893,6 +5891,11 @@ next-intl@^2.7.5:
   integrity sha512-tPhWWNAma+uqOjahwkugRiJ7UzNTw1tyW+9v5HsplTC04ORjkNQIju9MgDPPHwPU8vI9tyYfyx0IT9h3dbs+cw==
   dependencies:
     use-intl "^2.7.6"
+
+next-seo@^5.14.1:
+  version "5.14.1"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-5.14.1.tgz#d07322edc37634fbd9beca51fb04177910d8031c"
+  integrity sha512-NiJeQbxYP3z+EMp52q8k3Q+OfX2+Yv2WehERDj98r2wjXxL+woKpRBdsSVYolTD0Hm8IWs42SzaISE93RoQdOw==
 
 next-tick@^1.1.0:
   version "1.1.0"

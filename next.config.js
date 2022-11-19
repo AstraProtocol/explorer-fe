@@ -4,6 +4,7 @@ const nextConfig = {
 	env: {
 		NEXT_PUBLIC_COSMOS_API: 'https://chainindexing.astranaut.dev',
 		NEXT_PUBLIC_EVM_API: 'https://blockscout.astranaut.dev',
+		NEXT_PUBLIC_URL: 'https://explorer.astranaut.dev',
 		NEXT_PUBLIC_CHAIN_ID: 11115,
 		NEXT_PUBLIC_TITLE: 'Astra Explorer Testnet',
 
