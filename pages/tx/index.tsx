@@ -83,7 +83,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										from={item.from}
 										to={item.to}
 										value={item.value}
-										valueToken={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
+										valueToken={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames}
 										labelStatus={item.evmType}
 										type={item.type}
 										newBlock={item.newTransaction}

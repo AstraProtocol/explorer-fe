@@ -141,7 +141,7 @@ export default function TransactionRowContent({
 									currency={
 										valueCurrency
 											? valueCurrency.toLowerCase() == 'aastra'
-												? process.env.NEXT_PUBLIC_FEE_TOKEN
+												? process.env.NEXT_PUBLIC_NATIVE_TOKEN
 												: valueCurrency?.toUpperCase()
 											: 'ASA'
 									}
@@ -157,7 +157,7 @@ export default function TransactionRowContent({
 									size="2xs"
 									value={convertBalanceToView(fee)}
 									fixNumber={7}
-									currency={process.env.NEXT_PUBLIC_FEE_TOKEN}
+									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN}
 									classes="contrast-color-70"
 								/>
 							)}

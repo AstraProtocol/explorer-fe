@@ -169,7 +169,7 @@ export default function CardInfo({
 											<TypographyUI.Balance
 												icon={
 													<CryptoIcon
-														name={process.env.NEXT_PUBLIC_EVM_TOKEN as CryptoIconNames}
+														name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames}
 													/>
 												}
 												value={content.value}
