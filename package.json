@@ -19,6 +19,7 @@
 		"@cosmjs/crypto": "^0.29.0",
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
+		"@sentry/nextjs": "^7.20.0",
 		"abi-decoder": "^2.4.0",
 		"axios": "^0.27.2",
 		"bignumber.js": "^9.1.0",

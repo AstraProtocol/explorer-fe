@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { withSentryConfig } = require('@sentry/nextjs')
+
 const nextConfig = {
 	reactStrictMode: false,
 	env: {
@@ -7,6 +9,7 @@ const nextConfig = {
 		NEXT_PUBLIC_URL: 'https://explorer.astranaut.dev',
 		NEXT_PUBLIC_CHAIN_ID: 11115,
 		NEXT_PUBLIC_TITLE: 'Astra Explorer Testnet',
+		NEXT_PUBLIC_SENTRY_DSN: 'https://0df08007fb014e5fa05ce2a4fb3fccea@sentry.tiki.com.vn/473',
 
 		NEXT_PUBLIC_BLOCK_INTERVAL: '5000',
 		NEXT_PUBLIC_TRANSACTION_INTERVAL: '5000',
@@ -38,7 +41,7 @@ const nextConfig = {
 	}
 }
 
-module.exports = {
+const moduleExports = {
 	...nextConfig,
 	i18n: {
 		locales: ['en', 'vi'],
@@ -65,5 +68,33 @@ module.exports = {
 		// })
 
 		return config
+	},
+	sentry: {
+		hideSourceMaps: true
+		// See the sections below for information on the following options:
+		//   'Configure Source Maps':
+		//     - disableServerWebpackPlugin
+		//     - disableClientWebpackPlugin
+		//     - hideSourceMaps
+		//     - widenClientFileUpload
+		//   'Configure Legacy Browser Support':
+		//     - transpileClientSDK
+		//   'Configure Serverside Auto-instrumentation':
+		//     - autoInstrumentServerFunctions
+		//
 	}
 }
+
+const sentryWebpackPluginOptions = {
+	// Additional config options for the Sentry Webpack plugin. Keep in mind that
+	// the following options are set automatically, and overriding them is not
+	// recommended:
+	//   release, url, org, project, authToken, configFile, stripPrefix,
+	//   urlPrefix, include, ignore
+
+	silent: true // Suppresses all logs
+	// For all available options, see:
+	// https://github.com/getsentry/sentry-webpack-plugin#options.
+}
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions)
