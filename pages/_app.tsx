@@ -3,6 +3,7 @@ import { cosmosFetcher, evmFetcher } from 'api'
 import PageLoader from 'components/Loader/PageLoader'
 import dayjs from 'dayjs'
 import { NextIntlProvider } from 'next-intl'
+import { NextSeo } from 'next-seo'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Provider } from 'react-redux'
@@ -49,6 +50,33 @@ const App = ({ Component, pageProps }: AppProps) => {
 							<Head>
 								<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 							</Head>
+							<NextSeo
+								title={process.env.NEXT_PUBLIC_TITLE}
+								titleTemplate={process.env.NEXT_PUBLIC_TITLE}
+								defaultTitle={process.env.NEXT_PUBLIC_TITLE}
+								description="Astra Explorer allows you to explore and search the Astra blockchain for transactions, addresses, tokens, prices and other activities taking place on Astra (ASA)"
+								canonical={process.env.NEXT_PUBLIC_URL}
+								openGraph={{
+									url: process.env.NEXT_PUBLIC_URL,
+									title: process.env.NEXT_PUBLIC_TITLE,
+									description:
+										'Astra Explorer allows you to explore and search the Astra blockchain for transactions, addresses, tokens, prices and other activities taking place on Astra (ASA)',
+									images: [
+										{
+											url: '/og-image.png',
+											width: 800,
+											height: 420,
+											alt: process.env.NEXT_PUBLIC_TITLE
+										}
+									]
+								}}
+								twitter={{
+									handle: '@AstraOfficial5',
+									site: '@AstraOfficial5',
+									cardType: 'summary_large_image'
+								}}
+							/>
+
 							<PageLoader />
 							<ToastContainer toastClassName="dark--mode" />
 							<Component {...pageProps} />
