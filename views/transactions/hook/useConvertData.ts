@@ -70,12 +70,13 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								})
 						break
 					case 'blockHeight':
-						if (data[key] !== undefined && data[key] !== null)
+						if (data[key] !== undefined && data[key] !== null) {
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'link',
 								contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
 							})
+						}
 						break
 
 					case 'from': //from
@@ -245,6 +246,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.memo,
 				CardInfoLabels.confirmations,
 				CardInfoLabels.block,
+				CardInfoLabels.blockHeight,
 				//msgvote
 				CardInfoLabels.voter,
 				CardInfoLabels.proposalId,
