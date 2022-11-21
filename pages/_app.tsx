@@ -4,8 +4,10 @@ import PageLoader from 'components/Loader/PageLoader'
 import dayjs from 'dayjs'
 import { NextIntlProvider } from 'next-intl'
 import { NextSeo } from 'next-seo'
+import type { NextWebVitalsMetric } from 'next/app'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { event, GoogleAnalytics } from 'nextjs-google-analytics'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,6 +19,16 @@ import store, { persistor } from '../store'
 import '../styles.css'
 
 dayjs.locale('en')
+
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+	const { id, name, label, value } = metric
+	event(name, {
+		category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
+		value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
+		label: id, // id unique to current page load
+		nonInteraction: true // avoids affecting bounce rate.
+	})
+}
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const _detectFetcher = (rest: any[]) => {
@@ -76,7 +88,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 									cardType: 'summary_large_image'
 								}}
 							/>
-
+							<GoogleAnalytics trackPageViews />
 							<PageLoader />
 							<ToastContainer toastClassName="dark--mode" />
 							<Component {...pageProps} />

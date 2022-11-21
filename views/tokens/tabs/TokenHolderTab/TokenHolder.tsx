@@ -47,7 +47,7 @@ export default function TokenHolder({ index, account, tokenData }: Props) {
 					'padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center col-2'
 				)}
 			>
-				{numeral(percentage).format('0,0.00')}%
+				{numeral(percentage).format('0,0.0000')}%
 			</div>
 		</div>
 	)
