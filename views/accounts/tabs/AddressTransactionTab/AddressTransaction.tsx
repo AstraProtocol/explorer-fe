@@ -109,7 +109,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 								size="2xs"
 								value={convertBalanceToView(transaction.fee)}
 								fixNumber={7}
-								currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN}
+								currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
 								classes="contrast-color-70"
 							/>
 						)}

@@ -157,7 +157,7 @@ export default function TransactionRowContent({
 									size="2xs"
 									value={convertBalanceToView(fee)}
 									fixNumber={7}
-									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN}
+									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
 									classes="contrast-color-70"
 								/>
 							)}
