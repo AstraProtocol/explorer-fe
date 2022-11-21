@@ -1,4 +1,4 @@
-import { formatEther } from 'ethers/lib/utils'
+import { formatUnits } from 'ethers/lib/utils'
 import { isEmpty } from 'lodash'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { ZERO_ADDRESS } from './constants'
@@ -30,7 +30,7 @@ export const evmConvertTokenTransferToTransactionRow = (
 			style: 'inject',
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
-			value: formatEther(item.amount || '0'),
+			value: formatUnits(item.amount || '0', item.decimals),
 			valueCurrency: item.tokenSymbol,
 			hash: hash,
 			status,

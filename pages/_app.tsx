@@ -18,6 +18,8 @@ import '../prism-theme/dark.scss'
 import store, { persistor } from '../store'
 import '../styles.css'
 
+console.log(process.env)
+
 dayjs.locale('en')
 
 export function reportWebVitals(metric: NextWebVitalsMetric) {
