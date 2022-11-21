@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react'
 import AddressDisplay from './AddressDisplay'
 import Header from './Header'
 import useContractVerifyStatus from './hook/useContractVerifyStatus'
+import useEvmVersion from './hook/useEvmVersion'
+import useSolidityCompiler from './hook/useSolidityCompiler'
 import styles from './style.module.scss'
 
 interface Props {
@@ -24,7 +26,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	const [contractName, setContractName] = useState('')
 	const [hasNightlyBuild, setHasNightlyBuild] = useState(true)
 	const [compiler, setCompiler] = useState(undefined)
-	const [evmVersion, setEvmVersion] = useState(undefined)
+	const [evmVersion, setEvmVersion] = useState('default')
 	const [hasOptimization, setOptimization] = useState(true)
 	const [optimizeRun, setOptimizeRun] = useState(200)
 	const [solidityCode, setSolidityCode] = useState('')
@@ -33,6 +35,8 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	const [guid, setGuid] = useState(undefined)
 	const [libs, setLib] = useState<LibraryItem[]>([])
 
+	const versions = useEvmVersion()
+	const solidityCompilers = useSolidityCompiler()
 	const isValidated = useContractVerifyStatus(guid)
 
 	const addLibraryItem = () => {
@@ -51,7 +55,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		setContractName('')
 		setHasNightlyBuild(true)
 		setCompiler(undefined)
-		setEvmVersion(undefined)
+		setEvmVersion('default')
 		setOptimization(true)
 		setOptimizeRun(200)
 		setSolidityCode('')
@@ -64,8 +68,8 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 			'smart_contract[address_hash]': address,
 			'smart_contract[name]': contractName,
 			'smart_contract[nightly_builds]': hasNightlyBuild,
-			'smart_contract[compiler_version]': 'v0.8.4+commit.c7e474f2', // compiler,
-			'smart_contract[evm_version]': 'default', // evmVersion,
+			'smart_contract[compiler_version]': compiler,
+			'smart_contract[evm_version]': evmVersion,
 			'smart_contract[optimization]': hasOptimization,
 			'smart_contract[optimization_runs]': optimizeRun,
 			'smart_contract[contract_source_code]': solidityCode,
@@ -161,10 +165,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 							},
 							data: {
 								currentValue: compiler,
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
+								items: solidityCompilers.map(v => ({ label: v, value: v })),
 								id: 'verify-compiler',
 								tooltip: `The compiler version is specified in pragma solidity X.X.X. Use the compiler version rather than the nightly build. If using the Solidity compiler, run solc —version to check.`
 							} as FormSelectData
@@ -180,10 +181,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 							},
 							data: {
 								currentValue: evmVersion,
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
+								items: versions.map(v => ({ label: v, value: v })),
 								id: 'verify-evm-version',
 								tooltip:
 									'The EVM version the contract is written for. If the bytecode does not match the version, we try to verify using the latest EVM version. EVM version details.'

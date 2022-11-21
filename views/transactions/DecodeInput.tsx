@@ -40,27 +40,24 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 		router.reload()
 	}
 
-	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasAbi: boolean }> => {
-		const addressAbiRes = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
-		if (addressAbiRes.data.message === 'OK') {
-			return { abi: JSON.parse(addressAbiRes?.data?.result), hasAbi: true }
-		}
+	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasVerified: boolean }> => {
 		// datainput from hash
 		if (evmHash) {
 			const hashAbiRes = await evmApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+
 			if (hashAbiRes.data.message === 'OK') {
-				return { abi: [hashAbiRes?.data?.result?.abi], hasAbi: false }
+				return { abi: [hashAbiRes?.data?.result?.abi], hasVerified: hashAbiRes?.data?.result?.verified }
 			}
 		}
 
-		return { abi: undefined, hasAbi: false }
+		return { abi: undefined, hasVerified: false }
 	}
 
 	useEffect(() => {
 		async function data() {
 			if (!isEmpty(dataInput)) {
 				let items: LogElementProps[] = []
-				const { abi, hasAbi } = await getAbi(address)
+				const { abi, hasVerified } = await getAbi(address)
 				const item: LogElementProps = {
 					address: address,
 					data: '',
@@ -71,8 +68,8 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				items.push(item)
 				item.methodId = evmMethodId(dataInput)
 
-				item.verified = hasAbi
-				item.useDraftAbiToDecode = !hasAbi && !!abi
+				item.verified = hasVerified
+				item.useDraftAbiToDecode = !hasVerified && !!abi
 
 				if (Array.isArray(abi)) {
 					abiDecoder.addABI(abi)

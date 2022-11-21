@@ -54,7 +54,7 @@ export default function TransactionTabs({
 		{ title: 'Raw Trace', id: 'trace' }
 	]
 	const contents = {
-		logs: <Log logs={logs} display />,
+		logs: <Log logs={logs} display evmHash={evmHash} />,
 		trace: <RawTrace text={JSON.stringify(rawTrace, null, '\t')} />
 	}
 

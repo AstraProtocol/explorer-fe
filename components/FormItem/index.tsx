@@ -83,6 +83,7 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 					data-for={data?.id}
 					onChange={value => props.onSelect(value)}
 					options={data.items}
+					defaultInputValue={data.currentValue}
 					{...props}
 				/>
 			)

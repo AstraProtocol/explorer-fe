@@ -47,7 +47,9 @@ const API_LIST = {
 
 	CONTRACT_CODE: 'evm_/api/v1?module=contract&action=getsourcecode',
 	VERIFY_CONTRACT: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
-	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus'
+	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus',
+	GET_EVM_VERSION: 'evm_/api/v1/evm-versions',
+	GET_SOLIDITY_COMPILER: 'evm_/api/v1/compiler-versions?compiler=solc'
 }
 
 export default API_LIST

@@ -4,7 +4,7 @@ import API_LIST from 'api/api_list'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
 import RowLoader from 'components/Loader/RowLoader'
 import Empty from 'components/Typography/Empty'
-import { isEmpty } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
 import { AbiItem } from 'web3-utils'
@@ -15,30 +15,30 @@ interface AbiItemDecode extends AbiItem {
 
 type LogProps = {
 	logs: EvmLog[]
+	evmHash: string
 	display: boolean
 }
 
-export default function Log({ logs, display }: LogProps) {
+export default function Log({ logs, display, evmHash }: LogProps) {
 	const [load, setLoad] = useState(false)
 	const [items, setItems] = useState<LogElementProps[]>()
 
-	// no display and no load
-	if (!display && !load) {
-		return null
-	}
-
 	const getAbi = async (address: string): Promise<AbiItem[]> => {
-		const res = await evmApi.get<AbiResponse>(`${API_LIST.ABI}${address}`)
-		if (res.data.message === 'OK') {
-			return JSON.parse(res?.data?.result)
+		if (evmHash) {
+			const hashAbiRes = await evmApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+
+			if (hashAbiRes.data.message === 'OK') {
+				return [hashAbiRes?.data?.result?.abi]
+			}
 		}
+
 		return undefined
 	}
 
 	useEffect(() => {
 		async function data() {
 			if (!isEmpty(logs)) {
-				const items: LogElementProps[] = []
+				let items: LogElementProps[] = []
 				for (let log of logs) {
 					const abi = await getAbi(log.address)
 					const item: LogElementProps = {
@@ -50,20 +50,24 @@ export default function Log({ logs, display }: LogProps) {
 						item.verified = true
 						abiDecoder.addABI(abi)
 						const logObj = abiDecoder.decodeLogs([log])[0] as AbiItemDecode
-						const name = logObj.name
-						const interfaceItem = abi.find(item => item.name === name)
-						const params = interfaceItem.inputs
-						const call = `${interfaceItem.name}(${interfaceItem.inputs
-							.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
-							.join(', ')})`
-						item.call = call
-						for (let para of params) {
-							const input = logObj?.events.find(input => input.name === para.name)
-							if (input) {
-								input.indexed = para.indexed
+						if (!isUndefined(logObj)) {
+							const name = logObj.name
+							const interfaceItem = abi.find(item => item.name === name)
+							const params = interfaceItem.inputs
+							const call = `${interfaceItem.name}(${interfaceItem.inputs
+								.map(input => `${input.type} ${input.indexed ? 'indexed' : ''} ${input.name}`)
+								.join(', ')})`
+							item.call = call
+							for (let para of params) {
+								const input = logObj?.events.find(input => input.name === para.name)
+								if (input) {
+									input.indexed = para.indexed
+								}
 							}
+							item.methodParams = logObj.events
 						}
-						item.methodParams = logObj.events
+					} else {
+						items = []
 					}
 				}
 				setItems(items)
@@ -72,6 +76,12 @@ export default function Log({ logs, display }: LogProps) {
 		}
 		data()
 	}, [logs])
+
+	// no display and no load
+	if (!display && !load) {
+		return null
+	}
+
 	return (
 		<div className="width-100">
 			{!load ? (

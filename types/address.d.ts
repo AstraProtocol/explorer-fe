@@ -17,7 +17,14 @@ interface AbiResponse {
 interface HashAbiResponse {
 	message: string
 	result: {
-		abi: any
+		abi: {
+			inputs: []
+			name: string
+			outputs: any
+			stateMutability: any
+			type: any
+		}
+		verified: boolean
 	}
 	status: string
 }

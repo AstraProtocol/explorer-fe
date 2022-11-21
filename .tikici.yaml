@@ -83,7 +83,7 @@ deployment_config:
                         port: '3000'
         envFrom:
             - secretRef:
-                  name: env-explorer-fe
+                  name: explorer-fe
                   optional: false
         replicaCount: 1
     prod:
@@ -95,6 +95,6 @@ deployment_config:
                         port: '3000'
         envFrom:
             - secretRef:
-                  name: env-explorer-fe
+                  name: explorer-fe
                   optional: false
         replicaCount: 1
