@@ -3,7 +3,7 @@ import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { caculateCosmosTxAmount, caculateEthereumTxAmount } from 'views/transactions/utils'
+import { caculateCosmosTxAmount, caculateEthereumTxAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useAddressTransactions(address: string, page: number) {
 	const [hookData, setState] = useState<UseAddressTransactionData>({
@@ -35,7 +35,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			// if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`
 			// else type = msgTypeShort
 			type = msgTypeShort
-
+			const evmHash = getEvmTxhash(d.messages)
 			return {
 				value:
 					(d.value
@@ -48,7 +48,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				blockHeight: d.blockHeight,
 				blockTime: d.blockTime,
 				fee: d.fee.length > 0 ? d.fee[0]?.amount : 0,
-				hash: d.hash,
+				hash: evmHash || d.hash,
 				messageTypes: d.messageTypes,
 				messages: d.messages,
 				success: d.success,

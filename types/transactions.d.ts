@@ -187,10 +187,7 @@ interface EvmTransactionDetailResponse {
 		type: number
 		v: string
 		value: string
-		messages?: {
-			type: TransacionTypeEnum
-			content: MsgEthereumTxContent
-		}[]
+		messages?: MsgEthereumTx[]
 	}
 	status: string
 }

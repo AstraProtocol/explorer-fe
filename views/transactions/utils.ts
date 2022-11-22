@@ -84,10 +84,10 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	if (!result) return
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
-			? result.messages?.[0].content.params.hash
+			? getEvmTxhash(result.messages)
 			: result.hash
 		: evmHash
-	data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
+	// data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
 	data.cosmosHash = cosmosHash || result.cosmosHash
 	data.result = result.success ? 'Success' : 'Error'
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
@@ -199,7 +199,7 @@ export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
  * @param tx messages
  * @returns amount in string
  */
-export const caculateEthereumTxAmount = (messages: TransactionMessage[]): string => {
+export const caculateEthereumTxAmount = (messages: MsgEthereumTx[] | TransactionMessage[]): string => {
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
@@ -244,6 +244,15 @@ export const caculateAmount = (amounts: TokenAmount[]): TokenAmount => {
 		amount: totalAmount.toBigInt().toString(),
 		denom: amounts[0].denom
 	}
+}
+
+/**
+ * Get Evm TxHash from messages
+ * @param messages: MsgEthereumTx[]
+ * @returns
+ */
+export const getEvmTxhash = (messages: MsgEthereumTx[] | TransactionMessage[]): string | undefined => {
+	return messages?.[0]?.content?.params?.hash || undefined
 }
 
 export const getSignerEthAddress = (signers: Signer[]) => {

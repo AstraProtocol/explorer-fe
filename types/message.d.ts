@@ -10,6 +10,7 @@ enum TransacionTypeEnum {
 }
 
 interface MsgCreateValidator {
+	evmType?: string
 	type: '/cosmos.staking.v1beta1.MsgCreateValidator'
 	content: {
 		height: number
@@ -40,6 +41,7 @@ interface MsgCreateValidator {
 }
 
 interface MsgUnjail {
+	evmType?: string
 	type: '/cosmos.slashing.v1beta1.MsgUnjail'
 	content: {
 		txHash: string
@@ -54,11 +56,13 @@ interface MsgUnjail {
 }
 
 interface MsgEthereumTx {
+	evmType?: string
 	type: '/ethermint.evm.v1.MsgEthereumTx'
 	content: MsgEthereumTxContent
 }
 
 interface MsgBeginRedelegate {
+	evmType?: string
 	type: string
 	content: MsgBeginRedelegateContent
 }
