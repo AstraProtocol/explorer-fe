@@ -13,7 +13,6 @@ RUN GITHUB_PACKAGE_TOKEN=${GITHUB_TOKEN} yarn --frozen-lockfile
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
 WORKDIR /app
-ARG SENTRY_AUTH_TOKEN
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/ ./
 COPY . . 
