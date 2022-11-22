@@ -24,7 +24,14 @@ ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/ ./
 COPY . . 
-RUN yarn build
+RUN SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
+    NEXT_PUBLIC_COSMOS_API=${NEXT_PUBLIC_COSMOS_API} \
+    NEXT_PUBLIC_EVM_API=${NEXT_PUBLIC_EVM_API} \
+    NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL} \
+    NEXT_PUBLIC_CHAIN_ID=${NEXT_PUBLIC_CHAIN_ID} \
+    NEXT_PUBLIC_TITLE=${NEXT_PUBLIC_TITLE} \
+    NEXT_PUBLIC_GA_MEASUREMENT_ID=${NEXT_PUBLIC_GA_MEASUREMENT_ID} \
+    yarn build 
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
