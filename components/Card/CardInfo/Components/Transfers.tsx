@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
-import { LinkMaker } from 'utils/helper'
+import { isERC721, LinkMaker } from 'utils/helper'
 import { Content } from '../'
 import styles from '../style.module.scss'
 
 const Transfers = ({ content }: { content: Content }) => {
 	const data = content?.transfer || {}
-	const isNFT = data.tokenType === 'ERC-721'
+	const isNFT = isERC721(data.tokenType)
 	return (
 		<div className="block-center sm-wrap flex-justify-start">
 			<span

@@ -1,5 +1,6 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
+import * as Sentry from '@sentry/nextjs'
 import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
@@ -68,6 +69,7 @@ const ContractStandardVerify = ({ address, onClose, onSuccess }: Props) => {
 				}
 			})
 			.catch(function (error) {
+				Sentry.captureException(error)
 				console.log(error)
 			})
 	}

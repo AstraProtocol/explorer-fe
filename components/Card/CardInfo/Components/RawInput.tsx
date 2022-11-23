@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import CopyButton from 'components/Button/CopyButton'
 import Tabs from 'components/Tabs/Tabs'
 import web3 from 'web3'
@@ -24,7 +25,9 @@ export default function RawInput({ text }: RawInputProps) {
 	let utf8Text = text
 	try {
 		utf8Text = web3.utils.toAscii(text)
-	} catch (e) {}
+	} catch (e) {
+		Sentry.captureException(e)
+	}
 	return (
 		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'scroll' }}>
 			<Tabs

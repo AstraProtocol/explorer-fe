@@ -1,6 +1,7 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
+import * as Sentry from '@sentry/nextjs'
 import API_LIST from 'api/api_list'
 import axios from 'axios'
 import clsx from 'clsx'
@@ -98,6 +99,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 				}
 			})
 			.catch(function (error) {
+				Sentry.captureException(error)
 				setLoading(false)
 				console.log(error)
 			})

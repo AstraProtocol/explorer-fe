@@ -1,4 +1,5 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
+import * as Sentry from '@sentry/nextjs'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -113,12 +114,12 @@ export async function getServerSideProps({ query }) {
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e: any) {
+		Sentry.captureException(e)
 		let errorMessage = e.message
 		if (e instanceof AxiosError) {
 			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
-
 		return { props: { errorMessage, data: null, evmHash: tx, cosmosHash } }
 	}
 }

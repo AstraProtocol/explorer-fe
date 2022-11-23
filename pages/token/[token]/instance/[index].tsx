@@ -1,4 +1,5 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
+import * as Sentry from '@sentry/nextjs'
 import { evmApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -99,6 +100,7 @@ export async function getServerSideProps({ params }) {
 				}
 			}
 		} catch (err) {
+			Sentry.captureException(err)
 			let errorMessage = err.message
 			if (err instanceof AxiosError) {
 				console.log('error api', err.message, err.code, err?.config?.baseURL, err?.config?.url)

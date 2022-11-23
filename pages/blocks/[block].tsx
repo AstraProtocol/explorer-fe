@@ -1,5 +1,6 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { Breadcumbs } from '@astraprotocol/astra-ui'
+import * as Sentry from '@sentry/nextjs'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -146,6 +147,7 @@ export async function getServerSideProps({ params }) {
 			}
 		}
 	} catch (e) {
+		Sentry.captureException(e)
 		let errorMessage = e.message
 		if (e instanceof AxiosError) {
 			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)

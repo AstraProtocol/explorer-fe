@@ -81,6 +81,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
 	)
 	const result = res.data.result
+	console.log(result)
 	if (!result) return
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0

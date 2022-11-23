@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { ZERO_ADDRESS } from './constants'
 import { TransacionTypeEnum } from './enum'
+import { isERC721 } from './helper'
 
 export const evmTransactionType = (type: number): string => {
 	if (type === 2) {
@@ -26,11 +27,13 @@ export const evmConvertTokenTransferToTransactionRow = (
 		const isMint = item.fromAddress === ZERO_ADDRESS
 		const isBurn = item.toAddress === ZERO_ADDRESS
 		const labelStatus = (isMint && 'Mint') || (isBurn && 'Burn')
+
+		const isNft = isERC721(item.tokenType)
 		rows.push({
 			style: 'inject',
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
-			value: formatUnits(item.amount || '0', item.decimals),
+			value: isNft ? '1' : formatUnits(item.amount || '0', item.decimals),
 			valueCurrency: item.tokenSymbol,
 			hash: hash,
 			status,
