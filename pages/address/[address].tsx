@@ -22,6 +22,7 @@ const AddressDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { address, addressData, errorMessage } = props
 
+	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const isContract = addressData?.type === 'contractaddress'
 	const title = isContract
 		? `Contract ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
@@ -45,7 +46,13 @@ const AddressDetailPage: React.FC<Props> = props => {
 						<AddressDetailTabs address={address} addressData={addressData} />
 					</>
 				) : (
-					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Address Not Found'}</h1>
+					<h1 className="text contrast-color-70 margin-top-sm">
+						{isMainnet
+							? errorMessage
+								? 'Something went wrong'
+								: 'Address Not Found'
+							: errorMessage || 'Address Not Found'}
+					</h1>
 				)}
 			</Container>
 		</Layout>

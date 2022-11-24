@@ -22,6 +22,7 @@ const TokenDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, errorMessage } = props
 
+	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const title = tokenData
 		? `${tokenData.name} (${tokenData.symbol}) - ${process.env.NEXT_PUBLIC_TITLE}`
 		: `Token ${token}`
@@ -44,7 +45,13 @@ const TokenDetailPage: React.FC<Props> = props => {
 						<TokenDetailTab token={token} tokenData={tokenData} />
 					</>
 				) : (
-					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
+					<h1 className="text contrast-color-70 margin-top-sm">
+						{isMainnet
+							? errorMessage
+								? 'Something went wrong'
+								: 'Token Not Found'
+							: errorMessage || 'Token Not Found'}
+					</h1>
 				)}
 			</Container>
 		</Layout>

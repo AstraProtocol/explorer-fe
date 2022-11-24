@@ -108,7 +108,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 			{status === SearchStatusEnum.DONE && items?.length > 0 && (
 				<div className={clsx(styles.searchResultList, 'padding-top-lg')}>
 					<div className="text-base text-bold padding-bottom-sm margin-bottom-sm">
-						{items.length} search result:
+						{items.length} search results:
 					</div>
 					<div className={styles.resultScroll}>
 						{items.map(item => (

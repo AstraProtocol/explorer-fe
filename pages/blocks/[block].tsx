@@ -24,6 +24,7 @@ type Props = {
 }
 
 const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeight, transactions }: Props) => {
+	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const _convertRawDataToCardData = data => {
 		const keys = Object.keys(data)
 		let items: CardRowItem[] = []
@@ -122,7 +123,13 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 						</BackgroundCard>
 					</>
 				) : (
-					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Block Not Found'}</h1>
+					<h1 className="text contrast-color-70 margin-top-sm">
+						{isMainnet
+							? errorMessage
+								? 'Something went wrong'
+								: 'Block Not Found'
+							: errorMessage || 'Block Not Found'}
+					</h1>
 				)}
 			</Container>
 		</Layout>

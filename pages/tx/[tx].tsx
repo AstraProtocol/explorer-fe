@@ -33,7 +33,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const { isMobile } = useMobileLayout('small')
 	const [items, moreItems] = useConvertData({ data })
 	const hash = evmHash || cosmosHash
-
+	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	return (
 		<Layout>
 			<Head>
@@ -66,7 +66,13 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 						/>
 					</>
 				) : (
-					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
+					<h1 className="text contrast-color-70 margin-top-sm">
+						{isMainnet
+							? errorMessage
+								? 'Something went wrong'
+								: 'Transaction Not Found'
+							: errorMessage || 'Transaction Not Found'}
+					</h1>
 				)}
 			</Container>
 		</Layout>
