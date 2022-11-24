@@ -6,6 +6,7 @@ interface Address {
 	tokenName: string
 	tokenSymbol: string
 	type: 'address' | 'contractaddress' // string
+	verified: boolean
 }
 
 interface AbiResponse {
