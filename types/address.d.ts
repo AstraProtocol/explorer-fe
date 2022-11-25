@@ -1,4 +1,5 @@
 interface Address {
+	contractName?: string
 	balance: string
 	creationTransaction: string
 	creator: string
@@ -7,6 +8,12 @@ interface Address {
 	tokenSymbol: string
 	type: 'address' | 'contractaddress' // string
 	verified: boolean
+}
+
+interface AddressDetailResponse {
+	message: string
+	result: Address
+	status: string
 }
 
 interface AbiResponse {

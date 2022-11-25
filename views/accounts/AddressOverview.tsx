@@ -34,7 +34,9 @@ const AddressOverview = ({ address, addressData }: Props) => {
 						{isContract ? 'Contract' : 'Wallet Address'}
 					</span>
 					<br />
-					<span className="text text-lg">{address}</span>
+					<span className="text text-lg">
+						{isContract ? `${addressData.contractName} (${address})` : address}
+					</span>
 				</div>
 				<div>
 					<CopyButton textCopy={address} />

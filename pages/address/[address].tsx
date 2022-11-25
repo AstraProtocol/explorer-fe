@@ -36,7 +36,7 @@ const AddressDetailPage: React.FC<Props> = props => {
 			<Container>
 				<Breadcumbs
 					items={[
-						{ label: 'Address', link: LinkMaker.address() },
+						{ label: isContract ? 'Contract' : 'Address', link: LinkMaker.address() },
 						{ label: isMobile ? ellipseBetweenText(address) : address }
 					]}
 				/>
@@ -64,7 +64,7 @@ export async function getServerSideProps({ params }) {
 	let addressData
 	if (web3.utils.isAddress(address))
 		try {
-			const addressRes = await evmApi.get<BlockDetailResponse>(`${API_LIST.ADDRESS_DETAIL}${address}`)
+			const addressRes = await evmApi.get<AddressDetailResponse>(`${API_LIST.ADDRESS_DETAIL}${address}`)
 			addressData = addressRes.data.result
 			if (!addressData) {
 				return {

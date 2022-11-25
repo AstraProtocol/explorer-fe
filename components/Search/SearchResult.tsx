@@ -39,7 +39,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 						time: item.insertedAt,
 						type: 'Address',
 						key: item.addressHash,
-						value: item.addressHash,
+						value: item.name ? `${item.name} | ${item.addressHash}` : item.addressHash,
 						linkValue: item.addressHash
 					})
 				}
