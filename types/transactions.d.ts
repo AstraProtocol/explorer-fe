@@ -165,6 +165,7 @@ interface EvmTransactionDetailResponse {
 		cumulativeGasUsed: string
 		error: string
 		from: string
+		fromAddressName?: string
 		fee?: TokenAmount[]
 		gasLimit: string
 		gasPrice: string
@@ -182,6 +183,7 @@ interface EvmTransactionDetailResponse {
 		s: string
 		success: boolean
 		to: string
+		toAddressName?: string
 		createdContractAddressHash?: string
 		tokenTransfers: EVMTransferItem[]
 		type: number

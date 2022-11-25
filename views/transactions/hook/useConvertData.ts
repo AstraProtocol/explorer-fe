@@ -80,6 +80,20 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						break
 
 					case 'from': //from
+						if (data[key] !== undefined && data[key] !== null)
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'link-copy',
+								contents: [
+									{
+										value: data['fromAddressName']
+											? `${data['fromAddressName']} (${data[key]})`
+											: data[key],
+										link: LinkMaker.address(data[key])
+									}
+								]
+							})
+						break
 					case 'to': //to
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
@@ -87,7 +101,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								type: 'link-copy',
 								contents: [
 									{
-										value: data[key],
+										value: data['toAddressName']
+											? `${data['toAddressName']} (${data[key]})`
+											: data[key],
 										link: LinkMaker.address(data[key])
 									}
 								]

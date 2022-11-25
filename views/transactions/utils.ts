@@ -36,7 +36,9 @@ export interface TransactionDetail {
 	blockHeight?: string
 	time?: string | number
 	from?: string | string[] // Multisig or unique address
+	fromAddressName?: string
 	to?: string
+	toAddressName?: string
 	createdContractAddressHash?: string
 	value?: string
 	valueToken?: string
@@ -81,7 +83,6 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
 	)
 	const result = res.data.result
-	console.log(result)
 	if (!result) return
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
@@ -95,7 +96,9 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
 	data.from = result.from
+	data.fromAddressName = result.fromAddressName
 	data.to = result.to
+	data.toAddressName = result.toAddressName
 	data.createdContractAddressHash = result.createdContractAddressHash
 	data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
 	data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
