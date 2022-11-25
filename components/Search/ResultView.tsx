@@ -27,7 +27,7 @@ export default function ResultView({ item }: ResultViewProps) {
 			return LinkMaker.block(linkValue)
 		}
 
-		if (type === 'Address' || type === 'Validator') {
+		if (type === 'Address' || type === 'Validator' || type === 'Contract') {
 			return LinkMaker.address(linkValue)
 		}
 
