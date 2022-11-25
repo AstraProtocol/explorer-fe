@@ -277,3 +277,9 @@ interface VerifyStatusResponse {
 	result: string
 	status: string
 }
+
+interface ContractSearchResponse {
+	addressHash: string
+	insertedAt: string
+	name: string
+}

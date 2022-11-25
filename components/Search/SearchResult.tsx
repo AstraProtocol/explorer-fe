@@ -17,7 +17,7 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 			return []
 		}
 
-		const { blocks, addresses, transactions, validators, tokens } = data?.result
+		const { blocks, addresses, transactions, validators, tokens, contracts } = data?.result
 		const items: SearchResultViewItem[] = []
 		if (blocks && blocks.length > 0) {
 			for (let item of blocks) {
@@ -40,6 +40,19 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 						type: 'Address',
 						key: item.addressHash,
 						value: item.addressHash,
+						linkValue: item.addressHash
+					})
+				}
+			}
+		}
+		if (contracts && contracts.length > 0) {
+			for (let item of contracts) {
+				if (!items.find((i: SearchResultViewItem) => item.addressHash === i.key)) {
+					items.push({
+						time: item.insertedAt,
+						type: 'Contract',
+						key: item.addressHash,
+						value: `${item.name} | ${item.addressHash}`,
 						linkValue: item.addressHash
 					})
 				}

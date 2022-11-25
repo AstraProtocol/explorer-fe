@@ -11,6 +11,7 @@ interface SearchItemResponse {
 		validators: ValidatorData[]
 		addresses: AddressSearchResponse[]
 		tokens: TokenSearchResponse[]
+		contracts: ContractSearchResponse[]
 	}
 }
 
