@@ -57,7 +57,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	const data: SearchItemResponse = response.data
 	useEffect(() => {
 		_setSearchStatus(SearchStatusEnum.DONE)
-	}, [router.asPath])
+	}, [router.query])
 	useEffect(() => {
 		if (_search && data !== undefined) {
 			_setSearchStatus(SearchStatusEnum.DONE)
