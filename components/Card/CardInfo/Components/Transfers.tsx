@@ -57,14 +57,14 @@ const Transfers = ({ content }: { content: Content }) => {
 							TokenID [{data.tokenId}]
 						</Typography.LinkText>
 						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
-							{data.tokenName}
+							{data.tokenSymbol}
 						</Typography.LinkText>
 					</>
 				) : (
 					<>
 						<span className="padding-right-xs">{content?.transfer.value}</span>
 						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
-							{data.tokenName}
+							{data.tokenSymbol}
 						</Typography.LinkText>
 					</>
 				)}

@@ -29,7 +29,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 			gradient={'transparent'}
 		>
 			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
-				<div className={clsx('col-4')}>
+				<div className={clsx('col-5')}>
 					<Row>
 						{isEvm ? (
 							<Image alt={'eth'} src={`/images/icons/eth.svg`} width={24} height={24} />
@@ -116,7 +116,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 					</div>
 				</div>
 
-				<div className={clsx('col-2 padding-left-md gutter-left col')} style={{ textTransform: 'capitalize' }}>
+				<div className={clsx('col-1 padding-left-md gutter-left col')} style={{ textTransform: 'capitalize' }}>
 					{transaction.success ? (
 						<Typography.SuccessText>Success</Typography.SuccessText>
 					) : (

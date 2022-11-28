@@ -34,7 +34,7 @@ export const evmConvertTokenTransferToTransactionRow = (
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
 			value: isNft ? '1' : formatUnits(item.amount || '0', item.decimals),
-			valueCurrency: item.tokenSymbol,
+			valueCurrency: item.tokenSymbol?.toUpperCase(),
 			hash: hash,
 			status,
 			from: item.fromAddress,
