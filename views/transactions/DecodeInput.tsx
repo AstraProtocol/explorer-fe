@@ -1,9 +1,10 @@
 import abiDecoder from 'abi-decoder'
 import { evmApi } from 'api'
 import API_LIST from 'api/api_list'
+import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
-import { isEmpty, isUndefined } from 'lodash'
+import { isArray, isEmpty, isUndefined } from 'lodash'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
@@ -11,6 +12,7 @@ import { AbiItem } from 'web3-utils'
 import Spinner from '../../components/Spinner'
 import ModalContractVerify from '../../components/VerifyContract'
 import LogElement, { LogElementProps } from './LogItem'
+import styles from './style.module.scss'
 
 export interface AbiItemDecode extends AbiItem {
 	params: EventDecode[]
@@ -27,7 +29,7 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	const [verifyVisible, setVerifiVisible] = useState(false)
 
 	const [load, setLoad] = useState(false)
-	const [items, setItems] = useState<LogElementProps[]>()
+	const [items, setItems] = useState<LogElementProps[]>(undefined)
 
 	const onShowVerify = () => {
 		setVerifiVisible(true)
@@ -86,6 +88,14 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 							item.callRow = call
 							for (let para of params) {
 								const input = inputObj?.params.find(input => input.name === para.name)
+								// tuple
+								if (!isEmpty(para?.components)) {
+									input.type = `(${para.components.map(item => item.type).join(',')})`
+									input.value = `(${(input.value as string[]).join(',')})`
+								} else if (isArray(input.value)) {
+									// array
+									input.value = JSON.stringify(input.value)
+								}
 								if (input) {
 									input.indexed = para.indexed
 								}
@@ -97,6 +107,8 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 					}
 				}
 				setItems(items)
+			} else {
+				setItems([])
 			}
 			setLoad(true)
 		}
@@ -104,8 +116,8 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	}, [address, dataInput])
 
 	let content
-	if (dataInput && address) {
-		content = !isEmpty(items) && (
+	if (dataInput) {
+		content = !isEmpty(items) ? (
 			<div>
 				{!load ? (
 					<div className="padding-xl" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -131,7 +143,26 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 					</BackgroundCard>
 				)}
 			</div>
-		)
+		) : isEmpty(items) && isArray(items) ? (
+			<BackgroundCard classes="padding-top-xl padding-bottom-xl margin-bottom-md">
+				<div className="padding-left-2xl padding-right-2xl sm-padding-left-md sm-padding-right-md">
+					<div
+						className={clsx(
+							styles.verifyContract,
+							'contrast-color-100',
+							'padding-top-sm padding-bottom-sm padding-left-xs padding-right-xs'
+						)}
+					>
+						To see accurate decoded input data, the contract must be verified. Verify the contract{' '}
+						{/* <Link href={LinkMaker.address(address, '/verify')}> */}
+						<a className="link" onClick={() => onShowVerify()}>
+							here
+						</a>
+						{/* </Link> */}.
+					</div>
+				</div>
+			</BackgroundCard>
+		) : null
 	}
 
 	return (

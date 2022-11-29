@@ -1,12 +1,13 @@
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Table from 'components/Table/Table'
+import { isString } from 'lodash'
 import styles from '../style.module.scss'
 
 export interface EventDecode {
 	name: string
 	type: string
-	value: string
+	value: string | string[]
 	indexed?: boolean
 }
 
@@ -67,13 +68,37 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 					{
 						title: 'Data',
 						key: 'value',
-						render: value => (
-							<CopyButton
-								textCopy={value as string}
-								textTitle={value as string}
-								textColor={styles.copyColor}
-							/>
-						)
+						render: values => {
+							let valueCopy = values
+							let valueTitle = values
+							// array params
+							if (isString(values) && (values as string).includes('[')) {
+								const data: string[] = JSON.parse(values)
+								valueTitle = (
+									<span>
+										[<br />{' '}
+										{data.map((val, index) => (
+											<span key={val + index} className="padding-left-xs">
+												{val}
+												{index < values.length ? (
+													<>
+														, <br />{' '}
+													</>
+												) : null}
+											</span>
+										))}
+										]
+									</span>
+								)
+							}
+							return (
+								<CopyButton
+									textCopy={valueCopy as string}
+									textTitle={valueTitle as string}
+									textColor={styles.copyColor}
+								/>
+							)
+						}
 					}
 				]}
 				rows={(items as any[]) || []}
