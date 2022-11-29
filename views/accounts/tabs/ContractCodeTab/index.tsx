@@ -32,7 +32,7 @@ const ContractCodeTab = ({ address }: Props) => {
 						{contractCode?.ContractName || 'Contract Code'}
 					</span>
 				</span>
-				{contractCode?.Verified && <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
+				{!contractCode?.Verified && <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
 			</Row>
 			{isValidating ? (
 				<div className="margin-xl">
