@@ -42,7 +42,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
 					const address = astraToEth(proposer.initialDelegatorAddress)
 					items.push({
-						label: CardInfoLabels.to,
+						label: CardInfoLabels.validatorAddress,
 						type: 'link-copy',
 						contents: [
 							{
@@ -96,10 +96,10 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 			CardInfoLabels.Transaction,
 			CardInfoLabels.block,
 			CardInfoLabels.hash,
-			CardInfoLabels.to
+			CardInfoLabels.validatorAddress
 		])
 	}
-
+	console.log(blockDetail)
 	return (
 		<Layout>
 			<Head>
