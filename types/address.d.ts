@@ -256,6 +256,7 @@ interface ContractCodeData {
 	OptimizationRuns: number
 	OptimizationUsed: string
 	SourceCode: string
+	SameBytecodeAddress?: string
 	Address: string
 	Verified: boolean
 	VerifiedAt: string

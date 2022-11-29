@@ -32,7 +32,7 @@ const ContractCodeTab = ({ address }: Props) => {
 						{contractCode?.ContractName || 'Contract Code'}
 					</span>
 				</span>
-				{contractCode?.Verified ? <></> : <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
+				{contractCode?.Verified && <NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>}
 			</Row>
 			{isValidating ? (
 				<div className="margin-xl">
@@ -54,12 +54,9 @@ const ContractCodeTab = ({ address }: Props) => {
 					<SolidityView filename="Deployed ByteCode" code={contractCode.DeployedByteCode} />
 				</div>
 			) : (
-				<>
-					<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
-						<span className="text text-xl">Contract Code</span>
-						<NormalButton onClick={onShowVerify}>Verify & Publish</NormalButton>
-					</Row>
-				</>
+				<div className="padding-xl">
+					<span className="text text-xl contrast-color-30">API error. Something went wrong</span>
+				</div>
 			)}
 			<ModalContractVerify
 				onSuccess={onVerifyDone}

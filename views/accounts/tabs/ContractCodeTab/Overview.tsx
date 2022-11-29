@@ -1,6 +1,8 @@
 import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
+import { LinkText } from 'components/Typography/LinkText'
+import { LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -10,6 +12,20 @@ const ContractCodeOverview = ({ contractCode }: Props) => {
 	const { isMobile } = useMobileLayout()
 	return (
 		<div className={clsx(styles.overview, 'margin-bottom-xl ')}>
+			<div className="text text-sm contrast-color-30 margin-bottom-md">
+				Contract is not verified.{' '}
+				{contractCode.SameBytecodeAddress && (
+					<>
+						However, we found a verified contract with the same bytecode{' '}
+						<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
+							{contractCode.SameBytecodeAddress}
+						</LinkText>
+					</>
+				)}
+				. All metadata displayed below is from that contract. In order to verify current contract, click Verify
+				& Publish button.
+			</div>
+
 			<div className={isMobile ? 'col col-5' : 'col col-5 margin-right-xl'}>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<span className="text text-sm contrast-color-30">Compiler Version: </span>
