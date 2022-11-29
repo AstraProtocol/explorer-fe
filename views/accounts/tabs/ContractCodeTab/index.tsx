@@ -2,8 +2,10 @@ import { NormalButton, Spinner } from '@astraprotocol/astra-ui'
 import JsonView from 'components/CodeView/JsonView'
 import SolidityView from 'components/CodeView/SolidityView'
 import Row from 'components/Grid/Row'
+import { LinkText } from 'components/Typography/LinkText'
 import ModalContractVerify from 'components/VerifyContract'
 import { useState } from 'react'
+import { LinkMaker } from 'utils/helper'
 import useContractCode from 'views/accounts/hook/useContractCode'
 import ContractConstructorArguments from './ContructorArgs'
 import ContractCodeOverview from './Overview'
@@ -40,6 +42,19 @@ const ContractCodeTab = ({ address }: Props) => {
 				</div>
 			) : contractCode ? (
 				<div className="margin-left-xl margin-right-xl">
+					<div className="text text-sm contrast-color-30 margin-bottom-md">
+						Contract is not verified.{' '}
+						{contractCode.SameBytecodeAddress && (
+							<>
+								However, we found a verified contract with the same bytecode{' '}
+								<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
+									{contractCode.SameBytecodeAddress}
+								</LinkText>
+							</>
+						)}
+						. All metadata displayed below is from that contract. In order to verify current contract, click
+						Verify & Publish button.
+					</div>
 					<ContractCodeOverview contractCode={contractCode} />
 					<ContractConstructorArguments
 						abi={contractCode.ABI}
