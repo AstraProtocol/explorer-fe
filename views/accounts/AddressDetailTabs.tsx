@@ -29,7 +29,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 				classes="none"
 				tabs={[
 					{ title: 'Transactions', id: 'transactions' },
-					{ title: 'Token Transfer', id: 'token-transfer' },
+					{ title: 'Token Transfers', id: 'token-transfer' },
 					{ title: 'Tokens', id: 'tokens' },
 					{ title: 'Internal Transactions', id: 'internal-transactions' },
 					{ title: 'Coin Balance History', id: 'balance-history' },

@@ -59,13 +59,13 @@ export default function TransactionTabs({
 	}
 
 	if (type === 'cosmos') {
-		tabs.unshift({ title: 'Token Transfer', id: 'transfers' })
+		tabs.unshift({ title: 'Token Transfers', id: 'transfers' })
 		contents['transfers'] = (
 			<Transactions rows={transactions} emptyMsg="There are no transfer for this transaction." />
 		)
 	} else {
 		tabs.unshift({ title: 'Internal Transactions', id: 'internal-transactions' })
-		tabs.unshift({ title: 'Token Transfer', id: 'transfers' })
+		tabs.unshift({ title: 'Token Transfers', id: 'transfers' })
 
 		contents['transfers'] = (
 			<Transactions rows={transactions} emptyMsg="There are no transfer for this transaction." />

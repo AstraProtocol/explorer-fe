@@ -285,7 +285,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.gasPrice,
 				CardInfoLabels.typeOfTransfer
 			])
-			//remove label of token transfer
+			//remove label of Token Transfers
 			let hashTransfer = false
 			mainItems.map(item => {
 				if (item.label === CardInfoLabels.tokenTransfers) {
