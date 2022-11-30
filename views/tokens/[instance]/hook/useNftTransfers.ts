@@ -10,7 +10,7 @@ import { getEnvNumber } from 'utils/helper'
  * @param params
  * @returns
  */
-export default function useNftTransfer(token: string, params: string | undefined): UseTokenTransactionHookData {
+export default function useNftTransfer(token: string, tokenId: string, params: string | undefined): useNftTransfer {
 	const [hookData, setState] = useState({
 		result: [],
 		hasNextPage: false,
@@ -20,26 +20,28 @@ export default function useNftTransfer(token: string, params: string | undefined
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.TOKEN_TRANSACTIONS}${params}`,
+				`${API_LIST.TOKEN_TRANSER_BY_TOKEN_ID}${params}`,
 				{
-					contractaddress: token
+					contractaddress: token,
+					tokenid: tokenId
 				}
 			]
 		}
 
 		return [
-			API_LIST.TOKEN_TRANSACTIONS,
+			API_LIST.TOKEN_TRANSER_BY_TOKEN_ID,
 			{
 				contractaddress: token,
+				tokenid: tokenId,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
 		]
 	}
-	const { data } = useSWR<TokenTransactionResponse>(_fetchCondition())
+	const { data } = useSWR<NftTransferResponse>(_fetchCondition())
 
-	const convertData = (_data: TokenTransactionResponse): TokenTransaction[] => {
-		return data.result.map((d: TokenTransaction) => {
+	const convertData = (_data: NftTransferResponse): NftTransfer[] => {
+		return data.result.map((d: NftTransfer) => {
 			const isMint = d.fromAddress === ZERO_ADDRESS
 			const isBurn = d.toAddress === ZERO_ADDRESS
 

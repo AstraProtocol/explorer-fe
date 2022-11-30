@@ -62,7 +62,7 @@ const TokenInstanceDetailPage: React.FC<Props> = props => {
 							items={_convertRawDataToCardData(tokenData.attributes)}
 							classes={['margin-top-sm padding-top-md']}
 						/>
-						<NftDetailTab token={token} tokenData={tokenData} />
+						<NftDetailTab token={token} tokenId={tokenId} tokenData={tokenData} />
 					</>
 				) : (
 					<h1 className="text contrast-color-70 margin-top-sm">{errorMessage || 'Token Not Found'}</h1>
