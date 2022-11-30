@@ -51,12 +51,12 @@ const NftTransfer = ({ transaction, tokenData }: Props) => {
 							{transaction.fromAddress && (
 								<>
 									<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>From</span>
-									<span className="contrast-color-70 margin-right-lg money-2xs money">
+									<LinkText href={LinkMaker.address(transaction.fromAddress)}>
 										{evmAddressName(
 											transaction.fromAddressName,
 											ellipseBetweenText(transaction.fromAddress, 6, 6)
 										)}
-									</span>
+									</LinkText>
 								</>
 							)}
 							{transaction.toAddress && (
