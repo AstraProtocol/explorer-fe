@@ -34,7 +34,7 @@ export enum CardInfoLabels {
 	block = 'Block:',
 	from = 'From:',
 	to = 'To:',
-	createdContractAddressHash = 'Interacted With (To):',
+	interactWith = 'Interacted With:',
 	time = 'Timestamp:',
 	value = 'Value:',
 	fee = 'Transaction Fee:',

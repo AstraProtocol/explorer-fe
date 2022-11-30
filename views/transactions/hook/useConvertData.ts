@@ -95,9 +95,10 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							})
 						break
 					case 'to': //to
-						if (data[key] !== undefined && data[key] !== null)
+						if (data[key] !== undefined && data[key] !== null) {
+							const isInteractWith = !!data?.rawInput?.startsWith('0x')
 							items.push({
-								label: CardInfoLabels[key],
+								label: isInteractWith ? CardInfoLabels.interactWith : CardInfoLabels.to,
 								type: 'link-copy',
 								contents: [
 									{
@@ -108,12 +109,13 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 									}
 								]
 							})
+						}
 						break
 					case 'createdContractAddressHash': //to
-						const name = data['createdContractAddressName']
-						if (data[key] !== undefined && data[key] !== null)
+						if (data[key] !== undefined && data[key] !== null) {
+							const name = data['createdContractAddressName']
 							items.push({
-								label: CardInfoLabels[key],
+								label: CardInfoLabels.interactWith,
 								type: 'link-copy',
 								contents: [
 									{
@@ -123,6 +125,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 									}
 								]
 							})
+						}
 						break
 					case 'time':
 						if (data[key] !== undefined && data[key] !== null)
@@ -278,7 +281,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.time,
 				CardInfoLabels.from,
 				CardInfoLabels.to,
-				CardInfoLabels.createdContractAddressHash,
+				CardInfoLabels.interactWith,
 				CardInfoLabels.tokenTransfers,
 				CardInfoLabels.value,
 				CardInfoLabels.fee,
