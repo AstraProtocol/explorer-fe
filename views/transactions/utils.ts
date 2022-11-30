@@ -40,6 +40,7 @@ export interface TransactionDetail {
 	to?: string
 	toAddressName?: string
 	createdContractAddressHash?: string
+	createdContractAddressName?: string
 	value?: string
 	valueToken?: string
 	fee?: string
@@ -100,6 +101,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.to = result.to
 	data.toAddressName = result.toAddressName
 	data.createdContractAddressHash = result.createdContractAddressHash
+	data.createdContractAddressName = result.createdContractAddressName
 	data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
 	data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 	data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''

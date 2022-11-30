@@ -95,15 +95,16 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							})
 						break
 					case 'to': //to
+						const name = data['createdContractAddressHash']
+							? data['createdContractAddressName']
+							: data['toAddressName']
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [
 									{
-										value: data['toAddressName']
-											? `${data['toAddressName']} (${data[key]})`
-											: data[key],
+										value: name ? `${name} (${data[key]})` : data[key],
 										link: LinkMaker.address(data[key])
 									}
 								]
