@@ -1,9 +1,5 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
-import Row from 'components/Grid/Row'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
-import Empty from 'components/Typography/Empty'
-import usePaginationLite from 'hooks/usePaginationLite'
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 
 interface Props {
 	tokenData: TokenNFTMetadata
