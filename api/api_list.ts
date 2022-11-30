@@ -44,6 +44,7 @@ const API_LIST = {
 	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
 	TOKEN_INVENTORY: 'evm_/api/v1?module=token&action=getinventory', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0
 	TOKEN_METADATA: '/api/v1?module=token&action=getmetadata&contractaddress=',
+	TOKEN_TRANSER_BY_TOKEN_ID: 'evm_/api/v1?module=token&action=tokentransfersbytokenid', // contractaddress=0x8CB41dA24793D4515E6b96D1adA50b721878C0Ca&tokenid=10
 
 	CONTRACT_CODE: 'evm_/api/v1?module=contract&action=getsourcecode',
 	VERIFY_CONTRACT: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',

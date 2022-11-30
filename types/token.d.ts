@@ -4,6 +4,12 @@ interface TokenTransactionResponse {
 	result: TokenTransaction[]
 }
 
+interface NftTransferResponse {
+	hasNextPage: boolean
+	nextPagePath: any
+	result: NftTransfer[]
+}
+
 interface TokenHolderResponse {
 	hasNextPage: boolean
 	result: Holder[]
@@ -27,6 +33,12 @@ interface UseTokenTransactionHookData {
 	nextPagePath: string
 }
 
+interface useNftTransfer {
+	result: NftTransfer[] | []
+	hasNextPage: boolean
+	nextPagePath: string
+}
+
 interface UseTokenHolderData {
 	result: Holder[]
 	hasNextPage: boolean
@@ -43,6 +55,24 @@ interface TokenResponse {
 }
 
 interface TokenTransaction {
+	amount: string
+	blockHash: string
+	blockNumber: string
+	decimals: string
+	fromAddress: string
+	fromAddressName: string
+	timestamp: string
+	toAddress: string
+	toAddressName: string
+	tokenId: string
+	tokenContractAddress: string
+	tokenName: string
+	tokenSymbol: string
+	transactionHash: string
+	type?: string
+}
+
+interface NftTransfer {
 	amount: string
 	blockHash: string
 	blockNumber: string

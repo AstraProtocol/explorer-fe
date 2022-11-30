@@ -1,18 +1,21 @@
 import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
+import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
-import useTokenTransactions from 'views/tokens/hook/useTokenTransactions'
+import useNftTransfers from 'views/tokens/[instance]/hook/useNftTransfers'
+import NftTransfer from './NftTransfer'
 
 interface Props {
 	token: string
+	tokenId: string
 	tokenData: TokenNFTMetadata
 }
 
-const NftTransferTab = ({ token, tokenData }: Props) => {
+const NftTransferTab = ({ token, tokenData, tokenId }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useTokenTransactions(token, currentParam)
+	const { hasNextPage, nextPagePath, result } = useNftTransfers(token, tokenId, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
@@ -32,8 +35,7 @@ const NftTransferTab = ({ token, tokenData }: Props) => {
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
-			In Development
-			{/* {!result || result.length == 0 ? (
+			{!result || result.length == 0 ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<div style={{ overflowY: 'scroll' }}>
@@ -41,7 +43,7 @@ const NftTransferTab = ({ token, tokenData }: Props) => {
 						<NftTransfer key={item.transactionHash} tokenData={tokenData} transaction={item} />
 					))}
 				</div>
-			)} */}
+			)}
 		</div>
 	)
 }

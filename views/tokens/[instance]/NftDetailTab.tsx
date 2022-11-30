@@ -5,10 +5,11 @@ import NftTransferTab from './tabs/NftTransfers'
 
 interface Props {
 	token: string
+	tokenId: string
 	tokenData: TokenNFTMetadata
 }
 
-const NftDetailTab = ({ token, tokenData }: Props) => {
+const NftDetailTab = ({ token, tokenId, tokenData }: Props) => {
 	const [defaultTag, setTag] = useRouterTag()
 
 	return (
@@ -19,7 +20,7 @@ const NftDetailTab = ({ token, tokenData }: Props) => {
 				classes="none"
 				tabs={[{ title: 'Token Transfers', id: 'token-transfers' }]}
 				contents={{
-					'token-transfers': <NftTransferTab token={token} tokenData={tokenData} />
+					'token-transfers': <NftTransferTab token={token} tokenId={tokenId} tokenData={tokenData} />
 				}}
 			></Tabs>
 		</BackgroundCard>
