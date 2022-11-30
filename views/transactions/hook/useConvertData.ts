@@ -95,29 +95,29 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							})
 						break
 					case 'to': //to
-						const name = data['createdContractAddressHash']
-							? data['createdContractAddressName']
-							: data['toAddressName']
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [
 									{
-										value: name ? `${name} (${data[key]})` : data[key],
+										value: data['toAddressName']
+											? `${data['toAddressName']} (${data[key]})`
+											: data[key],
 										link: LinkMaker.address(data[key])
 									}
 								]
 							})
 						break
 					case 'createdContractAddressHash': //to
+						const name = data['createdContractAddressName']
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'link-copy',
 								contents: [
 									{
-										text: `[Contract ${data[key]} created]`,
+										text: `[Contract ${name ? `${name} (${data[key]})` : data[key]} created]`,
 										value: data[key],
 										link: LinkMaker.address(data[key])
 									}
