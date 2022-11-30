@@ -184,6 +184,7 @@ interface EvmTransactionDetailResponse {
 		success: boolean
 		to: string
 		toAddressName?: string
+		createdContractAddressName?: string
 		createdContractAddressHash?: string
 		tokenTransfers: EVMTransferItem[]
 		type: number
