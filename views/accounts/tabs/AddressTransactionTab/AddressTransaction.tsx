@@ -94,7 +94,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 						{Number(transaction.value || '0') >= 0 && (
 							<>
 								<TypographyLib.Balance
-									size="xs"
+									size="2xs"
 									value={transaction.value}
 									currency={''}
 									icon={<CryptoIcon name={'asa'} size="sm" />}
@@ -106,7 +106,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 						{Number(transaction.fee) >= 0 && (
 							<TypographyLib.Balance
 								icon={<span>Fee:</span>}
-								size="2xs"
+								size="xs"
 								value={convertBalanceToView(transaction.fee)}
 								fixNumber={7}
 								currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
