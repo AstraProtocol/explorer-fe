@@ -50,9 +50,10 @@ const ContractCodeTab = ({ address }: Props) => {
 								<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
 									{contractCode.SameBytecodeAddress}
 								</LinkText>
+								.{' '}
 							</>
 						)}
-						. In order to verify this contract, click Verify & Publish button.
+						In order to verify this contract, click Verify & Publish button.
 					</div>
 					<ContractCodeOverview contractCode={contractCode} />
 					<ContractConstructorArguments
