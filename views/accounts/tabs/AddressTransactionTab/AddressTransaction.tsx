@@ -47,31 +47,6 @@ const AddressTransaction = ({ transaction }: Props) => {
 								</Typography.LinkText>
 								{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
 							</Row>
-							{/* {(transaction.from || transaction.to) && (
-							<div className="margin-top-xs">
-								{transaction.from && (
-									<>
-										<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
-											From
-										</span>
-										<span className="contrast-color-70 margin-right-lg money-2xs money">
-											{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
-										</span>
-									</>
-								)}
-								{transaction.to && (
-									<>
-										<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>
-											To
-										</span>
-										<span className="contrast-color-70 margin-right-lg  money-2xs money">
-											{evmAddressName(toName, ellipseBetweenText(to, 6, 6))}
-										</span>
-									</>
-								)}
-							</div>
-							
-						)} */}
 						</div>
 					</Row>
 				</div>

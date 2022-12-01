@@ -52,8 +52,7 @@ const ContractCodeTab = ({ address }: Props) => {
 								</LinkText>
 							</>
 						)}
-						. All metadata displayed below is from that contract. In order to verify current contract, click
-						Verify & Publish button.
+						. In order to verify this contract, click Verify & Publish button.
 					</div>
 					<ContractCodeOverview contractCode={contractCode} />
 					<ContractConstructorArguments
