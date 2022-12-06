@@ -4,7 +4,7 @@ import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
-import { isArray, isEmpty, isUndefined } from 'lodash'
+import { isArray, isBoolean, isEmpty, isUndefined } from 'lodash'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { evmMethodId } from 'utils/evm'
@@ -95,6 +95,10 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 								} else if (isArray(input.value)) {
 									// array
 									input.value = JSON.stringify(input.value)
+								} else if (isBoolean(input.value)) {
+									input.value = (input.value as boolean).toString()
+								} else {
+									input.value = (input.value as string).toString()
 								}
 								if (input) {
 									input.indexed = para.indexed
