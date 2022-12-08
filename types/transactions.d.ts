@@ -46,6 +46,7 @@ interface TransactionItem {
 	messages: TransactionMessage[]
 	signers: Signer[]
 	type?: string
+	totalFee?: TokenAmount // client
 }
 
 interface TransactionItemModified extends TransactionItem {

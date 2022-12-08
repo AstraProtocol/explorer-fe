@@ -3,6 +3,8 @@ import usePagination from 'hooks/usePagination'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
+import { TransacionTypeEnum } from 'utils/enum'
+import { caculateAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useBlockById(blockHeight: string) {
 	const [items, setBlockItem] = useState<TransactionItem[]>()
@@ -19,6 +21,14 @@ export default function useBlockById(blockHeight: string) {
 	}
 	const { data } = useSWRImmutable<TransactionResponse>(_fetchCondition())
 
+	const handleData = (result: TransactionItem[]) => {
+		return result.map(item => ({
+			...item,
+			totalFee: caculateAmount(item.fee),
+			hash: item?.messages[0]?.type === TransacionTypeEnum.Ethermint ? getEvmTxhash(item?.messages) : item.hash
+		}))
+	}
+
 	useEffect(() => {
 		if (data && data?.result) {
 			if (isEmpty(items)) {
@@ -27,7 +37,7 @@ export default function useBlockById(blockHeight: string) {
 					total: data?.pagination.total_page
 				})
 			}
-			setBlockItem(data?.result)
+			setBlockItem(handleData(data?.result))
 		}
 	}, [data])
 

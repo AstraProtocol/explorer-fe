@@ -99,7 +99,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 			CardInfoLabels.validatorAddress
 		])
 	}
-	console.log(blockDetail)
+
 	return (
 		<Layout>
 			<Head>

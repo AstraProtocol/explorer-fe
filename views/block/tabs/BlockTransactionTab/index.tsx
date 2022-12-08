@@ -5,7 +5,6 @@ import Empty from 'components/Typography/Empty'
 import { getTransactionType } from 'utils/cosmos'
 import useBlockById from 'views/block/hook/useBlockById'
 import TransactionRow from 'views/transactions/TransactionRow'
-import { caculateAmount } from 'views/transactions/utils'
 
 interface Props {
 	blockHeight: string
@@ -31,13 +30,12 @@ const BlockTransactionTab = ({ blockHeight }: Props) => {
 				) : (
 					<>
 						{result?.map((transaction, index) => {
-							const fee = caculateAmount(transaction.fee)
 							return (
 								<TransactionRow
 									key={transaction.hash}
 									blockNumber={transaction.blockHeight}
 									updatedAt={transaction.blockTime}
-									fee={fee.amount}
+									fee={transaction.totalFee.amount}
 									status={transaction.success}
 									hash={transaction.hash}
 									from={''}
