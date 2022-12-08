@@ -302,6 +302,7 @@ const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]
 		const content = messages[0].content as unknown as MsgDelegateContent
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorAddress = content.validatorAddress
+		data.value = formatEther(content.amount.amount)
 	}
 }
 
