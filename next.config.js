@@ -17,17 +17,7 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'ipfs.io',
-				pathname: '/ipfs/**'
-			},
-			{
-				protocol: 'https',
-				hostname: 'astranaut.dev',
-				pathname: '/**'
-			},
-			{
-				protocol: 'https',
-				hostname: 'astranaut.io',
+				hostname: '*',
 				pathname: '/**'
 			}
 		]
