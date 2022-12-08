@@ -52,7 +52,7 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, def
 						title={tab.title}
 						key={tab.id}
 						padding={tab.padding}
-					></Tab>
+					/>
 				))}
 			</Row>
 			<div className={classes || 'margin-top-xl padding-bottom-lg'}>{contents[tabId]}</div>

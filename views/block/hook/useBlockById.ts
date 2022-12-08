@@ -3,7 +3,7 @@ import usePagination from 'hooks/usePagination'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
-import { TransacionTypeEnum } from 'utils/enum'
+import { TransactionTypeEnum } from 'utils/enum'
 import { caculateAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useBlockById(blockHeight: string) {
@@ -25,7 +25,7 @@ export default function useBlockById(blockHeight: string) {
 		return result.map(item => ({
 			...item,
 			totalFee: caculateAmount(item.fee),
-			hash: item?.messages[0]?.type === TransacionTypeEnum.Ethermint ? getEvmTxhash(item?.messages) : item.hash
+			hash: item?.messages[0]?.type === TransactionTypeEnum.Ethermint ? getEvmTxhash(item?.messages) : item.hash
 		}))
 	}
 

@@ -10,12 +10,12 @@ export enum Icon {
 	Wallet = 'wallet'
 }
 
-export enum TransacionTypeEnum {
+export enum TransactionTypeEnum {
 	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
 	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
 	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
 	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
-	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+	MsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
 	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
 	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant'
@@ -49,8 +49,10 @@ export enum CardInfoLabels {
 	option = 'Option:',
 	delegatorAddress = 'Delegator Address:',
 	validatorAddress = 'Validator Address:',
+	recipientAddress = 'Recipient Address:',
 	validatorSrcAddress = 'Validator Src Address:',
 	validatorDstAddress = 'Validator Dst Address:',
+	grantee = 'Grantee',
 	failLog = 'Fail reason:',
 	// Revert_Reason =
 	revertReason = 'Revert reason:',

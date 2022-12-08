@@ -1,12 +1,14 @@
-enum TransacionTypeEnum {
+enum TransactionTypeEnum {
 	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
 	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
 	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
 	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
-	MultipleMsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+	MsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
 	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
-	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant'
+	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant',
+	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator',
+	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail'
 }
 
 interface MsgCreateValidator {
@@ -15,7 +17,7 @@ interface MsgCreateValidator {
 	content: {
 		height: number
 		txHash: string
-		msgName: TransactionTypeEnum
+		msgName: TransactionTypeEnum.MsgCreateValidator
 		msgIndex: number
 		delegatorAddress: string
 		validatorAddress: string
@@ -45,7 +47,7 @@ interface MsgUnjail {
 	type: '/cosmos.slashing.v1beta1.MsgUnjail'
 	content: {
 		txHash: string
-		msgName: TransactionTypeEnum
+		msgName: TransactionTypeEnum.MsgUnjail
 		version: number
 		msgIndex: number
 		validatorAddress: string
@@ -78,13 +80,13 @@ interface MsgEthereumTxContent {
 		'from': string
 		'hash': string
 		'size': number
-		'@type': TransacionTypeEnum
+		'@type': TransactionTypeEnum.Ethermint
 		'data': {
 			'to': string
 			'gas': string
 			'r': string
 			'v': string
-			'@type': TransacionTypeEnum
+			'@type': TransactionTypeEnum.Ethermint
 			'nonce': string
 			'value': string
 			'gasPrice': string
@@ -93,13 +95,13 @@ interface MsgEthereumTxContent {
 		}
 	}
 	txHash: string
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.Ethermint
 	version: number
 }
 
 interface MsgBeginRedelegateContent {
 	height: number
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.MsgBeginRedelegate
 	delegatorAddress: string
 	autoClaimedRewards: TokenAmount
 	validatorSrcAddress: string
@@ -115,7 +117,7 @@ interface MsgBeginRedelegateContent {
 interface MsgSendContent {
 	amount: TokenAmount[]
 	txHash: string
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.MsgSend
 	msgIndex: number
 	toAddress: string
 	fromAddress: string
@@ -126,10 +128,18 @@ interface MsgSendContent {
 }
 
 interface MsgExecContent {
-	'@type': string
-	'amount': TokenAmount
-	'delegator_address': string
-	'validator_address': string
+	uuid: string
+	height: number
+	params: {
+		'@type': TransactionTypeEnum.MsgExec
+		'grantee': string
+		'msgs': any[]
+	}
+	txHash: string
+	msgName: TransactionTypeEnum.MsgExec
+	version: number
+	msgIndex: number
+	name: string
 }
 
 interface MsgGrantContent {
@@ -160,7 +170,7 @@ interface MsgGrantContent {
 interface MsgVoteContent {
 	option: string
 	txHash: string
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.MsgVote
 	version: number
 	proposalId: string
 	name: string
@@ -173,7 +183,7 @@ interface MsgVoteContent {
 interface MsgDelegateContent {
 	txHash: string
 	msgIndex: number
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.MsgDelegate
 	version: number
 	delegatorAddress: string
 	validatorAddress: string
@@ -184,10 +194,10 @@ interface MsgDelegateContent {
 	autoClaimedRewards: TokenAmount
 }
 
-interface CosmosMsgWithdrawDelegatorReward {
+interface MsgWithdrawDelegatorRewardContent {
 	amount: TokenAmount[]
 	height: number
-	msgName: TransactionTypeEnum
+	msgName: TransactionTypeEnum.MsgWithdrawDelegatorReward
 	version: number
 	msgIndex: number
 	validatorAddress: string
@@ -197,3 +207,5 @@ interface CosmosMsgWithdrawDelegatorReward {
 	delegatorAddress: string
 	recipientAddress: string
 }
+
+interface MsgCreateValidatorContent {}

@@ -5,7 +5,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
-import { TransacionTypeEnum } from 'utils/enum'
+import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -21,7 +21,7 @@ type TransactionBriefRowProps = {
 	newTransaction?: boolean
 	border?: boolean
 	evmType: string
-	transactionType: TransacionTypeEnum
+	transactionType: string
 }
 
 export default function TransactionBriefRow({
@@ -35,7 +35,7 @@ export default function TransactionBriefRow({
 	evmType,
 	transactionType
 }: TransactionBriefRowProps) {
-	const isEvm = transactionType === TransacionTypeEnum.Ethermint
+	const isEvm = transactionType === TransactionTypeEnum.Ethermint
 	const transactionQuery = isEvm ? { type: 'evm' } : null
 	return (
 		<RowShowAnimation action={newTransaction}>

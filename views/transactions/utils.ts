@@ -7,9 +7,8 @@ import { formatEther, formatUnits } from 'ethers/lib/utils'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
-import { TransacionTypeEnum } from 'utils/enum'
+import { TransactionTypeEnum } from 'utils/enum'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
-import { TransactionRowProps } from './TransactionRow'
 
 export interface TransactionQuery {
 	tx: string
@@ -26,55 +25,6 @@ export interface TransferItem {
 	tokenName?: string
 	tokenSymbol?: string
 	tokenType?: string
-}
-export interface TransactionDetail {
-	pageTitle?: string
-	evmHash?: string
-	cosmosHash?: string
-	result?: string
-	confirmations?: string
-	blockHeight?: string
-	time?: string | number
-	from?: string | string[] // Multisig or unique address
-	fromAddressName?: string
-	to?: string
-	toAddressName?: string
-	createdContractAddressHash?: string
-	createdContractAddressName?: string
-	value?: string
-	valueToken?: string
-	fee?: string
-	feeToken?: string
-	gasPrice?: string
-	type?: 'evm' | 'cosmos'
-	typeOfTransfer?: string
-	gasLimit?: string
-	gasUsed?: string
-	maxFeePerGas?: string
-	maxPriorityFeePerGas?: string
-	priorityFeePerGas?: string
-	gasUsedByTransaction?: string
-	nonce?: string
-	rawInput?: string
-	tokenTransfers?: TransferItem[]
-	tabTokenTransfers?: TransactionRowProps[]
-	index?: number
-	nonceText?: string
-	failLog?: string
-	//msvote
-	voter?: string
-	proposalId?: string
-	option?: string
-	//msgDelegate
-	delegatorAddress?: string
-	validatorAddress?: string
-	//MsgBeginRedelegate
-	validatorSrcAddress?: string
-	validatorDstAddress?: string
-
-	revertReason?: string
-	logs?: EvmLog[]
-	memo?: string
 }
 
 export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string): Promise<TransactionDetail> => {
@@ -153,7 +103,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	data.value = caculateCosmosTxAmount(result.messages) || '0'
 	data.memo = result.memo
 	// data.logs = result.log
-	data.from = getSignerEthAddress(result.signers)
+	// data.from = getSignerEthAddress(result.signers)
 	// data.to = result.to
 	// data.tokenTransfer = []
 	// data.value = undefined
@@ -176,8 +126,9 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	_mapMsgVoteField(data, result?.messages)
 	_mapMsgDelegate(data, result?.messages)
 	_mapMsgBeginRedelegate(data, result?.messages)
-	_mapMsgExec(data, result?.messages)
+	_mapMsgExec(data as TransactionMsgExecDetail, result?.messages)
 	_mapMsgGrant(data, result?.messages)
+	_mapMsgWithdrawDelegatorReward(data as TransactionMsgWithdrawDelegatorRewardDetail, result?.messages)
 	return data
 }
 
@@ -279,16 +230,16 @@ const _convertTransfer = (
 }
 
 const _mapMsgSendField = (data: TransactionDetail, result: TransactionItem) => {
-	const type: TransacionTypeEnum = result?.messages[0]?.type
-	if (type === TransacionTypeEnum.MsgSend) {
+	const type: string = result?.messages[0]?.type
+	if (type === TransactionTypeEnum.MsgSend) {
 		const content = result?.messages[0].content as unknown as MsgSendContent
 		data.from = astraToEth(content.fromAddress)
 		data.to = astraToEth(content.toAddress)
 	}
 }
 const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: TransacionTypeEnum = messages[0]?.type
-	if (type === TransacionTypeEnum.MsgVote) {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgVote) {
 		const content = messages[0].content as unknown as MsgVoteContent
 		data.voter = astraToEth(content.voter)
 		data.proposalId = content.proposalId
@@ -297,8 +248,8 @@ const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[
 }
 
 const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: TransacionTypeEnum = messages[0]?.type
-	if (type === TransacionTypeEnum.MsgDelegate) {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgDelegate) {
 		const content = messages[0].content as unknown as MsgDelegateContent
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorAddress = content.validatorAddress
@@ -307,25 +258,42 @@ const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]
 }
 
 const _mapMsgBeginRedelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: TransacionTypeEnum = messages[0]?.type
-	if (type === TransacionTypeEnum.MsgBeginRedelegate) {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgBeginRedelegate) {
 		const content = messages[0].content as MsgBeginRedelegateContent
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorSrcAddress = content.validatorSrcAddress
 		data.validatorDstAddress = content.validatorDstAddress
+		data.value = formatEther(content.amount.amount)
 	}
 }
 
-const _mapMsgExec = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: TransacionTypeEnum = messages[0]?.type
-	if (type === TransacionTypeEnum.MsgExec) {
+const _mapMsgExec = (data: TransactionMsgExecDetail, messages: TransactionMessage[]) => {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgExec) {
+		const content = messages[0].content as MsgExecContent
+		data.grantee = content.params.grantee
+		// @todo convert msgs to display
 	}
 }
 const _mapMsgGrant = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: TransacionTypeEnum = messages[0]?.type
-	if (type === TransacionTypeEnum.MsgGrant) {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgGrant) {
 		// const content = messages[0].content as MsgGrantContent
 		// data.grantee = content.params.maybeGenericGrant.grantee
 		// data.granter = content.params.maybeGenericGrant.granter
+	}
+}
+
+const _mapMsgWithdrawDelegatorReward = (
+	data: TransactionMsgWithdrawDelegatorRewardDetail,
+	messages: TransactionMessage[]
+) => {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgWithdrawDelegatorReward) {
+		const content = messages[0].content as MsgWithdrawDelegatorRewardContent
+		data.delegatorAddress = content.delegatorAddress
+		data.recipientAddress = content.recipientAddress
+		data.validatorAddress = content.validatorAddress
 	}
 }

@@ -52,7 +52,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
-						text={transaction.type}
+						text={ellipseBetweenText(transaction.type)}
 						// titleText={type}
 						backgroundShape="rectangle"
 						radius="radius-2xl"

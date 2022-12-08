@@ -42,7 +42,7 @@ const BlockTransactionTab = ({ blockHeight }: Props) => {
 									to={''}
 									value={undefined}
 									valueToken={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames}
-									type={getTransactionType(transaction?.messages[0]?.type as TransacionTypeEnum)}
+									type={getTransactionType(transaction?.messages[0]?.type as TransactionTypeEnum)}
 									newBlock={false}
 									style="normal"
 								/>

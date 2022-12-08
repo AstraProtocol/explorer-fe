@@ -14,7 +14,7 @@ interface TokenAmount {
 }
 
 interface TransactionMessage {
-	type: TransacionTypeEnum
+	type: TransactionTypeEnum
 	evmType?: string
 	content:
 		| MsgCreateValidatorContent
@@ -194,4 +194,64 @@ interface EvmTransactionDetailResponse {
 		messages?: MsgEthereumTx[]
 	}
 	status: string
+}
+
+interface TransactionDetail {
+	pageTitle?: string
+	evmHash?: string
+	cosmosHash?: string
+	result?: string
+	confirmations?: string
+	blockHeight?: string
+	time?: string | number
+	from?: string | string[] // Multisig or unique address
+	fromAddressName?: string
+	to?: string
+	toAddressName?: string
+	createdContractAddressHash?: string
+	createdContractAddressName?: string
+	value?: string
+	valueToken?: string
+	fee?: string
+	feeToken?: string
+	gasPrice?: string
+	type?: 'evm' | 'cosmos'
+	typeOfTransfer?: string
+	gasLimit?: string
+	gasUsed?: string
+	maxFeePerGas?: string
+	maxPriorityFeePerGas?: string
+	priorityFeePerGas?: string
+	gasUsedByTransaction?: string
+	nonce?: string
+	rawInput?: string
+	tokenTransfers?: TransferItem[]
+	tabTokenTransfers?: TransactionRowProps[]
+	index?: number
+	nonceText?: string
+	failLog?: string
+	//msvote
+	voter?: string
+	proposalId?: string
+	option?: string
+	//msgDelegate
+	delegatorAddress?: string
+	validatorAddress?: string
+	//MsgBeginRedelegate
+	validatorSrcAddress?: string
+	validatorDstAddress?: string
+
+	revertReason?: string
+	logs?: EvmLog[]
+	memo?: string
+}
+
+interface TransactionMsgExecDetail extends TransactionDetail {
+	grantee: string
+}
+
+interface TransactionMsgWithdrawDelegatorRewardDetail extends TransactionDetail {
+	recipientAddress: string
+	validatorAddress: string
+	delegatorAddress: string
 }

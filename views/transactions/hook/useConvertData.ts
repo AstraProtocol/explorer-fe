@@ -1,3 +1,4 @@
+import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
@@ -9,7 +10,6 @@ import { CONFIG } from 'utils/constants'
 import { CardInfoLabels } from 'utils/enum'
 import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
-import { TransactionDetail } from '../utils'
 
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
@@ -213,11 +213,23 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'link-copy',
-								contents: [{ value: data[key] }]
+								contents: [{ link: LinkMaker.address(data[key]), value: data[key] }]
 							})
 						break
 
 					case 'delegatorAddress':
+					case 'recipientAddress':
+					case 'grantee':
+						if (data[key] !== undefined && data[key] !== null) {
+							const evmAddress = astraToEth(data[key])
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'link-copy',
+								contents: [{ value: evmAddress, link: LinkMaker.address(evmAddress) }]
+							})
+						}
+						break
+
 					case 'validatorAddress':
 					case 'validatorSrcAddress':
 					case 'validatorDstAddress':
@@ -273,10 +285,14 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.option,
 				//delegate
 				CardInfoLabels.delegatorAddress,
+				CardInfoLabels.recipientAddress,
 				CardInfoLabels.validatorAddress,
 				//MsgBeginRedelegate
+
 				CardInfoLabels.validatorSrcAddress,
 				CardInfoLabels.validatorDstAddress,
+				//MsgExec
+				CardInfoLabels.grantee,
 
 				CardInfoLabels.time,
 				CardInfoLabels.from,

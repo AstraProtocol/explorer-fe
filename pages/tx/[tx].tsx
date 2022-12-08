@@ -9,17 +9,12 @@ import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
-import { TransacionTypeEnum } from 'utils/enum'
+import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
 import useConvertData from 'views/transactions/hook/useConvertData'
 import TransactionTabs from 'views/transactions/TransactionTabs'
-import {
-	cosmsTransactionDetail,
-	evmTransactionDetail,
-	TransactionDetail,
-	TransactionQuery
-} from 'views/transactions/utils'
+import { cosmsTransactionDetail, evmTransactionDetail, TransactionQuery } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -105,7 +100,7 @@ export async function getServerSideProps({ query }) {
 			let _data = cosmosDetailRes?.data?.result
 			if (_data) {
 				const type = _data?.messages[0]?.type
-				if (type === TransacionTypeEnum.Ethermint) {
+				if (type === TransactionTypeEnum.Ethermint) {
 					evmHash = (_data?.messages[0]?.content as MsgEthereumTxContent)?.params.hash
 					data = await evmTransactionDetail(evmHash, cosmosHash)
 				} else {
