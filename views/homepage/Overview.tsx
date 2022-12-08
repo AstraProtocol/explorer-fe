@@ -39,14 +39,16 @@ const Overview = () => {
 				return [API_LIST.LATEST_BLOCK]
 		}
 	}
-	const { data: estimateCountedDataRaw, error: estimateCountedError } = useSWR<EstimateCountedInfo>(
+	const { data: estimateCountedDataRaw, error: estimateCountedError } = useSWR<EstimateCountedResponse>(
 		_fetchCondition('estimate_counted_info')
 	)
-	const { data: commonStatsDataRaw, error: commonStatsError } = useSWR<CommonStats>(_fetchCondition('common-stats'))
+	const { data: commonStatsDataRaw, error: commonStatsError } = useSWR<CommonStatsResponse>(
+		_fetchCondition('common-stats')
+	)
 	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTracker>(_fetchCondition('gas_avg'))
 
-	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw)
-	const commonStatsData = getCommonStatsData(commonStatsDataRaw)
+	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw?.result)
+	const commonStatsData = getCommonStatsData(commonStatsDataRaw?.result)
 	const gasAvgData = getGasAvgData(gasAvgRaw)
 
 	return (

@@ -47,6 +47,10 @@ interface EstimateCountedInfo {
 	wallet_addresses: number
 }
 
+interface EstimateCountedResponse {
+	result: EstimateCountedInfo
+}
+
 interface CommonStats {
 	average_block_time: number
 	token_stats: {
@@ -61,6 +65,10 @@ interface CommonStats {
 		number_of_transactions: number
 		total_fee: string
 	}
+}
+
+interface CommonStatsResponse {
+	result: CommonStats
 }
 
 interface GasTracker {

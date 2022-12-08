@@ -6,12 +6,7 @@ export default function useAddressCounter(address: string) {
 	const [hookData, setState] = useState<AddressCounterData>({})
 
 	const _fetchCondition = () => {
-		return [
-			API_LIST.ADDRESS_COUNTER,
-			{
-				address
-			}
-		]
+		return [`${API_LIST.ADDRESS_COUNTER}/${address}/counters`]
 	}
 	const { data } = useSWR<AddressCounterResponse>(_fetchCondition())
 

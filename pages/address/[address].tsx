@@ -1,6 +1,6 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import * as Sentry from '@sentry/nextjs'
-import { evmApi } from 'api'
+import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
@@ -64,7 +64,7 @@ export async function getServerSideProps({ params }) {
 	let addressData
 	if (web3.utils.isAddress(address))
 		try {
-			const addressRes = await evmApi.get<AddressDetailResponse>(`${API_LIST.ADDRESS_DETAIL}${address}`)
+			const addressRes = await cosmosApi.get<AddressDetailResponse>(`${API_LIST.ADDRESS_DETAIL}/${address}`)
 			addressData = addressRes.data.result
 			if (!addressData) {
 				return {

@@ -24,13 +24,13 @@ const API_LIST = {
 	TRANSACTION_RAW_TRACE: 'evm_/api/v1?module=transaction&action=getrawtracebytxhash', // txhash
 
 	MARKET_PRICE: 'https://api.tiki.vn/sandseel/api/v2/public/markets/astra/summary',
-	COMMON_STATS: 'evm_/api/v1/common-stats',
-	ESTIMATE_COUNTED_INFO: 'evm_/api/v1/estimate-counted-info',
+	COMMON_STATS: '/api/v1/common-stats',
+	ESTIMATE_COUNTED_INFO: '/api/v1/estimate-counted-info',
 	GAS_AVG: 'evm_/api/v1/gas-price-oracle',
 
-	ADDRESS_DETAIL: '/api/v1?module=account&action=getaddress&address=',
+	ADDRESS_DETAIL: '/api/v1/accounts/detail',
 	ADDRESS_TOKEN: 'evm_/api/v1?module=account&action=tokenlist', // address = ?
-	ADDRESS_COUNTER: 'evm_/api/v1?module=account&action=getaddresscounters', // address=?
+	ADDRESS_COUNTER: '/api/v1/accounts', // address=?
 	ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?
 	ADDRESS_COIN_BALANCE_HISTORY: 'evm_/api/v1?module=account&action=getcoinbalancehistory', // address, page, offset=?
 	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'evm_/address', // address, page, offset=?
