@@ -27,8 +27,8 @@ export enum AddressTypeEnum {
 }
 
 export enum CardInfoLabels {
-	evmHash = 'Transaction Hash:',
-	cosmosHash = 'Transaction Cosmos:',
+	evmHash = 'Transaction Hash (Evm Layer):',
+	cosmosHash = 'Transaction Hash (Cosmos Layer):',
 	result = 'Result:',
 	confirmations = 'Status:',
 	block = 'Block:',
