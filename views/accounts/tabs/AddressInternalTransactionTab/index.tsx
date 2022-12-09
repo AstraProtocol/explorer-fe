@@ -32,7 +32,7 @@ const AddressInternalTransactionTab = ({ address }: Props) => {
 				</div>
 			</Row>
 
-			<Transactions rows={result} emptyMsg="There are no internal transactions for this transaction." />
+			<Transactions rows={result} emptyMsg="There are no internal transactions for this address." />
 		</div>
 	)
 }
