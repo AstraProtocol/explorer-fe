@@ -50,9 +50,9 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 						<AddressTransactionTab address={address} />
 					),
 					'token-transfer': <AddressTokenTransferTab address={address} />,
-					'tokens': <AddressTokenTab address={address} />,
+					'tokens': <AddressTokenTab addressData={addressData} address={address} />,
 					'internal-transactions': <AddressInternalTransactionTab address={address} />,
-					'balance-history': <AddressCoinBalanceTab address={address} />,
+					'balance-history': <AddressCoinBalanceTab addressData={addressData} address={address} />,
 					'code': isContract ? <ContractCodeTab address={address} /> : <div />
 				}}
 			></Tabs>

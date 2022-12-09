@@ -9,21 +9,20 @@ import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import AmountUnit from 'views/accounts/AmountUnit'
-import useAddressBalance from 'views/accounts/hook/useAddressBalance'
 import useAddressToken from 'views/accounts/hook/useAddressToken'
 import AddressTokenRow from './AddressTokenRow'
 import styles from './style.module.scss'
 
 interface Props {
 	address: string
+	addressData: Address
 }
 
-const AddressTokenTab = ({ address }: Props) => {
+const AddressTokenTab = ({ address, addressData }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
 	const { hasNextPage, nextPagePath, result } = useAddressToken(address, currentParam)
 	const astraSummary = useAppSelector(getAstraSummary)
-	const addressBalance = useAddressBalance(address)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
@@ -34,7 +33,7 @@ const AddressTokenTab = ({ address }: Props) => {
 		setPage(value)
 	}
 
-	const netWorth = numeral((astraSummary?.last * parseInt(addressBalance?.balance)) / 10 ** 18).format('0,0.00000')
+	const netWorth = numeral((astraSummary?.last * parseInt(addressData?.balance)) / 10 ** 18).format('0,0.00000')
 
 	return (
 		<div className="margin-left-xl margin-right-xl">

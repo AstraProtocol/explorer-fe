@@ -21,7 +21,6 @@ interface Props {
 
 const AddressOverview = ({ address, addressData }: Props) => {
 	const addressCounter = useAddressCounter(address)
-	// const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
 	const isContract = addressData.type === AddressTypeEnum.Contract
