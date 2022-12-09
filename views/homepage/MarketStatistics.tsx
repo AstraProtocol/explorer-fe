@@ -63,7 +63,7 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 					content={numeral(estimateCountedData?.wallet_addresses).format('0,0')}
 					contentClasses="money-2sm"
 					icon={Icon.Wallet}
-					title="Wallet Addresses"
+					title="Addresses"
 				/>
 			</div>
 		</div>

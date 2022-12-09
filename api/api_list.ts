@@ -31,7 +31,7 @@ const API_LIST = {
 	ADDRESS_DETAIL: '/api/v1/accounts/detail',
 	ADDRESS_TOKEN: 'evm_/api/v1?module=account&action=tokenlist', // address = ?
 	ADDRESS_COUNTER: '/api/v1/accounts', // address=?
-	ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?
+	// ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?
 	ADDRESS_COIN_BALANCE_HISTORY: 'evm_/api/v1?module=account&action=getcoinbalancehistory', // address, page, offset=?
 	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'evm_/address', // address, page, offset=?
 	ADDRESS_TRANSACTION: '/api/v1/accounts',

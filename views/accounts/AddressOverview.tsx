@@ -11,7 +11,6 @@ import { useAppSelector } from 'store/hooks'
 import { AddressTypeEnum } from 'utils/enum'
 
 import { convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
-import useAddressBalance from './hook/useAddressBalance'
 import useAddressCounter from './hook/useAddressCounter'
 import styles from './style.module.scss'
 
@@ -22,7 +21,7 @@ interface Props {
 
 const AddressOverview = ({ address, addressData }: Props) => {
 	const addressCounter = useAddressCounter(address)
-	const addressBalance = useAddressBalance(address)
+	// const addressBalance = useAddressBalance(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
 	const isContract = addressData.type === AddressTypeEnum.Contract
@@ -79,19 +78,15 @@ const AddressOverview = ({ address, addressData }: Props) => {
 					<TypographyUI.Balance
 						size="sm"
 						currency={
-							astraSummary && addressBalance.balance
+							astraSummary && addressData.balance
 								? `(${formatCurrencyValue(
-										(astraSummary.last * parseInt(addressBalance.balance)) / 10 ** 18,
+										(astraSummary.last * parseInt(addressData.balance)) / 10 ** 18,
 										'VND'
 								  )})`
 								: ''
 						}
 						icon={<CryptoIcon name="asa" size="sm" />}
-						value={
-							addressBalance.balance
-								? convertBalanceToView(addressBalance.balance)
-								: addressBalance.balance
-						}
+						value={addressData.balance ? convertBalanceToView(addressData.balance) : addressData.balance}
 						fixNumber={5}
 					/>
 				</div>
@@ -124,9 +119,9 @@ const AddressOverview = ({ address, addressData }: Props) => {
 					<span className="text text-base contrast-color-50">Last balance updated:</span>
 					<br />
 
-					{addressBalance.lastBalanceUpdate ? (
-						<LinkText href={LinkMaker.block(addressBalance.lastBalanceUpdate)}>
-							{addressBalance.lastBalanceUpdate}
+					{addressData.lastBalanceUpdate ? (
+						<LinkText href={LinkMaker.block(addressData.lastBalanceUpdate)}>
+							{addressData.lastBalanceUpdate}
 						</LinkText>
 					) : (
 						<span className="text text-base">NaN</span>
