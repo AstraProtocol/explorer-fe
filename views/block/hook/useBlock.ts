@@ -37,7 +37,7 @@ export default function useBlock() {
 				_setBlockItem(data?.result)
 				setPagination({
 					page: 1,
-					total: data?.pagination.total_page
+					total: Number(data?.pagination.total_record)
 				})
 			} else {
 				// refresh data in page 1
@@ -51,7 +51,7 @@ export default function useBlock() {
 				}
 				_setBlockItem(data?.result)
 				setPagination({
-					total: Number(data?.pagination.total_page)
+					total: Number(data?.pagination.total_record)
 				})
 			}
 		}

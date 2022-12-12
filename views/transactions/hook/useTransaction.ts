@@ -60,7 +60,7 @@ export default function useTransaction() {
 				_setTransactionItem(convertData(data?.result))
 				setPagination({
 					page: 1,
-					total: Number(data?.pagination.total_page)
+					total: Number(data?.pagination.total_record)
 				})
 			} else {
 				// refresh data in page 1
@@ -74,7 +74,7 @@ export default function useTransaction() {
 				}
 				_setTransactionItem(convertData(data?.result))
 				setPagination({
-					total: Number(data?.pagination.total_page)
+					total: Number(data?.pagination.total_record)
 				})
 			}
 		}
