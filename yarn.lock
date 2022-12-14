@@ -20,10 +20,10 @@
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@astraprotocol/astra-ui@^1.0.24":
-  version "1.0.24"
-  resolved "https://npm.pkg.github.com/download/@astraprotocol/astra-ui/1.0.24/4af5ab8304f8e9a4ef8a252a8cd61af4495dee33#4af5ab8304f8e9a4ef8a252a8cd61af4495dee33"
-  integrity sha512-ZpmpTtTEBXJHLZ4bfz5JASZHXHs6ho43YhQ99hAETlAZqYlEH86PmB/DPRaJVeMQtJQIJPa26e7lFvn5qde7TQ==
+"@astraprotocol/astra-ui@^1.0.25":
+  version "1.0.25"
+  resolved "https://npm.pkg.github.com/download/@astraprotocol/astra-ui/1.0.25/196a186d7137d6be5c1960f935bee967783205e1#196a186d7137d6be5c1960f935bee967783205e1"
+  integrity sha512-/JiKnRfPArHwBMdUbzDN9dSKGzLZTUmJZc9I/PR893nLmCB9OYHuehSrSkfiMPTNPYx0gcyQ31ezIj3YOzWoWQ==
   dependencies:
     "@types/numeral" "^2.0.2"
     "@types/react-copy-to-clipboard" "^5.0.4"
