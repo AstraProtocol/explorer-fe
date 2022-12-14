@@ -62,10 +62,10 @@
 	margin-left: auto;
 	margin-right: auto;
 
-	@media screen and (max-width: 960px) {
-		margin-left: var(--offset-md);
-		margin-right: var(--offset-md);
-	}
+	// @media screen and (max-width: 960px) {
+	// 	margin-left: var(--offset-md);
+	// 	margin-right: var(--offset-md);
+	// }
 
 	.inputWrapper {
 		position: relative;

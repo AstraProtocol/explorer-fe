@@ -25,7 +25,7 @@ function getGasAvgData(gasAvgData): GasTracker {
 }
 
 const Overview = () => {
-	const { isMobile } = useMobileLayout('medium')
+	const { isMobile } = useMobileLayout(1112)
 
 	const _fetchCondition = key => {
 		switch (key) {
@@ -59,7 +59,7 @@ const Overview = () => {
 			<div className={isMobile ? styles.moon2Mobile : styles.moon2}>
 				<Image alt="moon2" src={'/images/background/moon2.png'} layout="fill" />
 			</div>
-			<div className="row md-wrap">
+			<div className={clsx('row', { 'flex-column': isMobile })}>
 				<BackgroundCard
 					radius={false}
 					classes={clsx(isMobile && 'margin-bottom-md', styles.leftBlock, isMobile && styles.leftMobileBlock)}

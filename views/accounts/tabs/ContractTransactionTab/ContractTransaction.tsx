@@ -29,7 +29,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 			gradient={'transparent'}
 		>
 			<div className={clsx(styles.rowBrief, styles.TransactionRow, 'row')}>
-				<div className={clsx('col-6')}>
+				<div className={clsx('col-6 md-col-9')}>
 					<Row>
 						<Image alt="eth" src={`/images/icons/eth.svg`} width={24} height={24} />
 						<div className="margin-left-xs">

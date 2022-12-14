@@ -6,5 +6,7 @@ interface Props {
 }
 
 export const PrimaryText = ({ children, className = [] }: Props) => {
-	return <span className={clsx('text', 'text-base', 'contrast-color-70', ...className)}>{children}</span>
+	return (
+		<span className={clsx('text word-break-all', 'text-base', 'contrast-color-70', ...className)}>{children}</span>
+	)
 }

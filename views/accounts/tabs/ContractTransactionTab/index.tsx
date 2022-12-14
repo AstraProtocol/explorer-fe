@@ -33,16 +33,18 @@ const ContractTransactionTab = ({ address }: Props) => {
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
-			<div style={{ overflowY: 'scroll' }}>
-				{!result || result.length == 0 ? (
-					<Empty text={'There are no transactions.'} />
-				) : (
-					<>
-						{result?.map((item, index) => (
-							<ContractTransaction key={item.hash + index} transaction={item} />
-						))}
-					</>
-				)}
+			<div style={{ overflowX: 'auto' }}>
+				<div style={{ minWidth: '700px' }}>
+					{!result || result.length == 0 ? (
+						<Empty text={'There are no transactions.'} />
+					) : (
+						<>
+							{result?.map((item, index) => (
+								<ContractTransaction key={item.hash + index} transaction={item} />
+							))}
+						</>
+					)}
+				</div>
 			</div>
 			<div
 				style={{ justifyContent: 'space-between', display: 'flex' }}

@@ -50,35 +50,37 @@ const AddressCoinBalanceTab = ({ address, addressData }: Props) => {
 					onChange={onPagingChange}
 				/>
 			</div>
-			<div style={{ overflowY: 'scroll' }}>
-				<BackgroundCard
-					classes={clsx(
-						styles.noRadius,
-						'text text-base row  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
-					)}
-				>
-					<div className={clsx('col-2', styles.colBlockNumber)}>Blocks</div>
-					<div className={clsx('col-3', styles.colTransactionHash)}>Tx Hash</div>
-					<div className={clsx('col-5', styles.colValue)}>Value</div>
-					<div className={clsx('col-2', styles.colTimer)}>Time</div>
-				</BackgroundCard>
-				<div className="">
-					{!result || result.length == 0 ? (
-						<Empty classes="margin-top-lg" />
-					) : (
-						<>
-							{result?.map((item: AddressCoinBalanceHistory, index) => {
-								return (
-									<AddressBalanceHistory
-										addressBalance={addressData.balance}
-										astraSummary={astraSummary}
-										key={item.blockNumber}
-										data={item}
-									/>
-								)
-							})}
-						</>
-					)}
+			<div style={{ overflowX: 'auto' }}>
+				<div style={{ minWidth: '900px' }}>
+					<BackgroundCard
+						classes={clsx(
+							styles.noRadius,
+							'text text-base row  padding-left-lg padding-right-lg padding-top-sm padding-bottom-sm'
+						)}
+					>
+						<div className={clsx('col-2', styles.colBlockNumber)}>Blocks</div>
+						<div className={clsx('col-3', styles.colTransactionHash)}>Tx Hash</div>
+						<div className={clsx('col-5', styles.colValue)}>Value</div>
+						<div className={clsx('col-2', styles.colTimer)}>Time</div>
+					</BackgroundCard>
+					<div className="">
+						{!result || result.length == 0 ? (
+							<Empty classes="margin-top-lg" />
+						) : (
+							<>
+								{result?.map((item: AddressCoinBalanceHistory, index) => {
+									return (
+										<AddressBalanceHistory
+											addressBalance={addressData.balance}
+											astraSummary={astraSummary}
+											key={item.blockNumber}
+											data={item}
+										/>
+									)
+								})}
+							</>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

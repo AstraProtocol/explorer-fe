@@ -76,104 +76,106 @@ const ContractStandardVerify = ({ address, onClose, onSuccess }: Props) => {
 	return (
 		<div className={clsx(styles.modalVerify, 'radius-lg')}>
 			<Header onClose={onClose} />
-			<div className={clsx(styles.paddingHoz, styles.container, styles.body)}>
-				<AddressDisplay classes="margin-bottom-xl" address={address} />
-				<div className={clsx('margin-bottom-xl border border-bottom-base', styles.borderColor)}>
-					<FormItem
-						label="Contract Name:"
-						type="input"
-						inputProps={{
-							props: {
-								placeholder: 'Enter contract name',
-								classes: {
-									wapper: clsx('text text-base', styles.color, styles.input),
-									inputFont: clsx('text text-base', styles.color)
-								},
+			<div style={{ overflowX: 'auto' }}>
+				<div className={clsx(styles.paddingHoz, styles.container, styles.body)} style={{ minWidth: '795px' }}>
+					<AddressDisplay classes="margin-bottom-xl" address={address} />
+					<div className={clsx('margin-bottom-xl border border-bottom-base', styles.borderColor)}>
+						<FormItem
+							label="Contract Name:"
+							type="input"
+							inputProps={{
+								props: {
+									placeholder: 'Enter contract name',
+									classes: {
+										wapper: clsx('text text-base', styles.color, styles.input),
+										inputFont: clsx('text text-base', styles.color)
+									},
 
-								value: contractName,
-								onChange: e => setContractName(e.target.value),
-								ref: ref => (contractNameRef.current = ref)
-							} as InputProps,
-							data: {
-								id: 'verify-contract-name',
-								tooltip: `Must match the name specified in the code. <br />
+									value: contractName,
+									onChange: e => setContractName(e.target.value),
+									ref: ref => (contractNameRef.current = ref)
+								} as InputProps,
+								data: {
+									id: 'verify-contract-name',
+									tooltip: `Must match the name specified in the code. <br />
 								For example, in contract MyContract {..}  <br />
 								MyContract is the contract name.`
-							} as InputData
-						}}
-					/>
-					<FormItem
-						label="Include nightly build:"
-						type="radio-button"
-						inputProps={{
-							props: {
-								style: { width: 160 },
-								onClick: value => setHasNightlyBuild(value === 'yes')
-							},
-							data: {
-								currentValue: hasNightlyBuild ? 'yes' : 'no',
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
-								id: 'verify-nightly-build',
-								tooltip: `Select yes if you want to show nightly builds.`
-							} as FormRadioButtonData
-						}}
-					/>
-					<FormItem
-						label="Compiler:"
-						type="select"
-						inputProps={{
-							props: {
-								classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
-								onSelect: v => setCompiler(v.value)
-							},
-							data: {
-								currentValue: compiler,
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								],
-								id: 'verify-compiler',
-								tooltip: `The compiler version is specified in pragma solidity X.X.X. Use the compiler version rather than the nightly build. If using the Solidity compiler, run solc —version to check.`
-							} as FormSelectData
-						}}
-					/>
+								} as InputData
+							}}
+						/>
+						<FormItem
+							label="Include nightly build:"
+							type="radio-button"
+							inputProps={{
+								props: {
+									style: { width: 160 },
+									onClick: value => setHasNightlyBuild(value === 'yes')
+								},
+								data: {
+									currentValue: hasNightlyBuild ? 'yes' : 'no',
+									items: [
+										{ label: 'Yes', value: 'yes' },
+										{ label: 'No', value: 'no' }
+									],
+									id: 'verify-nightly-build',
+									tooltip: `Select yes if you want to show nightly builds.`
+								} as FormRadioButtonData
+							}}
+						/>
+						<FormItem
+							label="Compiler:"
+							type="select"
+							inputProps={{
+								props: {
+									classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
+									onSelect: v => setCompiler(v.value)
+								},
+								data: {
+									currentValue: compiler,
+									items: [
+										{ label: 'Yes', value: 'yes' },
+										{ label: 'No', value: 'no' }
+									],
+									id: 'verify-compiler',
+									tooltip: `The compiler version is specified in pragma solidity X.X.X. Use the compiler version rather than the nightly build. If using the Solidity compiler, run solc —version to check.`
+								} as FormSelectData
+							}}
+						/>
 
-					<FormItem
-						label="Standard Input JSON:"
-						type="file"
-						inputProps={{
-							props: {
-								// onChange: e => setSolidityCode(e.target.value),
-								// classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
-								// value: solidityCode
-							},
-							data: {
-								id: 'verify-contract-file-json',
-								tooltip:
-									'Drop the standard input JSON file created during contract compilation into the drop zone.'
-							}
-						}}
-					/>
-					<FormItem
-						label="Try to fetch constructor arguments automatically:"
-						type="radio-button"
-						inputProps={{
-							props: {
-								onClick: value => setFetchContructrorArgAutomatically(value === 'yes'),
-								style: { width: 160 }
-							},
-							data: {
-								currentValue: fetchContructorArgAutomatically ? 'yes' : 'no',
-								items: [
-									{ label: 'Yes', value: 'yes' },
-									{ label: 'No', value: 'no' }
-								]
-							} as FormRadioButtonData
-						}}
-					/>
+						<FormItem
+							label="Standard Input JSON:"
+							type="file"
+							inputProps={{
+								props: {
+									// onChange: e => setSolidityCode(e.target.value),
+									// classes: { wapper: styles.input, inputFont: clsx('text text-base', styles.color) },
+									// value: solidityCode
+								},
+								data: {
+									id: 'verify-contract-file-json',
+									tooltip:
+										'Drop the standard input JSON file created during contract compilation into the drop zone.'
+								}
+							}}
+						/>
+						<FormItem
+							label="Try to fetch constructor arguments automatically:"
+							type="radio-button"
+							inputProps={{
+								props: {
+									onClick: value => setFetchContructrorArgAutomatically(value === 'yes'),
+									style: { width: 160 }
+								},
+								data: {
+									currentValue: fetchContructorArgAutomatically ? 'yes' : 'no',
+									items: [
+										{ label: 'Yes', value: 'yes' },
+										{ label: 'No', value: 'no' }
+									]
+								} as FormRadioButtonData
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 			<Row

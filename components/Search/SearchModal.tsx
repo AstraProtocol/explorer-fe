@@ -125,7 +125,10 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	}
 	return (
 		<ModalWrapper open={open} classes={{ wrapperContent: 'same-bg-color-50' }}>
-			<div className={clsx(styles.searchModal, 'col-7 md-full radius-2xl padding-lg')} ref={_searchWrapperRef}>
+			<div
+				className={clsx(styles.searchModal, 'col-7 md-col-11 sm-col-11 md-full md-full radius-2xl padding-lg')}
+				ref={_searchWrapperRef}
+			>
 				<div
 					className={clsx(
 						styles.inputWrapper,

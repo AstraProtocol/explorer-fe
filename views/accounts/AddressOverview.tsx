@@ -98,7 +98,7 @@ const AddressOverview = ({ address, addressData }: Props) => {
 							: numeral(addressCounter.transactionCount).format('0,0')}
 					</span>
 				</div>
-				<div className={styles.colTransfer}>
+				<div className={clsx(styles.colTransfer)}>
 					<span className="text text-base contrast-color-50">Transfers:</span>
 					<br />
 					<span className="text text-base">

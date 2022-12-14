@@ -30,16 +30,18 @@ const AddressTransactionTab = ({ address }: Props) => {
 					/>
 				</div>
 			</Row>
-			<div style={{ overflowY: 'scroll' }}>
-				{!data || data.length == 0 ? (
-					<Empty text={'There are no transactions.'} />
-				) : (
-					<>
-						{data?.map((item, index) => (
-							<AddressTransaction key={item.hash + index} transaction={item} />
-						))}
-					</>
-				)}
+			<div style={{ overflowX: 'auto' }}>
+				<div style={{ minWidth: '950px' }}>
+					{!data || data.length == 0 ? (
+						<Empty text={'There are no transactions.'} />
+					) : (
+						<>
+							{data?.map((item, index) => (
+								<AddressTransaction key={item.hash + index} transaction={item} />
+							))}
+						</>
+					)}
+				</div>
 			</div>
 			<div
 				style={{ justifyContent: 'space-between', display: 'flex' }}

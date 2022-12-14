@@ -115,7 +115,7 @@ export default function CardInfo({
 							)}
 						>
 							{(contents as Content[]).map((content, index) => (
-								<div key={(content.value as string) + index} style={{ overflowX: 'auto' }}>
+								<div key={(content.value as string) + index}>
 									{type === 'nonce' ? (
 										<div className="block-ver-center money money-sm contrast-color-70">
 											{content.value}

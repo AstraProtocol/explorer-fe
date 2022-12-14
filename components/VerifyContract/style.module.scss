@@ -15,10 +15,18 @@
 	width: 1272px;
 	max-height: 800px;
 	overflow-y: unset;
+	@media screen and (max-width: 1272px) {
+		width: calc(100% - 32px) !important;
+		margin-left: 16px;
+		margin-right: 16px;
+	}
 }
 
 .input {
 	width: 560px;
+	@media screen and (max-width: 560px) {
+		width: 100%;
+	}
 }
 
 .container {
@@ -52,4 +60,8 @@
 .paddingHoz {
 	padding-left: 108px;
 	padding-right: 108px;
+	@media screen and (max-width: 760px) {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
 }

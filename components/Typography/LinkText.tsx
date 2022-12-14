@@ -18,7 +18,7 @@ export const LinkText = ({ fontType = 'Manrope', children, classes, href, fontSi
 				target={openInNewPage ? '_blank' : '_self'}
 				rel="noreferrer"
 				className={clsx(
-					'link',
+					'link word-break-all',
 					'link-color-useful ',
 					{
 						'text font-500': fontType === 'Manrope',

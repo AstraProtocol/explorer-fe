@@ -59,10 +59,10 @@ export default function BlockRow({
 				)}
 			>
 				<div className={clsx(styles.iconCetner, 'margin-right-sm md-flex-justify-space-between')}>
-					<div className="block-ver-center">
+					<div className="block-ver-center md-col-7">
 						<Image alt="nothing" src={'/images/icons/blockchain.png'} height={24} width={24} />
 						{isMobile && (
-							<div className="col-2 block-ver-center md-padding-left-xs">
+							<div className="col-2 md-col-12 block-ver-center md-padding-left-xs">
 								<Typography.LinkText
 									href={LinkMaker.block(blockNumber)}
 									classes={clsx('money', 'money-sm')}
@@ -73,7 +73,7 @@ export default function BlockRow({
 						)}
 					</div>
 					{isMobile && (
-						<div className="col-1 block-ver-center">
+						<div className="col-2 block-ver-center">
 							<Timer updatedAt={updatedAt} />
 						</div>
 					)}

@@ -31,11 +31,11 @@ export default function TransactionRowContentMobile({
 				className={clsx(styles.rowBrief, styles.TransactionRow, 'row width-100')}
 				style={{ minHeight: style === 'inject' ? 'auto' : height }}
 			>
-				<div className="flex flex-justify-space-between width-100">
+				<div className="flex flex-justify-space-between width-100 sm-wrap">
 					<div>
 						<Typography.LinkText
 							href={LinkMaker.transaction(hash, addressQuery)}
-							classes={'margin-right-xs'}
+							classes={'margin-right-xs word-break-all'}
 							fontType="Titi"
 						>
 							{ellipseBetweenText(hash, 20, 20).toLowerCase()}

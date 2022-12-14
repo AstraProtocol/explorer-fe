@@ -25,7 +25,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 				style.borderWidthPadding
 			)}
 		>
-			<div style={{ textAlign: 'left' }} className={clsx('col-6', style.colAddress)}>
+			<div style={{ textAlign: 'left' }} className={clsx('col-6 md-col-12', style.colAddress)}>
 				<Row>
 					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
 						{ellipseBetweenText(data.hash, 20, 20)}
