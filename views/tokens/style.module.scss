@@ -18,7 +18,6 @@
 	background: rgba(var(--contrast-color-theme--raw), 0.05);
 	border: 1px solid rgba(var(--contrast-color-theme--raw), 0.05);
 	backdrop-filter: blur(42px);
-	width: fit-content;
 
 	.currency {
 		color: var(--contrast-color-theme-70);
@@ -35,7 +34,6 @@
 
 .tokenHeadTitle,
 .tokenRow {
-	width: fit-content;
 	.colIndex {
 		width: 10px;
 		margin-right: var(--offset-lg);
@@ -48,6 +46,7 @@
 	}
 	.colTotalSupply {
 		min-width: 250px;
+		flex-direction: row;
 	}
 	.colHolderCount {
 		min-width: 80px;

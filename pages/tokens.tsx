@@ -66,17 +66,19 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 				{!tokens || tokens.length === 0 ? (
 					<RowLoader row={10} />
 				) : (
-					<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
-						<TokenHeadTitle />
-						{tokens?.map((item: Token, index: number) => {
-							return (
-								<TokenRow
-									key={item.contractAddressHash}
-									index={index + (page - 1) * getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET') + 1}
-									token={item}
-								/>
-							)
-						})}
+					<div className="padding-bottom-sm" style={{ overflowX: 'scroll' }}>
+						<div style={{ minWidth: '1272px' }}>
+							<TokenHeadTitle />
+							{tokens?.map((item: Token, index: number) => {
+								return (
+									<TokenRow
+										key={item.contractAddressHash}
+										index={index + (page - 1) * getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET') + 1}
+										token={item}
+									/>
+								)
+							})}
+						</div>
 					</div>
 				)}
 			</Container>

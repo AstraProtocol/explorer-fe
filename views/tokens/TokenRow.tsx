@@ -19,23 +19,29 @@ export default function TokenRow({ index, token }: Props) {
 				'row padding-left-lg',
 				'padding-right-lg padding-top-sm padding-bottom-sm',
 				'radius-lg',
-				'margin-bottom-xs'
+				'margin-bottom-xs',
+				'row'
 			)}
 		>
-			<div className={clsx(styles.colIndex, 'text text-base contrast-color-70 text-center')}>{index}</div>
-			<div className={clsx(styles.borderLeft, styles.colToken, 'col-3 padding-left-lg block-ver-center')}>
+			<div
+				className={clsx(styles.colIndex, 'col text text-base contrast-color-70 text-center')}
+				style={{ minWidth: '30px' }}
+			>
+				{index}
+			</div>
+			<div className={clsx(styles.borderLeft, styles.colToken, 'col col-3 padding-left-lg block-ver-center')}>
 				<Typography.LinkText href={LinkMaker.token(token.contractAddressHash)} classes={'text text-base'}>
 					{`${token.name} (${token.symbol})`}
 				</Typography.LinkText>
 			</div>
 
-			<div className={clsx('col-3 padding-left-lg', styles.borderLeft, styles.colAddress)}>
+			<div className={clsx('col col-3 padding-left-lg', styles.borderLeft, styles.colAddress)}>
 				<Typography.LinkText href={LinkMaker.address(token.contractAddressHash)} classes={'text text-sm'}>
 					{token.contractAddressHash}
 				</Typography.LinkText>
 			</div>
 
-			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'padding-left-lg col-3')}>
+			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'col padding-left-lg col-3')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
 					{formatNumber(
 						convertBalanceToView(token.totalSupply, parseInt(token.decimals || '1')),
@@ -49,7 +55,7 @@ export default function TokenRow({ index, token }: Props) {
 				className={clsx(
 					styles.borderLeft,
 					styles.colHolderCount,
-					'col-1 padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center'
+					'col col-2 padding-left-lg text-center money money-2xs contrast-color-70 block-ver-center'
 				)}
 			>
 				{token.holderCount}

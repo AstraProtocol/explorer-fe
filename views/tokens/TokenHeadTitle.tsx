@@ -11,10 +11,10 @@ const TokenHeadTitle = () => {
 			)}
 		>
 			<div className={clsx('hidden', styles.colIndex)}>STT</div>
-			<div className={clsx('padding-left-lg col-3 ', styles.colToken)}>Token</div>
-			<div className={clsx('padding-left-lg col-3 ', styles.colAddress)}>Address</div>
-			<div className={clsx('padding-left-lg col-3 ', styles.colTotalSupply)}>Total Supply</div>
-			<div className={clsx('padding-left-lg col-1 ', styles.colHolderCount)}>Holder Count</div>
+			<div className={clsx('col col-3 text-center gutter-left', styles.colToken)}>Token</div>
+			<div className={clsx('col padding-left-lg col-3 ', styles.colAddress)}>Address</div>
+			<div className={clsx('col padding-left-lg col-3 ', styles.colTotalSupply)}>Total Supply</div>
+			<div className={clsx('col col-2 text-center', styles.colHolderCount)}>Holder Count</div>
 		</Row>
 	)
 }
