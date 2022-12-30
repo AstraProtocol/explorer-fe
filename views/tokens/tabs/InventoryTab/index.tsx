@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
+import usePaginationLite from 'hooks/usePaginationLite'
 import { useState } from 'react'
 import { getEnvNumber } from 'utils/helper'
 import useTokenInventory from 'views/tokens/hook/useTokenInventory'
@@ -15,9 +16,17 @@ interface Props {
 
 const InventoryTab = ({ token }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { tokens, hasNextPage } = useTokenInventory(token, currentPage)
+	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
+	const { tokens, hasNextPage, nextPagePath } = useTokenInventory(token, currentParam)
 
-	const onPagingChange = (value: number) => setPage(value)
+	const onPagingChange = (value: number) => {
+		if (value < currentPage) {
+			makePrevPage()
+		} else {
+			makeNextPage(nextPagePath)
+		}
+		setPage(value)
+	}
 
 	return (
 		<div>
