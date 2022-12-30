@@ -20,7 +20,7 @@ const API_LIST = {
 	VALIDATORS: '/api/v1/validators',
 
 	MARKET_HISTORY_PRICE: 'evm_/api/v1/market-history-chart',
-	TRANSACTION_HISTORY_COUNTER: 'evm_/api/v1/transaction-history-chart',
+	TRANSACTION_HISTORY_COUNTER: '/api/v1/transactions-history-chart',
 	TRANSACTION_RAW_TRACE: 'evm_/api/v1?module=transaction&action=getrawtracebytxhash', // txhash
 
 	MARKET_PRICE: 'https://api.tiki.vn/sandseel/api/v2/public/markets/astra/summary',

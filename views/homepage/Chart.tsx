@@ -58,9 +58,9 @@ function getTxHistoryData(transactionHistory) {
 	}
 	if (transactionHistory.length == 0) return []
 
-	const data = transactionHistory.map(dataPoint => ({
+	const data = transactionHistory.map((dataPoint: TransactionHistoryCounter) => ({
 		x: dataPoint.date,
-		y: dataPoint.number_of_transactions
+		y: dataPoint.numberOfTransactions
 	}))
 
 	// it should be empty value for tx history the current day
@@ -92,9 +92,7 @@ const OverviewChart = ({}) => {
 
 	// const availableSupply = JSON.parse(historyPriceRaw.supply_data)
 	const marketHistoryData = historyPriceRaw ? humps.camelizeKeys(JSON.parse(historyPriceRaw.history_data)) : []
-	const historyCounterTransaction = historyCounterTransactionRaw
-		? JSON.parse(historyCounterTransactionRaw.history_data)
-		: []
+	const historyCounterTransaction = historyCounterTransactionRaw ? historyCounterTransactionRaw.result : []
 
 	const data: any = {
 		datasets: [

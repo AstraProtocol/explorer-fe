@@ -29,7 +29,7 @@ interface MarketHistoryPrice {
 
 interface TransactionHistoryCounter {
 	date: string
-	number_of_transactions: number
+	numberOfTransactions: number
 }
 
 interface MarketHistoryPriceResponse {
@@ -38,7 +38,7 @@ interface MarketHistoryPriceResponse {
 }
 
 interface TransactionHistoryCounterResponse {
-	history_data: string
+	result: TransactionHistoryCounter[]
 }
 
 interface EstimateCountedInfo {
