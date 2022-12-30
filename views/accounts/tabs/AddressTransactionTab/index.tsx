@@ -22,7 +22,7 @@ const AddressTransactionTab = ({ address }: Props) => {
 				<div>
 					{/* Select Component */}
 					<Pagination
-						total={pagination.total_page}
+						total={pagination.total_record}
 						currentPage={pagination.current_page}
 						disabled={false}
 						limit={pagination.limit}

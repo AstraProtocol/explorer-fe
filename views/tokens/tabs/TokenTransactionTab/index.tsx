@@ -28,7 +28,7 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
-				<span className="text text-xl">Transactions</span>
+				<span className="text text-xl">Token Transfers</span>
 				<div>
 					{/* Select Component */}
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
