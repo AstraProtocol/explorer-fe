@@ -13,6 +13,7 @@ import {
 } from 'chart.js'
 import 'chartjs-adapter-dayjs'
 import Spinner from 'components/Spinner'
+import dayjs from 'dayjs'
 import humps from 'humps'
 import numeral from 'numeral'
 import { Line } from 'react-chartjs-2'
@@ -47,6 +48,11 @@ function getPriceData(marketHistoryData) {
 		x: date,
 		y: closingPrice
 	}))
+
+	// Because of data return not include today. Add this.
+	const prevDay = dayjs(data[0].x)
+	let curDay = prevDay.add(1, 'd')
+	data.unshift({ x: curDay, y: null })
 
 	setDataToLocalStorage('priceData', data)
 	return data
