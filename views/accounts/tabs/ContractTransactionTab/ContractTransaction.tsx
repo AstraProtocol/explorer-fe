@@ -105,7 +105,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 						{Number(transaction.value) >= 0 && (
 							<>
 								<TypographyLib.Balance
-									size="xs"
+									size="2xs"
 									value={convertBalanceToView(transaction.value)}
 									currency={''}
 									icon={<CryptoIcon name={'asa'} size="sm" />}
