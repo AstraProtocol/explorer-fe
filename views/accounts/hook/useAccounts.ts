@@ -23,7 +23,7 @@ export default function useAccounts(params: string | undefined): UseAstraHolderD
 			}
 		]
 	}
-	const { data } = useSWR<TopAstraHolderResponse>(_fetchCondition())
+	const { data, isValidating } = useSWR<TopAstraHolderResponse>(_fetchCondition())
 
 	useEffect(() => {
 		if (data?.result) {
@@ -31,6 +31,7 @@ export default function useAccounts(params: string | undefined): UseAstraHolderD
 		}
 	}, [data])
 	return {
+		isValidating,
 		result: hookData.result,
 		hasNextPage: hookData.hasNextPage,
 		nextPagePath: hookData.nextPagePath

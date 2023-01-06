@@ -16,7 +16,7 @@ import Layout from '../components/Layout'
 
 const AllTokensPage: React.FC<NextPage> = _ => {
 	const { page, setPage } = usePageQuery('/tokens')
-	const { tokens, hasNextPage } = useTokens(page)
+	const { tokens, hasNextPage, isValidating } = useTokens(page)
 
 	const onPagingChange = (value: number) => {
 		setPage(value)
@@ -63,10 +63,10 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 					</div>
 				</Row>
 
-				{!tokens || tokens.length === 0 ? (
+				{isValidating ? (
 					<RowLoader row={10} />
 				) : (
-					<div className="padding-bottom-sm" style={{ overflowX: 'scroll' }}>
+					<div className="padding-bottom-sm" style={{ overflowX: 'auto' }}>
 						<div style={{ minWidth: '1272px' }}>
 							<TokenHeadTitle />
 							{tokens?.map((item: Token, index: number) => {

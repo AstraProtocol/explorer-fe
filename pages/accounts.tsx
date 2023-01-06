@@ -14,10 +14,9 @@ import useAccounts from 'views/accounts/hook/useAccounts'
 import Layout from '../components/Layout'
 
 const AstraHolderPage: React.FC<NextPage> = _ => {
-	// const { page, setPage } = usePaginationLite('/accounts')
 	const [page, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useAccounts(currentParam)
+	const { hasNextPage, nextPagePath, result, isValidating } = useAccounts(currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < page) {
@@ -41,7 +40,7 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 					</div>
 				</Row>
 
-				{!result || result.length === 0 ? (
+				{isValidating ? (
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>

@@ -40,7 +40,7 @@ export default function BlockRow({
 }: BlockRowProps) {
 	const { isMobile } = useMobileLayout('medium')
 	const { isMobile: isSmallDevice } = useMobileLayout('small')
-	const proposer = getStakingValidatorByAstraAddress(proposerAddress)
+	const proposer = proposerAddress ? getStakingValidatorByAstraAddress(proposerAddress) : null
 	const proposerName = proposer?.moniker
 	const proposerDisplay = proposerName
 		? `${proposerName} (${ellipseBetweenText(proposerAddress, 10, 10)})`

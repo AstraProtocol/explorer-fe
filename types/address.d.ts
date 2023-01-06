@@ -85,6 +85,7 @@ interface ContractTransactionResponse {
 }
 
 interface UseAstraHolderData {
+	isValidating: boolean
 	result: Holder[] | []
 	hasNextPage: boolean
 	nextPagePath: string

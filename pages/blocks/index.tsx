@@ -74,7 +74,11 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 									<BlockRow
 										key={item.blockHeight}
 										blockNumber={item.blockHeight}
-										proposerAddress={astraToEth(proposer.initialDelegatorAddress)}
+										proposerAddress={
+											proposer && proposer.initialDelegatorAddress
+												? astraToEth(proposer.initialDelegatorAddress)
+												: ''
+										}
 										transactions={item.transactionCount}
 										updatedAt={item.blockTime}
 										size={0}

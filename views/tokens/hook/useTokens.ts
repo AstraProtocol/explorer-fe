@@ -15,7 +15,7 @@ export default function useTokens(page: number): UseTokenHookData {
 			}
 		]
 	}
-	const { data } = useSWR<TokenResponse>(_fetchCondition())
+	const { data, isValidating } = useSWR<TokenResponse>(_fetchCondition())
 
 	useEffect(() => {
 		if (data?.result) {
@@ -23,6 +23,7 @@ export default function useTokens(page: number): UseTokenHookData {
 		}
 	}, [data])
 	return {
+		isValidating,
 		tokens: hookData.tokens,
 		hasNextPage: hookData.hasNextPage
 	}

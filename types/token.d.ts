@@ -45,6 +45,7 @@ interface UseTokenHolderData {
 }
 
 interface UseTokenHookData {
+	isValidating: boolean
 	tokens: Token[]
 	hasNextPage: boolean
 }
