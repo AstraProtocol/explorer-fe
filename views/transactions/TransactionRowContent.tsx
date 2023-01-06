@@ -140,10 +140,8 @@ export default function TransactionRowContent({
 									value={value}
 									currency={
 										valueCurrency
-											? valueCurrency.toLowerCase() == 'aastra'
-												? process.env.NEXT_PUBLIC_NATIVE_TOKEN
-												: valueCurrency?.toUpperCase()
-											: 'ASA'
+											? valueCurrency.toUpperCase()
+											: process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()
 									}
 									icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
 								/>

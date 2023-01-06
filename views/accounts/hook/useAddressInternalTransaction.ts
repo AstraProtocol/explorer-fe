@@ -1,3 +1,4 @@
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
@@ -42,7 +43,7 @@ export default function useAddressInternalTransaction(
 				blockNumber: Number(d?.blockNumber),
 				updatedAt: Number(d?.timeStamp) * 1000,
 				value: formatEther(d?.value || '0'),
-				valueToken: 'asa',
+				valueToken: process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames,
 				// valueCurrency: d.
 				hash: d?.transactionHash,
 				labelStatus: evmInternalTransactionType(d?.callType || d?.type),

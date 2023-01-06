@@ -1,4 +1,5 @@
-import { Typography as TypographyLib } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
@@ -95,6 +96,12 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 										size="xs"
 										value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
 										currency={transaction.tokenSymbol}
+										icon={
+											<CryptoIcon
+												name={transaction.tokenSymbol?.toLowerCase() as CryptoIconNames}
+												size="sm"
+											/>
+										}
 									/>
 									<br />
 								</>

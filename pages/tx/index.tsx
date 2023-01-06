@@ -1,5 +1,4 @@
 import { Pagination, useMobileLayout } from '@astraprotocol/astra-ui'
-import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import Container from 'components/Container'
 import RowLoader from 'components/Loader/RowLoader'
@@ -84,7 +83,6 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										from={item.from}
 										to={item.to}
 										value={item.value}
-										valueToken={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames}
 										labelStatus={item.evmType}
 										type={item.type}
 										newBlock={item.newTransaction}

@@ -71,8 +71,8 @@ const AddressTransaction = ({ transaction }: Props) => {
 								<TypographyLib.Balance
 									size="2xs"
 									value={transaction.value}
-									currency={''}
-									icon={<CryptoIcon name={'asa'} size="sm" />}
+									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
+									icon={<CryptoIcon name="asa" size="sm" />}
 								/>
 								<br />
 							</>

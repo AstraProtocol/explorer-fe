@@ -107,7 +107,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 								<TypographyLib.Balance
 									size="2xs"
 									value={convertBalanceToView(transaction.value)}
-									currency={''}
+									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
 									icon={<CryptoIcon name={'asa'} size="sm" />}
 								/>
 								<br />

@@ -1,4 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { formatEther } from 'ethers/lib/utils'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { caculateAmount } from 'views/transactions/utils'
@@ -40,7 +41,8 @@ const _parseCosmosMsgSend = (content: MsgSendContent, blockTime: string, status:
 		blockNumber: content.height,
 		updatedAt: blockTime,
 		value: formatEther(amountItem.amount || '0'),
-		valueCurrency: amountItem.denom,
+		valueCurrency: process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames,
+		valueToken: process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames,
 		hash: content.txHash,
 		type: getTransactionType(content?.msgName),
 		status,
