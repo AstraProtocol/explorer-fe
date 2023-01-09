@@ -63,7 +63,7 @@ const AllTokensPage: React.FC<NextPage> = _ => {
 					</div>
 				</Row>
 
-				{isValidating ? (
+				{isValidating && tokens.length == 0 ? (
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm" style={{ overflowX: 'auto' }}>

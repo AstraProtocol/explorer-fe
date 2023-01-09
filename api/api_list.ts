@@ -7,7 +7,7 @@ const API_LIST = {
 	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
 
 	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
-	ALL_HOLDERS: 'evm_/api/v1?module=account&action=getTopAddressesBalance', // &page=1&offset=20
+	ALL_HOLDERS: 'api/v1/accounts/get-top-addresses-balance?blockscout=true', // &page=1&offset=20
 	ALL_TRANSACTIONS: '/api/v1/transactions',
 
 	TRANSACTIONS: '/api/v1/transactions',

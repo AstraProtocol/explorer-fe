@@ -26,8 +26,8 @@ export default function useAccounts(params: string | undefined): UseAstraHolderD
 	const { data, isValidating } = useSWR<TopAstraHolderResponse>(_fetchCondition())
 
 	useEffect(() => {
-		if (data?.result) {
-			setState(data)
+		if (data?.result?.result) {
+			setState(data.result)
 		}
 	}, [data])
 	return {

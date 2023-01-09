@@ -1,7 +1,7 @@
 import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
-import { convertBalanceToView, getEnvNumber, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseRightText, getEnvNumber, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -31,7 +31,7 @@ export default function TokenRow({ index, token }: Props) {
 			</div>
 			<div className={clsx(styles.borderLeft, styles.colToken, 'col col-3 padding-left-lg block-ver-center')}>
 				<Typography.LinkText href={LinkMaker.token(token.contractAddressHash)} classes={'text text-base'}>
-					{`${token.name} (${token.symbol})`}
+					{ellipseRightText(`${token.name} (${token.symbol})`, 25)}
 				</Typography.LinkText>
 			</div>
 

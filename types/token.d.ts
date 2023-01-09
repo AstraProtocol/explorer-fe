@@ -22,9 +22,11 @@ interface TokenInventoryResponse {
 }
 
 interface TopAstraHolderResponse {
-	hasNextPage: boolean
-	nextPagePath: any
-	result: Holder[]
+	result: {
+		hasNextPage: boolean
+		nextPagePath: any
+		result: Holder[]
+	}
 }
 
 interface UseTokenTransactionHookData {

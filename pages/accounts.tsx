@@ -40,7 +40,7 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 					</div>
 				</Row>
 
-				{isValidating ? (
+				{isValidating && result.length == 0 ? (
 					<RowLoader row={10} />
 				) : (
 					<div className="padding-bottom-sm" style={{ overflowY: 'auto' }}>
