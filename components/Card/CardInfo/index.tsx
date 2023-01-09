@@ -10,11 +10,13 @@ import BackgroundCard from '../Background/BackgroundCard'
 import Decode, { DecodeProps } from './Components/Decode'
 import RawInput from './Components/RawInput'
 import Transfers from './Components/Transfers'
+import ValidatorCommission from './Components/ValidatorCommission'
+import ValidatorDescription from './Components/ValidatorDescription'
 import styles from './style.module.scss'
 
 export type Content = {
 	link?: string
-	value?: string | number
+	value?: string | number | any
 	text?: string
 	prefix?: string
 	suffix?: string
@@ -51,6 +53,8 @@ export type CardRowItem = {
 		| 'raw-input'
 		| 'nonce'
 		| 'decode'
+		| 'validator-description'
+		| 'commission'
 	contents: Content[]
 	responsive?: {
 		wrap?: 'sm' | 'md'
@@ -123,9 +127,9 @@ export default function CardInfo({
 										</div>
 									) : null}
 									{type === 'text' ? (
-										<span className="money money-sm contrast-color-100 word-break-all">
-											{_ellipsis(content.value, responsive.ellipsis)}{' '}
-											{content.suffix && content.suffix}
+										<span className="money money-sm contrast-color-100">
+											{/* {_ellipsis(content.value, responsive.ellipsis)}{' '} */}
+											{content.value} {content.suffix && content.suffix}
 										</span>
 									) : null}
 									{type === 'copy' ? (
@@ -140,16 +144,18 @@ export default function CardInfo({
 											fontType="Titi"
 											fontSize="text-500"
 										>
-											{_ellipsis(content.value as string, responsive.ellipsis)}
+											{/* {_ellipsis(content.value as string, responsive.ellipsis)} */}
+											{content.value}
 										</Typography.LinkText>
 									) : null}
 									{type === 'link-copy' ? (
 										<div className="block-center">
 											<Typography.LinkText href={content.link || ''}>
-												{_ellipsis(
+												{/* {_ellipsis(
 													content.text || (content.value as string),
 													responsive.ellipsis
-												)}
+												)} */}
+												{content.text || (content.value as string)}
 											</Typography.LinkText>
 											<CopyButton textCopy={content.value as string} />
 										</div>
@@ -189,6 +195,12 @@ export default function CardInfo({
 									{type === 'transfer' ? <Transfers content={content} /> : null}
 									{type === 'raw-input' ? <RawInput text={content.value as string} /> : null}
 									{type === 'decode' ? <Decode {...content.decode} /> : null}
+									{type === 'validator-description' ? (
+										<ValidatorDescription description={content.value as ValidatorData} />
+									) : null}
+									{type === 'commission' ? (
+										<ValidatorCommission commission={content.value as CommissionRates} />
+									) : null}
 								</div>
 							))}
 						</div>

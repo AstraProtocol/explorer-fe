@@ -122,6 +122,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	// data.rawInput = result.input
 	// msgsend
 	_convertTransfer(data, result?.messages, result?.blockTime, result?.success)
+
 	_mapMsgSendField(data, result)
 	_mapMsgVoteField(data, result?.messages)
 	_mapMsgDelegate(data, result?.messages)
@@ -129,26 +130,41 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	_mapMsgExec(data as TransactionMsgExecDetail, result?.messages)
 	_mapMsgGrant(data, result?.messages)
 	_mapMsgWithdrawDelegatorReward(data as TransactionMsgWithdrawDelegatorRewardDetail, result?.messages)
+	_mapMsgCreateValidator(data as TransactionMsgCreateValidatorDetail, result?.messages)
 	return data
 }
+
+// /**
+//  *
+//  * @param amounts {denom, amount}
+//  * @returns amount in string (bignumber)
+//  */
+// export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
+// 	if (amounts && amounts.length > 0) {
+// 		let totalAmount = BigNumber.from('0')
+// 		for (let amount of amounts) {
+// 			if (amount.denom === 'aastra') {
+// 				totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+// 			}
+// 		}
+
+// 		return totalAmount.toString()
+// 	}
+// 	return '0'
+// }
 
 /**
  *
  * @param amounts {denom, amount}
  * @returns amount in string (bignumber)
  */
-export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
-	if (amounts && amounts.length > 0) {
-		let totalAmount = BigNumber.from('0')
-		for (let amount of amounts) {
-			if (amount.denom === 'aastra') {
-				totalAmount = totalAmount.add(BigNumber.from(amount.amount))
-			}
-		}
-
-		return totalAmount.toString()
+export const getAstraTokenAmount = (amount: TokenAmount): string => {
+	let totalAmount = BigNumber.from('0')
+	if (amount.denom === 'aastra') {
+		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
 	}
-	return '0'
+
+	return totalAmount.toString()
 }
 
 /**
@@ -176,6 +192,7 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
+			console.log(message.content.amount)
 			totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content?.amount)))
 		}
 		return formatEther(totalAmount)
@@ -295,5 +312,19 @@ const _mapMsgWithdrawDelegatorReward = (
 		data.delegatorAddress = content.delegatorAddress
 		data.recipientAddress = content.recipientAddress
 		data.validatorAddress = content.validatorAddress
+	}
+}
+
+const _mapMsgCreateValidator = (data: TransactionMsgCreateValidatorDetail, messages: TransactionMessage[]) => {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgCreateValidator) {
+		const content = messages[0].content as MsgCreateValidatorContent
+
+		data.delegatorAddress = content.delegatorAddress
+		data.validatorDescription = content.description
+		data.commissionRates = content.commissionRates
+		data.minSelfDelegation = content.minSelfDelegation
+		data.validatorAddress = content.validatorAddress
+		data.tendermintPubkey = content.tendermintPubkey
 	}
 }

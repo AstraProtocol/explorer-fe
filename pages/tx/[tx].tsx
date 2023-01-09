@@ -26,7 +26,7 @@ type Props = {
 
 const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
 	const { isMobile } = useMobileLayout('small')
-	const [items, moreItems] = useConvertData({ data })
+	const [items, extraItems, moreItems] = useConvertData({ data })
 	const hash = evmHash || cosmosHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	return (
@@ -49,6 +49,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 							<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
 						</div>
 						<CardInfo items={items} classes={['margin-top-sm']} />
+						{extraItems.length > 0 && <CardInfo items={extraItems} classes={['margin-top-sm']} />}
 						{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
 						{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
 						<TransactionTabs

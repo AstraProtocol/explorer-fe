@@ -3,6 +3,7 @@ import { formatNumber } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
 import { formatUnits } from 'ethers/lib/utils'
+import { isEmpty } from 'lodash'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -135,6 +136,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								contents: [{ value: data[key], type: data[key], suffix: '' }]
 							})
 						break
+					case 'minSelfDelegation':
 					case 'value':
 						if (data[key] !== undefined && data[key] !== null) {
 							let money = Number(astraPrice) * parseFloat(data[key])
@@ -220,7 +222,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'delegatorAddress':
 					case 'recipientAddress':
 					case 'grantee':
-						if (data[key] !== undefined && data[key] !== null) {
+						if (!isEmpty(data[key])) {
 							const evmAddress = astraToEth(data[key])
 							items.push({
 								label: CardInfoLabels[key],
@@ -233,7 +235,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					case 'validatorAddress':
 					case 'validatorSrcAddress':
 					case 'validatorDstAddress':
-						if (data[key] !== undefined && data[key] !== null)
+						if (!isEmpty(data[key]))
 							items.push({
 								label: CardInfoLabels[key],
 								type: 'copy',
@@ -267,6 +269,23 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								contents: [{ value: data[key] }]
 							})
 						break
+
+					case 'validatorDescription':
+						if (!isEmpty(data[key]))
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'validator-description',
+								contents: [{ value: data[key] }]
+							})
+						break
+					case 'commissionRates':
+						if (!isEmpty(data[key]))
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'commission',
+								contents: [{ value: data[key] }]
+							})
+						break
 				}
 			}
 			const mainItems = sortArrayFollowValue(items, 'label', [
@@ -279,26 +298,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.confirmations,
 				CardInfoLabels.block,
 				CardInfoLabels.blockHeight,
-				//msgvote
-				CardInfoLabels.voter,
-				CardInfoLabels.proposalId,
-				CardInfoLabels.option,
-				//delegate
-				CardInfoLabels.delegatorAddress,
-				CardInfoLabels.recipientAddress,
-				CardInfoLabels.validatorAddress,
-				//MsgBeginRedelegate
-
-				CardInfoLabels.validatorSrcAddress,
-				CardInfoLabels.validatorDstAddress,
-				//MsgExec
-				CardInfoLabels.grantee,
 
 				CardInfoLabels.time,
-				CardInfoLabels.from,
-				CardInfoLabels.to,
-				CardInfoLabels.interactWith,
-				CardInfoLabels.tokenTransfers,
+
 				CardInfoLabels.value,
 				CardInfoLabels.fee,
 				CardInfoLabels.gasPrice,
@@ -315,6 +317,32 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 					}
 				}
 			})
+
+			const extraItems = sortArrayFollowValue(items, 'label', [
+				CardInfoLabels.from,
+				CardInfoLabels.to,
+				CardInfoLabels.interactWith,
+				CardInfoLabels.tokenTransfers,
+				//msgvote
+				CardInfoLabels.voter,
+				CardInfoLabels.proposalId,
+				CardInfoLabels.option,
+				//delegate
+				CardInfoLabels.delegatorAddress,
+				CardInfoLabels.recipientAddress,
+				CardInfoLabels.validatorAddress,
+				//MsgBeginRedelegate
+
+				CardInfoLabels.validatorSrcAddress,
+				CardInfoLabels.validatorDstAddress,
+				//MsgExec
+				CardInfoLabels.grantee,
+				//MsgCreateValidator
+				CardInfoLabels.validatorDescription,
+				CardInfoLabels.commissionRates,
+				CardInfoLabels.minSelfDelegation
+			])
+
 			const moreItems = sortArrayFollowValue(items, 'label', [
 				CardInfoLabels.gasLimit,
 				CardInfoLabels.maxFeePerGas,
@@ -324,12 +352,12 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				CardInfoLabels.rawInput
 			])
 			// console.log(mainItems, moreItems, items, data)
-			return [mainItems, moreItems]
+			return [mainItems, extraItems, moreItems]
 		},
 		[astraPrice]
 	)
 	if (!data) return [[], []]
 
-	const [mainItems, moreItems] = _convertRawDataToCardData(data)
-	return [mainItems, moreItems]
+	const [mainItems, extraItems, moreItems] = _convertRawDataToCardData(data)
+	return [mainItems, extraItems, moreItems]
 }

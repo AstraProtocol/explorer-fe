@@ -255,3 +255,12 @@ interface TransactionMsgWithdrawDelegatorRewardDetail extends TransactionDetail 
 	validatorAddress: string
 	delegatorAddress: string
 }
+
+interface TransactionMsgCreateValidatorDetail extends TransactionDetail {
+	uuid: string
+	tendermintPubkey: string
+	validatorAddress: string
+	validatorDescription: ValidatorData
+	commissionRates: CommissionRates
+	minSelfDelegation: string
+}

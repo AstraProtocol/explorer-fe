@@ -18,7 +18,8 @@ export enum TransactionTypeEnum {
 	MsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
 	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
-	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant'
+	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant',
+	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator'
 }
 
 export enum AddressTypeEnum {
@@ -52,6 +53,9 @@ export enum CardInfoLabels {
 	recipientAddress = 'Recipient Address:',
 	validatorSrcAddress = 'Validator Src Address:',
 	validatorDstAddress = 'Validator Dst Address:',
+	minSelfDelegation = 'Min Self Delegation:',
+	validatorDescription = 'Description:',
+	commissionRates = 'Commission Rates:',
 	grantee = 'Grantee',
 	failLog = 'Fail reason:',
 	// Revert_Reason =

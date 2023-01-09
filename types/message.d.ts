@@ -14,32 +14,7 @@ enum TransactionTypeEnum {
 interface MsgCreateValidator {
 	evmType?: string
 	type: '/cosmos.staking.v1beta1.MsgCreateValidator'
-	content: {
-		height: number
-		txHash: string
-		msgName: TransactionTypeEnum.MsgCreateValidator
-		msgIndex: number
-		delegatorAddress: string
-		validatorAddress: string
-		name: string
-		amount: TokenAmount
-		version: number
-		uuid: string
-		commissionRates: {
-			rate: string
-			maxRate: string
-			maxChangeRate: string
-		}
-		tendermintPubkey: string
-		description: {
-			details: string
-			moniker: string
-			website: string
-			identity: string
-			securityContract: string
-		}
-		minSelfDelegation: string
-	}
+	content: MsgCreateValidatorContent
 }
 
 interface MsgUnjail {
@@ -208,4 +183,25 @@ interface MsgWithdrawDelegatorRewardContent {
 	recipientAddress: string
 }
 
-interface MsgCreateValidatorContent {}
+interface MsgCreateValidatorContent {
+	height: number
+	txHash: string
+	msgName: TransactionTypeEnum.MsgCreateValidator
+	msgIndex: number
+	delegatorAddress: string
+	validatorAddress: string
+	name: string
+	amount: TokenAmount
+	version: number
+	uuid: string
+	commissionRates: CommissionRates
+	tendermintPubkey: string
+	description: ValidatorData
+	minSelfDelegation: string
+}
+
+interface CommissionRates {
+	rate: string
+	maxRate: string
+	maxChangeRate: string
+}
