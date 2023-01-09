@@ -11,6 +11,7 @@ import {
 } from 'chart.js'
 import 'chartjs-adapter-dayjs'
 import Spinner from 'components/Spinner'
+import { useRouter } from 'next/router'
 import { Line } from 'react-chartjs-2'
 import { formatCurrencyValue } from 'utils/helper'
 import useAddressCoinBalanceHistoryChart from 'views/accounts/hook/useAddressCoinBalanceHistoryChart'
@@ -54,6 +55,8 @@ interface Props {
 }
 
 const AddressBalanceHistoryChart = ({ address }: Props) => {
+	const router = useRouter()
+	const { locale } = router
 	const addressBalanceHistoryData = useAddressCoinBalanceHistoryChart(address)
 
 	const data: any = {
@@ -79,7 +82,7 @@ const AddressBalanceHistoryChart = ({ address }: Props) => {
 			mode: 'index' as const,
 			intersect: false
 		},
-		locale: 'vi-VN',
+		locale: locale === 'vi' ? 'vi-VN' : 'en-US',
 		stacked: false,
 		plugins: {
 			title: {

@@ -22,6 +22,7 @@ type TransactionBriefRowProps = {
 	border?: boolean
 	evmType: string
 	transactionType: string
+	fullBox?: boolean
 }
 
 export default function TransactionBriefRow({
@@ -33,7 +34,8 @@ export default function TransactionBriefRow({
 	newTransaction,
 	border,
 	evmType,
-	transactionType
+	transactionType,
+	fullBox
 }: TransactionBriefRowProps) {
 	const isEvm = transactionType === TransactionTypeEnum.Ethermint
 	const transactionQuery = isEvm ? { type: 'evm' } : null
@@ -47,7 +49,7 @@ export default function TransactionBriefRow({
 
 					{ 'border border-bottom-base': border }
 				)}
-				style={{ ['--min-height' as string]: '60px' }}
+				style={{ ['--min-height' as string]: '60px', maxHeight: fullBox ? '105px' : 'auto' }}
 			>
 				<div className={clsx(styles.icon, 'margin-right-sm', 'sm-hide')}>
 					{isEvm ? (

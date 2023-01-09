@@ -17,7 +17,7 @@ export function consensusPubkeyToHexAddress(consensusPubkey): string {
 	} else {
 		raw = sha256(fromHex(toHex(fromBech32(consensusPubkey).data).toUpperCase().replace('1624DE6420', '')))
 	}
-	const address = toHex(raw).slice(0, 40).toUpperCase()
+	const address = raw && toHex(raw).slice(0, 40).toUpperCase()
 	return address
 }
 
@@ -42,7 +42,9 @@ export function getStakingValidatorByHex(hex): Proposer | string {
 export function getStakingValidatorByAstraAddress(astraAddress: string): Proposer {
 	const locals = localStorage.getItem(`validators`)
 	if (locals && locals !== 'undefined') {
-		const val = JSON.parse(locals).find((x: Proposer) => x.initialDelegatorAddress === ethToAstra(astraAddress))
+		const val = JSON.parse(locals).find(
+			(x: Proposer) => x.initialDelegatorAddress === ethToAstra(astraAddress || '')
+		)
 		if (val) {
 			return val as Proposer
 		}

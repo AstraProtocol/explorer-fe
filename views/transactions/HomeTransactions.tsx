@@ -29,7 +29,11 @@ export function HomeTransactions() {
 			{!top10 || top10.length === 0 ? (
 				<RowLoader row={10} />
 			) : (
-				<BackgroundCard classes={clsx(styles.card, 'height-100 flex flex-column padding-bottom-sm')}>
+				<BackgroundCard
+					classes={clsx(styles.card, 'height-100 flex flex-column padding-bottom-sm', {
+						[styles.cardEmpty]: top10.length < 10
+					})}
+				>
 					{top10?.map((item, index) => (
 						<RowBrief
 							key={`${item.blockHeight}-${item.hash}`}
@@ -40,8 +44,9 @@ export function HomeTransactions() {
 							evmType={item.evmType}
 							updatedAt={item.blockTime}
 							newTransaction={item.newTransaction}
-							border={index !== top10.length - 1}
+							border={index !== top10.length - 1 && top10.length < 10}
 							transactionType={item?.messages[0]?.type}
+							fullBox={top10.length < 10}
 						/>
 					))}
 				</BackgroundCard>

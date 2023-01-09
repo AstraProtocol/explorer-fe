@@ -38,7 +38,7 @@ const NftTransferTab = ({ token, tokenData, tokenId }: Props) => {
 			{!result || result.length == 0 ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
-				<div style={{ overflowY: 'scroll' }}>
+				<div style={{ overflowY: 'auto' }}>
 					{result.map((item, index) => (
 						<NftTransfer key={item.transactionHash} tokenData={tokenData} transaction={item} />
 					))}

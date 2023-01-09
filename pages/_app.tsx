@@ -1,5 +1,6 @@
 import '@astraprotocol/astra-ui/lib/shared/style.css'
 import { cosmosFetcher, evmFetcher } from 'api'
+import InitPage from 'components/Loader/InitPage'
 import PageLoader from 'components/Loader/PageLoader'
 import dayjs from 'dayjs'
 import { NextIntlProvider } from 'next-intl'
@@ -45,7 +46,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 			<Head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 			</Head>
-			<PersistGate loading={'loading'} persistor={persistor}>
+			<PersistGate loading={<InitPage />} persistor={persistor}>
 				<NextIntlProvider messages={(pageProps as typeof pageProps & { messages: any }).messages}>
 					<SWRConfig
 						value={{

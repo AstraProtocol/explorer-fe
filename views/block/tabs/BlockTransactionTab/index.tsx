@@ -24,7 +24,7 @@ const BlockTransactionTab = ({ blockHeight }: Props) => {
 					/>
 				</div>
 			</Row>
-			<div style={{ overflowY: 'scroll' }}>
+			<div style={{ overflowY: 'auto' }}>
 				{!result || result.length == 0 ? (
 					<Empty text={'There are no transactions for this block.'} />
 				) : (

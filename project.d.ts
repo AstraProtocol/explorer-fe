@@ -163,3 +163,74 @@ interface Proposer {
 	powerPercentage: string
 	cumulativePowerPercentage: string
 }
+
+interface TransactionHistoryItem {
+	date: string
+	month: string
+	year: string
+	numberOfTransactions: number
+}
+
+interface TransactionHistoryResponse {
+	result: {
+		transactionsHistory: TransactionHistoryItem[]
+		dailyAverage: number
+	}
+}
+
+interface ActiveAddressItem {
+	date: string
+	month: string
+	year: string
+	numberOfActiveAddresses: number
+}
+
+interface ActiveAddressResponse {
+	result: {
+		activeAddressesHistory: ActiveAddressItem[]
+		dailyAverage: number
+	}
+}
+
+interface AddressGrowthItem {
+	date: string
+	month: string
+	year: string
+	total: number
+	active: number
+	notActive: number
+}
+interface AddressGrowthResponse {
+	result: {
+		totalAddressesGrowth: AddressGrowthItem[]
+		totalAddresses: number
+	}
+}
+
+interface GasItem {
+	date: string
+	month: string
+	year: string
+	totalGasUsed: number
+}
+interface GasResponse {
+	result: {
+		totalGasUsedHistory: GasItem[]
+		dailyAverage?: number
+		monthlyAverage?: number
+	}
+}
+
+interface FeeItem {
+	date: string
+	month: string
+	year: string
+	totalTransactionFees: number
+}
+interface FeeResponse {
+	result: {
+		totalFeesHistory: FeeItem[]
+		dailyAverage?: number
+		monthlyAverage?: number
+	}
+}

@@ -50,7 +50,16 @@ const API_LIST = {
 	VERIFY_CONTRACT: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
 	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus',
 	GET_EVM_VERSION: 'evm_/api/v1/evm-versions',
-	GET_SOLIDITY_COMPILER: 'evm_/api/v1/compiler-versions?compiler=solc'
+	GET_SOLIDITY_COMPILER: 'evm_/api/v1/compiler-versions?compiler=solc',
+
+	// charts && stats
+	GET_TRANSACTION_HISTORY: '/api/v1/transactions-history?year=#YEAR&daily=true',
+	GET_ACTIVE_ADDRESS: '/api/v1/active-addresses-history?year=#YEAR&daily=true',
+	GET_ADDRESS_GROWTH: '/api/v1/total-addresses-growth?year=#YEAR&daily=true',
+	GET_GAS_DAILY: '/api/v1/gas-used-history?year=#YEAR&daily=true',
+	GET_GAS_MONTHLY: '/api/v1/gas-used-history?year=#YEAR',
+	GET_FEE_DAILY: '/api/v1/total-fee-history?year=2023&daily=true',
+	GET_FEE_MONTHLY: '/api/v1/total-fee-history?year=2023'
 }
 
 export default API_LIST

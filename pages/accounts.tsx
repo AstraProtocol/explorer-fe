@@ -43,7 +43,7 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 				{isValidating ? (
 					<RowLoader row={10} />
 				) : (
-					<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
+					<div className="padding-bottom-sm" style={{ overflowY: 'auto' }}>
 						<HolderHeadTitle />
 						{result?.map((item: Holder, index: number) => {
 							return (

@@ -116,9 +116,7 @@ export default function MoibleNavigation({ items }: MobileNavigationProps) {
 					title: titleElement,
 					items: subCollapse
 				}
-				menus.push(
-					<Collapse key={item.label} {...collapse} classes={{ wrapper: 'border border-bottom-base' }} />
-				)
+				menus.push(<Collapse key={item.label} {...collapse} />)
 			} else {
 				menus.push(<LinkMenuItem key={item.label} link={item.link} label={item.label} pathname={pathname} />)
 			}

@@ -32,7 +32,7 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
 				</div>
 			</Row>
-			<div style={{ overflowY: 'scroll' }}>
+			<div style={{ overflowY: 'auto' }}>
 				{!result || result.length == 0 ? (
 					<Empty classes="margin-top-xl" />
 				) : (

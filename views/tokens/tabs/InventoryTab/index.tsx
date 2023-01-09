@@ -49,7 +49,7 @@ const InventoryTab = ({ token }: Props) => {
 			{!tokens || tokens.length == 0 ? (
 				<Empty text={'There are no token instance.'} />
 			) : (
-				<div className="padding-bottom-sm" style={{ overflowY: 'scroll' }}>
+				<div className="padding-bottom-sm" style={{ overflowY: 'auto' }}>
 					{tokens?.map((item: TokenNFTInstance, index: number) => {
 						return (
 							<InventoryItem

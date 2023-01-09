@@ -40,14 +40,18 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 				case 'committedCouncilNodes': //from
 					const proposerHash = data[key].find(item => item.isProposer).address
 					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
-					const address = astraToEth(proposer.initialDelegatorAddress)
+					const address =
+						proposer?.initialDelegatorAddress && astraToEth(proposer?.initialDelegatorAddress || '')
 					items.push({
 						label: CardInfoLabels.validatorAddress,
 						type: 'link-copy',
 						contents: [
 							{
 								value: address,
-								link: LinkMaker.address(astraToEth(proposer.initialDelegatorAddress))
+								link: LinkMaker.address(
+									proposer?.initialDelegatorAddress &&
+										astraToEth(proposer?.initialDelegatorAddress || '')
+								)
 							}
 						]
 					})

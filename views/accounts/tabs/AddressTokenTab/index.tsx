@@ -37,7 +37,7 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 
 	return (
 		<div className="margin-left-xl margin-right-xl">
-			<Row classes="margin-top-xl margin-bottom-xl" style={{ overflowY: 'scroll' }}>
+			<Row classes="margin-top-xl margin-bottom-xl" style={{ overflowY: 'auto' }}>
 				<BackgroundCard
 					classes={clsx(
 						'radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md',
@@ -78,7 +78,7 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 					onChange={onPagingChange}
 				/>
 			</div>
-			<div style={{ overflowY: 'scroll' }}>
+			<div style={{ overflowY: 'auto' }}>
 				<BackgroundCard
 					classes={clsx(
 						styles.noRadius,

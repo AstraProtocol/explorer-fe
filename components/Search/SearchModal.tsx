@@ -55,9 +55,11 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	}
 	const response = useSWR(_fetch())
 	const data: SearchItemResponse = response.data
-	useEffect(() => {
-		_setSearchStatus(SearchStatusEnum.DONE)
-	}, [router.query])
+
+	// useEffect(() => {
+	// 	_setSearchStatus(SearchStatusEnum.DONE)
+	// }, [router.query])
+
 	useEffect(() => {
 		if (_search && data !== undefined) {
 			_setSearchStatus(SearchStatusEnum.DONE)
@@ -81,7 +83,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 						? `${transactions[0].evmHash}?type=evm`
 						: transactions[0].cosmosHash
 					: undefined
-				const block = blocks?.[0] ? blocks[0].blockHash : undefined
+				const block = blocks?.[0] ? blocks[0].blockNumber : undefined
 				const address = addresses?.[0] ? addresses[0].addressHash : undefined
 				const validator = validators?.[0] ? validators[0].operatorAddress : undefined
 				const token = tokens?.[0] ? tokens[0].addressHash : undefined

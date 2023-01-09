@@ -68,3 +68,7 @@
 	display: flex;
 	flex-flow: column;
 }
+
+.cardEmpty {
+	justify-content: flex-start !important;
+}

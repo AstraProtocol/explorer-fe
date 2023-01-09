@@ -121,7 +121,7 @@ export default function Navigation({ items }: NavigationProps) {
 
 					{sub1?.length > 0 && (
 						<>
-							<span className="icon-dropdown" data-text="icon"></span>
+							<span className="icon-dropdown text-base" data-text="icon"></span>
 							<ul
 								className={clsx(styles.submenu, 'radius-sm shadow-xs', {
 									[styles.show]: show,

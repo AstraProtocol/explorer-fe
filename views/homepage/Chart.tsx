@@ -15,6 +15,7 @@ import 'chartjs-adapter-dayjs'
 import Spinner from 'components/Spinner'
 import dayjs from 'dayjs'
 import humps from 'humps'
+import { useRouter } from 'next/router'
 import numeral from 'numeral'
 import { Line } from 'react-chartjs-2'
 import useSWR from 'swr'
@@ -80,6 +81,8 @@ function getTxHistoryData(transactionHistory) {
 }
 
 const OverviewChart = ({}) => {
+	const router = useRouter()
+	const { locale } = router
 	const { isMobile } = useMobileLayout('small')
 
 	const _fetchCondition = key => {
@@ -133,7 +136,7 @@ const OverviewChart = ({}) => {
 			mode: 'index' as const,
 			intersect: false
 		},
-		locale: 'vi-VN',
+		locale: locale === 'vi' ? 'vi-VN' : 'en-US',
 		stacked: false,
 		plugins: {
 			title: {

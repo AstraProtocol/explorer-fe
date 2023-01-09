@@ -40,7 +40,6 @@ $backgroundHover: rgba(var(--contrast-color-theme--raw), 0.05);
 	span[data-text='icon'] {
 		display: inline-flex;
 		&::before {
-			font-size: 5px;
 			color: var(--contrast-color-theme-70);
 		}
 	}

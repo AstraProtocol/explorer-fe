@@ -20,7 +20,7 @@ type TransactionTabsProps = {
 
 export const Transactions = ({ rows, emptyMsg }: { rows: TransactionRowProps[]; emptyMsg: string }) => {
 	return (
-		<div style={{ overflowY: 'scroll' }}>
+		<div style={{ overflowY: 'auto' }}>
 			{!rows || rows.length == 0 ? (
 				<Empty text={emptyMsg} />
 			) : (

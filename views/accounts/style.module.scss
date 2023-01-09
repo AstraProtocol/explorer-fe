@@ -34,7 +34,7 @@
 	border-bottom: 1px solid var(--border-color);
 }
 .overview {
-	overflow-y: scroll;
+	overflow-y: auto;
 	.colBalance {
 		min-width: 300px;
 	}

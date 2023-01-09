@@ -29,7 +29,7 @@ export default function RawInput({ text }: RawInputProps) {
 		Sentry.captureException(e)
 	}
 	return (
-		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'scroll' }}>
+		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'auto' }}>
 			<Tabs
 				tabs={[
 					{ title: 'Hex', id: 'hex', padding: ' ' },
