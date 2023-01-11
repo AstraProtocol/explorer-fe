@@ -192,8 +192,8 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			console.log(message.content.amount)
-			totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content?.amount)))
+			if (message.content?.amount)
+				totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content.amount)))
 		}
 		return formatEther(totalAmount)
 	}
