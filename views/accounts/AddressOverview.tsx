@@ -1,4 +1,5 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { ethToAstra } from '@astradefi/address-converter'
+import { CryptoIcon, IconButton, IconEnum, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -6,6 +7,7 @@ import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
 import { isUndefined } from 'lodash'
 import numeral from 'numeral'
+import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { AddressTypeEnum } from 'utils/enum'
@@ -19,7 +21,13 @@ interface Props {
 	addressData: Address
 }
 
+enum DisplayMode {
+	EVM = 1,
+	COSMOS = -1
+}
+
 const AddressOverview = ({ address, addressData }: Props) => {
+	const [displayMode, setDisplayMode] = useState<DisplayMode>(DisplayMode.EVM)
 	const addressCounter = useAddressCounter(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
@@ -33,7 +41,18 @@ const AddressOverview = ({ address, addressData }: Props) => {
 					</span>
 					<br />
 					<span className="text text-lg">
-						{isContract ? `${addressData.contractName} (${address})` : address}
+						{isContract ? (
+							`${addressData.contractName} (${address})`
+						) : (
+							<div>
+								{displayMode === DisplayMode.EVM ? address : ethToAstra(address)}
+								<IconButton
+									classes="margin-left-xs"
+									onClick={() => setDisplayMode(displayMode * -1)}
+									icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
+								/>
+							</div>
+						)}
 					</span>
 				</div>
 				<div>
