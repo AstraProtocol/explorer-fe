@@ -46,6 +46,8 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 	const router = useRouter()
 	const { locale } = router
 
+	console.log({ line1Data, line2Data })
+
 	const data: ChartData<'line'> = {
 		labels,
 		datasets: [
@@ -53,18 +55,19 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 				label: line1Label,
 				data: line1Data,
 				yAxisID: 'active',
-				borderColor: '#5E5CE6',
+
+				backgroundColor: 'rgb(255 193 7 / 20%)',
 				fill: true,
-				backgroundColor: 'rgb(94 92 230 / 20%)',
+				borderColor: '#ffc107',
 				cubicInterpolationMode: 'monotone',
 				pointRadius: 0
 			},
 			{
 				label: line2Label,
 				data: line2Data,
-				backgroundColor: 'rgb(255 193 7 / 20%)',
+				backgroundColor: 'rgb(31 233 64 / 20%)',
 				fill: true,
-				borderColor: '#ffc107',
+				borderColor: '#1fe940',
 				cubicInterpolationMode: 'monotone',
 				pointRadius: 0
 			}
@@ -125,9 +128,9 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 						// }
 						return `${label}: ${formattedValue}`
 					},
-
 					footer: context => {
-						const total = context[0].parsed.y
+						const total = context[1].parsed.y + context[0].parsed.y
+						debugger
 						return `Total: ${numeral(total).format('0,0[.]000')}`
 					}
 				}
@@ -144,7 +147,10 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 				}
 			},
 			active: {
-				display: false
+				type: 'linear' as const,
+				display: true,
+				position: 'left' as const,
+				grid
 			}
 		}
 	}

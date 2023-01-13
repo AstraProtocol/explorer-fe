@@ -31,13 +31,13 @@ const LinkMenuItem = ({
 	prefix?: React.ReactNode
 }) => (
 	<div
-		className={clsx('radius-base', 'padding-sm', styles.subItem, {
+		className={clsx('radius-base', classes, styles.subItem, {
 			[styles.subActive]: pathname === link
 		})}
 	>
-		<span className="block-center">
+		<span className="flex width-100 flex-column">
 			{!!prefix && prefix}
-			<Typography.LinkText href={link} classes={clsx('text text-lg', styles.link, classes)}>
+			<Typography.LinkText href={link} classes={clsx('text text-lg  padding-sm ', styles.link)}>
 				{label}
 			</Typography.LinkText>
 		</span>

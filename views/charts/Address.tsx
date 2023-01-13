@@ -13,9 +13,9 @@ function convertActiveAddressToDataSet(history: ActiveAddressItem[]): [string[],
 
 function convertAddressGrowthToDataSet(history: AddressGrowthItem[]): [string[], number[], number[]] {
 	const notActiveAddressData = history.map(({ notActive }) => notActive)
-	const totalAddressData = history.map(({ total }) => total)
+	const activeAddressData = history.map(({ active }) => active)
 	const labels = history.map(({ date }) => date)
-	return [labels, notActiveAddressData, totalAddressData]
+	return [labels, notActiveAddressData, activeAddressData]
 }
 
 export default function Address() {
@@ -30,8 +30,7 @@ export default function Address() {
 	const [activeAddressLabels, activeAddressdata] = convertActiveAddressToDataSet(activeAddress)
 
 	const addressGrowth = addressGrowthRes?.result?.totalAddressesGrowth || []
-	const [labels, notActiveAddressData, totalAddressData] = convertAddressGrowthToDataSet(addressGrowth)
-	console.log({ labels, notActiveAddressData, totalAddressData })
+	const [labels, notActiveAddressData, activeAddressData] = convertAddressGrowthToDataSet(addressGrowth)
 	return (
 		<Col>
 			<ChartHeader text="Address" />
@@ -48,9 +47,9 @@ export default function Address() {
 					leftTitle="Total Addresses Growth | Daily"
 					rightTitle={{ title: 'Total Addresses', value: addressGrowthRes?.result?.totalAddresses }}
 					line1Data={notActiveAddressData}
-					line2Data={totalAddressData}
+					line2Data={activeAddressData}
 					labels={labels}
-					line2Label={'Total'}
+					line2Label={'Active'}
 					line1Label={'Not Active'}
 				/>
 			</Row>

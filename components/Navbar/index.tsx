@@ -68,17 +68,17 @@ export const items: MenuItem[] = [
 			}
 		]
 	},
-	// {
-	// 	id: '4',
-	// 	label: 'Resources',
-	// 	submenus: [
-	// 		{
-	// 			id: '4.1',
-	// 			label: 'Charts and Stats',
-	// 			link: '/charts'
-	// 		}
-	// 	]
-	// },
+	{
+		id: '4',
+		label: 'Resources',
+		submenus: [
+			{
+				id: '4.1',
+				label: 'Stats',
+				link: '/charts'
+			}
+		]
+	},
 	// {
 	// 	id: '4',
 	// 	label: 'APIs',

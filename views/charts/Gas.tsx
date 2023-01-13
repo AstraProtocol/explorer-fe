@@ -35,6 +35,9 @@ export default function Gas() {
 					data={gasDailyData}
 					labels={gasDailyLabels}
 					label="Address"
+					stepSize={history =>
+						history ? (history.length > 4 /*months*/ * 30 ? 30 : history.length > 15 ? 15 : 3) : 1
+					}
 				/>
 				<div style={{ width: '10px', height: '10px' }}></div>
 				<BarChart

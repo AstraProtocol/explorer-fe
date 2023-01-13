@@ -110,9 +110,8 @@ const BarChart = ({ leftTitle, rightTitle, label, data, labels }: LineChartProps
 				grid,
 				type: 'time',
 				time: {
-					unit: 'day',
-					tooltipFormat: 'MMM DD, YYYY',
-					stepSize: history.length > 20 ? 5 : 1
+					unit: 'month',
+					tooltipFormat: 'MMM DD, YYYY'
 				}
 			},
 			y: {

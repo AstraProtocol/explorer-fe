@@ -36,9 +36,10 @@ type LineChartProps = {
 		title: string
 		value: number
 	}
+	stepSize?: (history: History) => number
 }
 
-const LineChart = ({ leftTitle, rightTitle, labels, label, data }: LineChartProps) => {
+const LineChart = ({ leftTitle, rightTitle, labels, label, data, stepSize }: LineChartProps) => {
 	const { isMobile } = useMobileLayout('small')
 	const router = useRouter()
 	const { locale } = router
@@ -116,7 +117,7 @@ const LineChart = ({ leftTitle, rightTitle, labels, label, data }: LineChartProp
 				time: {
 					unit: 'day',
 					tooltipFormat: 'MMM DD, YYYY',
-					stepSize: history.length > 20 ? 5 : 1
+					stepSize: stepSize ? stepSize(history) : history.length > 30 ? 10 : 1
 				}
 			},
 			y: {
