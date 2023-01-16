@@ -26,8 +26,8 @@ export const commonSlice = createSlice({
 	}
 })
 
-export const getAstraSummary = (state: RootState): any => state['common'].astraSummary
-export const getValidatorSummary = (state: RootState): any => state['common'].validatorSummary
+export const getAstraSummary = (state: RootState): AstraSummary => state['common'].astraSummary
+export const getValidatorSummary = (state: RootState): ValidatorData[] => state['common'].validatorSummary
 
 // Action creators are generated for each case reducer function
 export const { setAstraSummary, setValidatorSummary } = commonSlice.actions

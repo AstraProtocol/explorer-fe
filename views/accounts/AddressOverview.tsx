@@ -5,7 +5,7 @@ import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
-import { isUndefined } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
@@ -17,6 +17,7 @@ import useAddressCounter from './hook/useAddressCounter'
 import styles from './style.module.scss'
 
 interface Props {
+	validator: ValidatorData
 	address: string
 	addressData: Address
 }
@@ -26,22 +27,35 @@ enum DisplayMode {
 	COSMOS = -1
 }
 
-const AddressOverview = ({ address, addressData }: Props) => {
+const AddressOverview = ({ validator, address, addressData }: Props) => {
 	const [displayMode, setDisplayMode] = useState<DisplayMode>(DisplayMode.EVM)
+
 	const addressCounter = useAddressCounter(address)
 	const astraSummary = useAppSelector(getAstraSummary)
 
+	const isValidator = !isEmpty(validator)
 	const isContract = addressData.type === AddressTypeEnum.Contract
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
 				<div>
 					<span className="text text-base contrast-color-50">
-						{isContract ? 'Contract' : 'Wallet Address'}
+						{isValidator ? 'Validator' : isContract ? 'Contract' : 'Wallet Address'}
 					</span>
 					<br />
 					<span className="text text-lg">
-						{isContract ? (
+						{isValidator ? (
+							<div>
+								{displayMode === DisplayMode.EVM
+									? `${validator.moniker} (${address})`
+									: `${validator.moniker} (${validator.initialDelegatorAddress})`}
+								<IconButton
+									classes="margin-left-xs"
+									onClick={() => setDisplayMode(displayMode * -1)}
+									icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
+								/>
+							</div>
+						) : isContract ? (
 							`${addressData.contractName} (${address})`
 						) : (
 							<div>

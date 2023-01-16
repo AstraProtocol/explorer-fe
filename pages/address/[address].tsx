@@ -1,11 +1,15 @@
+import { astraToEth } from '@astradefi/address-converter'
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import * as Sentry from '@sentry/nextjs'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
+import { isEmpty } from 'lodash'
 import Head from 'next/head'
 import React from 'react'
+import { getValidatorSummary } from 'slices/commonSlice'
+import { useAppSelector } from 'store/hooks'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import AddressDetailTabs from 'views/accounts/AddressDetailTabs'
 import AddressOverview from 'views/accounts/AddressOverview'
@@ -22,9 +26,15 @@ const AddressDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { address, addressData, errorMessage } = props
 
+	const validatorSummary = useAppSelector(getValidatorSummary)
+
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
+	const validator = validatorSummary.find((v: ValidatorData) => astraToEth(v.initialDelegatorAddress) === address)
+	const isValidator = !isEmpty(validator)
 	const isContract = addressData?.type === 'contractaddress'
-	const title = isContract
+	const title = isValidator
+		? `Validator ${validator.moniker} | ${process.env.NEXT_PUBLIC_TITLE}`
+		: isContract
 		? `Contract ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
 		: `Address ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
 	return (
@@ -36,13 +46,16 @@ const AddressDetailPage: React.FC<Props> = props => {
 			<Container>
 				<Breadcumbs
 					items={[
-						{ label: isContract ? 'Contract' : 'Address', link: LinkMaker.address() },
+						{
+							label: isValidator ? `Validator ${validator.moniker}` : isContract ? 'Contract' : 'Address',
+							link: LinkMaker.address()
+						},
 						{ label: isMobile ? ellipseBetweenText(address) : address }
 					]}
 				/>
 				{addressData ? (
 					<>
-						<AddressOverview address={address} addressData={addressData} />
+						<AddressOverview validator={validator} address={address} addressData={addressData} />
 						<AddressDetailTabs address={address} addressData={addressData} />
 					</>
 				) : (
@@ -60,8 +73,10 @@ const AddressDetailPage: React.FC<Props> = props => {
 }
 
 export async function getServerSideProps({ params }) {
-	const { address } = params
+	let { address } = params
 	let addressData
+
+	if (address && address.startsWith('astra')) address = astraToEth(address)
 	if (web3.utils.isAddress(address))
 		try {
 			const addressRes = await cosmosApi.get<AddressDetailResponse>(`${API_LIST.ADDRESS_DETAIL}/${address}`)
