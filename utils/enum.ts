@@ -14,6 +14,7 @@ export enum TransactionTypeEnum {
 	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
 	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
 	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
+	MsgUndelegate = '/cosmos.staking.v1beta1.MsgUndelegate',
 	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
 	MsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',

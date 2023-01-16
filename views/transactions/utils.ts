@@ -126,6 +126,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	_mapMsgSendField(data, result)
 	_mapMsgVoteField(data, result?.messages)
 	_mapMsgDelegate(data, result?.messages)
+	_mapMsgUndelegate(data, result?.messages)
 	_mapMsgBeginRedelegate(data, result?.messages)
 	_mapMsgExec(data as TransactionMsgExecDetail, result?.messages)
 	_mapMsgGrant(data, result?.messages)
@@ -293,6 +294,17 @@ const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]
 		data.delegatorAddress = content.delegatorAddress
 		data.validatorAddress = content.validatorAddress
 		data.value = formatEther(content.amount.amount)
+	}
+}
+
+const _mapMsgUndelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgUndelegate) {
+		const content = messages[0].content as unknown as MsgUndelegateContent
+		data.delegatorAddress = content.delegatorAddress
+		data.validatorAddress = content.validatorAddress
+		data.value = formatEther(content.amount.amount)
+		// Missing amount of auto claim reward
 	}
 }
 

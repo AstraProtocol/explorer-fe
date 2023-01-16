@@ -24,6 +24,7 @@ interface TransactionMessage {
 		| MsgSendContent
 		| MsgExecContent
 		| MsgGrantContent
+		| MsgUndelegateContent
 }
 
 interface TransactionItem {
@@ -264,3 +265,5 @@ interface TransactionMsgCreateValidatorDetail extends TransactionDetail {
 	commissionRates: CommissionRates
 	minSelfDelegation: string
 }
+
+interface TransactionMsgUndelegateDetail extends TransactionDetail {}
