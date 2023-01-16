@@ -4,7 +4,7 @@ import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
-import { isUndefined } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { TransactionTypeEnum } from 'utils/enum'
@@ -235,6 +235,28 @@ export const getSignerEthAddress = (signers: Signer[]) => {
 		if (s.address) addresses.push(astraToEth(s.address))
 	})
 	return addresses
+}
+
+export const getFromToTxFromCosmosEntry = (message: TransactionMessage) => {
+	let evmHash = '',
+		from = '',
+		to = ''
+	if (isEmpty(message)) {
+		return { evmHash, from, to }
+	}
+
+	if (message?.type === TransactionTypeEnum.Ethermint) {
+		const content = message.content as MsgEthereumTxContent
+		evmHash = content?.params?.hash
+		from = content?.params?.from
+		to = content?.params?.data?.to
+	} else if (message?.type === TransactionTypeEnum.MsgSend) {
+		const content = message.content as MsgSendContent
+		from = content.fromAddress ? astraToEth(content.fromAddress) : content.fromAddress
+		to = content.toAddress ? astraToEth(content.toAddress) : content.toAddress
+	}
+
+	return { evmHash, from, to }
 }
 
 const _convertTransfer = (

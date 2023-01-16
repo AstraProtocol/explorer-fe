@@ -7,10 +7,12 @@ import { LinkMaker } from 'utils/helper'
 import useTransaction from './hook/useTransaction'
 import RowBrief from './TransactionBriefRow'
 
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import styles from './style.module.scss'
 
 export function HomeTransactions() {
 	const { top10 } = useTransaction()
+	const { isMobile } = useMobileLayout('small')
 	return (
 		<div className={'height-100 flex flex-column'}>
 			<div
@@ -47,6 +49,7 @@ export function HomeTransactions() {
 							border={index !== top10.length - 1 && top10.length < 10}
 							transactionType={item?.messages[0]?.type}
 							fullBox={top10.length < 10}
+							isMobile={isMobile}
 						/>
 					))}
 				</BackgroundCard>

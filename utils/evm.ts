@@ -1,8 +1,6 @@
 import { formatUnits } from 'ethers/lib/utils'
-import { isEmpty } from 'lodash'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { ZERO_ADDRESS } from './constants'
-import { TransactionTypeEnum } from './enum'
 import { isERC721 } from './helper'
 
 export const evmTransactionType = (type: number): string => {
@@ -105,15 +103,4 @@ export const evmAddressName = (addressName: string, addresValue: string) => {
 		return addresValue
 	}
 	return `${addressName} (${addresValue})`
-}
-
-export const getFromToEvmTxFromCosmosEntry = (message: TransactionMessage) => {
-	if (isEmpty(message) || message?.type !== TransactionTypeEnum.Ethermint) {
-		return { evmHash: '', from: '', to: '' }
-	}
-
-	const evmHash = message?.content?.params?.hash
-	const from = message?.content?.params?.from
-	const to = message?.content?.params?.data?.to
-	return { evmHash, from, to }
 }
