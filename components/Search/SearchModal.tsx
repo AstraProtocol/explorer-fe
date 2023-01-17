@@ -35,6 +35,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 	const [_search, _setSearch] = useState<boolean>(false)
 	const [_timeout, _setTimeout] = useState<NodeJS.Timeout>(undefined)
 	const [_searchStatus, _setSearchStatus] = useState<SearchStatusEnum>(SearchStatusEnum.INPUTTING)
+	const [enter, setEnter] = useState(false)
 
 	useOutsideElement(_searchWrapperRef, closeModal)
 	// const _standardQueryInput = (value: string): string => {
@@ -73,40 +74,55 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 		}
 	}, [open])
 
+	useEffect(() => {
+		if (data && data.result && enter) {
+			setEnter(false)
+			_redirectPage()
+		}
+	}, [data])
+
 	const _keyPress = event => {
 		event.stopPropagation()
 		if (event.key === 'Enter') {
 			if (data && data.result) {
-				const { blocks, addresses, transactions, validators, tokens } = data?.result
-				const tx = transactions?.[0]
-					? transactions[0].evmHash
-						? `${transactions[0].evmHash}?type=evm`
-						: transactions[0].cosmosHash
-					: undefined
-				const block = blocks?.[0] ? blocks[0].blockNumber : undefined
-				const address = addresses?.[0] ? addresses[0].addressHash : undefined
-				const validator = validators?.[0] ? validators[0].operatorAddress : undefined
-				const token = tokens?.[0] ? tokens[0].addressHash : undefined
-
-				let key
-				if (tx) {
-					key = LinkMaker.transaction(tx)
-				} else if (block) {
-					key = LinkMaker.block(block)
-				} else if (address) {
-					key = LinkMaker.address(address)
-				} else if (token) {
-					key = LinkMaker.token(token)
-				} else {
-					key = LinkMaker.address(validator)
-				}
-				if (key) router.push(key)
+				_redirectPage()
+				setEnter(false)
+			} else {
+				setEnter(true)
 			}
 		}
 	}
 
+	const _redirectPage = () => {
+		const { blocks, addresses, transactions, validators, tokens } = data?.result
+		const tx = transactions?.[0]
+			? transactions[0].evmHash
+				? `${transactions[0].evmHash}?type=evm`
+				: transactions[0].cosmosHash
+			: undefined
+		const block = blocks?.[0] ? blocks[0].blockNumber : undefined
+		const address = addresses?.[0] ? addresses[0].addressHash : undefined
+		const validator = validators?.[0] ? validators[0].operatorAddress : undefined
+		const token = tokens?.[0] ? tokens[0].addressHash : undefined
+
+		let key
+		if (tx) {
+			key = LinkMaker.transaction(tx)
+		} else if (block) {
+			key = LinkMaker.block(block)
+		} else if (address) {
+			key = LinkMaker.address(address)
+		} else if (token) {
+			key = LinkMaker.token(token)
+		} else if (validator) {
+			key = LinkMaker.address(validator)
+		}
+		if (key) router.push(key)
+	}
+
 	const _inputChange = (event: React.FormEvent<HTMLInputElement>) => {
 		const value = event.currentTarget.value
+		setEnter(false)
 		clearTimeout(_timeout)
 		if (_search) {
 			_setSearch(false)
@@ -124,6 +140,7 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 		_setSearch(false)
 		_setSearchStatus(SearchStatusEnum.INPUTTING)
 		_inputRef.current.value = ''
+		setEnter(false)
 	}
 	return (
 		<ModalWrapper open={open} classes={{ wrapperContent: 'same-bg-color-50' }}>
