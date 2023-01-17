@@ -53,13 +53,13 @@ const API_LIST = {
 	GET_SOLIDITY_COMPILER: 'evm_/api/v1/compiler-versions?compiler=solc',
 
 	// charts && stats
-	GET_TRANSACTION_HISTORY: '/api/v1/transactions-history?year=#YEAR&daily=true',
-	GET_ACTIVE_ADDRESS: '/api/v1/active-addresses-history?year=#YEAR&daily=true',
-	GET_ADDRESS_GROWTH: '/api/v1/total-addresses-growth?year=#YEAR&daily=true',
-	GET_GAS_DAILY: '/api/v1/gas-used-history?year=#YEAR&daily=true',
-	GET_GAS_MONTHLY: '/api/v1/gas-used-history?year=#YEAR',
-	GET_FEE_DAILY: '/api/v1/total-fee-history?year=2023&daily=true',
-	GET_FEE_MONTHLY: '/api/v1/total-fee-history?year=2023'
+	GET_TRANSACTION_HISTORY: '/api/v1/transactions-history?daily=true',
+	GET_ACTIVE_ADDRESS: '/api/v1/active-addresses-history?daily=true',
+	GET_ADDRESS_GROWTH: '/api/v1/total-addresses-growth?daily=true',
+	GET_GAS_DAILY: '/api/v1/gas-used-history?daily=true',
+	GET_GAS_MONTHLY: '/api/v1/gas-used-history',
+	GET_FEE_DAILY: '/api/v1/total-fee-history?daily=true',
+	GET_FEE_MONTHLY: '/api/v1/total-fee-history'
 }
 
 export default API_LIST

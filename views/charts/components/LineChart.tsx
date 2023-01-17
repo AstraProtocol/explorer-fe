@@ -32,6 +32,7 @@ type LineChartProps = {
 	data: number[]
 	label: string
 	labels: string[]
+	unitName?: string
 	rightTitle: {
 		title: string
 		value: number
@@ -39,7 +40,7 @@ type LineChartProps = {
 	stepSize?: (history: History) => number
 }
 
-const LineChart = ({ leftTitle, rightTitle, labels, label, data, stepSize }: LineChartProps) => {
+const LineChart = ({ leftTitle, rightTitle, labels, label, data, unitName, stepSize }: LineChartProps) => {
 	const { isMobile } = useMobileLayout('small')
 	const router = useRouter()
 	const { locale } = router
@@ -103,7 +104,7 @@ const LineChart = ({ leftTitle, rightTitle, labels, label, data, stepSize }: Lin
 						const { label } = context.dataset
 						const { formattedValue } = context
 						if (context.dataset.yAxisID === 'y') {
-							return `${label}: ${formattedValue}`
+							return `${label}: ${formattedValue}${unitName ? ' ' + unitName : ''}`
 						}
 						return formattedValue
 					}

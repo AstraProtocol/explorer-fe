@@ -34,7 +34,8 @@ export default function Gas() {
 					rightTitle={{ title: 'Daily Average', value: gasDailyRes?.result?.dailyAverage }}
 					data={gasDailyData}
 					labels={gasDailyLabels}
-					label="Address"
+					label="Gas"
+					unitName="(wei) ASA"
 					stepSize={history =>
 						history ? (history.length > 4 /*months*/ * 30 ? 30 : history.length > 15 ? 15 : 3) : 1
 					}
@@ -45,6 +46,7 @@ export default function Gas() {
 					rightTitle={{ title: 'Monthly Average', value: gasMonthRes?.result?.monthlyAverage }}
 					data={gasMonthlyData}
 					labels={gasMonthlyLabels}
+					unitName="(wei) ASA"
 					label="Gas"
 				/>
 			</Row>

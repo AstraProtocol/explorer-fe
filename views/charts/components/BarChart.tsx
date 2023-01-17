@@ -32,13 +32,14 @@ type LineChartProps = {
 	data: number[]
 	labels: string[]
 	label: string
+	unitName?: string
 	rightTitle: {
 		title: string
 		value: number
 	}
 }
 
-const BarChart = ({ leftTitle, rightTitle, label, data, labels }: LineChartProps) => {
+const BarChart = ({ leftTitle, rightTitle, label, data, labels, unitName }: LineChartProps) => {
 	const { isMobile } = useMobileLayout('small')
 	const router = useRouter()
 	const { locale } = router
@@ -98,7 +99,7 @@ const BarChart = ({ leftTitle, rightTitle, label, data, labels }: LineChartProps
 						const { label } = context.dataset
 						const { formattedValue, parsed } = context
 						if (context.dataset.yAxisID === 'y') {
-							return `${label}: ${numeral(parsed.y).format('0,0.000a')}`
+							return `${label}: ${numeral(parsed.y).format('0,0.000a')}${unitName ? ' ' + unitName : ''}`
 						}
 						return formattedValue
 					}
