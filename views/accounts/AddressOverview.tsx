@@ -107,7 +107,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						currency={
 							astraSummary && addressData.balance
 								? `(${formatCurrencyValue(
-										(astraSummary.last * parseInt(addressData.balance)) / 10 ** 18,
+										(Number(astraSummary.last) * parseInt(addressData.balance)) / 10 ** 18,
 										'VND'
 								  )})`
 								: ''

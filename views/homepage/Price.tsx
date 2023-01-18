@@ -23,7 +23,7 @@ const Price = ({ classes }: Props) => {
 		)
 	}
 
-	const delta = (astraSummary.last / astraSummary.open - 1) * 100
+	const delta = (Number(astraSummary.last) / Number(astraSummary.open) - 1) * 100
 	const deltaText = delta >= 0 ? `+${numeral(delta).format('0.00')}` : numeral(delta).format('0.00')
 	const deltaStyle = delta == 0 ? 'warning' : delta > 0 ? 'success' : 'error'
 	return (

@@ -33,7 +33,9 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 		setPage(value)
 	}
 
-	const netWorth = numeral((astraSummary?.last * parseInt(addressData?.balance)) / 10 ** 18).format('0,0.00000')
+	const netWorth = numeral((Number(astraSummary?.last) * parseInt(addressData?.balance)) / 10 ** 18).format(
+		'0,0.00000'
+	)
 
 	return (
 		<div className="margin-left-xl margin-right-xl">
