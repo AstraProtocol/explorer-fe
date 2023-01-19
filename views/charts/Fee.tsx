@@ -42,7 +42,7 @@ export default function Fee() {
 					data={feeDailyData}
 					labels={feeDailyLabels}
 					label="Fee"
-					unitName="(wei) ASA"
+					unitName="ASA"
 				/>
 				<div style={{ width: '10px', height: '10px' }}></div>
 				<BarChart
@@ -54,7 +54,7 @@ export default function Fee() {
 					data={feeMonthData}
 					labels={feeMonthlyLabels}
 					label="Fee"
-					unitName="(wei) ASA"
+					unitName="ASA"
 				/>
 			</Row>
 		</Col>
