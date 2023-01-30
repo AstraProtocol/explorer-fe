@@ -64,9 +64,9 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
 		? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
 		: undefined
-	data.gasUsedByTransaction = result.cumulativeGasUsed
-		? `${numeral(result.cumulativeGasUsed).format('0,0')} | ${numeral(
-				parseFloat(result.cumulativeGasUsed) / parseFloat(result.gasLimit)
+	data.gasUsedByTransaction = result.gasUsed
+		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(
+				parseFloat(result.gasUsed) / parseFloat(result.gasLimit)
 		  ).format('0.00%')}`
 		: undefined
 	data.nonce = result.nonce ? result.nonce.toString() : ''
