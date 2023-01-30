@@ -225,6 +225,11 @@ interface TextProposalFullContent {
 		'title': string
 		'description': string
 		'@type': string
+		'changes'?: {
+			key: string
+			value: string
+			subspace: string
+		}[]
 	}
 	msgName: string
 }

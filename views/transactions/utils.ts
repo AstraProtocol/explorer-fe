@@ -373,7 +373,8 @@ const _mapMsgCreateValidator = (data: TransactionMsgCreateValidatorDetail, messa
 
 const _mapMsgTextProposal = (data: TransactionDetail, result: TransactionItem) => {
 	const type: string = result?.messages[0]?.type
-	if (type === TransactionTypeEnum.TextProposal) {
+	console.log(type)
+	if (type === TransactionTypeEnum.TextProposal || type === TransactionTypeEnum.MsgSubmitProposal) {
 		const content = result?.messages[0].content as unknown as TextProposalFullContent
 		if (content) {
 			data.proposer = content.proposerAddress
@@ -387,9 +388,25 @@ const _mapMsgTextProposal = (data: TransactionDetail, result: TransactionItem) =
 			const tabContentData = content.content
 			if (tabContentData) {
 				data.textProposalContent = []
-				data.textProposalContent.push({ title: 'Type', description: tabContentData['@type'] })
-				data.textProposalContent.push({ title: 'Title', description: tabContentData.title })
-				data.textProposalContent.push({ title: 'Description', description: tabContentData.description })
+				data.textProposalContent.push({ type: 'text', title: 'Type', description: tabContentData['@type'] })
+				data.textProposalContent.push({ type: 'text', title: 'Title', description: tabContentData.title })
+				data.textProposalContent.push({
+					type: 'text',
+					title: 'Description',
+					description: tabContentData.description
+				})
+				if (tabContentData.changes) {
+					const rows = []
+					for (let change of tabContentData.changes) {
+						rows.push([change.subspace, change.key, change.value])
+					}
+					data.textProposalContent.push({
+						type: 'table',
+						title: 'Changes',
+						cols: ['Subpace', 'Key', 'Value'],
+						rows
+					})
+				}
 			}
 		}
 	}

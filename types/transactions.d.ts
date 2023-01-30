@@ -199,8 +199,11 @@ interface EvmTransactionDetailResponse {
 }
 
 interface TextProposalContent {
+	type: 'text' | 'table'
 	title: string
-	description: string
+	description?: string
+	cols?: string[]
+	rows?: string[][]
 }
 interface TransactionDetail {
 	pageTitle?: string

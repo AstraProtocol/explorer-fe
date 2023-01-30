@@ -1,5 +1,6 @@
 import { CryptoIcon, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
+import { Column, RowData } from '@astraprotocol/astra-ui/lib/es/components/Table/Table'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
@@ -40,7 +41,7 @@ export type Content = {
 	decode?: DecodeProps
 	tabs?: {
 		titles: string[]
-		content: string[]
+		content: Array<string | { cols: Column[]; rows: RowData[] }>
 	}
 }
 

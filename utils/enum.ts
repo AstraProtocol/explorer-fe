@@ -22,7 +22,8 @@ export enum TransactionTypeEnum {
 	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant',
 	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator',
 	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail',
-	TextProposal = '/cosmos.gov.v1beta1.TextProposal'
+	TextProposal = '/cosmos.gov.v1beta1.TextProposal',
+	MsgSubmitProposal = '/cosmos.params.v1beta1.ParameterChangeProposal'
 }
 
 export enum AddressTypeEnum {

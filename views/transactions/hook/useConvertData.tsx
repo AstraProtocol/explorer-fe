@@ -1,9 +1,10 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
+import { Column, RowData } from '@astraprotocol/astra-ui/lib/es/components/Table/Table'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
 import { formatUnits } from 'ethers/lib/utils'
-import { isEmpty } from 'lodash'
+import { isArray, isEmpty, isString } from 'lodash'
 import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -308,7 +309,31 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 									{
 										tabs: {
 											titles: (data[key] as TextProposalContent[]).map(item => item.title),
-											content: (data[key] as TextProposalContent[]).map(item => item.description)
+											content: (data[key] as TextProposalContent[]).map(item => {
+												if (isString(item.description)) {
+													return item.description
+												}
+												if (isArray(item.rows) && isArray(item.cols)) {
+													const cols: Column[] = item.cols.map(col => ({
+														key: col,
+														content: (
+															<span className="text-md contrast-color-70">{col}</span>
+														),
+														render: val => (
+															<span className="contrast-color-70 text-sm">{val}</span>
+														)
+													}))
+													const rows: RowData[] = item.rows.map(row => {
+														const _row: RowData = {}
+														for (let i = 0; i < item.cols.length; i++) {
+															const col = item.cols[i]
+															_row[col] = { content: row[i] }
+														}
+														return _row
+													})
+													return { cols, rows }
+												}
+											})
 										}
 									}
 								]
