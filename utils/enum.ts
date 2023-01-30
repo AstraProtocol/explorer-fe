@@ -20,7 +20,9 @@ export enum TransactionTypeEnum {
 	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
 	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
 	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant',
-	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator'
+	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator',
+	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail',
+	TextProposal = '/cosmos.gov.v1beta1.TextProposal'
 }
 
 export enum AddressTypeEnum {
@@ -38,7 +40,7 @@ export enum CardInfoLabels {
 	to = 'To:',
 	interactWith = 'Interacted With:',
 	time = 'Timestamp:',
-	value = 'Value:',
+	value = 'Amount:',
 	fee = 'Transaction Fee:',
 	gasPrice = 'Gas Price:',
 	gasLimit = 'Gas Limit:',
@@ -67,7 +69,11 @@ export enum CardInfoLabels {
 	gasUsedByTransaction = 'Gas Used:',
 	hash = 'Hash:',
 	blockHeight = 'Block Height:',
-	Transaction = 'Transaction:'
+	Transaction = 'Transaction:',
+	//Text Proposal
+	textProposalContent = 'Content: ',
+	initialDepositValue = 'Initial Deposit:',
+	proposer = 'Proposer:'
 }
 
 export enum ErcTypeEnum {

@@ -33,10 +33,10 @@ export default function Address() {
 	const [labels, notActiveAddressData, activeAddressData] = convertAddressGrowthToDataSet(addressGrowth)
 	return (
 		<Col>
-			<ChartHeader text="Address" />
+			<ChartHeader text="Addresses" />
 			<Row className="md-flex-column">
 				<LineChart
-					leftTitle="Active Address | Daily"
+					leftTitle="Active Addresses | Daily"
 					rightTitle={{ title: 'Daily Average', value: activeAddressRes?.result?.dailyAverage }}
 					data={activeAddressdata}
 					labels={activeAddressLabels}

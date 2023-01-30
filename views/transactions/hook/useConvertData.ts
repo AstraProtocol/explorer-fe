@@ -211,6 +211,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						break
 
 					case 'voter':
+					case 'proposer':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
 								label: CardInfoLabels[key],
@@ -234,6 +235,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 
 					case 'validatorAddress':
 					case 'validatorSrcAddress':
+					case 'validatorDstAddress':
 					case 'validatorDstAddress':
 						if (!isEmpty(data[key]))
 							items.push({
@@ -285,6 +287,33 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 								type: 'commission',
 								contents: [{ value: data[key] }]
 							})
+						break
+					case 'initialDepositValue':
+						if (data[key] !== undefined && data[key] !== null) {
+							let money = Number(astraPrice) * parseFloat(data[key])
+							let moneyFormat = formatCurrencyValue(money)
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'balance',
+								contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
+							})
+						}
+						break
+					case 'textProposalContent':
+						if (!isEmpty(data[key])) {
+							items.push({
+								label: CardInfoLabels[key],
+								type: 'tabs',
+								contents: [
+									{
+										tabs: {
+											titles: (data[key] as TextProposalContent[]).map(item => item.title),
+											content: (data[key] as TextProposalContent[]).map(item => item.description)
+										}
+									}
+								]
+							})
+						}
 						break
 				}
 			}
@@ -340,7 +369,11 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				//MsgCreateValidator
 				CardInfoLabels.validatorDescription,
 				CardInfoLabels.commissionRates,
-				CardInfoLabels.minSelfDelegation
+				CardInfoLabels.minSelfDelegation,
+				//MsgTextProposal
+				CardInfoLabels.textProposalContent,
+				CardInfoLabels.initialDepositValue,
+				CardInfoLabels.proposer
 			])
 
 			const moreItems = sortArrayFollowValue(items, 'label', [

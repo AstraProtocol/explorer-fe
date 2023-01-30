@@ -2,9 +2,9 @@ import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
-import { isEmpty, isUndefined } from 'lodash'
+import { isArray, isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { TransactionTypeEnum } from 'utils/enum'
@@ -135,6 +135,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	_mapMsgGrant(data, result?.messages)
 	_mapMsgWithdrawDelegatorReward(data as TransactionMsgWithdrawDelegatorRewardDetail, result?.messages)
 	_mapMsgCreateValidator(data as TransactionMsgCreateValidatorDetail, result?.messages)
+	_mapMsgTextProposal(data, result)
 	return data
 }
 
@@ -162,9 +163,13 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
  * @param amounts {denom, amount}
  * @returns amount in string (bignumber)
  */
-export const getAstraTokenAmount = (amount: TokenAmount): string => {
+export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
-	if (amount.denom === 'aastra') {
+	if (isArray(amount)) {
+		for (let a of amount) {
+			totalAmount = totalAmount.add(BigNumber.from(a.amount))
+		}
+	} else if (!isArray(amount)) {
 		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
 	}
 
@@ -363,5 +368,29 @@ const _mapMsgCreateValidator = (data: TransactionMsgCreateValidatorDetail, messa
 		data.minSelfDelegation = content.minSelfDelegation
 		data.validatorAddress = content.validatorAddress
 		data.tendermintPubkey = content.tendermintPubkey
+	}
+}
+
+const _mapMsgTextProposal = (data: TransactionDetail, result: TransactionItem) => {
+	const type: string = result?.messages[0]?.type
+	if (type === TransactionTypeEnum.TextProposal) {
+		const content = result?.messages[0].content as unknown as TextProposalFullContent
+		if (content) {
+			data.proposer = content.proposerAddress
+			if (content.initialDeposit && content.initialDeposit.length > 0) {
+				data.initialDepositValue = content.initialDeposit.reduce<number>(
+					(sum, obj) => sum + Number(utils.formatEther(obj.amount)),
+					0
+				)
+				data.initialDepositTokenSymbol = content.initialDeposit[0].denom
+			}
+			const tabContentData = content.content
+			if (tabContentData) {
+				data.textProposalContent = []
+				data.textProposalContent.push({ title: 'Type', description: tabContentData['@type'] })
+				data.textProposalContent.push({ title: 'Title', description: tabContentData.title })
+				data.textProposalContent.push({ title: 'Description', description: tabContentData.description })
+			}
+		}
 	}
 }

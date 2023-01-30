@@ -28,6 +28,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const { isMobile } = useMobileLayout('small')
 	const [items, extraItems, moreItems] = useConvertData({ data })
 	const hash = evmHash || cosmosHash
+	const isEvm = !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	return (
 		<Layout>
@@ -52,14 +53,16 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 						{extraItems.length > 0 && <CardInfo items={extraItems} classes={['margin-top-sm']} />}
 						{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
 						{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
-						<TransactionTabs
-							evmHash={evmHash}
-							cosmosHash={cosmosHash}
-							type={data.type}
-							transactions={data?.tabTokenTransfers}
-							input={data?.rawInput}
-							logs={data?.logs}
-						/>
+						{isEvm && (
+							<TransactionTabs
+								evmHash={evmHash}
+								cosmosHash={cosmosHash}
+								type={data.type}
+								transactions={data?.tabTokenTransfers}
+								input={data?.rawInput}
+								logs={data?.logs}
+							/>
+						)}
 					</>
 				) : (
 					<h1 className="text contrast-color-70 margin-top-sm">

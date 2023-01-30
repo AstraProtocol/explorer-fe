@@ -198,6 +198,10 @@ interface EvmTransactionDetailResponse {
 	status: string
 }
 
+interface TextProposalContent {
+	title: string
+	description: string
+}
 interface TransactionDetail {
 	pageTitle?: string
 	evmHash?: string
@@ -242,6 +246,11 @@ interface TransactionDetail {
 	//MsgBeginRedelegate
 	validatorSrcAddress?: string
 	validatorDstAddress?: string
+	//MsgTextProposal
+	proposer?: string
+	initialDepositValue?: number
+	initialDepositTokenSymbol?: string
+	textProposalContent?: TextProposalContent[]
 
 	revertReason?: string
 	logs?: EvmLog[]

@@ -7,6 +7,7 @@ import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
 import Tag from 'components/Typography/Tag'
 import { ellipseRightText } from 'utils/helper'
 import BackgroundCard from '../Background/BackgroundCard'
+import CardContentTabs from './Components/CardContentTabs'
 import Decode, { DecodeProps } from './Components/Decode'
 import RawInput from './Components/RawInput'
 import Transfers from './Components/Transfers'
@@ -37,6 +38,10 @@ export type Content = {
 		tokenId?: string
 	}
 	decode?: DecodeProps
+	tabs?: {
+		titles: string[]
+		content: string[]
+	}
 }
 
 export type CardRowItem = {
@@ -55,6 +60,7 @@ export type CardRowItem = {
 		| 'decode'
 		| 'validator-description'
 		| 'commission'
+		| 'tabs'
 	contents: Content[]
 	responsive?: {
 		wrap?: 'sm' | 'md'
@@ -127,7 +133,7 @@ export default function CardInfo({
 										</div>
 									) : null}
 									{type === 'text' ? (
-										<span className="money money-sm contrast-color-100">
+										<span className="money money-sm contrast-color-100 word-break-all ">
 											{/* {_ellipsis(content.value, responsive.ellipsis)}{' '} */}
 											{content.value} {content.suffix && content.suffix}
 										</span>
@@ -201,6 +207,7 @@ export default function CardInfo({
 									{type === 'commission' ? (
 										<ValidatorCommission commission={content.value as CommissionRates} />
 									) : null}
+									{type === 'tabs' ? <CardContentTabs {...content.tabs} /> : null}
 								</div>
 							))}
 						</div>

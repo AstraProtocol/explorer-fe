@@ -1,17 +1,3 @@
-enum TransactionTypeEnum {
-	Ethermint = '/ethermint.evm.v1.MsgEthereumTx',
-	MsgVote = '/cosmos.gov.v1beta1.MsgVote',
-	MsgDelegate = '/cosmos.staking.v1beta1.MsgDelegate',
-	MsgUndelegate = '/cosmos.staking.v1beta1.MsgUndelegate',
-	MsgSend = '/cosmos.bank.v1beta1.MsgSend',
-	MsgWithdrawDelegatorReward = '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
-	MsgBeginRedelegate = '/cosmos.staking.v1beta1.MsgBeginRedelegate',
-	MsgExec = '/cosmos.authz.v1beta1.MsgExec',
-	MsgGrant = '/cosmos.authz.v1beta1.MsgGrant',
-	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator',
-	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail'
-}
-
 interface MsgCreateValidator {
 	evmType?: string
 	type: '/cosmos.staking.v1beta1.MsgCreateValidator'
@@ -220,4 +206,25 @@ interface CommissionRates {
 	rate: string
 	maxRate: string
 	maxChangeRate: string
+}
+
+interface TextProposalFullContent {
+	name: string
+	txHash: string
+	msgIndex: number
+	initialDeposit: {
+		denom: string
+		amount: string
+	}[]
+	version: number
+	proposalId: string
+	proposerAddress: string
+	uuid: string
+	height: number
+	content: {
+		'title': string
+		'description': string
+		'@type': string
+	}
+	msgName: string
 }
