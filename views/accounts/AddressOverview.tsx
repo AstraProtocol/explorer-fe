@@ -133,6 +133,17 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						{isUndefined(addressCounter?.tokenTransferCount) ? 'NaN' : addressCounter?.tokenTransferCount}
 					</span>
 				</div>
+				<div className={styles.colLastBalanceUpdated}>
+					<span className="text text-base contrast-color-50">Fee:</span>
+					<br />
+					<TypographyUI.Balance
+						size="sm"
+						currency={'ASA'}
+						icon={<CryptoIcon name="asa" size="sm" />}
+						value={addressCounter.feesCount ? addressCounter.feesCount : 0}
+						fixNumber={5}
+					/>
+				</div>
 				<div className={styles.colGasUsed}>
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />

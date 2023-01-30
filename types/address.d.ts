@@ -167,6 +167,7 @@ interface AddressCounterData {
 	tokenTransferCount?: number
 	transactionCount?: number
 	validationCount?: number
+	feesCount?: number
 }
 
 interface AddressTransactionData {

@@ -46,8 +46,6 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 	const router = useRouter()
 	const { locale } = router
 
-	console.log({ line1Data, line2Data })
-
 	const data: ChartData<'line'> = {
 		labels,
 		datasets: [

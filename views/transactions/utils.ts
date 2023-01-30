@@ -53,7 +53,10 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.createdContractAddressHash = result.createdContractAddressHash
 	data.createdContractAddressName = result.createdContractAddressName
 	data.value = (result.value ? formatEther(result.value) : caculateEthereumTxAmount(result.messages)) || '0'
-	data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
+	data.fee = result.transactionFee && result.transactionFee.length > 0 ? formatEther(result.transactionFee) : ''
+	if (!data.fee) {
+		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
+	}
 	data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
 	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
 	data.gasUsed = result.gasUsed

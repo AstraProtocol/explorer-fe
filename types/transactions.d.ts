@@ -193,6 +193,7 @@ interface EvmTransactionDetailResponse {
 		v: string
 		value: string
 		messages?: MsgEthereumTx[]
+		transactionFee?: string
 	}
 	status: string
 }
