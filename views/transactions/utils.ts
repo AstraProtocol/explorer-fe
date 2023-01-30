@@ -373,7 +373,6 @@ const _mapMsgCreateValidator = (data: TransactionMsgCreateValidatorDetail, messa
 
 const _mapMsgTextProposal = (data: TransactionDetail, result: TransactionItem) => {
 	const type: string = result?.messages[0]?.type
-	console.log(type)
 	if (type === TransactionTypeEnum.TextProposal || type === TransactionTypeEnum.MsgSubmitProposal) {
 		const content = result?.messages[0].content as unknown as TextProposalFullContent
 		if (content) {

@@ -3,6 +3,7 @@ import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/Crypt
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { getTransactionType } from 'utils/cosmos'
+import { TransactionTypeEnum } from 'utils/enum'
 import useBlockById from 'views/block/hook/useBlockById'
 import TransactionRow from 'views/transactions/TransactionRow'
 
