@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -6,6 +6,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
+import { CONFIG } from 'utils/constants'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -16,6 +17,9 @@ interface Props {
 const AddressTransaction = ({ transaction }: Props) => {
 	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
 	const isEvm = transaction?.type === 'MsgEthereumTx'
+	const { isMobile } = useMobileLayout()
+	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
+
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -43,7 +47,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 									classes={'margin-right-xs'}
 									fontType="Titi"
 								>
-									{ellipseBetweenText(transaction.hash, 12, 12).toLowerCase()}
+									{ellipseBetweenText(transaction.hash, txsHashLength, txsHashLength).toLowerCase()}
 								</Typography.LinkText>
 								{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
 							</Row>

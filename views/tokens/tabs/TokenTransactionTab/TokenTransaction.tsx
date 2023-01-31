@@ -1,10 +1,11 @@
-import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { CONFIG } from 'utils/constants'
 import { evmAddressName } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, isERC721, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
@@ -16,6 +17,8 @@ interface Props {
 
 const TokenTransaction = ({ transaction, tokenData }: Props) => {
 	const isNFT = isERC721(tokenData.type)
+	const { isMobile } = useMobileLayout()
+	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
 	return (
 		<GradientRow
@@ -40,7 +43,7 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(transaction.transactionHash, 16, 16)}
+							{ellipseBetweenText(transaction.transactionHash, txsHashLength, txsHashLength)}
 						</Typography.LinkText>
 						<Typography.Label
 							text={transaction.type}
@@ -55,18 +58,28 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 							{transaction.fromAddress && (
 								<>
 									<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>From</span>
-									<span className="contrast-color-70 margin-right-lg money-2xs money">
+									<LinkText
+										href={LinkMaker.address(transaction.fromAddress)}
+										classes="margin-right-lg"
+										fontType="Titi"
+										fontSize="money-2xs"
+									>
 										{evmAddressName(
 											transaction.fromAddressName,
 											ellipseBetweenText(transaction.fromAddress, 6, 6)
 										)}
-									</span>
+									</LinkText>
 								</>
 							)}
 							{transaction.toAddress && (
 								<>
 									<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>To</span>
-									<LinkText href={LinkMaker.address(transaction.toAddress)}>
+									<LinkText
+										href={LinkMaker.address(transaction.toAddress)}
+										classes="margin-right-lg"
+										fontType="Titi"
+										fontSize="money-2xs"
+									>
 										{evmAddressName(
 											transaction.toAddressName,
 											ellipseBetweenText(transaction.toAddress, 6, 6)

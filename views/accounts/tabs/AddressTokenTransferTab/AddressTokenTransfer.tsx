@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -7,6 +7,7 @@ import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Tag from 'components/Typography/Tag'
 import numeral from 'numeral'
+import { CONFIG } from 'utils/constants'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import style from './style.module.scss'
 
@@ -15,6 +16,9 @@ interface Props {
 }
 
 const AddressTokenTransfer = ({ data }: Props) => {
+	const { isMobile } = useMobileLayout()
+	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
+
 	return (
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
@@ -28,7 +32,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 			<div style={{ textAlign: 'left' }} className={clsx('col-6 md-col-12', style.colAddress)}>
 				<Row>
 					<LinkText classes={style.address} fontType="Titi" href={LinkMaker.transaction(data.hash)}>
-						{ellipseBetweenText(data.hash, 20, 20)}
+						{ellipseBetweenText(data.hash, txsHashLength, txsHashLength)}
 					</LinkText>
 					{data.contractMethodName && (
 						<Tag hasArrowRight={false} fontType="Titi" text={data.contractMethodName} />

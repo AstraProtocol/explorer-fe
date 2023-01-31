@@ -6,8 +6,11 @@ import qs from 'qs'
 import { CONFIG } from './constants'
 import { ErcTypeEnum } from './enum'
 
-export const ellipseBetweenText = (address: string, left = 10, right = 10) =>
-	!address ? '' : address.length < left * 2 ? address : `${address.slice(0, left)}...${address.slice(-right)}`
+export const ellipseBetweenText = (
+	address: string,
+	left = CONFIG.TXS_MOBILE_SPLIT_LENGTH,
+	right = CONFIG.TXS_MOBILE_SPLIT_LENGTH
+) => (!address ? '' : address.length < left * 2 ? address : `${address.slice(0, left)}...${address.slice(-right)}`)
 
 export const ellipseRightText = (address: string, to: number) => {
 	if (!address || address.length <= to) {

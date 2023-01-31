@@ -6,6 +6,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
+import { CONFIG } from 'utils/constants'
 import { evmAddressName } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
@@ -49,7 +50,8 @@ export default function TransactionRowContent({
 	fromName,
 	toName
 }: TransactionRowContentProps) {
-	const { isMobile: isSmallDevice } = useMobileLayout('small')
+	const { isMobile } = useMobileLayout()
+	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const statusText = status ? 'success' : 'error'
 	const isEvm = type === 'MsgEthereumTx'
 
@@ -74,7 +76,7 @@ export default function TransactionRowContent({
 									classes={'margin-right-sm'}
 									fontType="Titi"
 								>
-									{ellipseBetweenText(hash, 12, 12).toLowerCase()}
+									{ellipseBetweenText(hash, length, length).toLowerCase()}
 								</Typography.LinkText>
 								{labelStatus && <Tag hasArrowRight={false} fontType="Titi" text={labelStatus} />}
 							</Row>

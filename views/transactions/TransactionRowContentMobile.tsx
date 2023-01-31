@@ -2,6 +2,7 @@ import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import { CONFIG } from 'utils/constants'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -22,7 +23,8 @@ export default function TransactionRowContentMobile({
 	style,
 	height
 }: TransactionRowContentMobileProps) {
-	const { isMobile: isSmallDevice } = useMobileLayout('small')
+	const { isMobile } = useMobileLayout()
+	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const isEvm = type === 'MsgEthereumTx'
 	const addressQuery = isEvm ? { type: 'evm' } : ''
 	return (
@@ -38,7 +40,7 @@ export default function TransactionRowContentMobile({
 							classes={'margin-right-xs word-break-all'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(hash, 20, 20).toLowerCase()}
+							{ellipseBetweenText(hash, length, length).toLowerCase()}
 						</Typography.LinkText>
 					</div>
 					<div className={clsx(' block-ver-center')}>

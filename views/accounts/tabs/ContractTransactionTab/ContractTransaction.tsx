@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyLib } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -6,6 +6,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Image from 'next/image'
+import { CONFIG } from 'utils/constants'
 import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -15,6 +16,8 @@ interface Props {
 
 const ContractTransaction = ({ transaction }: Props) => {
 	const interactToAddress = transaction.to || transaction.createdContractAddressHash
+	const { isMobile } = useMobileLayout()
+	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
 	return (
 		<GradientRow
@@ -39,7 +42,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 									classes={'margin-right-xs'}
 									fontType="Titi"
 								>
-									{ellipseBetweenText(transaction.hash, 20, 20)}
+									{ellipseBetweenText(transaction.hash, txsHashLength, txsHashLength)}
 								</Typography.LinkText>
 								{transaction.contractMethodName && (
 									<Typography.Label

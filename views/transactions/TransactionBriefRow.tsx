@@ -5,6 +5,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
+import { CONFIG } from 'utils/constants'
 import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
@@ -41,7 +42,7 @@ export default function TransactionBriefRow({
 }: TransactionBriefRowProps) {
 	const isEvm = transactionType === TransactionTypeEnum.Ethermint
 	const transactionQuery = isEvm ? { type: 'evm' } : null
-	const ellipseLength = isMobile ? 12 : 20
+	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
 	return (
 		<RowShowAnimation action={newTransaction}>
@@ -72,7 +73,7 @@ export default function TransactionBriefRow({
 										fontType="Titi"
 										fontSize="money-2xs"
 									>
-										{ellipseBetweenText(hash, ellipseLength, ellipseLength).toLowerCase()}
+										{ellipseBetweenText(hash, length, length).toLowerCase()}
 									</Typography.LinkText>
 									{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
 								</Row>

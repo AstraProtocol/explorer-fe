@@ -2,6 +2,7 @@ import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
 import Link from 'next/link'
+import { CONFIG } from 'utils/constants'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -37,11 +38,12 @@ export default function ResultView({ item }: ResultViewProps) {
 
 		return LinkMaker.transaction(linkValue)
 	}
+	const length = CONFIG.TXS_MOBILE_SPLIT_LENGTH
 	return (
 		<Link href={_link()}>
 			<div className={clsx(styles.item, 'money money-sm padding-left-xs pointer')}>
 				<div className={clsx('text-bold')}>
-					{isMobile ? ellipseBetweenText(value?.toString(), 10, 10) : value}
+					{isMobile ? ellipseBetweenText(value?.toString(), length, length) : value}
 				</div>
 				<div
 					className={clsx(

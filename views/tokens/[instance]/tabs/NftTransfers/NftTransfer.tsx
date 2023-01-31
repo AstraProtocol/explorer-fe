@@ -1,8 +1,10 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { CONFIG } from 'utils/constants'
 import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
@@ -13,6 +15,9 @@ interface Props {
 }
 
 const NftTransfer = ({ transaction, tokenData }: Props) => {
+	const { isMobile } = useMobileLayout()
+	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
+
 	return (
 		<GradientRow
 			type={'success'}
@@ -36,7 +41,7 @@ const NftTransfer = ({ transaction, tokenData }: Props) => {
 							classes={'margin-right-xs'}
 							fontType="Titi"
 						>
-							{ellipseBetweenText(transaction.transactionHash, 16, 16)}
+							{ellipseBetweenText(transaction.transactionHash, txsHashLength, txsHashLength)}
 						</Typography.LinkText>
 						<Typography.Label
 							text={transaction.type}
