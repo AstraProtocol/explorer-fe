@@ -49,10 +49,7 @@ const ContractTransactionTab = ({ address }: Props) => {
 					)}
 				</div>
 			</div>
-			<div
-				style={{ justifyContent: 'space-between', display: 'flex' }}
-				className="padding-right-xl padding-left-xl"
-			>
+			<div className="padding-right-xl padding-left-xl flex flex-justify-end">
 				{isHasData && (
 					<div>
 						<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />

@@ -1,3 +1,4 @@
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import { useCallback } from 'react'
@@ -23,7 +24,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 					blockNumber: Number(internalItem?.blockNumber),
 					updatedAt: Number(internalItem?.timeStamp) * 1000,
 					value: formatEther(internalItem?.value || '0'),
-					valueToken: 'asa',
+					valueToken: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() as CryptoIconNames,
 					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,
 					labelStatus: upperCaseFirstLetterOfWord(

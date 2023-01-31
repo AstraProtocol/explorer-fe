@@ -120,7 +120,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 									size="2xs"
 									value={convertBalanceToView(transaction.gasUsed)}
 									fixNumber={7}
-									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN}
+									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()}
 									classes="contrast-color-70"
 								/>
 							)}

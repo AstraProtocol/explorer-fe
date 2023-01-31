@@ -46,11 +46,7 @@ const AddressTransactionTab = ({ address }: Props) => {
 					)}
 				</div>
 			</div>
-			<div
-				style={{ justifyContent: 'space-between', display: 'flex' }}
-				className="padding-right-xl padding-left-xl"
-			>
-				<div></div>
+			<div className="padding-right-xl padding-left-xl flex flex-justify-end">
 				<div>
 					{isHasData && (
 						<Pagination
