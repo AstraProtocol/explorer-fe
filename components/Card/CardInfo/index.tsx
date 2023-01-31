@@ -111,7 +111,9 @@ export default function CardInfo({
 						})}
 					>
 						<div
-							className={clsx(styles.leftColumn, 'col-2 gutter-right padding-bottom-sm block-ver-center')}
+							className={clsx(styles.leftColumn, 'col-2 gutter-right block-ver-center', {
+								'padding-bottom-sm': items.length > 1
+							})}
 						>
 							<Typography.CardLabel>{label}</Typography.CardLabel>
 							{type === 'nonce' && <Tag text={'Position'} />}
@@ -120,8 +122,8 @@ export default function CardInfo({
 							className={clsx(
 								styles.rightColumn,
 								'col-10',
-								'block-ver-center margin-right-sm padding-bottom-sm',
-								'border border-bottom-base',
+								'block-ver-center margin-right-sm',
+								{ 'padding-bottom-sm border border-bottom-base': items.length > 1 },
 								{ [`${responsive?.wrap}-full`]: responsive?.wrap }
 							)}
 						>

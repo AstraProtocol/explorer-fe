@@ -12,6 +12,7 @@ import { CONFIG } from 'utils/constants'
 import { CardInfoLabels } from 'utils/enum'
 import { evmAddressName } from 'utils/evm'
 import { ellipseBetweenText, formatCurrencyValue, LinkMaker, sortArrayFollowValue } from 'utils/helper'
+import { EXT_FIELD_SORT_ORDER, MAIN_FIELD_SORT_ORDER, MORE_ITEM_FIELD_SORT_ORDER } from './convertDataConstants'
 
 export default function useConvertData({ data }: { data: TransactionDetail }) {
 	const astraSummary = useAppSelector(getAstraSummary)
@@ -25,17 +26,10 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 			for (let key of keys) {
 				switch (key) {
 					case 'evmHash':
-						if (data[key] !== undefined && data[key] !== null)
-							items.push({
-								label: CardInfoLabels[key],
-								type: 'copy',
-								contents: [{ value: data[key] }]
-							})
-						break
 					case 'cosmosHash':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
-								label: CardInfoLabels.cosmosHash,
+								label: CardInfoLabels[key],
 								type: 'copy',
 								contents: [{ value: data[key] }]
 							})
@@ -343,24 +337,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 						break
 				}
 			}
-			const mainItems = sortArrayFollowValue(items, 'label', [
-				CardInfoLabels.evmHash,
-				CardInfoLabels.cosmosHash,
-				CardInfoLabels.result,
-				CardInfoLabels.failLog,
-				CardInfoLabels.revertReason,
-				CardInfoLabels.memo,
-				CardInfoLabels.confirmations,
-				CardInfoLabels.block,
-				CardInfoLabels.blockHeight,
-
-				CardInfoLabels.time,
-
-				CardInfoLabels.value,
-				CardInfoLabels.fee,
-				CardInfoLabels.gasPrice,
-				CardInfoLabels.typeOfTransfer
-			])
+			const mainItems = sortArrayFollowValue(items, 'label', MAIN_FIELD_SORT_ORDER)
 			//remove label of Token Transfers
 			let hashTransfer = false
 			mainItems.map(item => {
@@ -373,45 +350,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				}
 			})
 
-			const extraItems = sortArrayFollowValue(items, 'label', [
-				CardInfoLabels.from,
-				CardInfoLabels.to,
-				CardInfoLabels.interactWith,
-				CardInfoLabels.tokenTransfers,
-				//msgvote
-				CardInfoLabels.voter,
-				CardInfoLabels.proposalId,
-				CardInfoLabels.option,
-				//delegate
-				CardInfoLabels.delegatorAddress,
-				CardInfoLabels.recipientAddress,
-				CardInfoLabels.validatorAddress,
-				//MsgBeginRedelegate
+			const extraItems = sortArrayFollowValue(items, 'label', EXT_FIELD_SORT_ORDER)
 
-				CardInfoLabels.validatorSrcAddress,
-				CardInfoLabels.validatorDstAddress,
-				//MsgExec
-				CardInfoLabels.grantee,
-				//MsgCreateValidator
-				CardInfoLabels.validatorDescription,
-				CardInfoLabels.commissionRates,
-				CardInfoLabels.minSelfDelegation,
-				//MsgTextProposal
-				CardInfoLabels.textProposalContent,
-				CardInfoLabels.initialDepositValue,
-				CardInfoLabels.proposer,
-				// Msg Deposit
-				CardInfoLabels.depositor
-			])
-
-			const moreItems = sortArrayFollowValue(items, 'label', [
-				CardInfoLabels.gasLimit,
-				CardInfoLabels.maxFeePerGas,
-				CardInfoLabels.maxPriorityFeePerGas,
-				CardInfoLabels.gasUsedByTransaction,
-				CardInfoLabels.nonce,
-				CardInfoLabels.rawInput
-			])
+			const moreItems = sortArrayFollowValue(items, 'label', MORE_ITEM_FIELD_SORT_ORDER)
 			// console.log(mainItems, moreItems, items, data)
 			return [mainItems, extraItems, moreItems]
 		},

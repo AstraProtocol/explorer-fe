@@ -24,7 +24,8 @@ export enum TransactionTypeEnum {
 	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail',
 	TextProposal = '/cosmos.gov.v1beta1.TextProposal',
 	MsgSubmitProposal = '/cosmos.params.v1beta1.ParameterChangeProposal',
-	MsgDeposit = '/cosmos.gov.v1beta1.MsgDeposit'
+	MsgDeposit = '/cosmos.gov.v1beta1.MsgDeposit',
+	MsgEditValidator = '/cosmos.staking.v1beta1.MsgEditValidator'
 }
 
 export enum AddressTypeEnum {
