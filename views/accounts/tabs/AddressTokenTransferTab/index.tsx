@@ -2,7 +2,8 @@ import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
-import { useState } from 'react'
+import { isEmpty } from 'lodash'
+import { useMemo, useState } from 'react'
 import useAddressTokenTransfers from 'views/accounts/hook/useAddressTokenTransfer'
 import AddressTokenTransfer from './AddressTokenTransfer'
 
@@ -23,14 +24,18 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 		setPage(value)
 	}
 
+	const isHasData = useMemo(() => !isEmpty(result), [result])
+
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Token Transfers</span>
-				<div>
-					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
-				</div>
+				{isHasData && (
+					<div>
+						{/* Select Component */}
+						<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					</div>
+				)}
 			</Row>
 			<div style={{ overflowY: 'auto' }}>
 				{!result || result.length == 0 ? (
@@ -41,6 +46,14 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 							return <AddressTokenTransfer key={item.hash} data={item} />
 						})}
 					</>
+				)}
+			</div>
+			<div className="flex flex-justify-end padding-right-xl margin-top-md">
+				{isHasData && (
+					<div>
+						{/* Select Component */}
+						<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					</div>
 				)}
 			</div>
 		</div>

@@ -3,7 +3,8 @@ import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
-import { useState } from 'react'
+import { isEmpty } from 'lodash'
+import { useMemo, useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import useAddressCoinBalanceHistory from 'views/accounts/hook/useAddressCoinBalanceHistory'
@@ -31,24 +32,22 @@ const AddressCoinBalanceTab = ({ address, addressData }: Props) => {
 		setPage(value)
 	}
 
+	const isHasData = useMemo(() => !isEmpty(result), [result])
+
 	return (
 		<div className="margin-left-xl margin-right-xl">
-			{/* <Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
-				<span className="text text-xl">Internal Transactions</span>
-				<div>
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
-				</div>
-			</Row> */}
 			<div className={clsx('margin-top-xl margin-bottom-xl', styles.container)}>
 				<AddressBalanceHistoryChart address={address} />
 			</div>
 			<div className="margin-bottom-xs">
-				<PaginationLite
-					style={{ justifyContent: 'flex-end' }}
-					currentPage={currentPage}
-					hasNext={hasNextPage}
-					onChange={onPagingChange}
-				/>
+				{isHasData && (
+					<PaginationLite
+						style={{ justifyContent: 'flex-end' }}
+						currentPage={currentPage}
+						hasNext={hasNextPage}
+						onChange={onPagingChange}
+					/>
+				)}
 			</div>
 			<div style={{ overflowX: 'auto' }}>
 				<div style={{ minWidth: '900px' }}>
@@ -64,7 +63,7 @@ const AddressCoinBalanceTab = ({ address, addressData }: Props) => {
 						<div className={clsx('col-2', styles.colTimer)}>Time</div>
 					</BackgroundCard>
 					<div className="">
-						{!result || result.length == 0 ? (
+						{!isHasData ? (
 							<Empty classes="margin-top-lg" />
 						) : (
 							<>
@@ -82,6 +81,16 @@ const AddressCoinBalanceTab = ({ address, addressData }: Props) => {
 						)}
 					</div>
 				</div>
+			</div>
+			<div className="margin-bottom-xs margin-top-xs">
+				{isHasData && (
+					<PaginationLite
+						style={{ justifyContent: 'flex-end' }}
+						currentPage={currentPage}
+						hasNext={hasNextPage}
+						onChange={onPagingChange}
+					/>
+				)}
 			</div>
 		</div>
 	)

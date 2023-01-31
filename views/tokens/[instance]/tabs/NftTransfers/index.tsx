@@ -2,7 +2,8 @@ import { PaginationLite } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
-import { useState } from 'react'
+import { isEmpty } from 'lodash'
+import { useMemo, useState } from 'react'
 import useNftTransfers from 'views/tokens/[instance]/hook/useNftTransfers'
 import NftTransfer from './NftTransfer'
 
@@ -25,17 +26,20 @@ const NftTransferTab = ({ token, tokenData, tokenId }: Props) => {
 		}
 		setPage(value)
 	}
+	const isHasData = useMemo(() => !isEmpty(result), [result])
 
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Token Transfers</span>
-				<div>
-					{/* Select Component */}
-					<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
-				</div>
+				{isHasData && (
+					<div>
+						{/* Select Component */}
+						<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					</div>
+				)}
 			</Row>
-			{!result || result.length == 0 ? (
+			{!isHasData ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<div style={{ overflowY: 'auto' }}>
@@ -44,6 +48,14 @@ const NftTransferTab = ({ token, tokenData, tokenId }: Props) => {
 					))}
 				</div>
 			)}
+			<div className="flex flex-justify-end padding-right-xl margin-top-md">
+				{isHasData && (
+					<div>
+						{/* Select Component */}
+						<PaginationLite currentPage={currentPage} hasNext={hasNextPage} onChange={onPagingChange} />
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }

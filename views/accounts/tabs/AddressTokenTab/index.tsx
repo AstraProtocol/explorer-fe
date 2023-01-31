@@ -4,8 +4,9 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
+import { isEmpty } from 'lodash'
 import numeral from 'numeral'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import AmountUnit from 'views/accounts/AmountUnit'
@@ -37,6 +38,8 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 		'0,0.00000'
 	)
 
+	const isHasData = useMemo(() => !isEmpty(result), [result])
+
 	return (
 		<div className="margin-left-xl margin-right-xl">
 			<Row classes="margin-top-xl margin-bottom-xl" style={{ overflowY: 'auto' }}>
@@ -50,16 +53,6 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 					<br />
 					<AmountUnit amount={netWorth} unit="VND" />
 				</BackgroundCard>
-				{/* <BackgroundCard classes="radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md">
-					<span className="text text-base contrast-color-50">Astra Balance</span>
-					<br />
-					<AmountUnit classes="padding-right-sm border border-right-base" amount={netWorth} unit="VND" />
-					<AmountUnit
-						classes="padding-left-sm"
-						amount={addressBalance.balance ? convertBalanceToView(addressBalance.balance) : ''}
-						unit="Astra"
-					/>
-				</BackgroundCard> */}
 				<BackgroundCard
 					classes={clsx(
 						'radius-sm margin-right-xl padding-top-xs padding-bottom-xs padding-left-md padding-right-md',
@@ -73,12 +66,14 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 				</BackgroundCard>
 			</Row>
 			<div className="margin-bottom-xs">
-				<PaginationLite
-					style={{ justifyContent: 'flex-end' }}
-					currentPage={currentPage}
-					hasNext={hasNextPage}
-					onChange={onPagingChange}
-				/>
+				{isHasData && (
+					<PaginationLite
+						style={{ justifyContent: 'flex-end' }}
+						currentPage={currentPage}
+						hasNext={hasNextPage}
+						onChange={onPagingChange}
+					/>
+				)}
 			</div>
 			<div style={{ overflowY: 'auto' }}>
 				<BackgroundCard
@@ -96,7 +91,7 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 					<div className={clsx('col-3', styles.colAddress)}>Contract Address</div>
 				</BackgroundCard>
 				<div>
-					{!result || result.length == 0 ? (
+					{!isHasData ? (
 						<Empty classes="margin-top-xl" />
 					) : (
 						<>
@@ -104,6 +99,16 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 								return <AddressTokenRow key={item.contractAddress} data={item} />
 							})}
 						</>
+					)}
+				</div>
+				<div className="margin-bottom-xs margin-top-xs">
+					{isHasData && (
+						<PaginationLite
+							style={{ justifyContent: 'flex-end' }}
+							currentPage={currentPage}
+							hasNext={hasNextPage}
+							onChange={onPagingChange}
+						/>
 					)}
 				</div>
 			</div>
