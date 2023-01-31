@@ -213,6 +213,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 
 					case 'voter':
 					case 'proposer':
+					case 'depositor':
 						if (data[key] !== undefined && data[key] !== null)
 							items.push({
 								label: CardInfoLabels[key],
@@ -398,7 +399,9 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				//MsgTextProposal
 				CardInfoLabels.textProposalContent,
 				CardInfoLabels.initialDepositValue,
-				CardInfoLabels.proposer
+				CardInfoLabels.proposer,
+				// Msg Deposit
+				CardInfoLabels.depositor
 			])
 
 			const moreItems = sortArrayFollowValue(items, 'label', [

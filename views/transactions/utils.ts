@@ -136,6 +136,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	_mapMsgWithdrawDelegatorReward(data as TransactionMsgWithdrawDelegatorRewardDetail, result?.messages)
 	_mapMsgCreateValidator(data as TransactionMsgCreateValidatorDetail, result?.messages)
 	_mapMsgTextProposal(data, result)
+	_mapMsgDeposit(data, result?.messages)
 	return data
 }
 
@@ -408,5 +409,14 @@ const _mapMsgTextProposal = (data: TransactionDetail, result: TransactionItem) =
 				}
 			}
 		}
+	}
+}
+
+const _mapMsgDeposit = (data: TransactionDetail, messages: TransactionMessage[]) => {
+	const type: string = messages[0]?.type
+	if (type === TransactionTypeEnum.MsgDeposit) {
+		const content = messages[0].content as MsgDepositContent
+		data.depositor = content.depositor
+		data.proposalId = content.proposalId
 	}
 }

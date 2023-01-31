@@ -28,7 +28,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const { isMobile } = useMobileLayout('small')
 	const [items, extraItems, moreItems] = useConvertData({ data })
 	const hash = evmHash || cosmosHash
-	const isEvm = !!data.evmHash
+	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	return (
 		<Layout>

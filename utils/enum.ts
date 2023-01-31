@@ -23,7 +23,8 @@ export enum TransactionTypeEnum {
 	MsgCreateValidator = '/cosmos.staking.v1beta1.MsgCreateValidator',
 	MsgUnjail = '/cosmos.slashing.v1beta1.MsgUnjail',
 	TextProposal = '/cosmos.gov.v1beta1.TextProposal',
-	MsgSubmitProposal = '/cosmos.params.v1beta1.ParameterChangeProposal'
+	MsgSubmitProposal = '/cosmos.params.v1beta1.ParameterChangeProposal',
+	MsgDeposit = '/cosmos.gov.v1beta1.MsgDeposit'
 }
 
 export enum AddressTypeEnum {
@@ -74,7 +75,9 @@ export enum CardInfoLabels {
 	//Text Proposal
 	textProposalContent = 'Content: ',
 	initialDepositValue = 'Initial Deposit:',
-	proposer = 'Proposer:'
+	proposer = 'Proposer:',
+	// MSG Deposit
+	depositor = 'Depositor:'
 }
 
 export enum ErcTypeEnum {

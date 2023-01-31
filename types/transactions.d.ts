@@ -254,6 +254,7 @@ interface TransactionDetail {
 	initialDepositValue?: number
 	initialDepositTokenSymbol?: string
 	textProposalContent?: TextProposalContent[]
+	depositor?: string
 
 	revertReason?: string
 	logs?: EvmLog[]

@@ -233,3 +233,19 @@ interface TextProposalFullContent {
 	}
 	msgName: string
 }
+
+interface MsgDepositContent {
+	name: string
+	uuid: string
+	height: number
+	txHash: string
+	msgName: string
+	proposalId: string
+	amount: {
+		denom: string
+		amount: string
+	}[]
+	version: number
+	msgIndex: number
+	depositor: string
+}
