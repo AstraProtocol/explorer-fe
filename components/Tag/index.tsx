@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import style from './style.module.scss'
 
+export type TagType = 'success' | 'error' | 'info' | 'warning' | 'primary'
 interface Props {
-	type: 'success' | 'error' | 'info' | 'warning' | 'primary'
+	type: TagType
 	text: string
 	classes?: string
 }

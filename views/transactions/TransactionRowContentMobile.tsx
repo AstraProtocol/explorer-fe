@@ -1,5 +1,6 @@
 import { useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
+import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { CONFIG } from 'utils/constants'
@@ -13,6 +14,7 @@ export type TransactionRowContentMobileProps = {
 	hash: string
 	type?: string
 	height?: string
+	transactionType?: string
 }
 
 export default function TransactionRowContentMobile({
@@ -21,7 +23,8 @@ export default function TransactionRowContentMobile({
 	hash,
 	type,
 	style,
-	height
+	height,
+	transactionType
 }: TransactionRowContentMobileProps) {
 	const { isMobile } = useMobileLayout()
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
@@ -71,6 +74,14 @@ export default function TransactionRowContentMobile({
 							font="text-bold text text-sm"
 						/>
 					</div>
+				</div>
+			</div>
+			<div
+				className={clsx(styles.rowBrief, styles.TransactionRow, 'row width-100')}
+				style={{ minHeight: style === 'inject' ? 'auto' : height }}
+			>
+				<div className="flex flex-justify-space-between width-100 sm-wrap">
+					<TransactionTag type={transactionType} />
 				</div>
 			</div>
 		</>

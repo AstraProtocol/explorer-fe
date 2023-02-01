@@ -2,12 +2,14 @@ import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astra
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
+import PolygonTag from 'components/Tag/PolygonTag'
+import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
-import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import styles from './style.module.scss'
 
 interface Props {
@@ -20,6 +22,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
+	const transactionType = useTransactionType(transaction.from, transaction.to)
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -49,7 +52,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 								>
 									{ellipseBetweenText(transaction.hash, txsHashLength, txsHashLength).toLowerCase()}
 								</Typography.LinkText>
-								{evmType && <Tag hasArrowRight={false} fontType="Titi" text={evmType} />}
+								{evmType && <PolygonTag hasArrowRight={false} fontType="Titi" text={evmType} />}
 							</Row>
 						</div>
 					</Row>
@@ -95,13 +98,14 @@ const AddressTransaction = ({ transaction }: Props) => {
 					</div>
 				</div>
 
-				<div className={clsx('col-1 padding-left-md gutter-left col')} style={{ textTransform: 'capitalize' }}>
+				<div className={clsx('col-2 padding-left-md gutter-left col')} style={{ textTransform: 'capitalize' }}>
 					{transaction.success ? (
 						<Typography.SuccessText>Success</Typography.SuccessText>
 					) : (
 						<Typography.ErrorText>Error</Typography.ErrorText>
 					)}
 					<Timer updatedAt={transaction.blockTime} />
+					{transactionType && <TransactionTag type={transactionType} />}
 				</div>
 			</div>
 		</GradientRow>

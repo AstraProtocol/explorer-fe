@@ -25,7 +25,6 @@ const AddressInternalTransactionTab = ({ address }: Props) => {
 	}
 
 	const isHasData = useMemo(() => !isEmpty(result), [result])
-
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">

@@ -1,6 +1,7 @@
-import { ethToAstra } from '@astradefi/address-converter'
+import { astraToEth, ethToAstra } from '@astradefi/address-converter'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
+import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { caculateCosmosTxAmount, caculateEthereumTxAmount, getEvmTxhash } from 'views/transactions/utils'
@@ -24,6 +25,33 @@ export default function useAddressTransactions(address: string, page: number) {
 	}
 	const { data } = useSWR<AddressTransactionResponse>(_fetchCondition())
 
+	const getFromAndToOfEvm = (account: string, messages: TransactionMessage[]): [string, string] => {
+		if (account && !isEmpty(messages) && messages.length > 0) {
+			const to = astraToEth(account)
+			const from = (messages[0].content as MsgEthereumTxContent)?.params?.from
+
+			return [from, to]
+		}
+		return ['', '']
+	}
+
+	const getFromAndToOfCosmos = (messages: TransactionMessage[]): [string, string] => {
+		if (!isEmpty(messages) && messages.length > 0) {
+			let from = (messages[0].content as MsgSendContent).fromAddress
+			let to = (messages[0].content as MsgSendContent).toAddress
+			if (!isEmpty(from)) {
+				from = astraToEth(from)
+			}
+
+			if (!isEmpty(to)) {
+				to = astraToEth(to)
+			}
+
+			return [from, to]
+		}
+		return ['', '']
+	}
+
 	const convertData = (rawData: AddressTransactionResponse): AddressTransactionData[] => {
 		return rawData.result.map(d => {
 			let type
@@ -36,6 +64,14 @@ export default function useAddressTransactions(address: string, page: number) {
 			// else type = msgTypeShort
 			type = msgTypeShort
 			const evmHash = getEvmTxhash(d.messages)
+			let from = ''
+			let to = ''
+			if (!isEmpty(evmHash)) {
+				;[from, to] = getFromAndToOfEvm(d.account, d.messages)
+			} else {
+				;[from, to] = getFromAndToOfCosmos(d.messages)
+			}
+
 			return {
 				value:
 					(d.value
@@ -52,7 +88,9 @@ export default function useAddressTransactions(address: string, page: number) {
 				messageTypes: d.messageTypes,
 				messages: d.messages,
 				success: d.success,
-				type
+				type,
+				from,
+				to
 			}
 		})
 	}

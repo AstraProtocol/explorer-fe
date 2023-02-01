@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
-import { isUndefined } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import qs from 'qs'
 import { CONFIG } from './constants'
@@ -171,4 +171,19 @@ export const capitalizeFirstLetter = (text: string) => {
 
 export const isERC721 = (type: string): boolean => {
 	return type === ErcTypeEnum.ERC721
+}
+
+export const getTransactionInOrOut = (
+	address: string = '',
+	from: string = '',
+	to: string = '',
+	defaultType: string = ''
+) => {
+	if (address.toLocaleLowerCase() === from.toLocaleLowerCase() && !isEmpty(to)) {
+		return 'OUT'
+	}
+	if (address.toLocaleLowerCase() === to.toLocaleLowerCase() && !isEmpty(from)) {
+		return 'IN'
+	}
+	return defaultType
 }

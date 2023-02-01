@@ -6,7 +6,7 @@ interface Props {
 	hasArrowRight?: boolean
 }
 
-export default function Tag({ text, fontType = 'Manrope', hasArrowRight = true }: Props) {
+export default function PolygonTag({ text, fontType = 'Manrope', hasArrowRight = true }: Props) {
 	return (
 		<div
 			className={clsx(

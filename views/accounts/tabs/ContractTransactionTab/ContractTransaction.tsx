@@ -2,12 +2,15 @@ import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astra
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
+import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { isEmpty } from 'lodash'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import styles from './style.module.scss'
 
 interface Props {
@@ -19,6 +22,9 @@ const ContractTransaction = ({ transaction }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
+	const type = !isEmpty(transaction.createdContractAddressHash)
+		? 'Contract Creation'
+		: useTransactionType(transaction.from, transaction.to)
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -130,16 +136,14 @@ const ContractTransaction = ({ transaction }: Props) => {
 						</span>
 					</div>
 				</div>
-				<div
-					className={clsx('col col-2 padding-left-md gutter-left block-ver-center')}
-					style={{ textTransform: 'capitalize' }}
-				>
+				<div className={clsx('col col-2 padding-left-md gutter-left ')} style={{ textTransform: 'capitalize' }}>
 					{transaction.success ? (
 						<Typography.SuccessText>Success</Typography.SuccessText>
 					) : (
 						<Typography.ErrorText>Error</Typography.ErrorText>
 					)}
 					<Timer updatedAt={transaction.timeStamp} />
+					{type && <TransactionTag type={type} />}
 				</div>
 			</div>
 		</GradientRow>

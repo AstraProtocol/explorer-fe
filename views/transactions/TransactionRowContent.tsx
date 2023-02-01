@@ -2,9 +2,10 @@ import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astra
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
+import Tag from 'components/Tag/PolygonTag'
+import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
-import Tag from 'components/Typography/Tag'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { evmAddressName } from 'utils/evm'
@@ -29,6 +30,7 @@ export type TransactionRowContentProps = {
 	contractAddress?: string
 	toName?: string
 	height?: string
+	transactionType?: string
 }
 
 export default function TransactionRowContent({
@@ -48,13 +50,13 @@ export default function TransactionRowContent({
 	style = 'normal',
 	height,
 	fromName,
-	toName
+	toName,
+	transactionType
 }: TransactionRowContentProps) {
 	const { isMobile } = useMobileLayout()
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const statusText = status ? 'success' : 'error'
 	const isEvm = type === 'MsgEthereumTx'
-
 	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
 	return (
 		<>
@@ -164,13 +166,14 @@ export default function TransactionRowContent({
 						</span>
 					</div>
 				</div>
-				<div className={clsx('col col-1 padding-left-md ')} style={{ textTransform: 'capitalize' }}>
+				<div className={clsx('col col-2 padding-left-md ')} style={{ textTransform: 'capitalize' }}>
 					{status ? (
 						<Typography.SuccessText>{statusText}</Typography.SuccessText>
 					) : (
 						<Typography.ErrorText>{statusText}</Typography.ErrorText>
 					)}
 					<Timer updatedAt={updatedAt} />
+					{transactionType && <TransactionTag type={transactionType} />}
 				</div>
 			</div>
 		</>

@@ -2,13 +2,15 @@ import { CryptoIcon, Typography as TypographyUI, useMobileLayout } from '@astrap
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
+import Tag from 'components/Tag/PolygonTag'
+import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
-import Tag from 'components/Typography/Tag'
 import numeral from 'numeral'
 import { CONFIG } from 'utils/constants'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import style from './style.module.scss'
 
 interface Props {
@@ -19,6 +21,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
+	const type = useTransactionType(data.from, data.to)
 	return (
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
@@ -83,6 +86,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 			<div className={clsx('col col-2 margin-left-xs', style.colStatus)}>
 				<Typography.SuccessText>Success</Typography.SuccessText>
 				<Timer updatedAt={parseInt(data.timeStamp) * 1000} />
+				{type && <TransactionTag type={type} />}
 			</div>
 		</GradientRow>
 	)

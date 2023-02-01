@@ -56,6 +56,8 @@ interface MsgEthereumTxContent {
 			'data': string
 		}
 	}
+	fromAddress?: string
+	toAddress?: string
 	txHash: string
 	msgName: TransactionTypeEnum.Ethermint
 	version: number
