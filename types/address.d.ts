@@ -235,7 +235,9 @@ interface AddressTransactionResponse {
 interface AddressSearchResponse {
 	addressHash: string
 	address: string
-	name: string
+	name?: string
+	tokenName?: string
+	contractName?: string
 	insertedAt: string
 }
 

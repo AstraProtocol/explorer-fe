@@ -35,11 +35,12 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (addresses && addresses.length > 0) {
 			for (let item of addresses) {
 				if (!items.find((i: SearchResultViewItem) => item.addressHash === i.key)) {
+					const name = item.name || item.tokenName || item.contractName
 					items.push({
 						time: item.insertedAt,
 						type: 'Address',
 						key: item.addressHash,
-						value: item.name ? `${item.name} | ${item.addressHash}` : item.addressHash,
+						value: name ? `${name} | ${item.addressHash}` : item.addressHash,
 						linkValue: item.addressHash
 					})
 				}
