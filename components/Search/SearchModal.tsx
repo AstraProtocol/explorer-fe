@@ -117,7 +117,10 @@ export default function SearchModal({ open, closeModal }: SearchModalProps) {
 		} else if (validator) {
 			key = LinkMaker.address(validator)
 		}
-		if (key) router.push(key)
+		if (key) {
+			router.push(key)
+			closeModal()
+		}
 	}
 
 	const _inputChange = (event: React.FormEvent<HTMLInputElement>) => {
