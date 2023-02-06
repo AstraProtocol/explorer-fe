@@ -11,7 +11,7 @@ type Props = {
 }
 
 export default function InventoryItem({ index, tokenAddress, token }: Props) {
-	const tokenImage = token?.metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+	const tokenImage = token?.metadata?.image?.replace('ipfs://', 'https://ipfs.io/ipfs/')
 
 	return (
 		<div
