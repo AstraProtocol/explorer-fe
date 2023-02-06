@@ -1,4 +1,4 @@
-import { formatNumber } from '@astraprotocol/astra-ui'
+import { ellipseBetweenText, formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
 import { convertBalanceToView, ellipseRightText, getEnvNumber, isERC721, LinkMaker } from 'utils/helper'
@@ -38,7 +38,9 @@ export default function TokenRow({ index, token }: Props) {
 
 			<div className={clsx('col col-3 padding-left-lg', styles.borderLeft, styles.colAddress)}>
 				<Typography.LinkText href={LinkMaker.address(token.contractAddressHash)} classes={'text text-sm'}>
-					{token.contractAddressHash}
+					{token.contractAddressName
+						? `${token.contractAddressName} (${ellipseBetweenText(token.contractAddressHash, 8, 6)})`
+						: token.contractAddressHash}
 				</Typography.LinkText>
 			</div>
 

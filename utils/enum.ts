@@ -25,7 +25,14 @@ export enum TransactionTypeEnum {
 	TextProposal = '/cosmos.gov.v1beta1.TextProposal',
 	MsgSubmitProposal = '/cosmos.params.v1beta1.ParameterChangeProposal',
 	MsgDeposit = '/cosmos.gov.v1beta1.MsgDeposit',
-	MsgEditValidator = '/cosmos.staking.v1beta1.MsgEditValidator'
+	MsgEditValidator = '/cosmos.staking.v1beta1.MsgEditValidator',
+	MsgUpdateClient = '/ibc.core.client.v1.MsgUpdateClient',
+	MsgChannelOpenAck = '/ibc.core.channel.v1.MsgChannelOpenAck',
+	MsgConnectionOpenInit = '/ibc.core.connection.v1.MsgConnectionOpenInit',
+	MsgTransfer = '/ibc.applications.transfer.v1.MsgTransfer',
+	MsgCreateClient = '/ibc.core.client.v1.MsgCreateClient',
+	MsgCreateClawbackVestingAccount = '/evmos.vesting.v1.MsgCreateClawbackVestingAccount',
+	CommunityPoolSpendProposal = '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal'
 }
 
 export enum AddressTypeEnum {
@@ -64,6 +71,11 @@ export enum CardInfoLabels {
 	commissionRates = 'Commission Rates:',
 	grantee = 'Grantee',
 	failLog = 'Fail reason:',
+
+	//cosmos
+	amount = 'Amount:',
+	totalAmount = 'Total Amount:',
+	type = 'Type:',
 	// Revert_Reason =
 	revertReason = 'Revert reason:',
 	memo = 'Memo',
@@ -78,7 +90,28 @@ export enum CardInfoLabels {
 	initialDepositValue = 'Initial Deposit:',
 	proposer = 'Proposer:',
 	// MSG Deposit
-	depositor = 'Depositor:'
+	depositor = 'Depositor:',
+	//Msg update client
+	signer = 'Signer:',
+	header = 'Header:',
+	clientId = 'Client ID: ',
+	delayPeriod = 'Deplay Period',
+	version = 'Version: ',
+	counterparty = 'Counterparty: ',
+	sourcePort = 'Source Port: ',
+	sourceChannel = 'Source Channel:',
+	sender = 'Sender:',
+	receiver = 'Receider:',
+	timeoutTimestamp = 'Timeout Timestamp:',
+	timeoutHeight = 'Timeout Height',
+	token = 'Token: ',
+
+	clientState = 'Client State',
+	consensusState = 'Consensus State',
+
+	startTime = 'Start Time',
+	lockupPeriods = 'Lockup Periods',
+	vestingPeriods = 'Vesting Periods'
 }
 
 export enum ErcTypeEnum {

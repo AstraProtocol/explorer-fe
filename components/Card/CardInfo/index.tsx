@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
+import { CryptoIcon, Table, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { Column, RowData } from '@astraprotocol/astra-ui/lib/es/components/Table/Table'
 import clsx from 'clsx'
@@ -8,7 +8,7 @@ import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
 import { ellipseRightText } from 'utils/helper'
 import BackgroundCard from '../Background/BackgroundCard'
-import CardContentTabs from './Components/CardContentTabs'
+import CardTabs from './Components/CardTabs'
 import Decode, { DecodeProps } from './Components/Decode'
 import RawInput from './Components/RawInput'
 import Transfers from './Components/Transfers'
@@ -40,8 +40,12 @@ export type Content = {
 	}
 	decode?: DecodeProps
 	tabs?: {
-		titles: string[]
-		content: Array<string | { cols: Column[]; rows: RowData[] }>
+		tabTitles: string[]
+		tabContent: any[]
+	}
+	table?: {
+		colums: Column[]
+		rows: RowData[]
 	}
 }
 
@@ -62,6 +66,7 @@ export type CardRowItem = {
 		| 'validator-description'
 		| 'commission'
 		| 'tabs'
+		| 'table'
 	contents: Content[]
 	responsive?: {
 		wrap?: 'sm' | 'md'
@@ -210,7 +215,25 @@ export default function CardInfo({
 									{type === 'commission' ? (
 										<ValidatorCommission commission={content.value as CommissionRates} />
 									) : null}
-									{type === 'tabs' ? <CardContentTabs {...content.tabs} /> : null}
+									{type === 'tabs' ? <CardTabs {...content.tabs} /> : null}
+									{type === 'table'
+										? content.table && (
+												<div
+													style={{
+														maxHeight: '300px',
+														minWidth: '250px',
+														overflowY: 'auto',
+														width: '100%'
+													}}
+												>
+													<Table
+														classes={{ table: styles.tableTD }}
+														colums={content.table.colums}
+														rows={content.table.rows}
+													/>
+												</div>
+										  )
+										: null}
 								</div>
 							))}
 						</div>

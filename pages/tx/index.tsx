@@ -24,7 +24,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			setLoaderTime(true) // time for loader dispaly
 			setTimeout(() => {
 				setLoaderTime(false) // endtime
-			}, 500)
+			}, 1000)
 		}
 	}, [fullPageData])
 	return (
@@ -87,6 +87,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										type={item.type}
 										newBlock={item.newTransaction}
 										height="auto"
+										typeCount={item.typeCount}
 									/>
 								)
 							})}

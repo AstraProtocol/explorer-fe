@@ -86,7 +86,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				fee: d.fee.length > 0 ? d.fee[0]?.amount : 0,
 				hash: evmHash || d.hash,
 				messageTypes: d.messageTypes,
-				messages: d.messages,
+				messages: d.messages as any,
 				success: d.success,
 				type,
 				from,

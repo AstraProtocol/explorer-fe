@@ -177,7 +177,7 @@ interface AddressTransactionData {
 	blockTime: string
 	hash: string
 	messageTypes: string[]
-	messages: {
+	messages?: {
 		type: string
 		evmType?: string
 		content: MsgEthereumTxContent

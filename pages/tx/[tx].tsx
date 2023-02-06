@@ -5,6 +5,7 @@ import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import CardInfo from 'components/Card/CardInfo'
 import Container from 'components/Container'
+import PolygonTag from 'components/Tag/PolygonTag'
 import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import Head from 'next/head'
@@ -26,7 +27,7 @@ type Props = {
 
 const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
 	const { isMobile } = useMobileLayout('small')
-	const [items, extraItems, moreItems] = useConvertData({ data })
+	const cards = useConvertData({ data })
 	const hash = evmHash || cosmosHash
 	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
@@ -47,11 +48,20 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 				{data ? (
 					<>
 						<div className="margin-top-2xl margin-bottom-md">
-							<Typography.PageTitle>{data.pageTitle || ''}</Typography.PageTitle>
+							<Typography.PageTitle className={['flex flex-align-center']}>
+								{data.cosmosMsgCount ? (
+									<span className="flex flex-align-center">
+										{data.pageTitle}
+										<PolygonTag text={`+ ${data.cosmosMsgCount.toString()}`} />
+									</span>
+								) : (
+									data.pageTitle || ''
+								)}
+							</Typography.PageTitle>
 						</div>
-						<CardInfo items={items} classes={['margin-top-sm']} />
-						{extraItems.length > 0 && <CardInfo items={extraItems} classes={['margin-top-sm']} />}
-						{moreItems.length > 0 && <CardInfo items={moreItems} classes={['margin-top-sm']} />}
+						{cards.map((card, idx) => (
+							<CardInfo items={card} classes={['margin-top-sm']} key={idx} />
+						))}
 						{data.rawInput && <DecodeInput dataInput={data.rawInput} address={data.to} evmHash={evmHash} />}
 						{isEvm && (
 							<TransactionTabs

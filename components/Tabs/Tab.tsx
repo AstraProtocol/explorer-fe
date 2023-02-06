@@ -21,7 +21,7 @@ const Tab = ({ active, title, onClick, padding }: Props) => {
 					'text',
 					'text-base text-bold',
 					padding || 'padding-top-lg padding-bottom-sm',
-					'padding-left-xs padding-right-x',
+					'padding-left-xs padding-right-xs',
 					'margin-right-sm'
 				)}
 			>

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 interface Props {
-	children: string
+	children: React.ReactNode
 	className?: string[]
 	icon?: string
 }

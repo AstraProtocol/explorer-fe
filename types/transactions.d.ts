@@ -25,6 +25,8 @@ interface TransactionMessage {
 		| MsgExecContent
 		| MsgGrantContent
 		| MsgUndelegateContent
+		| TextProposalFullContent
+		| MsgDepositContent
 }
 
 interface TransactionItem {
@@ -57,6 +59,7 @@ interface TransactionItemModified extends TransactionItem {
 	to?: string
 	value?: string
 	evmHash?: string
+	typeCount?: number
 }
 
 interface TransactionSearchResponse {
@@ -205,8 +208,70 @@ interface TextProposalContent {
 	cols?: string[]
 	rows?: string[][]
 }
+/**
+ * @param dynamicRender render all key:value
+ */
+interface CosmosTxMessage {
+	type: string
+	amount?: string
+	amountSymbol?: string
+	//msg send
+	from?: string
+	to?: string
+	//msvote
+	voter?: string
+	proposalId?: string
+	option?: string
+	//msgDelegate
+	delegatorAddress?: string
+	validatorAddress?: string
+	//MsgBeginRedelegate
+	validatorSrcAddress?: string
+	validatorDstAddress?: string
+	//MsgTextProposal
+	proposer?: string
+	initialDepositValue?: string
+	initialDepositTokenSymbol?: string
+	textProposalContent?: TextProposalContent[]
+	depositor?: string
+	//
+	grantee?: string
+	recipientAddress?: string
+	validatorDescription?: ValidatorData
+	commissionRates?: CommissionRates
+	minSelfDelegation?: string
+	tendermintPubkey?: string
+
+	//msg update client
+	signer?: string
+	clientId?: string
+	//
+	dynamicRender?: { [key: string]: any }[]
+
+	delayPeriod?: string
+	sourcePort?: string
+	sourceChannel?: string
+	sender?: string
+	receiver?: string
+	timeoutTimestamp?: string
+	memo?: string
+	token?: string
+
+	startTime?: string
+
+	lockupPeriods?: {
+		titles: string[]
+		content: string[][]
+	}
+	vestingPeriods?: {
+		titles: string[]
+		content: string[][]
+	}
+}
+
 interface TransactionDetail {
 	pageTitle?: string
+	cosmosMsgCount?: number
 	evmHash?: string
 	cosmosHash?: string
 	result?: string
@@ -239,22 +304,9 @@ interface TransactionDetail {
 	index?: number
 	nonceText?: string
 	failLog?: string
-	//msvote
-	voter?: string
-	proposalId?: string
-	option?: string
-	//msgDelegate
-	delegatorAddress?: string
-	validatorAddress?: string
-	//MsgBeginRedelegate
-	validatorSrcAddress?: string
-	validatorDstAddress?: string
-	//MsgTextProposal
-	proposer?: string
-	initialDepositValue?: number
-	initialDepositTokenSymbol?: string
-	textProposalContent?: TextProposalContent[]
-	depositor?: string
+
+	cosmosTxnMessages?: CosmosTxMessage[]
+	totalAmount?: string
 
 	revertReason?: string
 	logs?: EvmLog[]

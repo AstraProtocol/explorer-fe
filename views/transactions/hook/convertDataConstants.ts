@@ -14,12 +14,14 @@ export const MAIN_FIELD_SORT_ORDER = [
 	CardInfoLabels.time,
 
 	CardInfoLabels.value,
+	CardInfoLabels.totalAmount,
 	CardInfoLabels.fee,
 	CardInfoLabels.gasPrice,
 	CardInfoLabels.typeOfTransfer
 ]
 
-export const EXT_FIELD_SORT_ORDER = [
+export const COSMOS_MESSAGE_FIELD_SORT_ORDER = [
+	CardInfoLabels.type,
 	CardInfoLabels.from,
 	CardInfoLabels.to,
 	CardInfoLabels.interactWith,
@@ -47,10 +49,31 @@ export const EXT_FIELD_SORT_ORDER = [
 	CardInfoLabels.initialDepositValue,
 	CardInfoLabels.proposer,
 	// Msg Deposit
-	CardInfoLabels.depositor
+	CardInfoLabels.depositor,
+	//
+	CardInfoLabels.amount,
+	CardInfoLabels.clientId,
+	CardInfoLabels.header,
+	CardInfoLabels.version,
+	CardInfoLabels.delayPeriod,
+	CardInfoLabels.clientState,
+	CardInfoLabels.consensusState,
+	CardInfoLabels.signer,
+
+	CardInfoLabels.sourcePort,
+	CardInfoLabels.sourceChannel,
+	CardInfoLabels.token,
+	CardInfoLabels.sender,
+	CardInfoLabels.receiver,
+	CardInfoLabels.timeoutHeight,
+	CardInfoLabels.timeoutTimestamp,
+
+	CardInfoLabels.startTime,
+	CardInfoLabels.lockupPeriods,
+	CardInfoLabels.vestingPeriods
 ]
 
-export const MORE_ITEM_FIELD_SORT_ORDER = [
+export const GAS_ITEM_FIELD_SORT_ORDER = [
 	CardInfoLabels.gasLimit,
 	CardInfoLabels.maxFeePerGas,
 	CardInfoLabels.maxPriorityFeePerGas,

@@ -2,13 +2,14 @@ import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from 'ethers'
 import { formatEther, formatUnits } from 'ethers/lib/utils'
-import { isArray, isEmpty, isUndefined } from 'lodash'
+import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { convertMessageToTransfer, getTransactionType } from 'utils/cosmos'
 import { TransactionTypeEnum } from 'utils/enum'
 import { evmConvertTokenTransferToTransactionRow, evmTransactionType, isEmptyRawInput } from 'utils/evm'
+import { getAstraTokenAmount, handleCosmosMsg } from './cosmosMessage'
 
 export interface TransactionQuery {
 	tx: string
@@ -40,7 +41,6 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			? getEvmTxhash(result.messages)
 			: result.hash
 		: evmHash
-	// data.pageTitle = result.messages ? getTransactionType(result.messages[0]?.type) : ''
 	data.cosmosHash = cosmosHash || result.cosmosHash
 	data.result = result.success ? 'Success' : 'Error'
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
@@ -92,10 +92,12 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 }
 
 export const cosmsTransactionDetail = (result: TransactionItem): TransactionDetail => {
+	// result.messages = result.messages.concat(result.messages).concat(result.messages).concat(result.messages)
 	const data: TransactionDetail = {}
 	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
 	data.pageTitle = getTransactionType(result?.messages[0]?.type)
+	data.cosmosMsgCount = result.messages.length - 1
 	data.evmHash = ''
 	data.cosmosHash = result.hash
 	data.result = result.success ? 'Success' : 'Error'
@@ -103,79 +105,21 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
 	data.failLog = !result.success ? result.log : undefined
-	data.value = caculateCosmosTxAmount(result.messages) || '0'
+	data.totalAmount = caculateCosmosTxAmount(result.messages) || '0'
 	data.memo = result.memo
-	// data.logs = result.log
-	// data.from = getSignerEthAddress(result.signers)
-	// data.to = result.to
-	// data.tokenTransfer = []
-	// data.value = undefined
 	data.fee = formatEther(fee.amount || '0')
-	data.feeToken = 'ASA'
-	// data.gasPrice = undefined
+	data.feeToken = process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 	data.gasLimit = result.gasWanted?.toString()
 	data.gasUsed = `${result.gasUsed}`
-	// data.maxFeePerGas = undefined
-	// data.maxPriorityFeePerGas = undefined
-	// data.priorityFeePerGas = undefined
 	data.gasUsedByTransaction = result.gasUsed
 		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(result.gasUsed / result.gasWanted).format('0.00%')}`
 		: undefined
-	// data.nonce = undefined
-	// data.rawInput = result.input
 	// msgsend
 	_convertTransfer(data, result?.messages, result?.blockTime, result?.success)
 
-	_mapMsgSendField(data, result)
-	_mapMsgVoteField(data, result?.messages)
-	_mapMsgDelegate(data, result?.messages)
-	_mapMsgUndelegate(data, result?.messages)
-	_mapMsgBeginRedelegate(data, result?.messages)
-	_mapMsgExec(data as TransactionMsgExecDetail, result?.messages)
-	_mapMsgGrant(data, result?.messages)
-	_mapMsgWithdrawDelegatorReward(data as TransactionMsgWithdrawDelegatorRewardDetail, result?.messages)
-	_mapMsgCreateValidator(data as TransactionMsgCreateValidatorDetail, result?.messages)
-	_mapMsgTextProposalOrMsgSubmitProposal(data, result)
-	_mapMsgDeposit(data, result?.messages)
-	_mapMsgUnjailOrMsgEditValidator(data, result.messages)
+	const { messageData } = handleCosmosMsg(result.messages)
+	data.cosmosTxnMessages = messageData
 	return data
-}
-
-// /**
-//  *
-//  * @param amounts {denom, amount}
-//  * @returns amount in string (bignumber)
-//  */
-// export const getAstraTokenAmount = (amounts: TokenAmount[]): string => {
-// 	if (amounts && amounts.length > 0) {
-// 		let totalAmount = BigNumber.from('0')
-// 		for (let amount of amounts) {
-// 			if (amount.denom === 'aastra') {
-// 				totalAmount = totalAmount.add(BigNumber.from(amount.amount))
-// 			}
-// 		}
-
-// 		return totalAmount.toString()
-// 	}
-// 	return '0'
-// }
-
-/**
- *
- * @param amounts {denom, amount}
- * @returns amount in string (bignumber)
- */
-export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
-	let totalAmount = BigNumber.from('0')
-	if (isArray(amount)) {
-		for (let a of amount) {
-			totalAmount = totalAmount.add(BigNumber.from(a.amount))
-		}
-	} else if (!isArray(amount)) {
-		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
-	}
-
-	return totalAmount.toString()
 }
 
 /**
@@ -187,7 +131,9 @@ export const caculateEthereumTxAmount = (messages: MsgEthereumTx[] | Transaction
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			totalAmount = totalAmount.add(BigNumber.from(message.content?.params?.data?.value || '0'))
+			totalAmount = totalAmount.add(
+				BigNumber.from((message.content as MsgEthereumTxContent)?.params?.data?.value || '0')
+			)
 		}
 		return formatEther(totalAmount)
 	}
@@ -203,8 +149,16 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			if (message.content?.amount)
-				totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(message.content.amount)))
+			if ((message.content as MsgSendContent)?.amount) {
+				totalAmount = totalAmount.add(
+					BigNumber.from(getAstraTokenAmount((message.content as MsgSendContent).amount))
+				)
+			}
+			if ((message.content as TextProposalFullContent)?.initialDeposit) {
+				totalAmount = totalAmount.add(
+					BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
+				)
+			}
 		}
 		return formatEther(totalAmount)
 	}
@@ -237,7 +191,7 @@ export const caculateAmount = (amounts: TokenAmount[]): TokenAmount => {
  * @returns
  */
 export const getEvmTxhash = (messages: MsgEthereumTx[] | TransactionMessage[]): string | undefined => {
-	return messages?.[0]?.content?.params?.hash || undefined
+	return (messages?.[0]?.content as MsgEthereumTxContent)?.params?.hash || undefined
 }
 
 export const getSignerEthAddress = (signers: Signer[]) => {
@@ -277,155 +231,4 @@ const _convertTransfer = (
 	success?: boolean
 ) => {
 	data.tabTokenTransfers = convertMessageToTransfer(messages, blockTime, success)
-}
-
-const _mapMsgSendField = (data: TransactionDetail, result: TransactionItem) => {
-	const type: string = result?.messages[0]?.type
-	if (type === TransactionTypeEnum.MsgSend) {
-		const content = result?.messages[0].content as unknown as MsgSendContent
-		data.from = astraToEth(content.fromAddress)
-		data.to = astraToEth(content.toAddress)
-	}
-}
-const _mapMsgVoteField = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgVote) {
-		const content = messages[0].content as unknown as MsgVoteContent
-		data.voter = astraToEth(content.voter)
-		data.proposalId = content.proposalId
-		data.option = content.option
-	}
-}
-
-const _mapMsgDelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgDelegate) {
-		const content = messages[0].content as unknown as MsgDelegateContent
-		data.delegatorAddress = content.delegatorAddress
-		data.validatorAddress = content.validatorAddress
-		data.value = formatEther(content.amount.amount)
-	}
-}
-
-const _mapMsgUndelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgUndelegate) {
-		const content = messages[0].content as unknown as MsgUndelegateContent
-		data.delegatorAddress = content.delegatorAddress
-		data.validatorAddress = content.validatorAddress
-		data.value = formatEther(content.amount.amount)
-		// Missing amount of auto claim reward
-	}
-}
-
-const _mapMsgBeginRedelegate = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgBeginRedelegate) {
-		const content = messages[0].content as MsgBeginRedelegateContent
-		data.delegatorAddress = content.delegatorAddress
-		data.validatorSrcAddress = content.validatorSrcAddress
-		data.validatorDstAddress = content.validatorDstAddress
-		data.value = formatEther(content.amount.amount)
-	}
-}
-
-const _mapMsgExec = (data: TransactionMsgExecDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgExec) {
-		const content = messages[0].content as MsgExecContent
-		data.grantee = content.params.grantee
-		// @todo convert msgs to display
-	}
-}
-const _mapMsgGrant = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgGrant) {
-		// const content = messages[0].content as MsgGrantContent
-		// data.grantee = content.params.maybeGenericGrant.grantee
-		// data.granter = content.params.maybeGenericGrant.granter
-	}
-}
-
-const _mapMsgWithdrawDelegatorReward = (
-	data: TransactionMsgWithdrawDelegatorRewardDetail,
-	messages: TransactionMessage[]
-) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgWithdrawDelegatorReward) {
-		const content = messages[0].content as MsgWithdrawDelegatorRewardContent
-		data.delegatorAddress = content.delegatorAddress
-		data.recipientAddress = content.recipientAddress
-		data.validatorAddress = content.validatorAddress
-	}
-}
-
-const _mapMsgCreateValidator = (data: TransactionMsgCreateValidatorDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgCreateValidator) {
-		const content = messages[0].content as MsgCreateValidatorContent
-
-		data.delegatorAddress = content.delegatorAddress
-		data.validatorDescription = content.description
-		data.commissionRates = content.commissionRates
-		data.minSelfDelegation = content.minSelfDelegation
-		data.validatorAddress = content.validatorAddress
-		data.tendermintPubkey = content.tendermintPubkey
-	}
-}
-
-const _mapMsgTextProposalOrMsgSubmitProposal = (data: TransactionDetail, result: TransactionItem) => {
-	const type: string = result?.messages[0]?.type
-	if (type === TransactionTypeEnum.TextProposal || type === TransactionTypeEnum.MsgSubmitProposal) {
-		const content = result?.messages[0].content as unknown as TextProposalFullContent
-		if (content) {
-			data.proposer = content.proposerAddress
-			if (content.initialDeposit && content.initialDeposit.length > 0) {
-				data.initialDepositValue = content.initialDeposit.reduce<number>(
-					(sum, obj) => sum + Number(utils.formatEther(obj.amount)),
-					0
-				)
-				data.initialDepositTokenSymbol = content.initialDeposit[0].denom
-			}
-			const tabContentData = content.content
-			if (tabContentData) {
-				data.textProposalContent = []
-				data.textProposalContent.push({ type: 'text', title: 'Type', description: tabContentData['@type'] })
-				data.textProposalContent.push({ type: 'text', title: 'Title', description: tabContentData.title })
-				data.textProposalContent.push({
-					type: 'text',
-					title: 'Description',
-					description: tabContentData.description
-				})
-				if (tabContentData.changes) {
-					const rows = []
-					for (let change of tabContentData.changes) {
-						rows.push([change.subspace, change.key, change.value])
-					}
-					data.textProposalContent.push({
-						type: 'table',
-						title: 'Changes',
-						cols: ['Subpace', 'Key', 'Value'],
-						rows
-					})
-				}
-			}
-		}
-	}
-}
-
-const _mapMsgDeposit = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgDeposit) {
-		const content = messages[0].content as MsgDepositContent
-		data.depositor = content.depositor
-		data.proposalId = content.proposalId
-	}
-}
-
-const _mapMsgUnjailOrMsgEditValidator = (data: TransactionDetail, messages: TransactionMessage[]) => {
-	const type: string = messages[0]?.type
-	if (type === TransactionTypeEnum.MsgUnjail || type === TransactionTypeEnum.MsgEditValidator) {
-		const content = messages[0] as MsgUnjail
-		data.validatorAddress = content.content.validatorAddress
-	}
 }

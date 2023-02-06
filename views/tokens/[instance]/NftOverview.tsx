@@ -19,7 +19,7 @@ const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 		) : (
 			<Row>{children}</Row>
 		)
-	const tokenImage = tokenData?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+	const tokenImage = tokenData?.image?.replace('ipfs://', 'https://ipfs.io/ipfs/')
 	return (
 		<BackgroundCard classes="padding-top-lg padding-bottom-lg margin-top-2xl padding-left-2xl padding-right-2xl">
 			<Layout>
@@ -39,7 +39,7 @@ const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 					{/* </Row> */}
 				</div>
 				<div className={clsx(isMobile ? 'margin-bottom-md' : 'flex flex-justify-end')}>
-					<Image src={tokenImage} alt={tokenData.name} width={size} height={size} />
+					{tokenImage && <Image src={tokenImage} alt={tokenData.name} width={size} height={size} />}
 				</div>
 			</Layout>
 		</BackgroundCard>

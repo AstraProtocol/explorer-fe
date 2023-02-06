@@ -31,6 +31,7 @@ export type TransactionRowContentProps = {
 	toName?: string
 	height?: string
 	transactionType?: string
+	typeCount?: number
 }
 
 export default function TransactionRowContent({
@@ -51,7 +52,8 @@ export default function TransactionRowContent({
 	height,
 	fromName,
 	toName,
-	transactionType
+	transactionType,
+	typeCount
 }: TransactionRowContentProps) {
 	const { isMobile } = useMobileLayout()
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
@@ -123,12 +125,20 @@ export default function TransactionRowContent({
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
-						text={ellipseRightText(type, 17)}
+						text={ellipseRightText(type, 15)}
 						titleText={type}
 						backgroundShape="rectangle"
 						radius="radius-2xl"
 						font="text-bold text text-sm"
 					/>
+					{typeCount ? (
+						<Typography.Label
+							text={`+${typeCount}`}
+							// backgroundShape="rectangle"
+							radius="radius-2xl margin-left-2xs"
+							font="text-bold text text-sm"
+						/>
+					) : null}
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.LinkText href={LinkMaker.block(blockNumber)} fontType="Titi">

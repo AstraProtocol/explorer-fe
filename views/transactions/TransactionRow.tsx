@@ -27,6 +27,7 @@ export type TransactionRowProps = {
 	contractAddress?: string
 	toName?: string
 	height?: string
+	typeCount?: number
 }
 
 export default function TransactionRow({
@@ -47,11 +48,13 @@ export default function TransactionRow({
 	style = 'normal',
 	height,
 	fromName,
-	toName
+	toName,
+	typeCount
 }: TransactionRowProps) {
 	const { isMobile } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	const transactionType = useTransactionType(from, to || contractAddress)
+
 	return (
 		<RowShowAnimation action={newBlock}>
 			<GradientRow
@@ -99,6 +102,7 @@ export default function TransactionRow({
 						fromName={fromName}
 						toName={toName}
 						transactionType={transactionType}
+						typeCount={typeCount}
 					/>
 				)}
 			</GradientRow>

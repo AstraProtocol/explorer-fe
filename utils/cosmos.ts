@@ -10,7 +10,8 @@ import { TransactionTypeEnum } from './enum'
  * @param type
  * @returns
  */
-export const getTransactionType = (type: string) => type?.split('.').slice(-1).join('') || ''
+export const getTransactionType = (type: string) =>
+	type?.split('.').slice(-1).join('').replace('Msg', '').replace('MSG', '') || ''
 export const getTransactionEvmType = (messages: TransactionMessage[]) =>
 	messages.length > 0 ? messages[0].evmType : ''
 

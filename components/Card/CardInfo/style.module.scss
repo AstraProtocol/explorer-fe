@@ -15,6 +15,11 @@
 	border: 1px solid rgba(var(--contrast-color-theme--raw), 0.1);
 	border-radius: 8px;
 	padding: 12px;
+	div:last-of-type {
+		margin-bottom: 0px !important;
+		padding-bottom: 0px !important;
+		border-bottom: none !important;
+	}
 }
 .copyColor {
 	color: var(--link-color-useful);
@@ -26,4 +31,17 @@
 
 .table {
 	min-width: 600px;
+}
+
+.left {
+	max-width: 170px;
+}
+
+.tableTD {
+	th {
+		padding: 5px !important;
+	}
+	td {
+		padding: 5px !important;
+	}
 }

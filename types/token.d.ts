@@ -97,6 +97,7 @@ interface Token {
 	cataloged?: boolean
 	contractAddressHash?: string
 	contractAddress?: string
+	contractAddressName?: string
 	decimals: string
 	holderCount?: number
 	holdersCount?: number

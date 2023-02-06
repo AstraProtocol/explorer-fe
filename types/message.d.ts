@@ -4,19 +4,15 @@ interface MsgCreateValidator {
 	content: MsgCreateValidatorContent
 }
 
-interface MsgUnjail {
-	evmType?: string
-	type: '/cosmos.slashing.v1beta1.MsgUnjail'
-	content: {
-		txHash: string
-		msgName: TransactionTypeEnum.MsgUnjail
-		version: number
-		msgIndex: number
-		validatorAddress: string
-		name: string
-		uuid: string
-		height: number
-	}
+interface MsgUnjailContent {
+	txHash: string
+	msgName: TransactionTypeEnum.MsgUnjail
+	version: number
+	msgIndex: number
+	validatorAddress: string
+	name: string
+	uuid: string
+	height: number
 }
 
 interface MsgEthereumTx {
@@ -250,4 +246,303 @@ interface MsgDepositContent {
 	version: number
 	msgIndex: number
 	depositor: string
+}
+
+interface MsgUpdateClientContent {
+	uuid: string
+	height: number
+	params: {
+		signer: string
+		clientId: string
+		clientType: string
+		consensusHeight: {
+			revisionHeight: string
+			revisionNumber: string
+		}
+		maybeTendermintLightClientUpdate: {
+			header: {
+				'validatorSet': {
+					proposer: {
+						pubKey: {
+							ed25519: string
+						}
+						address: string
+						votingPower: string
+						proposerPriority: string
+					}
+					validators: {
+						address: string
+						votingPower: string
+						proposerPriority: string
+						pubKey: {
+							ed25519: string
+						}
+					}[]
+					totalVotingPower: string
+				}
+				'trustedHeight': {
+					revisionHeight: string
+					revisionNumber: string
+				}
+				'trustedValidators': {
+					proposer: {
+						proposerPriority: string
+						pubKey: {
+							ed25519: string
+						}
+						address: string
+						votingPower: string
+					}
+					validators: {
+						pubKey: {
+							ed25519: string
+						}
+						address: string
+						votingPower: string
+						proposerPriority: string
+					}[]
+					totalVotingPower: string
+				}
+				'@type': string
+				'signedHeader': {
+					commit: {
+						signatures: {
+							signature: string
+							timestamp: string
+							blockIdFlag: string
+							validatorAddress: string
+						}[]
+						round: number
+						height: string
+						blockId: {
+							partSetHeader: {
+								hash: string
+								total: number
+							}
+							hash: string
+						}
+					}
+					header: {
+						lastCommitHash: string
+						validatorsHash: string
+						nextValidatorsHash: string
+						appHash: string
+						chainId: string
+						lastResultsHash: string
+						proposerAddress: string
+						time: string
+						height: string
+						version: {
+							app: string
+							block: string
+						}
+						dataHash: string
+						lastBlockId: {
+							hash: string
+							partSetHeader: {
+								total: number
+								hash: string
+							}
+						}
+						evidenceHash: string
+						consensusHash: string
+					}
+				}
+			}
+		}
+		maybeSoloMachineLightClientUpdate: null
+	}
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+}
+
+interface MsgConnectionOpenInitContent {
+	name: string
+	uuid: string
+	height: number
+	params: {
+		signer: string
+		version: {
+			features: string[]
+			identifier: string
+		}
+		clientId: string
+		delayPeriod: string
+		connectionId: string
+		counterparty: {
+			prefix: {
+				keyPrefix: string
+			}
+			clientId: string
+			connectionId: string
+		}
+	}
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+}
+
+interface MsgTransferContent {
+	version: number
+	msgIndex: number
+	name: string
+	uuid: string
+	height: number
+	params: {
+		destinationChannel: string
+		receiver: string
+		packetData: {
+			denom: string
+			amount: string
+			sender: string
+			receiver: string
+		}
+		sourcePort: string
+		sourceChannel: string
+		timeoutHeight: {
+			revisionHeight: string
+			revisionNumber: string
+		}
+		packetSequence: string
+		channelOrdering: string
+		token: {
+			denom: string
+			amount: string
+		}
+		sender: string
+		connectionId: string
+		destinationPort: string
+		timeoutTimestamp: string
+	}
+	txHash: string
+	msgName: string
+}
+
+interface MsgCreateClientContent {
+	version: number
+	msgIndex: number
+	name: string
+	uuid: string
+	height: number
+	params: {
+		clientType: string
+		maybeLocalhostLightClient: null
+		maybeTendermintLightClient: {
+			consensusState: {
+				'root': {
+					hash: string
+				}
+				'@type': string
+				'timestamp': string
+				'nextValidatorsHash': string
+			}
+			clientState: {
+				'proofSpecs': {
+					maxDepth: number
+					minDepth: number
+					innerSpec: {
+						hash: string
+						childSize: number
+						childOrder: number[]
+						emptyChild: null
+						maxPrefixLength: number
+						minPrefixLength: number
+					}
+					leafSpec: {
+						length: string
+						prefix: string
+						prehashKey: string
+						prehashValue: string
+						hash: string
+					}
+				}[]
+				'unbondingPeriod': string
+				'allowUpdateAfterMisbehaviour': boolean
+				'@type': string
+				'chainId': string
+				'frozenHeight': {
+					revisionHeight: string
+					revisionNumber: string
+				}
+				'latestHeight': {
+					revisionHeight: string
+					revisionNumber: string
+				}
+				'maxClockDrift': string
+				'trustingPeriod': string
+				'allowUpdateAfterExpiry': boolean
+				'trustLevel': {
+					numerator: string
+					denominator: string
+				}
+				'upgradePath': string[]
+			}
+		}
+		maybeSoloMachineLightClient: null
+		signer: string
+		clientId: string
+	}
+	txHash: string
+	msgName: string
+}
+
+interface MsgCreateClawbackVestingAccountContent {
+	uuid: string
+	height: number
+	params: {
+		'to_address': string
+		'from_address': string
+		'lockup_periods': {
+			amount: {
+				denom: string
+				amount: string
+			}[]
+			length: string
+		}[]
+		'vesting_periods': {
+			length: string
+			amount: {
+				denom: string
+				amount: string
+			}[]
+		}[]
+		'@type': string
+		'merge': boolean
+		'start_time': string
+	}
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+}
+
+interface CommunityPoolSpendProposalContent {
+	proposalId: string
+	initialDeposit: {
+		denom: string
+		amount: string
+	}[]
+	proposerAddress: string
+	height: number
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+	uuid: string
+	content: {
+		'@type': string
+		'title': string
+		'amount': {
+			denom: string
+			amount: string
+		}[]
+		'description': string
+		'recipientAddress': string
+	}
 }
