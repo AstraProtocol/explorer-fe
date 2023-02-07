@@ -21,7 +21,6 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 		(data: TransactionDetail) => {
 			if (!data) return [[], []]
 			const items = _cardData(data, astraPrice)
-			const isEvm = !!data.evmHash
 			const cosmosCards = []
 			const { cosmosTxnMessages } = data
 			if (isArray(cosmosTxnMessages) && cosmosTxnMessages.length > 0) {
@@ -48,7 +47,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				cosmosSortItems.push(sortArrayFollowValue(cos, 'label', COSMOS_MESSAGE_SORT_FIELD))
 			}
 			const evmSortItems = []
-			if (isEvm) {
+			if (isEmpty(cosmosCards)) {
 				const evm = sortArrayFollowValue(items, 'label', EVM_MESSAGE_SORT_FIELD)
 				evmSortItems.push(evm)
 			}
