@@ -1,6 +1,7 @@
 import { Col, Row } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import useSWR from 'swr'
+import { convertBigNumberToString } from 'utils/helper'
 import BarChart from './components/BarChart'
 import ChartHeader from './components/Header'
 import LineChart from './components/LineChart'
@@ -31,7 +32,10 @@ export default function Gas() {
 			<Row className="md-flex-column">
 				<LineChart
 					leftTitle="Average Gas Usage | Daily"
-					rightTitle={{ title: 'Daily Average', value: gasDailyRes?.result?.dailyAverage }}
+					rightTitle={{
+						title: 'Daily Average',
+						value: convertBigNumberToString(gasDailyRes?.result?.dailyAverage)
+					}}
 					data={gasDailyData}
 					labels={gasDailyLabels}
 					label="Gas"
@@ -43,7 +47,10 @@ export default function Gas() {
 				<div style={{ width: '10px', height: '10px' }}></div>
 				<BarChart
 					leftTitle="Average Gas Usage | Monthly"
-					rightTitle={{ title: 'Monthly Average', value: gasMonthRes?.result?.monthlyAverage }}
+					rightTitle={{
+						title: 'Monthly Average',
+						value: convertBigNumberToString(gasMonthRes?.result?.monthlyAverage)
+					}}
 					data={gasMonthlyData}
 					labels={gasMonthlyLabels}
 					// unitName="AASTRA"
