@@ -3,6 +3,7 @@ import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/Crypt
 import clsx from 'clsx'
 import RowShowAnimation from 'components/Animation/RowShowAnimation'
 import GradientRow from 'components/Row/GradientRow'
+import { getTransactionType } from 'utils/cosmos'
 import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import styles from './style.module.scss'
 import TransactionRowContent from './TransactionRowContent'
@@ -54,7 +55,7 @@ export default function TransactionRow({
 	const { isMobile } = useMobileLayout('small')
 	const statusText = status ? 'success' : 'error'
 	const transactionType = useTransactionType(from, to || contractAddress)
-
+	type = getTransactionType(type)
 	return (
 		<RowShowAnimation action={newBlock}>
 			<GradientRow

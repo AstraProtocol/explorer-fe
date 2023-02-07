@@ -81,9 +81,9 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				break
 			case 'to': //to
 				if (data[key] !== undefined && data[key] !== null) {
-					const isInteractWith = !!data?.rawInput?.startsWith('0x')
+					// const isInteractWith = !!data?.rawInput?.startsWith('0x')
 					items.push({
-						label: isInteractWith ? CardInfoLabels.interactWith : CardInfoLabels.to,
+						label: CardInfoLabels.to,
 						type: 'link-copy',
 						contents: [
 							{

@@ -1,4 +1,4 @@
-import { CryptoIcon, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
+import { CryptoIcon, ellipseRightText, Typography as TypographyLib, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -21,7 +21,6 @@ const AddressTransaction = ({ transaction }: Props) => {
 	const isEvm = transaction?.type === 'MsgEthereumTx'
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
-
 	const transactionType = useTransactionType(transaction.from, transaction.to)
 	return (
 		<GradientRow
@@ -59,7 +58,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
-						text={ellipseBetweenText(transaction.type)}
+						text={ellipseRightText(transaction.type, 13)}
 						// titleText={type}
 						backgroundShape="rectangle"
 						radius="radius-2xl"

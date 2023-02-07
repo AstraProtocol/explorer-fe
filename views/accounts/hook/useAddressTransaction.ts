@@ -4,6 +4,7 @@ import { formatEther } from 'ethers/lib/utils'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { getTransactionType } from 'utils/cosmos'
 import { caculateCosmosTxAmount, caculateEthereumTxAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useAddressTransactions(address: string, page: number) {
@@ -62,7 +63,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			// Show in detail
 			// if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`
 			// else type = msgTypeShort
-			type = msgTypeShort
+			type = getTransactionType(msgTypeShort)
 			const evmHash = getEvmTxhash(d.messages)
 			let from = ''
 			let to = ''

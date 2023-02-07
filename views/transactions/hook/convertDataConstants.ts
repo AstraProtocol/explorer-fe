@@ -1,6 +1,6 @@
 import { CardInfoLabels } from 'utils/enum'
 
-export const MAIN_FIELD_SORT_ORDER = [
+export const MAIN_SORT_FIELD = [
 	CardInfoLabels.evmHash,
 	CardInfoLabels.cosmosHash,
 	CardInfoLabels.result,
@@ -20,7 +20,14 @@ export const MAIN_FIELD_SORT_ORDER = [
 	CardInfoLabels.typeOfTransfer
 ]
 
-export const COSMOS_MESSAGE_FIELD_SORT_ORDER = [
+export const EVM_MESSAGE_SORT_FIELD = [
+	CardInfoLabels.from,
+	CardInfoLabels.to,
+	CardInfoLabels.interactWith,
+	CardInfoLabels.tokenTransfers
+]
+
+export const COSMOS_MESSAGE_SORT_FIELD = [
 	CardInfoLabels.type,
 	CardInfoLabels.from,
 	CardInfoLabels.to,

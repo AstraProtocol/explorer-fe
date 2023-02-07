@@ -6,9 +6,10 @@ import { useAppSelector } from 'store/hooks'
 import { CardInfoLabels } from 'utils/enum'
 import { sortArrayFollowValue } from 'utils/helper'
 import {
-	COSMOS_MESSAGE_FIELD_SORT_ORDER,
+	COSMOS_MESSAGE_SORT_FIELD,
+	EVM_MESSAGE_SORT_FIELD,
 	GAS_ITEM_FIELD_SORT_ORDER,
-	MAIN_FIELD_SORT_ORDER
+	MAIN_SORT_FIELD
 } from './convertDataConstants'
 import { _cardData } from './utils'
 
@@ -20,6 +21,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 		(data: TransactionDetail) => {
 			if (!data) return [[], []]
 			const items = _cardData(data, astraPrice)
+			const isEvm = !!data.evmHash
 			const cosmosCards = []
 			const { cosmosTxnMessages } = data
 			if (isArray(cosmosTxnMessages) && cosmosTxnMessages.length > 0) {
@@ -29,7 +31,7 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 				}
 			}
 
-			const mainItems = sortArrayFollowValue(items, 'label', MAIN_FIELD_SORT_ORDER)
+			const mainItems = sortArrayFollowValue(items, 'label', MAIN_SORT_FIELD)
 			//remove label of Token Transfers
 			let hashTransfer = false
 			mainItems.map(item => {
@@ -43,12 +45,17 @@ export default function useConvertData({ data }: { data: TransactionDetail }) {
 			})
 			const cosmosSortItems = []
 			for (let cos of cosmosCards) {
-				cosmosSortItems.push(sortArrayFollowValue(cos, 'label', COSMOS_MESSAGE_FIELD_SORT_ORDER))
+				cosmosSortItems.push(sortArrayFollowValue(cos, 'label', COSMOS_MESSAGE_SORT_FIELD))
+			}
+			const evmSortItems = []
+			if (isEvm) {
+				const evm = sortArrayFollowValue(items, 'label', EVM_MESSAGE_SORT_FIELD)
+				evmSortItems.push(evm)
 			}
 
 			const gasItems = sortArrayFollowValue(items, 'label', GAS_ITEM_FIELD_SORT_ORDER)
 			// console.log(mainItems, moreItems, items, data)
-			return [mainItems, ...cosmosSortItems, gasItems].filter(c => !isEmpty(c))
+			return [mainItems, ...cosmosSortItems, ...evmSortItems, gasItems].filter(c => !isEmpty(c))
 		},
 		[astraPrice]
 	)
