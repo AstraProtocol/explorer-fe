@@ -62,6 +62,9 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgCreateClawbackVestingAccount:
 				messageData.push(_mapMsgCreateClawbackVestingAccount(msg))
 				break
+			case TransactionTypeEnum.MsgAcknowledgement:
+				messageData.push(_mapMsgAcknowledgement(msg))
+				break
 		}
 	}
 	return {
@@ -341,6 +344,20 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 				titles: vestingPeriodsTitle,
 				content: vestingPeriodsContent
 			}
+		}
+	}
+}
+
+const _mapMsgAcknowledgement = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgAcknowledgementContent
+	const { params } = content
+	if (msg && content) {
+		return {
+			type: msg.type,
+			dynamicRender: [{ packet: params.packet }, { proofHeigh: params.proofHeight }],
+			acknowledgement: params.acknowledgement,
+			proofAcked: params.proofAcked,
+			signer: params.signer
 		}
 	}
 }

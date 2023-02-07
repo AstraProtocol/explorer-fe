@@ -32,7 +32,8 @@ export enum TransactionTypeEnum {
 	MsgTransfer = '/ibc.applications.transfer.v1.MsgTransfer',
 	MsgCreateClient = '/ibc.core.client.v1.MsgCreateClient',
 	MsgCreateClawbackVestingAccount = '/evmos.vesting.v1.MsgCreateClawbackVestingAccount',
-	CommunityPoolSpendProposal = '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal'
+	CommunityPoolSpendProposal = '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
+	MsgAcknowledgement = '/ibc.core.channel.v1.MsgAcknowledgement'
 }
 
 export enum AddressTypeEnum {
@@ -111,7 +112,12 @@ export enum CardInfoLabels {
 
 	startTime = 'Start Time',
 	lockupPeriods = 'Lockup Periods',
-	vestingPeriods = 'Vesting Periods'
+	vestingPeriods = 'Vesting Periods',
+
+	packet = 'Packet: ',
+	acknowledgement = 'Acknowledgement: ',
+	proofAcked = 'Proof Acked: ',
+	proofHeigh = 'Proof Height: '
 }
 
 export enum ErcTypeEnum {

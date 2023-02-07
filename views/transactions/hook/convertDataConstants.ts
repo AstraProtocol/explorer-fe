@@ -77,7 +77,12 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 
 	CardInfoLabels.startTime,
 	CardInfoLabels.lockupPeriods,
-	CardInfoLabels.vestingPeriods
+	CardInfoLabels.vestingPeriods,
+
+	CardInfoLabels.packet,
+	CardInfoLabels.acknowledgement,
+	CardInfoLabels.proofAcked,
+	CardInfoLabels.proofHeigh
 ]
 
 export const GAS_ITEM_FIELD_SORT_ORDER = [

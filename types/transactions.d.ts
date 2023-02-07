@@ -267,6 +267,9 @@ interface CosmosTxMessage {
 		titles: string[]
 		content: string[][]
 	}
+
+	acknowledgement?: string
+	proofAcked?: string
 }
 
 interface TransactionDetail {

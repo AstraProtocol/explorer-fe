@@ -546,3 +546,49 @@ interface CommunityPoolSpendProposalContent {
 		'recipientAddress': string
 	}
 }
+
+interface MsgAcknowledgementContent {
+	uuid: string
+	height: number
+	params: {
+		packet: {
+			sequence: string
+			sourcePort: string
+			sourceChannel: string
+			timeoutHeight: {
+				revisionHeight: string
+				revisionNumber: string
+			}
+			destinationPort: string
+			timeoutTimestamp: string
+			destinationChannel: string
+			data: string
+		}
+		signer: string
+		connectionId: string
+		packetSequence: string
+		maybeMsgTransfer: {
+			success: boolean
+			receiver: string
+			acknowledgement: string
+			denom: string
+			error: null
+			amount: string
+			sender: string
+		}
+		proofAcked: string
+		application: string
+		messageType: string
+		proofHeight: {
+			revisionHeight: string
+			revisionNumber: string
+		}
+		acknowledgement: string
+		channelOrdering: string
+	}
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+}

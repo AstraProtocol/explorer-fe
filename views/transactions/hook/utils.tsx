@@ -259,6 +259,8 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 			case 'sourceChannel':
 			case 'timeoutTimestamp':
 			case 'token':
+			case 'proofAcked':
+			case 'acknowledgement':
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
