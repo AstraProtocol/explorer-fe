@@ -59,7 +59,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			let type
 
 			// const numberOfMsgTypes = d.messageTypes.length
-			const msgTypeSplit = d.messageTypes[0].split('.')
+			const msgTypeSplit = d.messages[0].type.split('.')
 			const msgTypeShort = msgTypeSplit[msgTypeSplit.length - 1]
 			// Show in detail
 			// if (numberOfMsgTypes >= 2) type = `${msgTypeShort} (+${numberOfMsgTypes - 1})`

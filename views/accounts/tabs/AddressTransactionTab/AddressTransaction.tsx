@@ -6,6 +6,7 @@ import PolygonTag from 'components/Tag/PolygonTag'
 import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import { isEmpty } from 'lodash'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { isEvmTransactionType } from 'utils/evm'
@@ -20,7 +21,6 @@ interface Props {
 const AddressTransaction = ({ transaction }: Props) => {
 	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
 	const isEvm = isEvmTransactionType(transaction?.type)
-	console.log(transaction)
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const transactionType = useTransactionType(transaction.from, transaction.to)
@@ -66,6 +66,11 @@ const AddressTransaction = ({ transaction }: Props) => {
 						radius="radius-2xl"
 						font="text-bold text text-sm"
 					/>
+					{!isEmpty(transaction.messages) && transaction.messages.length > 1 ? (
+						<span className="margin-left-2xs contrast-color-70 text-bold">
+							+{transaction.messages.length - 1}
+						</span>
+					) : null}
 				</div>
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.LinkText href={LinkMaker.block(transaction.blockHeight)} fontType="Titi">

@@ -38,6 +38,8 @@
 }
 
 .tableTD {
+	display: block;
+	overflow-x: auto;
 	th {
 		padding: 5px !important;
 	}

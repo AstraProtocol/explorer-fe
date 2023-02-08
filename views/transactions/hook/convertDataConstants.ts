@@ -82,7 +82,8 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 	CardInfoLabels.packet,
 	CardInfoLabels.acknowledgement,
 	CardInfoLabels.proofAcked,
-	CardInfoLabels.proofHeigh
+	CardInfoLabels.proofHeigh,
+	CardInfoLabels.msgs
 ]
 
 export const GAS_ITEM_FIELD_SORT_ORDER = [

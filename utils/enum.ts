@@ -117,7 +117,8 @@ export enum CardInfoLabels {
 	packet = 'Packet: ',
 	acknowledgement = 'Acknowledgement: ',
 	proofAcked = 'Proof Acked: ',
-	proofHeigh = 'Proof Height: '
+	proofHeigh = 'Proof Height: ',
+	msgs = 'Msgs: '
 }
 
 export enum ErcTypeEnum {

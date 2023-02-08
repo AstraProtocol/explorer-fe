@@ -212,7 +212,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 			case 'recipientAddress':
 			case 'grantee':
 				if (!isEmpty(data[key])) {
-					const evmAddress = astraToEth(data[key])
+					const evmAddress = key === 'grantee' ? data[key] : astraToEth(data[key])
 					items.push({
 						label: CardInfoLabels[key],
 						type: 'link-copy',
@@ -298,6 +298,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				break
 			case 'lockupPeriods':
 			case 'vestingPeriods':
+			case 'msgs':
 				if (data[key] !== undefined && data[key] !== null) {
 					const titleEl = data[key].titles.map(t => ({
 						key: t,

@@ -131,6 +131,7 @@ export default function CardInfo({
 								{ 'padding-bottom-sm border border-bottom-base': items.length > 1 },
 								{ [`${responsive?.wrap}-full`]: responsive?.wrap }
 							)}
+							style={{ overflowX: type === 'table' ? 'auto' : 'unset' }}
 						>
 							{(contents as Content[]).map((content, index) => (
 								<div key={(content.value as string) + index}>

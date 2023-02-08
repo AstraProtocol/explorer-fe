@@ -1,7 +1,7 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
-import { isArray } from 'lodash'
+import { isArray, isEmpty } from 'lodash'
 import { TransactionTypeEnum } from 'utils/enum'
 
 export const handleCosmosMsg = (messages: TransactionMessage[]) => {
@@ -24,11 +24,11 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 				messageData.push(_mapMsgBeginRedelegate(msg))
 				break
 			case TransactionTypeEnum.MsgExec:
-				messageData.push(_mapMsgExec(msg))
+				messageData.push(_mapMsgExec(msg, messages))
 				break
-			case TransactionTypeEnum.MsgGrant:
-				messageData.push(_mapMsgGrant(msg))
-				break
+			// case TransactionTypeEnum.MsgGrant:
+			// 	messageData.push(_mapMsgGrant(msg))
+			// 	break
 			case TransactionTypeEnum.MsgWithdrawDelegatorReward:
 				messageData.push(_mapMsgWithdrawDelegatorReward(msg))
 				break
@@ -168,23 +168,40 @@ const _mapMsgBeginRedelegate = (msg: TransactionMessage): CosmosTxMessage => {
 	}
 }
 
-const _mapMsgExec = (msg: TransactionMessage): CosmosTxMessage => {
+const _mapMsgExec = (msg: TransactionMessage, messages: TransactionMessage[]): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgExecContent
+	// const msgs =
+	const msgGrants = messages.filter(msg => msg.type === TransactionTypeEnum.MsgGrant)
+	let tableTitles = ['TYPE', 'GRANTER', 'GRANTEE', 'GRANT']
+	let tableContent = []
+	if (!isEmpty(msgGrants)) {
+		for (let grant of msgGrants) {
+			const { params } = grant.content as MsgGrantContent
+			tableContent.push([
+				params.maybeGenericGrant['@type'],
+				params.maybeGenericGrant.granter,
+				params.maybeGenericGrant.grantee,
+				JSON.stringify(params.maybeGenericGrant.grant)
+			])
+		}
+	}
 	if (msg && content) {
 		return {
 			type: msg.type,
-			grantee: content.params.grantee
+			grantee: content.params.grantee,
+			msgs: { content: tableContent, titles: tableTitles }
 		}
 	}
 }
-const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
-	const content = msg.content as unknown as MsgExecContent
-	if (msg && content) {
-		return {
-			type: msg.type
-		}
-	}
-}
+// const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
+// 	const content = msg.content as unknown as MsgExecContent
+// 	if (msg && content) {
+// 		return {
+// 			type: msg.type,
+// 			grantee: content.params.grantee
+// 		}
+// 	}
+// }
 
 const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgWithdrawDelegatorRewardContent

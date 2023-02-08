@@ -270,6 +270,10 @@ interface CosmosTxMessage {
 
 	acknowledgement?: string
 	proofAcked?: string
+	msgs?: {
+		titles: string[]
+		content: string[][]
+	}
 }
 
 interface TransactionDetail {
