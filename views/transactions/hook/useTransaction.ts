@@ -36,7 +36,7 @@ export default function useTransaction() {
 			const totalFee = caculateAmount(item.fee)
 			const evmType = getTransactionEvmType(item.messages)
 			const type = getTransactionType(item?.messages[0]?.type)
-			const typeCount = item?.messages.length - 1
+			const typeCount = item?.messages.length > 1 ? item?.messages.length - 1 : 0
 			const { from, to, evmHash } = getFromToTxFromCosmosEntry(item.messages[0])
 
 			return {
