@@ -193,6 +193,7 @@ const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessag
 			type: msg.type,
 			delegatorAddress: content.delegatorAddress,
 			// recipientAddress: content.recipientAddress,
+			amount: formatEther(getAstraTokenAmount(content.amount)),
 			validatorAddress: content.validatorAddress
 		}
 	}
