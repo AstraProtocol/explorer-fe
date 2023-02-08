@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getTransactionType } from 'utils/cosmos'
+import { isEvmTransactionType } from 'utils/evm'
 import { caculateCosmosTxAmount, caculateEthereumTxAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useAddressTransactions(address: string, page: number) {
@@ -77,7 +78,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				value:
 					(d.value
 						? formatEther(d.value)
-						: type === 'MsgEthereumTx'
+						: isEvmTransactionType(type)
 						? caculateEthereumTxAmount(d.messages)
 						: caculateCosmosTxAmount(d.messages)) || '0',
 				account: d.account,

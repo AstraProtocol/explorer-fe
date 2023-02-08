@@ -4,6 +4,7 @@ import { differenceWith, isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getTransactionEvmType, getTransactionType } from 'utils/cosmos'
+import { isEvmTransactionType } from 'utils/evm'
 import { caculateAmount, caculateCosmosTxAmount, caculateEthereumTxAmount, getFromToTxFromCosmosEntry } from '../utils'
 
 export default function useTransaction() {
@@ -41,7 +42,7 @@ export default function useTransaction() {
 			return {
 				...item,
 				value:
-					(type === 'MsgEthereumTx'
+					(isEvmTransactionType(type)
 						? caculateEthereumTxAmount(item.messages)
 						: caculateCosmosTxAmount(item.messages)) || '0',
 				totalFee,

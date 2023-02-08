@@ -4,6 +4,7 @@ import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { CONFIG } from 'utils/constants'
+import { isEvmTransactionType } from 'utils/evm'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -28,7 +29,7 @@ export default function TransactionRowContentMobile({
 }: TransactionRowContentMobileProps) {
 	const { isMobile } = useMobileLayout()
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
-	const isEvm = type === 'MsgEthereumTx'
+	const isEvm = isEvmTransactionType(type)
 	const addressQuery = isEvm ? { type: 'evm' } : ''
 	return (
 		<>

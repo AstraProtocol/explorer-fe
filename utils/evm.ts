@@ -104,3 +104,7 @@ export const evmAddressName = (addressName: string, addresValue: string) => {
 	}
 	return `${addressName} (${addresValue})`
 }
+
+export const isEvmTransactionType = (type: string) => {
+	return type && type.endsWith('EthereumTx')
+}

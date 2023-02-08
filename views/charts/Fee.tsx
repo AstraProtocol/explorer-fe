@@ -10,7 +10,7 @@ import LineChart from './components/LineChart'
 
 function convertFeeToDataSet(history: FeeItem[], convertDecimal?: boolean): [string[], number[]] {
 	const data = history.map(({ totalTransactionFees }) =>
-		parseFloat(ethers.utils.formatEther(`${totalTransactionFees}`))
+		parseFloat(ethers.utils.formatEther(`${convertBigNumberToString(totalTransactionFees)}`))
 	)
 
 	const labels = history.map(({ date, year, month }) => (date ? date : `${year}-${month}-01`))

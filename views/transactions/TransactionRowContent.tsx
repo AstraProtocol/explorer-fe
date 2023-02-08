@@ -8,7 +8,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
-import { evmAddressName } from 'utils/evm'
+import { evmAddressName, isEvmTransactionType } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
@@ -58,7 +58,7 @@ export default function TransactionRowContent({
 	const { isMobile } = useMobileLayout()
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const statusText = status ? 'success' : 'error'
-	const isEvm = type === 'MsgEthereumTx'
+	const isEvm = isEvmTransactionType(type)
 	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
 	return (
 		<>

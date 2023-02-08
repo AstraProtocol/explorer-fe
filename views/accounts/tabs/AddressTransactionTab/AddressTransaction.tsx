@@ -8,6 +8,7 @@ import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
+import { isEvmTransactionType } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import styles from './style.module.scss'
@@ -18,7 +19,8 @@ interface Props {
 
 const AddressTransaction = ({ transaction }: Props) => {
 	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
-	const isEvm = transaction?.type === 'MsgEthereumTx'
+	const isEvm = isEvmTransactionType(transaction?.type)
+	console.log(transaction)
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const transactionType = useTransactionType(transaction.from, transaction.to)
