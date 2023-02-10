@@ -33,7 +33,8 @@ export enum TransactionTypeEnum {
 	MsgCreateClient = '/ibc.core.client.v1.MsgCreateClient',
 	MsgCreateClawbackVestingAccount = '/evmos.vesting.v1.MsgCreateClawbackVestingAccount',
 	CommunityPoolSpendProposal = '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
-	MsgAcknowledgement = '/ibc.core.channel.v1.MsgAcknowledgement'
+	MsgAcknowledgement = '/ibc.core.channel.v1.MsgAcknowledgement',
+	MsgRevoke = '/cosmos.authz.v1beta1.MsgRevoke'
 }
 
 export enum AddressTypeEnum {

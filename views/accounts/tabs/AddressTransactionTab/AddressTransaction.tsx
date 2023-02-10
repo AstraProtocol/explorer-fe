@@ -12,6 +12,7 @@ import { CONFIG } from 'utils/constants'
 import { isEvmTransactionType } from 'utils/evm'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
 import { useTransactionType } from 'views/accounts/hook/useTransactionType'
+import { comosTransactionMsgCount } from 'views/transactions/utils'
 import styles from './style.module.scss'
 
 interface Props {
@@ -68,7 +69,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 					/>
 					{!isEmpty(transaction.messages) && transaction.messages.length > 1 ? (
 						<span className="margin-left-2xs contrast-color-70 text-bold">
-							+{transaction.messages.length - 1}
+							{comosTransactionMsgCount(transaction.messages)}
 						</span>
 					) : null}
 				</div>

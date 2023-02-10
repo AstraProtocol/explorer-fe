@@ -31,7 +31,7 @@ export type TransactionRowContentProps = {
 	toName?: string
 	height?: string
 	transactionType?: string
-	typeCount?: number
+	typeCount?: string
 }
 
 export default function TransactionRowContent({
@@ -133,7 +133,7 @@ export default function TransactionRowContent({
 					/>
 					{typeCount ? (
 						<Typography.Label
-							text={`+${typeCount}`}
+							text={`${typeCount}`}
 							// backgroundShape="rectangle"
 							radius="radius-2xl margin-left-2xs"
 							font="text-bold text text-sm"

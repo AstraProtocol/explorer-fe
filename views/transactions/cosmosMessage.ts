@@ -171,25 +171,38 @@ const _mapMsgBeginRedelegate = (msg: TransactionMessage): CosmosTxMessage => {
 const _mapMsgExec = (msg: TransactionMessage, messages: TransactionMessage[]): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgExecContent
 	// const msgs =
-	const msgGrants = messages.filter(msg => msg.type === TransactionTypeEnum.MsgGrant)
-	let tableTitles = ['TYPE', 'GRANTER', 'GRANTEE', 'GRANT']
+	let msgsObj = {}
+	const msgGrants = messages.filter(msg =>
+		[TransactionTypeEnum.MsgGrant, TransactionTypeEnum.MsgRevoke].includes(msg.type)
+	)
+	let tableTitles = ['TYPE', 'GRANTER', 'GRANTEE', 'GRANT', 'MSG TYPE URL']
 	let tableContent = []
 	if (!isEmpty(msgGrants)) {
-		for (let grant of msgGrants) {
-			const { params } = grant.content as MsgGrantContent
-			tableContent.push([
-				params.maybeGenericGrant['@type'],
-				params.maybeGenericGrant.granter,
-				params.maybeGenericGrant.grantee,
-				JSON.stringify(params.maybeGenericGrant.grant)
-			])
+		for (let msg of msgGrants) {
+			if (msg.type === TransactionTypeEnum.MsgGrant) {
+				tableTitles = ['TYPE', 'GRANTER', 'GRANTEE', 'GRANT']
+				const { params } = msg.content as MsgGrantContent
+				tableContent.push([
+					params.maybeGenericGrant['@type'],
+					params.maybeGenericGrant.granter,
+					params.maybeGenericGrant.grantee,
+					JSON.stringify(params.maybeGenericGrant.grant)
+				])
+			}
+
+			if (msg.type === TransactionTypeEnum.MsgRevoke) {
+				tableTitles = ['TYPE', 'GRANTER', 'GRANTEE', 'MSG TYPE URL']
+				const { params } = msg.content as unknown as MsgRevokeContent
+				tableContent.push([params['@type'], params.granter, params.grantee, params.msgTypeUrl])
+			}
 		}
+		msgsObj = { msgs: { content: tableContent, titles: tableTitles } }
 	}
 	if (msg && content) {
 		return {
 			type: msg.type,
 			grantee: content.params.grantee,
-			msgs: { content: tableContent, titles: tableTitles }
+			...msgsObj
 		}
 	}
 }
