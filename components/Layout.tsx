@@ -1,3 +1,4 @@
+import { Footer } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import React, { ReactNode, useEffect } from 'react'
@@ -5,7 +6,6 @@ import { setAstraSummary, setValidatorSummary } from 'slices/commonSlice'
 import useSWR from 'swr'
 import { selectTheme } from '../slices/themeSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import Footer from './Footer'
 import styles from './Layout.module.scss'
 import Navbar from './Navbar'
 

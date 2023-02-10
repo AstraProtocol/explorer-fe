@@ -592,3 +592,19 @@ interface MsgAcknowledgementContent {
 	msgIndex: number
 	name: string
 }
+
+interface MsgRevokeContent {
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+	name: string
+	uuid: string
+	height: number
+	params: {
+		'@type': string
+		'grantee': string
+		'granter': string
+		'msgTypeUrl': string
+	}
+}

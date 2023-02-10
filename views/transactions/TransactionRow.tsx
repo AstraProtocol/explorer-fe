@@ -28,7 +28,7 @@ export type TransactionRowProps = {
 	contractAddress?: string
 	toName?: string
 	height?: string
-	typeCount?: number
+	typeCount?: string
 }
 
 export default function TransactionRow({

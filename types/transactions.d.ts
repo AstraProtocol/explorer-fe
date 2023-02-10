@@ -59,7 +59,7 @@ interface TransactionItemModified extends TransactionItem {
 	to?: string
 	value?: string
 	evmHash?: string
-	typeCount?: number
+	typeCount?: string
 }
 
 interface TransactionSearchResponse {
@@ -278,7 +278,7 @@ interface CosmosTxMessage {
 
 interface TransactionDetail {
 	pageTitle?: string
-	cosmosMsgCount?: number
+	cosmosMsgCount?: string
 	evmHash?: string
 	cosmosHash?: string
 	result?: string

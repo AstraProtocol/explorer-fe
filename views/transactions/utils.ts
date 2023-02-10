@@ -97,7 +97,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
 	data.pageTitle = getTransactionType(result?.messages[0]?.type)
-	data.cosmosMsgCount = result.messages.length > 1 ? result.messages.length - 1 : 0
+	data.cosmosMsgCount = comosTransactionMsgCount(result.messages)
 	data.evmHash = ''
 	data.cosmosHash = result.hash
 	data.result = result.success ? 'Success' : 'Error'
@@ -222,6 +222,23 @@ export const getFromToTxFromCosmosEntry = (message: TransactionMessage) => {
 	}
 
 	return { evmHash, from, to }
+}
+/**
+ * [TransactionTypeEnum.MsgGrant, TransactionTypeEnum.MsgRevoke] are msg of TransactionTypeEnum.MsgExec
+ * @param messages
+ * @returns
+ */
+export const comosTransactionMsgCount = (messages: TransactionMessage[]): string => {
+	if (!isEmpty(messages) && messages.length > 1) {
+		let countMsg = [...messages]
+		if (messages[0].type === TransactionTypeEnum.MsgExec) {
+			countMsg = countMsg.filter(
+				msg => ![TransactionTypeEnum.MsgGrant, TransactionTypeEnum.MsgRevoke].includes(msg.type)
+			)
+		}
+		return countMsg.length > 1 ? `+ ${countMsg.length - 1}` : ''
+	}
+	return ''
 }
 
 const _convertTransfer = (

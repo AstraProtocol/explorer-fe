@@ -52,7 +52,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 								{data.cosmosMsgCount ? (
 									<span className="flex flex-align-center">
 										{data.pageTitle}
-										<PolygonTag text={`+ ${data.cosmosMsgCount.toString()}`} />
+										<PolygonTag text={`${data.cosmosMsgCount.toString()}`} />
 									</span>
 								) : (
 									data.pageTitle || ''
