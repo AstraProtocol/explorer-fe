@@ -1,4 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { PaginationLite, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
@@ -14,7 +14,7 @@ interface Props {
 const ContractTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useContractTransaction(address, currentParam)
+	const { hasNextPage, nextPagePath, result, loading } = useContractTransaction(address, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
@@ -38,7 +38,9 @@ const ContractTransactionTab = ({ address }: Props) => {
 			</Row>
 			<div style={{ overflowX: 'auto' }}>
 				<div style={{ minWidth: '700px' }}>
-					{!isHasData ? (
+					{loading ? (
+						<RowLoader row={5} />
+					) : !isHasData ? (
 						<Empty text={'There are no transactions.'} />
 					) : (
 						<>

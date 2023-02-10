@@ -1,4 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { PaginationLite, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
@@ -15,7 +15,7 @@ interface Props {
 const TokenTransactionTab = ({ token, tokenData }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useTokenTransactions(token, currentParam)
+	const { hasNextPage, nextPagePath, result, loading } = useTokenTransactions(token, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
@@ -39,7 +39,9 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 				)}
 			</Row>
 
-			{!isHasData ? (
+			{loading ? (
+				<RowLoader row={5} />
+			) : !isHasData ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<div style={{ overflowY: 'auto' }}>

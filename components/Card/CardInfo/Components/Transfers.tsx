@@ -1,3 +1,4 @@
+import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
@@ -62,7 +63,7 @@ const Transfers = ({ content }: { content: Content }) => {
 					</>
 				) : (
 					<>
-						<span className="padding-right-xs">{content?.transfer.value}</span>
+						<span className="padding-right-xs">{formatNumber(content?.transfer.value)}</span>
 						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
 							{data.tokenSymbol}
 						</Typography.LinkText>

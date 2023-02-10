@@ -1,4 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
+import { formatNumber } from '@astraprotocol/astra-ui'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { isArray, isEmpty } from 'lodash'
@@ -360,7 +361,10 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 			const { amount, length } = vest
 			const totalAmount = getAstraTokenAmount(amount)
 			const tokenName = getTokenName(amount)
-			vestingPeriodsContent.push([length, `${formatEther(totalAmount)} ${tokenName}`])
+			vestingPeriodsContent.push([
+				formatNumber(length),
+				`${formatNumber(formatEther(totalAmount), 5)} ${tokenName}`
+			])
 		}
 		return {
 			type: msg.type,

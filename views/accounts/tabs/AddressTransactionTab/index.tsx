@@ -1,4 +1,4 @@
-import { Pagination } from '@astraprotocol/astra-ui'
+import { Pagination, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { isEmpty } from 'lodash'
@@ -12,7 +12,7 @@ interface Props {
 
 const AddressTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { data, pagination } = useAddressTransactions(address, currentPage)
+	const { data, pagination, loading } = useAddressTransactions(address, currentPage)
 
 	const onPagingChange = (value: number) => setPage(value)
 	const isHasData = useMemo(() => !isEmpty(data), [data])
@@ -35,7 +35,9 @@ const AddressTransactionTab = ({ address }: Props) => {
 			</Row>
 			<div style={{ overflowX: 'auto' }}>
 				<div style={{ minWidth: '950px' }}>
-					{!isHasData ? (
+					{loading ? (
+						<RowLoader row={5} />
+					) : !isHasData ? (
 						<Empty text={'There are no transactions.'} />
 					) : (
 						<>

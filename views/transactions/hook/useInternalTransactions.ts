@@ -1,6 +1,8 @@
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
+import { isEmpty } from 'lodash'
 import { useCallback } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
@@ -11,9 +13,15 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 	const _fetchCondition = () => {
 		return !!hash ? [`${API_LIST.EVM_INTERNAL_TRANSACTION}${hash}`] : null
 	}
-	const { data } = useSWR<InternalTransactionReponse>(_fetchCondition(), {
+	const { data, error } = useSWR<InternalTransactionReponse>(_fetchCondition(), {
 		refreshInterval: 0
 	})
+
+	const isLoadedData = useCallback(() => {
+		return !isEmpty(data) || error
+	}, [data])
+
+	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
 	const _convertData = useCallback((): TransactionRowProps[] => {
 		const items: TransactionRowProps[] = []
@@ -43,6 +51,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 		return items
 	}, [data])
 	return {
-		rows: _convertData()
+		rows: _convertData(),
+		loading: isWaiting
 	}
 }

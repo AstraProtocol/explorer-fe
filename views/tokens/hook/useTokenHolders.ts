@@ -1,4 +1,6 @@
 import API_LIST from 'api/api_list'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
+import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getEnvNumber } from 'utils/helper'
@@ -16,8 +18,8 @@ export default function useTokenHolders(token: string, page: number) {
 			}
 		]
 	}
-	const { data } = useSWR<any>(_fetchCondition())
-
+	const { data, error } = useSWR<any>(_fetchCondition())
+	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 	useEffect(() => {
 		if (data?.result) {
 			const tokens: any = data.result.map(d => ({ address: d.address, balance: d.value }))
@@ -26,6 +28,7 @@ export default function useTokenHolders(token: string, page: number) {
 	}, [data])
 	return {
 		tokens: hookData?.result,
-		hasNextPage: hookData?.hasNextPage
+		hasNextPage: hookData?.hasNextPage,
+		loading: isWaiting
 	}
 }

@@ -1,7 +1,9 @@
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
-import { useEffect, useState } from 'react'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
+import { isEmpty } from 'lodash'
+import { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
 import { getEnvNumber } from 'utils/helper'
@@ -35,7 +37,13 @@ export default function useAddressInternalTransaction(
 			}
 		]
 	}
-	const { data } = useSWR<AddressInternalTransactionResponse>(_fetchCondition())
+	const { data, error } = useSWR<AddressInternalTransactionResponse>(_fetchCondition())
+
+	const isLoadedData = useCallback(() => {
+		return !isEmpty(data) || error
+	}, [data])
+
+	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
 	useEffect(() => {
 		if (data && data?.result.length > 0) {
@@ -61,6 +69,7 @@ export default function useAddressInternalTransaction(
 	return {
 		result: hookData.result,
 		hasNextPage: hookData.hasNextPage,
-		nextPagePath: hookData.nextPagePath
+		nextPagePath: hookData.nextPagePath,
+		loading: isWaiting
 	}
 }

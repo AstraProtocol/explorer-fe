@@ -53,6 +53,7 @@ interface AddressTokenTransferResponse {
 	hasNextPage: boolean
 	result: TokenTransfer[]
 	nextPagePath: string
+	pagination: Pagination
 }
 
 interface AddressTokenResponse {
@@ -100,12 +101,14 @@ interface UseContractTransactionData {
 	result: ContractTransactionData[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressTokenTransferData {
 	result: TokenTransfer[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressTokenData {
@@ -118,6 +121,7 @@ interface UseAddressInternalTransactionData {
 	result: TransactionRowProps[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressBalanceData {

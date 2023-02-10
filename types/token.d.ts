@@ -33,6 +33,7 @@ interface UseTokenTransactionHookData {
 	result: TokenTransaction[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface useNftTransfer {

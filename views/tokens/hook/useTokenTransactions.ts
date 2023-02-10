@@ -1,4 +1,6 @@
 import API_LIST from 'api/api_list'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
+import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { ZERO_ADDRESS } from 'utils/constants'
@@ -30,7 +32,9 @@ export default function useTokenTransactions(token: string, params: string | und
 			}
 		]
 	}
-	const { data } = useSWR<TokenTransactionResponse>(_fetchCondition())
+	const { data, error } = useSWR<TokenTransactionResponse>(_fetchCondition())
+
+	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 
 	const convertData = (_data: TokenTransactionResponse): TokenTransaction[] => {
 		return data.result.map((d: TokenTransaction) => {
@@ -57,6 +61,7 @@ export default function useTokenTransactions(token: string, params: string | und
 	return {
 		result: hookData.result,
 		hasNextPage: hookData.hasNextPage,
-		nextPagePath: hookData.nextPagePath
+		nextPagePath: hookData.nextPagePath,
+		loading: isWaiting
 	}
 }
