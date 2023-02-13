@@ -274,6 +274,10 @@ interface CosmosTxMessage {
 		titles: string[]
 		content: string[][]
 	}
+
+	funderAddress?: string
+	accountAddress?: string
+	destAddress?: string
 }
 
 interface TransactionDetail {

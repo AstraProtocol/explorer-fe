@@ -66,6 +66,10 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgAcknowledgement:
 				messageData.push(_mapMsgAcknowledgement(msg))
 				break
+			case TransactionTypeEnum.MsgClawback:
+				console.log('error')
+				messageData.push(_mapMsgClawback(msg))
+				break
 		}
 	}
 	return {
@@ -393,6 +397,19 @@ const _mapMsgAcknowledgement = (msg: TransactionMessage): CosmosTxMessage => {
 			acknowledgement: params.acknowledgement,
 			proofAcked: params.proofAcked,
 			signer: params.signer
+		}
+	}
+}
+
+const _mapMsgClawback = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgClawbackContent
+	const { params } = content
+	if (msg && content) {
+		return {
+			type: msg.type,
+			funderAddress: params.funder_address,
+			accountAddress: params.account_address,
+			destAddress: params.dest_address || ' '
 		}
 	}
 }

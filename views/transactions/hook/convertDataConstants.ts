@@ -83,7 +83,11 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 	CardInfoLabels.acknowledgement,
 	CardInfoLabels.proofAcked,
 	CardInfoLabels.proofHeigh,
-	CardInfoLabels.msgs
+	CardInfoLabels.msgs,
+
+	CardInfoLabels.funderAddress,
+	CardInfoLabels.accountAddress,
+	CardInfoLabels.destAddress
 ]
 
 export const GAS_ITEM_FIELD_SORT_ORDER = [

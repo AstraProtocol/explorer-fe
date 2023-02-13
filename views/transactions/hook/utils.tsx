@@ -224,7 +224,9 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 			case 'validatorAddress':
 			case 'validatorSrcAddress':
 			case 'validatorDstAddress':
-			case 'validatorDstAddress':
+			case 'funderAddress':
+			case 'accountAddress':
+			case 'destAddress':
 				if (!isEmpty(data[key]))
 					items.push({
 						label: CardInfoLabels[key],
