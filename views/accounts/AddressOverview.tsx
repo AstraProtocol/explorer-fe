@@ -6,6 +6,7 @@ import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
+import { utils } from 'ethers'
 import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { useMemo, useState } from 'react'
@@ -148,7 +149,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						currency={
 							astraSummary && addressData.balance
 								? `(${formatCurrencyValue(
-										(Number(astraPrice) * parseInt(addressData.balance)) / 10 ** 18,
+										Number(astraPrice) * parseFloat(utils.formatEther(addressData.balance)),
 										'VND'
 								  )})`
 								: ''
@@ -219,7 +220,14 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 							<br />
 							<TypographyUI.Balance
 								size="sm"
-								currency={totalVested.denom}
+								currency={
+									totalVested.denom === 'ASA'
+										? `(${formatCurrencyValue(
+												Number(astraPrice) * parseFloat(utils.formatEther(totalVested.amount)),
+												'VND'
+										  )})`
+										: totalVested.denom
+								}
 								icon={
 									<CryptoIcon name={totalVested.denom.toLowerCase() as CryptoIconNames} size="sm" />
 								}
@@ -236,7 +244,18 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 							<br />
 							<TypographyUI.Balance
 								size="sm"
-								currency={totalUnvested.denom}
+								currency={
+									totalUnvested.denom === 'ASA'
+										? `(${formatCurrencyValue(
+												Number(astraPrice) *
+													parseFloat(utils.formatEther(totalUnvested.amount)),
+												'VND'
+										  )})`
+										: totalUnvested.denom
+								}
+								icon={
+									<CryptoIcon name={totalUnvested.denom.toLowerCase() as CryptoIconNames} size="sm" />
+								}
 								value={
 									totalUnvested.amount
 										? convertBalanceToView(totalUnvested.amount)
@@ -252,7 +271,15 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 							<br />
 							<TypographyUI.Balance
 								size="sm"
-								currency={totalLock.denom}
+								currency={
+									totalLock.denom === 'ASA'
+										? `(${formatCurrencyValue(
+												Number(astraPrice) * parseFloat(utils.formatEther(totalLock.amount)),
+												'VND'
+										  )})`
+										: totalLock.denom
+								}
+								icon={<CryptoIcon name={totalLock.denom.toLowerCase() as CryptoIconNames} size="sm" />}
 								value={totalLock.amount ? convertBalanceToView(totalLock.amount) : totalLock.amount}
 								fixNumber={5}
 							/>
