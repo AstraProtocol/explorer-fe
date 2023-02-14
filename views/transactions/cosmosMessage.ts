@@ -84,7 +84,7 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
  */
 export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
-	if (isArray(amount)) {
+	if (isArray(amount) && !isEmpty(amount)) {
 		for (let a of amount) {
 			totalAmount = totalAmount.add(BigNumber.from(a.amount))
 		}
@@ -96,14 +96,10 @@ export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string
 }
 
 export const getTokenName = (amount: TokenAmount | TokenAmount[]): string => {
-	if (isArray(amount)) {
-		return amount[0].denom.toLocaleLowerCase().includes('astra')
-			? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-			: ''
+	if (isArray(amount) && !isEmpty(amount)) {
+		return amount[0].denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
 	} else if (!isArray(amount)) {
-		return amount.denom.toLocaleLowerCase().includes('astra')
-			? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-			: ''
+		return amount.denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
 	}
 
 	return ''

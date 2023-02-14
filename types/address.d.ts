@@ -1,3 +1,8 @@
+interface VestingBalances {
+	locked: TokenAmount[]
+	unvested: TokenAmount[]
+	vested: TokenAmount[]
+}
 interface Address {
 	contractName?: string
 	balance: string
@@ -8,6 +13,7 @@ interface Address {
 	tokenSymbol: string
 	type: 'address' | 'contractaddress' // string
 	verified: boolean
+	vestingBalances?: VestingBalances
 }
 
 interface AddressDetailResponse {

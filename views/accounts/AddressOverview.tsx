@@ -1,5 +1,6 @@
 import { ethToAstra } from '@astradefi/address-converter'
 import { CryptoIcon, IconButton, IconEnum, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -7,12 +8,13 @@ import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
 import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { AddressTypeEnum } from 'utils/enum'
 
 import { convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
+import { getAstraTokenAmount, getTokenName } from 'views/transactions/cosmosMessage'
 import useAddressCounter from './hook/useAddressCounter'
 import styles from './style.module.scss'
 
@@ -35,6 +37,45 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 
 	const isValidator = !isEmpty(validator)
 	const isContract = addressData.type === AddressTypeEnum.Contract
+	const [totalLock, totalUnvested, totalVested] = useMemo<Array<TokenAmount | undefined>>(() => {
+		if (addressData.vestingBalances) {
+			const { locked, unvested, vested } = addressData.vestingBalances
+			let totalLockedObj: TokenAmount = undefined
+			if (!isEmpty(locked)) {
+				const totalLockedAmount = getAstraTokenAmount(locked)
+				if (!isEmpty(totalLockedAmount)) {
+					totalLockedObj = {
+						amount: totalLockedAmount,
+						denom: getTokenName(locked)
+					}
+				}
+			}
+
+			let totalUnvesteddObj: TokenAmount = undefined
+			if (!isEmpty(unvested)) {
+				const totalUnvestedAmount = getAstraTokenAmount(unvested)
+				if (!isEmpty(totalUnvestedAmount)) {
+					totalUnvesteddObj = {
+						amount: totalUnvestedAmount,
+						denom: getTokenName(unvested)
+					}
+				}
+			}
+			let totalVesteddObj: TokenAmount = undefined
+			if (!isEmpty(vested)) {
+				const totalVestedAmount = getAstraTokenAmount(vested)
+				if (!isEmpty(totalVestedAmount)) {
+					totalVesteddObj = {
+						amount: totalVestedAmount,
+						denom: getTokenName(vested)
+					}
+				}
+			}
+			return [totalLockedObj, totalUnvesteddObj, totalVesteddObj]
+		}
+		return [undefined, undefined, undefined]
+	}, [addressData.vestingBalances])
+	const astraPrice = astraSummary?.last || 0
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
@@ -107,7 +148,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						currency={
 							astraSummary && addressData.balance
 								? `(${formatCurrencyValue(
-										(Number(astraSummary.last) * parseInt(addressData.balance)) / 10 ** 18,
+										(Number(astraPrice) * parseInt(addressData.balance)) / 10 ** 18,
 										'VND'
 								  )})`
 								: ''
@@ -133,7 +174,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						{isUndefined(addressCounter?.tokenTransferCount) ? 'NaN' : addressCounter?.tokenTransferCount}
 					</span>
 				</div>
-				<div className={styles.colLastBalanceUpdated}>
+				{/* <div className={styles.colLastBalanceUpdated}>
 					<span className="text text-base contrast-color-50">Fee:</span>
 					<br />
 					<TypographyUI.Balance
@@ -143,7 +184,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						value={addressCounter.feesCount ? addressCounter.feesCount : 0}
 						fixNumber={5}
 					/>
-				</div>
+				</div> */}
 				<div className={styles.colGasUsed}>
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />
@@ -166,6 +207,59 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 					)}
 				</div>
 			</Row>
+
+			{addressData.vestingBalances && (totalLock || totalUnvested || totalVested) ? (
+				<Row
+					style={{ justifyContent: 'space-between' }}
+					classes="padding-top-lg border-top-base border margin-top-lg"
+				>
+					{totalVested && (
+						<div className={styles.colBalance}>
+							<span className="text text-base contrast-color-50">Vested:</span>
+							<br />
+							<TypographyUI.Balance
+								size="sm"
+								currency={totalVested.denom}
+								icon={
+									<CryptoIcon name={totalVested.denom.toLowerCase() as CryptoIconNames} size="sm" />
+								}
+								value={
+									totalVested.amount ? convertBalanceToView(totalVested.amount) : totalVested.amount
+								}
+								fixNumber={5}
+							/>
+						</div>
+					)}
+					{totalUnvested && (
+						<div className={styles.colBalance}>
+							<span className="text text-base contrast-color-50">Unvested:</span>
+							<br />
+							<TypographyUI.Balance
+								size="sm"
+								currency={totalUnvested.denom}
+								value={
+									totalUnvested.amount
+										? convertBalanceToView(totalUnvested.amount)
+										: totalUnvested.amount
+								}
+								fixNumber={5}
+							/>
+						</div>
+					)}
+					{totalLock && (
+						<div className={styles.colBalance}>
+							<span className="text text-base contrast-color-50">Lock:</span>
+							<br />
+							<TypographyUI.Balance
+								size="sm"
+								currency={totalLock.denom}
+								value={totalLock.amount ? convertBalanceToView(totalLock.amount) : totalLock.amount}
+								fixNumber={5}
+							/>
+						</div>
+					)}
+				</Row>
+			) : null}
 		</BackgroundCard>
 	)
 }

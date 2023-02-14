@@ -23,7 +23,7 @@ const Price = ({ classes }: Props) => {
 		)
 	}
 
-	const delta = (Number(astraSummary.last) / Number(astraSummary.open) - 1) * 100
+	const delta = (Number(astraSummary?.last || 0) / Number(astraSummary?.open || 0) - 1) * 100
 	const deltaText = delta >= 0 ? `+${numeral(delta).format('0.00')}` : numeral(delta).format('0.00')
 	const deltaStyle = delta == 0 ? 'warning' : delta > 0 ? 'success' : 'error'
 	return (
@@ -31,7 +31,7 @@ const Price = ({ classes }: Props) => {
 			<div className="margin-bottom-xs">
 				<Tag type={deltaStyle} text={`${deltaText}%`} />
 			</div>
-			<TypographyUI.Balance value={astraSummary.last} currency="VND" />
+			<TypographyUI.Balance value={astraSummary?.last || 0} currency="VND" />
 		</div>
 	)
 }
