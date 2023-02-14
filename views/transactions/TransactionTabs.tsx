@@ -1,3 +1,4 @@
+import { RowLoader } from '@astraprotocol/astra-ui'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Tabs from 'components/Tabs/Tabs'
 import Empty from 'components/Typography/Empty'
@@ -18,10 +19,20 @@ type TransactionTabsProps = {
 	logs?: EvmLog[]
 }
 
-export const Transactions = ({ rows, emptyMsg }: { rows: TransactionRowProps[]; emptyMsg: string }) => {
+export const Transactions = ({
+	rows,
+	emptyMsg,
+	loading
+}: {
+	rows: TransactionRowProps[]
+	emptyMsg: string
+	loading?: boolean
+}) => {
 	return (
 		<div style={{ overflowY: 'auto' }}>
-			{!rows || rows.length == 0 ? (
+			{loading ? (
+				<RowLoader row={5} />
+			) : !rows || rows.length == 0 ? (
 				<Empty text={emptyMsg} />
 			) : (
 				<>
@@ -43,7 +54,7 @@ export default function TransactionTabs({
 }: TransactionTabsProps) {
 	const [defaultTag, setTag] = useRouterTag()
 	const hashInternalTransactions = !isEmptyRawInput(input) && type === 'evm'
-	const { rows: internalTransactionRows } = useInternalTransactions({
+	const { rows: internalTransactionRows, loading: internalLoading } = useInternalTransactions({
 		hash: hashInternalTransactions ? evmHash : null
 	})
 
@@ -73,6 +84,7 @@ export default function TransactionTabs({
 		contents['internal-transactions'] = (
 			<Transactions
 				rows={internalTransactionRows}
+				loading={internalLoading}
 				emptyMsg="There are no internal transactions for this transaction.
         "
 			/>

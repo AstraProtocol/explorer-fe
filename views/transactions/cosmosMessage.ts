@@ -1,4 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
+import { formatNumber } from '@astraprotocol/astra-ui'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { isArray, isEmpty } from 'lodash'
@@ -65,6 +66,10 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgAcknowledgement:
 				messageData.push(_mapMsgAcknowledgement(msg))
 				break
+			case TransactionTypeEnum.MsgClawback:
+				console.log('error')
+				messageData.push(_mapMsgClawback(msg))
+				break
 		}
 	}
 	return {
@@ -79,7 +84,7 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
  */
 export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
-	if (isArray(amount)) {
+	if (isArray(amount) && !isEmpty(amount)) {
 		for (let a of amount) {
 			totalAmount = totalAmount.add(BigNumber.from(a.amount))
 		}
@@ -91,14 +96,10 @@ export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string
 }
 
 export const getTokenName = (amount: TokenAmount | TokenAmount[]): string => {
-	if (isArray(amount)) {
-		return amount[0].denom.toLocaleLowerCase().includes('astra')
-			? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-			: ''
+	if (isArray(amount) && !isEmpty(amount)) {
+		return amount[0].denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
 	} else if (!isArray(amount)) {
-		return amount.denom.toLocaleLowerCase().includes('astra')
-			? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-			: ''
+		return amount.denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
 	}
 
 	return ''
@@ -360,7 +361,10 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 			const { amount, length } = vest
 			const totalAmount = getAstraTokenAmount(amount)
 			const tokenName = getTokenName(amount)
-			vestingPeriodsContent.push([length, `${formatEther(totalAmount)} ${tokenName}`])
+			vestingPeriodsContent.push([
+				formatNumber(length),
+				`${formatNumber(formatEther(totalAmount), 5)} ${tokenName}`
+			])
 		}
 		return {
 			type: msg.type,
@@ -389,6 +393,19 @@ const _mapMsgAcknowledgement = (msg: TransactionMessage): CosmosTxMessage => {
 			acknowledgement: params.acknowledgement,
 			proofAcked: params.proofAcked,
 			signer: params.signer
+		}
+	}
+}
+
+const _mapMsgClawback = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgClawbackContent
+	const { params } = content
+	if (msg && content) {
+		return {
+			type: msg.type,
+			funderAddress: params.funder_address,
+			accountAddress: params.account_address,
+			destAddress: params.dest_address || ' '
 		}
 	}
 }

@@ -1,3 +1,8 @@
+interface VestingBalances {
+	locked: TokenAmount[]
+	unvested: TokenAmount[]
+	vested: TokenAmount[]
+}
 interface Address {
 	contractName?: string
 	balance: string
@@ -8,6 +13,7 @@ interface Address {
 	tokenSymbol: string
 	type: 'address' | 'contractaddress' // string
 	verified: boolean
+	vestingBalances?: VestingBalances
 }
 
 interface AddressDetailResponse {
@@ -53,6 +59,7 @@ interface AddressTokenTransferResponse {
 	hasNextPage: boolean
 	result: TokenTransfer[]
 	nextPagePath: string
+	pagination: Pagination
 }
 
 interface AddressTokenResponse {
@@ -100,12 +107,14 @@ interface UseContractTransactionData {
 	result: ContractTransactionData[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressTokenTransferData {
 	result: TokenTransfer[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressTokenData {
@@ -118,6 +127,7 @@ interface UseAddressInternalTransactionData {
 	result: TransactionRowProps[] | []
 	hasNextPage: boolean
 	nextPagePath: string
+	loading: boolean
 }
 
 interface UseAddressBalanceData {

@@ -1,4 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { PaginationLite, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import usePaginationLite from 'hooks/usePaginationLite'
@@ -14,7 +14,7 @@ interface Props {
 const AddressTokenTransferTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useAddressTokenTransfers(address, currentParam)
+	const { hasNextPage, nextPagePath, result, loading } = useAddressTokenTransfers(address, currentParam)
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
 			makePrevPage()
@@ -38,7 +38,9 @@ const AddressTokenTransferTab = ({ address }: Props) => {
 				)}
 			</Row>
 			<div style={{ overflowY: 'auto' }}>
-				{!result || result.length == 0 ? (
+				{loading ? (
+					<RowLoader row={5} />
+				) : !result || result.length == 0 ? (
 					<Empty classes="margin-top-xl" />
 				) : (
 					<>

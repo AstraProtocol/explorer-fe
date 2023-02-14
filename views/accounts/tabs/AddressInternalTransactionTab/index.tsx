@@ -1,4 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { PaginationLite, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import usePaginationLite from 'hooks/usePaginationLite'
 import { isEmpty } from 'lodash'
@@ -13,7 +13,7 @@ interface Props {
 const AddressInternalTransactionTab = ({ address }: Props) => {
 	const [currentPage, setPage] = useState(1)
 	const { currentParam, makeNextPage, makePrevPage } = usePaginationLite()
-	const { hasNextPage, nextPagePath, result } = useAddressInternalTransaction(address, currentParam)
+	const { hasNextPage, nextPagePath, result, loading } = useAddressInternalTransaction(address, currentParam)
 
 	const onPagingChange = (value: number) => {
 		if (value < currentPage) {
@@ -25,6 +25,7 @@ const AddressInternalTransactionTab = ({ address }: Props) => {
 	}
 
 	const isHasData = useMemo(() => !isEmpty(result), [result])
+
 	return (
 		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
@@ -35,8 +36,11 @@ const AddressInternalTransactionTab = ({ address }: Props) => {
 					</div>
 				)}
 			</Row>
-
-			<Transactions rows={result} emptyMsg="There are no internal transactions for this address." />
+			{loading ? (
+				<RowLoader row={5} />
+			) : (
+				<Transactions rows={result} emptyMsg="There are no internal transactions for this address." />
+			)}
 			<div className="flex flex-justify-end padding-right-xl margin-top-md">
 				{isHasData && (
 					<div>

@@ -1,4 +1,4 @@
-import { PaginationLite } from '@astraprotocol/astra-ui'
+import { PaginationLite, RowLoader } from '@astraprotocol/astra-ui'
 import Row from 'components/Grid/Row'
 import Empty from 'components/Typography/Empty'
 import { isEmpty } from 'lodash'
@@ -14,7 +14,7 @@ interface Props {
 
 const TokenHolderTab = ({ token, tokenData }: Props) => {
 	const [currentPage, setPage] = useState(1)
-	const { tokens, hasNextPage } = useTokenHolders(token, currentPage)
+	const { tokens, hasNextPage, loading } = useTokenHolders(token, currentPage)
 
 	const onPagingChange = (value: number) => setPage(value)
 	const isHasData = useMemo(() => !isEmpty(tokens), [tokens])
@@ -30,7 +30,9 @@ const TokenHolderTab = ({ token, tokenData }: Props) => {
 				)}
 			</Row>
 
-			{!isHasData ? (
+			{loading ? (
+				<RowLoader row={3} />
+			) : !isHasData ? (
 				<Empty text={'There are no transactions.'} />
 			) : (
 				<div className="padding-bottom-sm" style={{ overflowY: 'auto' }}>

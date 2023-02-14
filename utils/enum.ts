@@ -34,7 +34,8 @@ export enum TransactionTypeEnum {
 	MsgCreateClawbackVestingAccount = '/evmos.vesting.v1.MsgCreateClawbackVestingAccount',
 	CommunityPoolSpendProposal = '/cosmos.distribution.v1beta1.CommunityPoolSpendProposal',
 	MsgAcknowledgement = '/ibc.core.channel.v1.MsgAcknowledgement',
-	MsgRevoke = '/cosmos.authz.v1beta1.MsgRevoke'
+	MsgRevoke = '/cosmos.authz.v1beta1.MsgRevoke',
+	MsgClawback = '/evmos.vesting.v1.MsgClawback'
 }
 
 export enum AddressTypeEnum {
@@ -119,7 +120,11 @@ export enum CardInfoLabels {
 	acknowledgement = 'Acknowledgement: ',
 	proofAcked = 'Proof Acked: ',
 	proofHeigh = 'Proof Height: ',
-	msgs = 'Msgs: '
+	msgs = 'Msgs: ',
+
+	funderAddress = 'Funder Address:',
+	accountAddress = 'Account Address: ',
+	destAddress = 'Dest Address:'
 }
 
 export enum ErcTypeEnum {

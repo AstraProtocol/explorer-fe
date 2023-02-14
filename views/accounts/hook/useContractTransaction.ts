@@ -1,5 +1,7 @@
 import API_LIST from 'api/api_list'
-import { useEffect, useState } from 'react'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
+import { isEmpty } from 'lodash'
+import { useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { getEnvNumber } from 'utils/helper'
 
@@ -29,7 +31,13 @@ export default function useContractTransaction(address: string, params: string):
 			}
 		]
 	}
-	const { data } = useSWR<ContractTransactionResponse>(_fetchCondition())
+	const { data, error } = useSWR<AddressTokenTransferResponse>(_fetchCondition())
+
+	const isLoadedData = useCallback(() => {
+		return !isEmpty(data) || error
+	}, [data])
+
+	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
 	useEffect(() => {
 		if (data?.result) {
@@ -44,6 +52,7 @@ export default function useContractTransaction(address: string, params: string):
 	return {
 		result: hookData.result,
 		hasNextPage: hookData.hasNextPage,
-		nextPagePath: hookData.nextPagePath
+		nextPagePath: hookData.nextPagePath,
+		loading: isWaiting
 	}
 }

@@ -1,6 +1,7 @@
 import { astraToEth, ethToAstra } from '@astradefi/address-converter'
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
+import useDelayUntilDone from 'hooks/useDelayUntilDone'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
@@ -25,7 +26,9 @@ export default function useAddressTransactions(address: string, page: number) {
 			}
 		]
 	}
-	const { data } = useSWR<AddressTransactionResponse>(_fetchCondition())
+	const { data, error } = useSWR<AddressTransactionResponse>(_fetchCondition())
+
+	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 
 	const getFromAndToOfEvm = (account: string, messages: TransactionMessage[]): [string, string] => {
 		if (account && !isEmpty(messages) && messages.length > 0) {
@@ -105,6 +108,7 @@ export default function useAddressTransactions(address: string, page: number) {
 	}, [data])
 	return {
 		data: hookData.result,
-		pagination: hookData.pagination
+		pagination: hookData.pagination,
+		loading: isWaiting
 	}
 }

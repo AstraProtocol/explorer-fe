@@ -608,3 +608,19 @@ interface MsgRevokeContent {
 		'msgTypeUrl': string
 	}
 }
+
+interface MsgClawbackContent {
+	name: string
+	uuid: string
+	height: number
+	params: {
+		'funder_address': string
+		'account_address': string
+		'@type': string
+		'dest_address': string
+	}
+	txHash: string
+	msgName: string
+	version: number
+	msgIndex: number
+}
