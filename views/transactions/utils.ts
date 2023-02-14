@@ -36,6 +36,8 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	)
 	const result = res.data.result
 	if (!result) return
+
+	const [from, to] = _getFromAndToEvmFromCosmosMsg(res.data)
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
 			? getEvmTxhash(result.messages)
@@ -46,9 +48,9 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
-	data.from = result.from
+	data.from = from
 	data.fromAddressName = result.fromAddressName
-	data.to = result.to
+	data.to = to
 	data.toAddressName = result.toAddressName
 	data.createdContractAddressHash = result.createdContractAddressHash
 	data.createdContractAddressName = result.createdContractAddressName
@@ -248,4 +250,26 @@ const _convertTransfer = (
 	success?: boolean
 ) => {
 	data.tabTokenTransfers = convertMessageToTransfer(messages, blockTime, success)
+}
+
+const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [string, string] => {
+	const { result } = res
+	const { messages } = result
+
+	let from = ''
+	let to = ''
+	if (!isEmpty(result) && !isEmpty(result.from) && !isEmpty(result.to)) {
+		// server parsed
+		from = result.from
+		to = result.to
+	} else {
+		// server is parsing data
+		const message = messages[0]
+		try {
+			from = message.content.params.from
+			to = message.content.params.data.to
+		} catch (e) {}
+	}
+
+	return [from, to]
 }
