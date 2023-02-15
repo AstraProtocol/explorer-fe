@@ -129,6 +129,7 @@ export async function getServerSideProps({ query }) {
 		data = pickBy(data, item => item !== undefined && item !== '')
 		return { props: { data, evmHash, cosmosHash } }
 	} catch (e: any) {
+		console.log(e.message)
 		Sentry.captureException(e)
 		let errorMessage = e.message
 		if (e instanceof AxiosError) {
