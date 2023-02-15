@@ -189,7 +189,7 @@ export const getTransactionInOrOut = (
 }
 
 export function convertBigNumberToString(x: any) {
-	if (!x) return ''
+	if (!x) return '0'
 	if (Math.abs(x) < 1.0) {
 		var e = parseInt(x.toString().split('e-')[1])
 		if (e) {
