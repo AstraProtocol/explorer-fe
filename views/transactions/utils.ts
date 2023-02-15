@@ -43,7 +43,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			? getEvmTxhash(result.messages)
 			: result.hash
 		: evmHash
-	data.cosmosHash = cosmosHash || result.cosmosHash || result.messages[0]?.content?.txHash || ''
+	data.cosmosHash = cosmosHash || result.cosmosHash || result.messages?.[0]?.content?.txHash || ''
 	data.result = result.success ? 'Success' : 'Error'
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 	data.blockHeight = `${result.blockHeight}`
@@ -77,7 +77,9 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 					: ''
 		  }`
 		: undefined
-	data.nonce = result.nonce ? result.nonce.toString() : result?.messages[0]?.content?.params?.data?.nonce
+	data.nonce = !isUndefined(result.nonce)
+		? result.nonce.toString()
+		: result?.messages?.[0]?.content?.params?.data?.nonce
 	data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 	data.tokenTransfers = result.tokenTransfers
 	data.index = result.index
@@ -104,7 +106,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	const data: TransactionDetail = {}
 	const fee = caculateAmount(result.fee)
 	data.type = 'cosmos'
-	data.pageTitle = getTransactionType(result?.messages[0]?.type)
+	data.pageTitle = getTransactionType(result?.messages?.[0]?.type)
 	data.cosmosMsgCount = comosTransactionMsgCount(result.messages)
 	data.evmHash = ''
 	data.cosmosHash = result.hash
@@ -270,7 +272,7 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 		to = result.to
 	} else {
 		// server is parsing data
-		const message = messages[0]
+		const message = messages?.[0]
 		try {
 			from = message.content.params.from
 			to = message.content.params.data.to
