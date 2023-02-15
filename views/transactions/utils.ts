@@ -43,7 +43,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			? getEvmTxhash(result.messages)
 			: result.hash
 		: evmHash
-	data.cosmosHash = cosmosHash || result.cosmosHash
+	data.cosmosHash = cosmosHash || result.cosmosHash || result.messages[0]?.content?.txHash || ''
 	data.result = result.success ? 'Success' : 'Error'
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 	data.blockHeight = `${result.blockHeight}`
@@ -59,7 +59,11 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	if (!data.fee) {
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 	}
-	data.gasPrice = result.gasPrice ? formatUnits(result.gasPrice, 9) + ' NanoAstra' : ''
+	data.gasPrice = result.gasPrice
+		? formatNumber(formatUnits(result.gasPrice, 9)) + ' NanoAstra'
+		: result?.messages[0]?.content?.params?.data?.gasPrice
+		? formatNumber(formatUnits(result?.messages[0]?.content?.params?.data?.gasPrice, 9)) + ' NanoAstra'
+		: ''
 	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
 	data.gasUsed = result.gasUsed
 	data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
@@ -67,11 +71,13 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
 		: undefined
 	data.gasUsedByTransaction = result.gasUsed
-		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(
-				parseFloat(result.gasUsed) / parseFloat(result.gasLimit)
-		  ).format('0.00%')}`
+		? `${numeral(result.gasUsed).format('0,0')} ${
+				result.gasLimit
+					? `| ${numeral(parseFloat(result.gasUsed) / parseFloat(result.gasLimit)).format('0.00%')}`
+					: ''
+		  }`
 		: undefined
-	data.nonce = result.nonce ? result.nonce.toString() : ''
+	data.nonce = result.nonce ? result.nonce.toString() : result?.messages[0]?.content?.params?.data?.nonce
 	data.rawInput = isEmptyRawInput(result.input) ? undefined : result.input
 	data.tokenTransfers = result.tokenTransfers
 	data.index = result.index

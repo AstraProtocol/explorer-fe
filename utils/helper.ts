@@ -204,5 +204,5 @@ export function convertBigNumberToString(x: any) {
 			x += new Array(e + 1).join('0')
 		}
 	}
-	return x.toString()
+	return isEmpty(x.toString()) ? '0' : x.toString()
 }
