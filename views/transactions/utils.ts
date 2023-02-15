@@ -59,10 +59,11 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	if (!data.fee) {
 		data.fee = result.fee && result.fee.length > 0 ? formatEther(result.fee[0].amount) : ''
 	}
+
 	data.gasPrice = result.gasPrice
 		? formatNumber(formatUnits(result.gasPrice, 9)) + ' NanoAstra'
-		: result?.messages[0]?.content?.params?.data?.gasPrice
-		? formatNumber(formatUnits(result?.messages[0]?.content?.params?.data?.gasPrice, 9)) + ' NanoAstra'
+		: result?.messages?.[0]?.content?.params?.data?.gasPrice
+		? formatNumber(formatUnits(result?.messages?.[0]?.content?.params?.data?.gasPrice, 9)) + ' NanoAstra'
 		: ''
 	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
 	data.gasUsed = result.gasUsed
