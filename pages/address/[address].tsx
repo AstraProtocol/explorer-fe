@@ -97,11 +97,11 @@ export async function getServerSideProps({ params }) {
 				}
 			}
 		} catch (e) {
-			// console.log(e.message)
+			console.log(e)
 			Sentry.captureException(e)
 			let errorMessage = e.message
 			if (e instanceof AxiosError) {
-				console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
+				// console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 				if (e.code !== '200') errorMessage = '404 Not Found'
 			}
 			return {
