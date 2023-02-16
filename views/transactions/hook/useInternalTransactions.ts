@@ -19,14 +19,15 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 
 	const isLoadedData = useCallback(() => {
 		return !isEmpty(data) || error
-	}, [data])
+	}, [data, error])
 
 	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
 	const _convertData = useCallback((): TransactionRowProps[] => {
+		if (!data) return []
 		const items: TransactionRowProps[] = []
-		if (data && data?.result.length > 0) {
-			const internalItems = data.result
+		if (data && data?.result && data?.result.length > 0) {
+			const internalItems = data?.result
 			for (let internalItem of internalItems) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),

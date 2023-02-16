@@ -4,36 +4,36 @@ const API_LIST = {
 	ALL_BLOCKS: '/api/v1/blocks',
 	BLOCKS: '/api/v1/blocks/',
 	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions',
-	LATEST_BLOCK: 'evm_/api/v1?module=block&action=eth_block_number',
+	LATEST_BLOCK: '/api/v1/eth-block-number',
 
-	ALL_TOKENS: 'evm_/api/v1?module=token&action=getListTokens', // &page=1&offset=20
-	ALL_HOLDERS: 'api/v1/accounts/get-top-addresses-balance?blockscout=true', // &page=1&offset=20
+	ALL_TOKENS: '/api/v1/accounts/get-list-tokens?blockscout=true', // &page=1&offset=20
+	ALL_HOLDERS: '/api/v1/accounts/get-top-addresses-balance?blockscout=true', // &page=1&offset=20
 	ALL_TRANSACTIONS: '/api/v1/transactions',
 
 	TRANSACTIONS: '/api/v1/transactions',
-	EVM_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal&txhash=', // call axios
+	EVM_INTERNAL_TRANSACTION: '/api/v1/transactions/internal-transactions/', // call axios
 	COSMOS_TRANSACTION: '/api/v1?module=transaction&action=getTxCosmosInfo&txhash=', // call axios
 
-	ABI: '/api/v1?module=contract&action=getabi&address=',
-	HASH_ABI: '/api/v1?module=transaction&action=getabibytxhash&txhash=',
+	ABI: '/api/v1/accounts/getabi/',
+	HASH_ABI: '/api/v1/transactions/getabi/',
 
 	VALIDATORS: '/api/v1/validators',
 
-	MARKET_HISTORY_PRICE: 'evm_/api/v1/market-history-chart',
+	MARKET_HISTORY_PRICE: '/api/v1/market-history-chart',
 	TRANSACTION_HISTORY_COUNTER: '/api/v1/transactions-history-chart',
-	TRANSACTION_RAW_TRACE: 'evm_/api/v1?module=transaction&action=getrawtracebytxhash', // txhash
+	TRANSACTION_RAW_TRACE: '/api/v1/transactions/getrawtrace/', // txhash
 
 	MARKET_PRICE: 'https://api.tiki.vn/sandseel/api/v2/public/markets/astra/summary',
 	COMMON_STATS: '/api/v1/common-stats',
 	ESTIMATE_COUNTED_INFO: '/api/v1/estimate-counted-info',
-	GAS_AVG: 'evm_/api/v1/gas-price-oracle',
+	GAS_AVG: '/api/v1/gas-price-oracle',
 
 	ADDRESS_DETAIL: '/api/v1/accounts/detail',
-	ADDRESS_TOKEN: 'evm_/api/v1?module=account&action=tokenlist', // address = ?
+	ADDRESS_TOKEN: '/api/v1/accounts/tokenlist/', // address = ?
 	ADDRESS_COUNTER: '/api/v1/accounts', // address=?
 	// ADDRESS_BALANCE: 'evm_/api/v1?module=account&action=balance', // address=?
 	ADDRESS_COIN_BALANCE_HISTORY: 'evm_/api/v1?module=account&action=getcoinbalancehistory', // address, page, offset=?
-	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'evm_/address', // address, page, offset=?
+	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'api/v1/accounts', // address, page, offset=?
 	ADDRESS_TRANSACTION: '/api/v1/accounts',
 	ADDRESS_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal', // address, page, offset
 	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=getlisttokentransfers', // address=?

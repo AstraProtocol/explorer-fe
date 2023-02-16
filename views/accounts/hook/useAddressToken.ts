@@ -13,16 +13,17 @@ export default function useAddressToken(address: string, params: string | undefi
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.ADDRESS_TOKEN}${params}`,
+				`${API_LIST.ADDRESS_TOKEN}${address}${params}`,
 				{
-					address
+					blockscout: true
 				}
 			]
 		}
 
 		return [
-			API_LIST.ADDRESS_TOKEN,
+			`${API_LIST.ADDRESS_TOKEN}${address}`,
 			{
+				blockscout: true,
 				address,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
@@ -34,7 +35,7 @@ export default function useAddressToken(address: string, params: string | undefi
 
 	useEffect(() => {
 		if (data?.result) {
-			setState(data)
+			setState(data?.result)
 		}
 	}, [data])
 

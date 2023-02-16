@@ -6,13 +6,13 @@ export default function useAddressCoinBalanceHistoryChart(address: string) {
 	const [hookData, setState] = useState<UseAddressCoinBalanceHistoryChartData>({ result: [] })
 
 	const _fetchCondition = () => {
-		return [`${API_LIST.ADDRESS_COIN_BALANCE_HISTORY_CHART}/${address}/coin-balances/by-day?type=JSON`]
+		return [`${API_LIST.ADDRESS_COIN_BALANCE_HISTORY_CHART}/${address}/coin-balances/by-day`]
 	}
-	const { data } = useSWR<AddressCoinBalanceHistoryChartData[]>(_fetchCondition())
+	const { data } = useSWR<AddressCoinBalanceHistoryChartResponse>(_fetchCondition())
 
 	useEffect(() => {
 		if (data) {
-			setState({ result: data })
+			setState({ result: data.result })
 		}
 	}, [data])
 	return hookData.result

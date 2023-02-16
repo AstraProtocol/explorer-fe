@@ -13,7 +13,7 @@ interface Props {
 }
 
 function getLastestBlock(latestBlock: LatestBlock) {
-	return latestBlock ? parseInt(latestBlock.result) : undefined
+	return latestBlock ? parseInt(latestBlock.result.result) : undefined
 }
 
 const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Props) => {

@@ -100,7 +100,7 @@ const OverviewChart = ({}) => {
 		useSWR<TransactionHistoryCounterResponse>(_fetchCondition('transaction_history_counter'))
 
 	// const availableSupply = JSON.parse(historyPriceRaw.supply_data)
-	const marketHistoryData = historyPriceRaw ? humps.camelizeKeys(JSON.parse(historyPriceRaw.history_data)) : []
+	const marketHistoryData = historyPriceRaw ? humps.camelizeKeys(JSON.parse(historyPriceRaw.result.history_data)) : []
 	const historyCounterTransaction = historyCounterTransactionRaw ? historyCounterTransactionRaw.result : []
 
 	const data: any = {

@@ -49,7 +49,7 @@ const Overview = () => {
 
 	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw?.result)
 	const commonStatsData = getCommonStatsData(commonStatsDataRaw?.result)
-	const gasAvgData = getGasAvgData(gasAvgRaw)
+	const gasAvgData = getGasAvgData(gasAvgRaw?.result)
 
 	return (
 		<div className={clsx(styles.overview, isMobile && 'margin-bottom-2xl')}>

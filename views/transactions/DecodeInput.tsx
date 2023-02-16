@@ -1,5 +1,5 @@
 import abiDecoder from 'abi-decoder'
-import { evmApi } from 'api'
+import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
@@ -45,9 +45,9 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasVerified: boolean }> => {
 		// datainput from hash
 		if (evmHash) {
-			const hashAbiRes = await evmApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+			const hashAbiRes = await cosmosApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
 
-			if (hashAbiRes.data.message === 'OK') {
+			if (hashAbiRes.data) {
 				return { abi: [hashAbiRes?.data?.result?.abi], hasVerified: hashAbiRes?.data?.result?.verified }
 			}
 		}

@@ -54,8 +54,10 @@ interface UseTokenHookData {
 }
 
 interface TokenResponse {
-	result: Token[]
-	hasNextPage: boolean
+	result: {
+		result: Token[]
+		hasNextPage: boolean
+	}
 }
 
 interface TokenTransaction {

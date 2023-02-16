@@ -18,8 +18,8 @@ export default function useTokens(page: number): UseTokenHookData {
 	const { data, isValidating } = useSWR<TokenResponse>(_fetchCondition())
 
 	useEffect(() => {
-		if (data?.result) {
-			setState({ tokens: data.result, hasNextPage: data.hasNextPage })
+		if (data?.result?.result) {
+			setState({ tokens: data.result.result, hasNextPage: data.result.hasNextPage })
 		}
 	}, [data])
 	return {
