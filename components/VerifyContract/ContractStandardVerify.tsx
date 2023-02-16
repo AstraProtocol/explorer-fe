@@ -55,7 +55,7 @@ const ContractStandardVerify = ({ address, onClose, onSuccess }: Props) => {
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
-			url: 'https://blockscout.astranaut.dev/verify_smart_contract/contract_verifications',
+			url: `${process.env.NEXT_PUBLIC_EVM_API}/verify_smart_contract/contract_verifications`,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
