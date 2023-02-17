@@ -1,6 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
-import * as Sentry from '@sentry/nextjs'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { BigNumber } from 'ethers'
@@ -278,9 +277,7 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 		try {
 			from = message.content.params.from
 			to = message.content.params.data.to
-		} catch (e) {
-			Sentry.captureException(e)
-		}
+		} catch (e) {}
 	}
 
 	return [from, to]
