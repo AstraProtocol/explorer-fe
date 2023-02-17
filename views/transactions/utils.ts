@@ -268,7 +268,11 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 
 	let from = ''
 	let to = ''
-	if (isEmpty(result)) {
+	if (!isEmpty(result) && (!isEmpty(result.from) || !isEmpty(result.to))) {
+		// parsed from body data
+		from = result.from
+		to = result.to
+	} else {
 		// parse from first message body data
 		const message = messages?.[0]
 		try {
@@ -277,10 +281,6 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 		} catch (e) {
 			Sentry.captureException(e)
 		}
-	} else {
-		// parsed from body data
-		from = result.from
-		to = result.to
 	}
 
 	return [from, to]
