@@ -6,12 +6,7 @@ export default function useContractCode(address: string): UseContractCodeData {
 	const [hookData, setState] = useState<ContractCodeData>(undefined)
 
 	const _fetchCondition = () => {
-		return [
-			API_LIST.CONTRACT_CODE,
-			{
-				address
-			}
-		]
+		return [`${API_LIST.CONTRACT_CODE}${address}`]
 	}
 	const { data, mutate, isValidating } = useSWRImmutable<ContractCodeResponse>(_fetchCondition())
 

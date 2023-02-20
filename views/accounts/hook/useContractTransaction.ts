@@ -15,17 +15,17 @@ export default function useContractTransaction(address: string, params: string):
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.CONTRACT_TRANSACTION}${params}`,
+				`${API_LIST.CONTRACT_TRANSACTION}${address}${params}`,
 				{
-					address
+					blockscout: true
 				}
 			]
 		}
 
 		return [
-			API_LIST.CONTRACT_TRANSACTION,
+			`${API_LIST.CONTRACT_TRANSACTION}${address}`,
 			{
-				address,
+				blockscout: true,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
@@ -42,9 +42,9 @@ export default function useContractTransaction(address: string, params: string):
 	useEffect(() => {
 		if (data?.result) {
 			setState({
-				hasNextPage: data.hasNextPage,
-				nextPagePath: data.nextPagePath,
-				result: data.result.map(d => ({ ...d, timeStamp: parseInt(d.timeStamp) * 1000 }))
+				hasNextPage: data.result.hasNextPage,
+				nextPagePath: data.result.nextPagePath,
+				result: data.result.result.map(d => ({ ...d, timeStamp: parseInt(d.timeStamp) * 1000 }))
 			})
 		}
 	}, [data])

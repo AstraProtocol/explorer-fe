@@ -18,17 +18,17 @@ export default function useAddressTokenTransfers(
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.ADDRESS_TOKEN_TRANSFER}${params}`,
+				`${API_LIST.ADDRESS_TOKEN_TRANSFER}${address}${params}`,
 				{
-					address
+					blockscout: true
 				}
 			]
 		}
 
 		return [
-			API_LIST.ADDRESS_TOKEN_TRANSFER,
+			`${API_LIST.ADDRESS_TOKEN_TRANSFER}${address}`,
 			{
-				address,
+				blockscout: true,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
@@ -44,7 +44,7 @@ export default function useAddressTokenTransfers(
 
 	useEffect(() => {
 		if (data?.result) {
-			setState(data)
+			setState(data.result)
 		}
 	}, [data])
 

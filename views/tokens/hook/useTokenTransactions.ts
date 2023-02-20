@@ -16,17 +16,17 @@ export default function useTokenTransactions(token: string, params: string | und
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.TOKEN_TRANSACTIONS}${params}`,
+				`${API_LIST.TOKEN_TRANSACTIONS}${token}${params}`,
 				{
-					contractaddress: token
+					blockscout: true
 				}
 			]
 		}
 
 		return [
-			API_LIST.TOKEN_TRANSACTIONS,
+			`${API_LIST.TOKEN_TRANSACTIONS}${token}`,
 			{
-				contractaddress: token,
+				blockscout: true,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
@@ -36,8 +36,8 @@ export default function useTokenTransactions(token: string, params: string | und
 
 	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 
-	const convertData = (_data: TokenTransactionResponse): TokenTransaction[] => {
-		return data.result.map((d: TokenTransaction) => {
+	const convertData = (_data: TokenTransaction[]): TokenTransaction[] => {
+		return _data.map((d: TokenTransaction) => {
 			const isMint = d.fromAddress === ZERO_ADDRESS
 			const isBurn = d.toAddress === ZERO_ADDRESS
 
@@ -51,9 +51,9 @@ export default function useTokenTransactions(token: string, params: string | und
 	useEffect(() => {
 		if (data?.result) {
 			setState({
-				result: convertData(data),
-				hasNextPage: data.hasNextPage,
-				nextPagePath: data.nextPagePath
+				result: convertData(data?.result?.result),
+				hasNextPage: data.result.hasNextPage,
+				nextPagePath: data.result.nextPagePath
 			})
 		}
 	}, [data])

@@ -145,17 +145,13 @@ interface InternalTransactionItem {
 	toAddressName: string
 }
 interface InternalTransactionReponse {
-	message: 'OK' | string
 	result: InternalTransactionItem[]
-	status: string
 }
 
 interface TransactionRawTraceResponse {
-	message: string
 	result: {
 		rawTrace: any[]
 	}
-	status: string
 }
 
 interface EvmTransactionDetailResponse {

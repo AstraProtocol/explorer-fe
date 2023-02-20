@@ -1,5 +1,5 @@
 import abiDecoder from 'abi-decoder'
-import { evmApi } from 'api'
+import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
 import RowLoader from 'components/Loader/RowLoader'
@@ -25,9 +25,9 @@ export default function Log({ logs, display, evmHash }: LogProps) {
 
 	const getAbi = async (address: string): Promise<AbiItem[]> => {
 		if (evmHash) {
-			const hashAbiRes = await evmApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+			const hashAbiRes = await cosmosApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
 
-			if (hashAbiRes.data.message === 'OK') {
+			if (hashAbiRes.data) {
 				return [hashAbiRes?.data?.result?.abi]
 			}
 		}

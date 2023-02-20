@@ -15,7 +15,7 @@ export default function useAbi(address: string) {
 	const { data } = useSWR<AbiResponse>(_fetch())
 
 	useEffect(() => {
-		if (data.message === 'OK') {
+		if (data) {
 			const abiRaw = data.result
 			setAbi(JSON.parse(abiRaw))
 		}

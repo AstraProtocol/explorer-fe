@@ -1,13 +1,17 @@
 interface TokenTransactionResponse {
-	hasNextPage: boolean
-	nextPagePath: any
-	result: TokenTransaction[]
+	result: {
+		hasNextPage: boolean
+		nextPagePath: any
+		result: TokenTransaction[]
+	}
 }
 
 interface NftTransferResponse {
-	hasNextPage: boolean
-	nextPagePath: any
-	result: NftTransfer[]
+	result: {
+		hasNextPage: boolean
+		nextPagePath: any
+		result: NftTransfer[]
+	}
 }
 
 interface TokenHolderResponse {
@@ -16,9 +20,11 @@ interface TokenHolderResponse {
 }
 
 interface TokenInventoryResponse {
-	hasNextPage: boolean
-	nextPagePath: string
-	result: []
+	result: {
+		hasNextPage: boolean
+		nextPagePath: string
+		result: []
+	}
 }
 
 interface TopAstraHolderResponse {
@@ -54,8 +60,10 @@ interface UseTokenHookData {
 }
 
 interface TokenResponse {
-	result: Token[]
-	hasNextPage: boolean
+	result: {
+		result: Token[]
+		hasNextPage: boolean
+	}
 }
 
 interface TokenTransaction {
