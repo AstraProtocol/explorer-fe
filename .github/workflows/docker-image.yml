@@ -2,9 +2,9 @@ name: CI explorer-fe
 
 on:
     push:
-        branches: ['dev']
+        branches: ['dev.*']
     pull_request:
-        branches: ['dev']
+        branches: ['dev.*']
 
 env:
     BUILD_IMAGE: 'maven:3.6-jdk-11'
