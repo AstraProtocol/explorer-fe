@@ -1,0 +1,17 @@
+name: CI explorer-fe
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+
+  build:
+
+    runs-on: [ self-hosted, linux ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag explorer-fe:$GITHUB_RUN_NUMBER
