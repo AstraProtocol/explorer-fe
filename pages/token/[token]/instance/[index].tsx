@@ -1,6 +1,6 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
 import * as Sentry from '@sentry/nextjs'
-import { evmApi } from 'api'
+import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
@@ -57,10 +57,9 @@ export async function getServerSideProps({ params }) {
 
 	if (Web3.utils.isAddress(token, parseInt(process.env.NEXT_PUBLIC_CHAIN_ID) || 11115)) {
 		try {
-			const tokenData = await evmApi.get<TokenInstanceResponse>(
-				`${API_LIST.TOKEN_METADATA}${token}&tokenid=${index}`
+			const tokenData = await cosmosApi.get<TokenInstanceResponse>(
+				`${API_LIST.TOKEN_METADATA}contractaddress=${token}/tokenid=${index}`
 			)
-
 			if (tokenData.data.result) {
 				return {
 					props: {

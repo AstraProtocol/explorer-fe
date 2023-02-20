@@ -8,16 +8,16 @@ export default function useTokenInventory(token: string, params: string) {
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.TOKEN_INVENTORY}${params}`,
+				`${API_LIST.TOKEN_INVENTORY}${token}${params}`,
 				{
-					contractaddress: token
+					blockscout: true
 				}
 			]
 		}
 		return [
-			API_LIST.TOKEN_INVENTORY,
+			`${API_LIST.TOKEN_INVENTORY}${token}`,
 			{
-				contractaddress: token
+				blockscout: true
 			}
 		]
 	}
@@ -25,7 +25,11 @@ export default function useTokenInventory(token: string, params: string) {
 
 	useEffect(() => {
 		if (data?.result) {
-			setState({ result: data.result, hasNextPage: data.hasNextPage, nextPagePath: data.nextPagePath })
+			setState({
+				result: data.result.result,
+				hasNextPage: data.result.hasNextPage,
+				nextPagePath: data.result.nextPagePath
+			})
 		}
 	}, [data])
 	return {

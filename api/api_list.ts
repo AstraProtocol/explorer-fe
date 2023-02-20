@@ -6,7 +6,7 @@ const API_LIST = {
 	TRANSACTION_OF_BLOCK: '/api/v1/blocks/:id/transactions',
 	LATEST_BLOCK: '/api/v1/eth-block-number',
 
-	ALL_TOKENS: '/api/v1/accounts/get-list-tokens?blockscout=true', // &page=1&offset=20
+	ALL_TOKENS: '/api/v1/contract/get-list-tokens?blockscout=true', // &page=1&offset=20
 	ALL_HOLDERS: '/api/v1/accounts/get-top-addresses-balance?blockscout=true', // &page=1&offset=20
 	ALL_TRANSACTIONS: '/api/v1/transactions',
 
@@ -36,21 +36,21 @@ const API_LIST = {
 	ADDRESS_COIN_BALANCE_HISTORY_CHART: 'api/v1/accounts', // address, page, offset=?
 	ADDRESS_TRANSACTION: '/api/v1/accounts',
 	ADDRESS_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal', // address, page, offset
-	ADDRESS_TOKEN_TRANSFER: 'evm_/api/v1?module=account&action=getlisttokentransfers', // address=?
-	CONTRACT_TRANSACTION: 'evm_/api/v1?module=account&action=txlist', // address = ?
+	ADDRESS_TOKEN_TRANSFER: '/api/v1/accounts/token-transfers/', // address=?
+	CONTRACT_TRANSACTION: '/api/v1/contract/txs/', // address = ?
 
-	TOKEN_DETAIL: '/api/v1?module=token&action=gettoken&contractaddress=', // SSR
-	TOKEN_TRANSACTIONS: 'evm_/api/v1?module=token&action=getlisttokentransfers',
-	TOKEN_HOLDERS: 'evm_/api/v1?module=token&action=getTokenHolders', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
-	TOKEN_INVENTORY: 'evm_/api/v1?module=token&action=getinventory', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0
-	TOKEN_METADATA: '/api/v1?module=token&action=getmetadata&contractaddress=',
-	TOKEN_TRANSER_BY_TOKEN_ID: 'evm_/api/v1?module=token&action=tokentransfersbytokenid', // contractaddress=0x8CB41dA24793D4515E6b96D1adA50b721878C0Ca&tokenid=10
+	TOKEN_DETAIL: '/api/v1/contract/token-detail/', // SSR
+	TOKEN_TRANSACTIONS: '/api/v1/contract/token-transfers/',
+	TOKEN_HOLDERS: '/api/v1/contract/token-holders/', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0&page=1&offset=20
+	TOKEN_INVENTORY: '/api/v1/contract/token-inventory/', // contractaddress=0x60baCCdfdCa114f97F32121f6b2879fB555Df4d0
+	TOKEN_METADATA: '/api/v1/contract/token-metadata/',
+	TOKEN_TRANSER_BY_TOKEN_ID: '/api/v1/contract/token-transfers-by-tokenid/', // contractaddress=0x8CB41dA24793D4515E6b96D1adA50b721878C0Ca&tokenid=10
 
-	CONTRACT_CODE: 'evm_/api/v1?module=contract&action=getsourcecode',
+	CONTRACT_CODE: '/api/v1/contract/source-code/',
 	VERIFY_CONTRACT: `evm_/verify_smart_contract/contract_verifications`,
 	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus',
-	GET_EVM_VERSION: 'evm_/api/v1/evm-versions',
-	GET_SOLIDITY_COMPILER: 'evm_/api/v1/compiler-versions?compiler=solc',
+	GET_EVM_VERSION: '/api/v1/evm-versions',
+	GET_SOLIDITY_COMPILER: '/api/v1/compiler-versions/',
 
 	// charts && stats
 	GET_TRANSACTION_HISTORY: '/api/v1/transactions-history?daily=true',

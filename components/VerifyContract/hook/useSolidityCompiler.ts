@@ -2,10 +2,10 @@ import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 
-const useSolidityCompiler = (): string[] => {
+const useSolidityCompiler = (type: string = 'solc'): string[] => {
 	const [evmVersions, setEvmVersions] = useState([])
 	const _fetchCondition = () => {
-		return [API_LIST.GET_SOLIDITY_COMPILER]
+		return [`${API_LIST.GET_SOLIDITY_COMPILER}${type}`]
 	}
 	const { data } = useSWRImmutable<any>(_fetchCondition())
 

@@ -52,10 +52,12 @@ interface AddressBalanceResponse {
 }
 
 interface AddressTokenTransferResponse {
-	hasNextPage: boolean
-	result: TokenTransfer[]
-	nextPagePath: string
-	pagination: Pagination
+	result: {
+		hasNextPage: boolean
+		result: TokenTransfer[]
+		nextPagePath: string
+		pagination: Pagination
+	}
 }
 
 interface AddressTokenResponse {

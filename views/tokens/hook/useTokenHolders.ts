@@ -10,9 +10,9 @@ export default function useTokenHolders(token: string, page: number) {
 
 	const _fetchCondition = () => {
 		return [
-			API_LIST.TOKEN_HOLDERS,
+			`${API_LIST.TOKEN_HOLDERS}${token}`,
 			{
-				contractaddress: token,
+				blockscout: true,
 				page,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
@@ -22,8 +22,8 @@ export default function useTokenHolders(token: string, page: number) {
 	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 	useEffect(() => {
 		if (data?.result) {
-			const tokens: any = data.result.map(d => ({ address: d.address, balance: d.value }))
-			setState({ result: tokens, hasNextPage: data.hasNextPage })
+			const tokens: any = data.result.result.map(d => ({ address: d.address, balance: d.value }))
+			setState({ result: tokens, hasNextPage: data.result.hasNextPage })
 		}
 	}, [data])
 	return {
