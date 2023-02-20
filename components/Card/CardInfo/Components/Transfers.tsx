@@ -2,7 +2,7 @@ import { formatNumber } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
-import { isERC721, LinkMaker } from 'utils/helper'
+import { getEnvNumber, isERC721, LinkMaker } from 'utils/helper'
 import { Content } from '../'
 import styles from '../style.module.scss'
 
@@ -63,7 +63,9 @@ const Transfers = ({ content }: { content: Content }) => {
 					</>
 				) : (
 					<>
-						<span className="padding-right-xs">{formatNumber(content?.transfer.value)}</span>
+						<span className="padding-right-xs">
+							{formatNumber(content?.transfer.value, getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS'))}
+						</span>
 						<Typography.LinkText href={LinkMaker.token(data.tokenAddress)}>
 							{data.tokenSymbol}
 						</Typography.LinkText>

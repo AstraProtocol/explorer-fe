@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { isArray, isEmpty } from 'lodash'
 import { TransactionTypeEnum } from 'utils/enum'
+import { getEnvNumber } from 'utils/helper'
 
 export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 	const messageData: CosmosTxMessage[] = []
@@ -363,7 +364,10 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 			const tokenName = getTokenName(amount)
 			vestingPeriodsContent.push([
 				formatNumber(length),
-				`${formatNumber(formatEther(totalAmount), 5)} ${tokenName}`
+				`${formatNumber(
+					formatEther(totalAmount),
+					getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
+				)} ${tokenName}`
 			])
 		}
 		return {
