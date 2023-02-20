@@ -26,7 +26,12 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
         with:
+          context: .
+          push: false
+          tags: explorer-fe:dev
           file: Dockerfile
           build-args: |
             SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
