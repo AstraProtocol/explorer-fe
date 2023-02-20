@@ -73,12 +73,14 @@ interface CommonStatsResponse {
 	result: CommonStats
 }
 
+interface GasTrackerResponse {
+	result: GasTracker
+}
+
 interface GasTracker {
-	result: {
-		average: number
-		fast: number
-		slow: number
-	}
+	average: number
+	fast: number
+	slow: number
 }
 
 interface LatestBlock {

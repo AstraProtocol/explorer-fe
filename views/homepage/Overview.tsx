@@ -45,7 +45,7 @@ const Overview = () => {
 	const { data: commonStatsDataRaw, error: commonStatsError } = useSWR<CommonStatsResponse>(
 		_fetchCondition('common-stats')
 	)
-	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTracker>(_fetchCondition('gas_avg'))
+	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTrackerResponse>(_fetchCondition('gas_avg'))
 
 	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw?.result)
 	const commonStatsData = getCommonStatsData(commonStatsDataRaw?.result)
