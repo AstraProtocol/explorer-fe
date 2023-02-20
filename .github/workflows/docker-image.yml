@@ -17,6 +17,8 @@ env:
   NEXT_PUBLIC_SENTRY_CLIENT_DSN: 'https://0df08007fb014e5fa05ce2a4fb3fccea@sentry.tiki.com.vn/473'
   NEXT_PUBLIC_SENTRY_SSR_DSN: 'https://b3b5ac84a31d407aa23b14b84af7f10d@sentry.tiki.com.vn/475'
   NEXT_PUBLIC_ENV: 'testnet'
+  GITHUB_TOKEN_READ_ORG_A: ${{ secrets.GH_TOKEN_READ_ORG_A }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 jobs:
   build:
@@ -50,3 +52,4 @@ jobs:
             NEXT_PUBLIC_SENTRY_CLIENT_DSN=$NEXT_PUBLIC_SENTRY_CLIENT_DSN 
             NEXT_PUBLIC_SENTRY_SSR_DSN=$NEXT_PUBLIC_SENTRY_SSR_DSN 
             NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
+            GITHUB_TOKEN=$GITHUB_TOKEN_READ_ORG_A
