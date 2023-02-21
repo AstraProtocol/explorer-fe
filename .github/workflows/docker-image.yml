@@ -25,6 +25,8 @@ jobs:
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@v3
+      - name: test
+        run: echo $SENTRY_AUTH_TOKEN
       - name: Set up Docker Context for Buildx
         id: buildx-context
         run: |
