@@ -97,7 +97,9 @@ const OverviewChart = ({}) => {
 		_fetchCondition('market_history_price')
 	)
 	const { data: historyCounterTransactionRaw, error: historyCounterTransactionError } =
-		useSWR<TransactionHistoryCounterResponse>(_fetchCondition('transaction_history_counter'))
+		useSWR<TransactionHistoryCounterResponse>(_fetchCondition('transaction_history_counter'), {
+			refreshInterval: parseInt(process.env.NEXT_PUBLIC_CHART_INTERVAL)
+		})
 
 	// const availableSupply = JSON.parse(historyPriceRaw.supply_data)
 	const marketHistoryData = historyPriceRaw ? humps.camelizeKeys(JSON.parse(historyPriceRaw.result.history_data)) : []
