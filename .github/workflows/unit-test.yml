@@ -4,7 +4,6 @@ on:
     pull_request:
     push:
         branches:
-            - feat/add-config-test
             - dev
             - main
 
