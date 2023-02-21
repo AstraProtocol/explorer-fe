@@ -17,7 +17,7 @@ env:
   NEXT_PUBLIC_SENTRY_CLIENT_DSN: 'https://0df08007fb014e5fa05ce2a4fb3fccea@sentry.tiki.com.vn/473'
   NEXT_PUBLIC_SENTRY_SSR_DSN: 'https://b3b5ac84a31d407aa23b14b84af7f10d@sentry.tiki.com.vn/475'
   NEXT_PUBLIC_ENV: 'testnet'
-  GITHUB_TOKEN_READ_ORG_A: 
+  GITHUB_TOKEN_READ_ORG_A: ${{ secrets.GH_TOKEN_READ_ORG_A }}
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: test
-        run: echo $SENTRY_AUTH_TOKEN
+        run: echo $NEXT_PUBLIC_GA_MEASUREMENT_ID
       - name: Set up Docker Context for Buildx
         id: buildx-context
         run: |
@@ -44,7 +44,7 @@ jobs:
           tags: explorer-fe:dev
           file: Dockerfile
           build-args: |
-            SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
             NEXT_PUBLIC_COSMOS_API=$NEXT_PUBLIC_COSMOS_API 
             NEXT_PUBLIC_EVM_API=$NEXT_PUBLIC_EVM_API 
             NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL 
@@ -54,4 +54,4 @@ jobs:
             NEXT_PUBLIC_SENTRY_CLIENT_DSN=$NEXT_PUBLIC_SENTRY_CLIENT_DSN 
             NEXT_PUBLIC_SENTRY_SSR_DSN=$NEXT_PUBLIC_SENTRY_SSR_DSN 
             NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
-            GITHUB_TOKEN=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
+            GITHUB_TOKEN=${{ secrets.GH_TOKEN_READ_ORG_A }}
