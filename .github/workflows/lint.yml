@@ -29,6 +29,7 @@ jobs:
                   scope: '@astraprotocol'
                   token: ${{ secrets.GITHUB_TOKEN }}
 
+
             - name: Get yarn cache directory path
               id: yarn-cache-dir-path
               run: echo "::set-output name=dir::$(yarn cache dir)"
