@@ -3,17 +3,7 @@ const { withSentryConfig } = require('@sentry/nextjs')
 
 const nextConfig = {
 	reactStrictMode: false,
-	env: {
-		NEXT_PUBLIC_BLOCK_INTERVAL: '5000',
-		NEXT_PUBLIC_TRANSACTION_INTERVAL: '5000',
-		NEXT_PUBLIC_CHART_INTERVAL: 600000, // 10 mintues refresh chart overview: price, transactions
-		NEXT_PUBLIC_DATE_FORMAT_VI: 'DD/MM/YYYY',
-		NEXT_PUBLIC_DATE_FROMAT_OTHER: 'MM/DD/YYYY',
-		NEXT_PUBLIC_ITEM_SHOW_HOME_PAGE: 7,
-		NEXT_PUBLIC_PAGE_OFFSET: 10,
-		NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS: 4,
-		NEXT_PUBLIC_NATIVE_TOKEN: 'asa'
-	},
+
 	images: {
 		remotePatterns: [
 			{
