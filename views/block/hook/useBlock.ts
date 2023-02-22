@@ -2,12 +2,13 @@ import API_LIST from 'api/api_list'
 import usePagination from 'hooks/usePagination'
 import { differenceWith, isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { setLatestBlock } from 'slices/commonSlice'
+import { useAppDispatch } from 'store/hooks'
 import useSWR from 'swr'
 
 export default function useBlock() {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+
 	const [_items, _setBlockItem] = useState<BlockItem[]>()
 	const { pagination, setPagination } = usePagination('/blocks')
 	const _fetchCondition = () => {
