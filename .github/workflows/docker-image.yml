@@ -64,13 +64,23 @@ jobs:
             NEXT_PUBLIC_SENTRY_SSR_DSN=$NEXT_PUBLIC_SENTRY_SSR_DSN 
             NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
             GITHUB_TOKEN=${{ secrets.GH_TOKEN_READ_ORG_A }}
-      # - name: Trigger Argocd Deploy
-      #   uses: clowdhaus/argo-cd-action/@main
-      #   with:
-      #     command: app create
-      #     options: |
-      #       --client
-      #       --insecure
-      #       --server argocd.astra-explorer.tiki.services
-      #       --auth-token ${{ secrets.ARGOCD_TOKEN }}
-            
+      - name: Trigger Argocd Deploy
+        uses: clowdhaus/argo-cd-action/@main
+        with:
+          command: app create
+          options: |
+            --insecure
+            --server argocd.astra-explorer.tiki.services
+            --auth-token ${{ secrets.ARGOCD_TOKEN }}
+            --repo https://github.com/AstraProtocol/astra-helm
+            --path generic/
+            --revision master
+            --dest-namespace default 
+            --dest-server https://kubernetes.default.svc 
+            --project devops 
+            --values ../values/explorer-fe.dev.yaml 
+            --name explorer-fe 
+            --helm-set image.imageName=explorer-fe:dev-ci-build-35 
+            --helm-set projectName=explorer-fe 
+            --auth-token=${{ secrets.ARGOCD_TOKEN }} 
+            --upsert
