@@ -3,20 +3,23 @@ import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import StaticsCard from 'components/Card/Layout/StaticsCard'
 import numeral from 'numeral'
+import { getLatestBlock } from 'slices/commonSlice'
 import useSWR from 'swr'
 import { Icon } from 'utils/enum'
+import { useAppSelector } from '../../store/hooks'
 
 interface Props {
 	classes?: string
 	estimateCountedData: EstimateCountedInfo
 	commonStatsData: CommonStats
+	hasFetchLatestBlock?: boolean
 }
 
 function getLastestBlock(latestBlock: LatestBlock) {
 	return latestBlock ? parseInt(latestBlock.result.result) : undefined
 }
 
-const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Props) => {
+const MarketStatistics = ({ classes, hasFetchLatestBlock, commonStatsData, estimateCountedData }: Props) => {
 	const { isMobile } = useMobileLayout('small')
 	const _fetchCondition = key => {
 		switch (key) {
@@ -27,10 +30,14 @@ const MarketStatistics = ({ classes, commonStatsData, estimateCountedData }: Pro
 	const { data: latestBlockRaw, error: latestBlockError } = useSWR<LatestBlock>(_fetchCondition('latest_block'), {
 		refreshInterval: 2000
 	})
-	const latestBlock = getLastestBlock(latestBlockRaw)
+
+	let latestBlock = useAppSelector(getLatestBlock)
+	if (hasFetchLatestBlock) {
+		latestBlock = getLastestBlock(latestBlockRaw)
+	}
 
 	return (
-		<div>
+		<div className={classes}>
 			<div className={clsx('row md-wrap', !isMobile && 'margin-bottom-2xl')}>
 				<StaticsCard
 					classes={isMobile ? 'margin-bottom-lg' : 'margin-right-xl'}
