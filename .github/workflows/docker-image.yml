@@ -80,7 +80,7 @@ jobs:
             --project devops 
             --values ../values/explorer-fe.dev.yaml 
             --name explorer-fe 
-            --helm-set image.imageName=${{ steps.pushimage.outputs.imageid }}
+            --helm-set image.imageName=explorer-fe:${{ github.ref_name }}-build-${{ github.run_number }}
             --helm-set projectName=explorer-fe 
             --auth-token=${{ secrets.ARGOCD_TOKEN }} 
             --upsert
@@ -94,3 +94,4 @@ jobs:
             --timeout 600 
             --retry-limit 2
             --auth-token=${{ secrets.ARGOCD_TOKEN }} 
+            --server argocd.astra-explorer.tiki.services
