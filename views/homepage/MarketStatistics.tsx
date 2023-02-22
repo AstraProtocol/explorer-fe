@@ -21,13 +21,11 @@ function getLastestBlock(latestBlock: LatestBlock) {
 
 const MarketStatistics = ({ classes, hasFetchLatestBlock, commonStatsData, estimateCountedData }: Props) => {
 	const { isMobile } = useMobileLayout('small')
-	const _fetchCondition = key => {
-		switch (key) {
-			case 'latest_block':
-				return [API_LIST.LATEST_BLOCK]
-		}
+	const _fetchCondition = () => {
+		if (!hasFetchLatestBlock) return ''
+		return [API_LIST.LATEST_BLOCK]
 	}
-	const { data: latestBlockRaw, error: latestBlockError } = useSWR<LatestBlock>(_fetchCondition('latest_block'), {
+	const { data: latestBlockRaw, error: latestBlockError } = useSWR<LatestBlock>(_fetchCondition(), {
 		refreshInterval: 2000
 	})
 
