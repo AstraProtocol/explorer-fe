@@ -102,7 +102,7 @@ export const items: MenuItem[] = [
 	// },
 	{
 		id: '5',
-		label: 'Astra Mainnet',
+		label: process.env.NEXT_PUBLIC_ENV == 'mainnet' ? 'Astra Mainnet' : 'Astra Testnet',
 		prefixIcon: <LiveIcon />,
 		link: '/'
 		// submenus: [
