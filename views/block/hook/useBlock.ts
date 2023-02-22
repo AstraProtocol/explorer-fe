@@ -38,7 +38,7 @@ export default function useBlock() {
 		if (data?.result) {
 			// Dispatch latest block for cache
 			// Do not call directly get eth-block-number -> It dumps BE
-			dispatch(setLatestBlock(data?.result?.[0].blockHeight + 1))
+			dispatch(setLatestBlock((data?.result?.[0].blockHeight || 0) + 1))
 
 			if (pagination.page === 1 && isEmpty(_items)) {
 				_setBlockItem(data?.result)
