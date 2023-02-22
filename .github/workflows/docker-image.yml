@@ -49,8 +49,8 @@ jobs:
           context: .
           push: true
           tags: |
-            asia.gcr.io/tiki-prod-astra-validator-ca1a/${{ github.repository }}:latest
-            asia.gcr.io/tiki-prod-astra-validator-ca1a/${{ github.repository }}:${{ github.ref_name }}-build-${{ github.run_number }}
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:latest
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:${{ github.ref_name }}-build-${{ github.run_number }}
           file: Dockerfile
           build-args: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
