@@ -58,8 +58,9 @@ export function formatCurrencyValue(value: number | string | undefined, symbol =
 }
 
 export function formatGasValue(value) {
-	if (isNaN(value) || isUndefined(value)) return 'NaN'
-	if (value === 0 || value === '0') return `0`
+	const minimumValue = 0.01
+	if (isNaN(value) || isUndefined(value)) return '0'
+	if (value === 0 || value === '0' || value <= minimumValue) return `0`
 	if (value <= 1000) return `${numeral(value).format('0,0')} NanoAstra`
 	// if (value <= 1000) return `${numeral(value).format('0,0')} MWEI`
 	if (value <= 1000000) return `${numeral(value / 10 ** 3).format('0,0')} MicroAstra`
