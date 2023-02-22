@@ -42,29 +42,29 @@ jobs:
           registry: asia.gcr.io
           username: _json_key
           password: ${{ secrets.GCR_CREDS }}
-      # - name: Build and push
-      #   id: pushimage
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: |
-      #       asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:latest
-      #       asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:${{ github.ref_name }}-build-${{ github.run_number }}
-      #     file: Dockerfile
-      #     build-args: |
-      #       SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-      #       NEXT_PUBLIC_COSMOS_API=$NEXT_PUBLIC_COSMOS_API 
-      #       NEXT_PUBLIC_EVM_API=$NEXT_PUBLIC_EVM_API 
-      #       NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL 
-      #       NEXT_PUBLIC_CHAIN_ID=$NEXT_PUBLIC_CHAIN_ID 
-      #       NEXT_PUBLIC_TITLE=$NEXT_PUBLIC_TITLE 
-      #       NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID 
-      #       NEXT_PUBLIC_SENTRY_CLIENT_DSN=$NEXT_PUBLIC_SENTRY_CLIENT_DSN 
-      #       NEXT_PUBLIC_SENTRY_SSR_DSN=$NEXT_PUBLIC_SENTRY_SSR_DSN 
-      #       NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
-      #       GITHUB_TOKEN=${{ secrets.GH_TOKEN_READ_ORG_A }}
-      - name: Trigger Argocd Deploy
+      - name: Build and push
+        id: pushimage
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:latest
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/explorer-fe:${{ github.ref_name }}-build-${{ github.run_number }}
+          file: Dockerfile
+          build-args: |
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+            NEXT_PUBLIC_COSMOS_API=$NEXT_PUBLIC_COSMOS_API 
+            NEXT_PUBLIC_EVM_API=$NEXT_PUBLIC_EVM_API 
+            NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL 
+            NEXT_PUBLIC_CHAIN_ID=$NEXT_PUBLIC_CHAIN_ID 
+            NEXT_PUBLIC_TITLE=$NEXT_PUBLIC_TITLE 
+            NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID 
+            NEXT_PUBLIC_SENTRY_CLIENT_DSN=$NEXT_PUBLIC_SENTRY_CLIENT_DSN 
+            NEXT_PUBLIC_SENTRY_SSR_DSN=$NEXT_PUBLIC_SENTRY_SSR_DSN 
+            NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
+            GITHUB_TOKEN=${{ secrets.GH_TOKEN_READ_ORG_A }}
+      - name: Create Argocd App
         uses: clowdhaus/argo-cd-action/@main
         with:
           command: app create
@@ -80,7 +80,17 @@ jobs:
             --project devops 
             --values ../values/explorer-fe.dev.yaml 
             --name explorer-fe 
-            --helm-set image.imageName=explorer-fe:dev-ci-build-35 
+            --helm-set image.imageName=${{ steps.pushimage.outputs.imageid }}
             --helm-set projectName=explorer-fe 
             --auth-token=${{ secrets.ARGOCD_TOKEN }} 
             --upsert
+      - name: Deploy Image
+        uses: clowdhaus/argo-cd-action/@main
+        with:
+          command: app sync explorer-fe
+          options: |
+            --insecure
+            --http-retry-max 10 
+            --timeout 600 
+            --retry-limit 2
+            --auth-token=${{ secrets.ARGOCD_TOKEN }} 
