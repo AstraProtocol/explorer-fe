@@ -2,7 +2,6 @@ import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/Crypt
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import useDelayUntilDone from 'hooks/useDelayUntilDone'
-import { isEmpty } from 'lodash'
 import { useCallback } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
@@ -17,9 +16,11 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 		refreshInterval: 0
 	})
 
+	console.log({ data })
+
 	const isLoadedData = useCallback(() => {
-		return !isEmpty(data) || error
-	}, [data, error])
+		return !!data || !!error || !hash
+	}, [data, error, hash])
 
 	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
