@@ -25,10 +25,10 @@ export default function Log({ logs, display, evmHash }: LogProps) {
 
 	const getAbi = async (address: string): Promise<AbiItem[]> => {
 		if (evmHash) {
-			const hashAbiRes = await cosmosApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+			const hashAbiRes = await cosmosApi.get<LogAbiResponse>(`${API_LIST.ABI}${address}`)
 
 			if (hashAbiRes.data) {
-				return [hashAbiRes?.data?.result?.abi]
+				return JSON.parse(hashAbiRes?.data?.result || '{}')
 			}
 		}
 
@@ -66,8 +66,6 @@ export default function Log({ logs, display, evmHash }: LogProps) {
 							}
 							item.methodParams = logObj.events
 						}
-					} else {
-						items = []
 					}
 				}
 				setItems(items)
