@@ -16,8 +16,6 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 		refreshInterval: 0
 	})
 
-	console.log({ data })
-
 	const isLoadedData = useCallback(() => {
 		return !!data || !!error || !hash
 	}, [data, error, hash])
