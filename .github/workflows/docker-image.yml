@@ -39,15 +39,18 @@ jobs:
       - name: Login to GCR
         uses: docker/login-action@v2
         with:
-          registry: gcr.io
+          registry: asia.gcr.io
           username: _json_key
           password: ${{ secrets.GCR_CREDS }}
       - name: Build and push
+        id: pushimage
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: explorer-fe:${{ github.ref_name }}-build-${{ github.run_number }}
+          tags: |
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/${{ github.repository }}:latest
+            asia.gcr.io/tiki-prod-astra-validator-ca1a/${{ github.repository }}:${{ github.ref_name }}-build-${{ github.run_number }}
           file: Dockerfile
           build-args: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
