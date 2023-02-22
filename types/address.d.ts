@@ -39,6 +39,10 @@ interface HashAbiResponse {
 	}
 }
 
+interface LogAbiResponse {
+	result: string
+}
+
 interface AddressCounterResponse {
 	message: string
 	result: AddressCounterData
