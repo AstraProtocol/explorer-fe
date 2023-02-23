@@ -29,6 +29,7 @@
 		"chart.js": "^3.9.1",
 		"chartjs-adapter-dayjs": "^1.0.0",
 		"clsx": "^1.2.1",
+		"cypress": "^12.6.0",
 		"dayjs": "^1.11.5",
 		"ethers": "^5.7.1",
 		"humps": "^2.0.1",
