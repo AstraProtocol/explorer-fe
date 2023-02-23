@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import abiDecoder from 'abi-decoder'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
@@ -25,13 +26,16 @@ export default function Log({ logs, display, evmHash }: LogProps) {
 
 	const getAbi = async (address: string): Promise<AbiItem[]> => {
 		if (evmHash) {
-			const hashAbiRes = await cosmosApi.get<LogAbiResponse>(`${API_LIST.ABI}${address}`)
+			try {
+				const hashAbiRes = await cosmosApi.get<LogAbiResponse>(`${API_LIST.ABI}${address}`)
 
-			if (hashAbiRes.data) {
-				return JSON.parse(hashAbiRes?.data?.result || '{}')
+				if (hashAbiRes.data) {
+					return JSON.parse(hashAbiRes?.data?.result || '{}')
+				}
+			} catch (e) {
+				Sentry.captureException(e)
 			}
 		}
-
 		return undefined
 	}
 
