@@ -112,7 +112,7 @@ export default function TransactionBriefRow({
 													href={LinkMaker.address(to)}
 													fontSize="money-2xs"
 												>
-													{ellipseBetweenText(to)}
+													{ellipseBetweenText(to, 6, 6)}
 												</Typography.LinkText>
 											</>
 										)}
