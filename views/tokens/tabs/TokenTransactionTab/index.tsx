@@ -46,7 +46,11 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 			) : (
 				<div style={{ overflowY: 'auto' }}>
 					{result.map((item, index) => (
-						<TokenTransaction key={item.transactionHash} tokenData={tokenData} transaction={item} />
+						<TokenTransaction
+							key={`${item.transactionHash}-${item.fromAddress}-${item.toAddress}-${item.tokenSymbol}`}
+							tokenData={tokenData}
+							transaction={item}
+						/>
 					))}
 				</div>
 			)}
