@@ -2,9 +2,13 @@ import API_LIST from 'api/api_list'
 import usePagination from 'hooks/usePagination'
 import { differenceWith, isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
+import { setLatestBlock } from 'slices/commonSlice'
+import { useAppDispatch } from 'store/hooks'
 import useSWR from 'swr'
 
 export default function useBlock() {
+	const dispatch = useAppDispatch()
+
 	const [_items, _setBlockItem] = useState<BlockItem[]>()
 	const { pagination, setPagination } = usePagination('/blocks')
 	const _fetchCondition = () => {
@@ -33,6 +37,10 @@ export default function useBlock() {
 
 	useEffect(() => {
 		if (data?.result) {
+			// Dispatch latest block for cache
+			// Do not call directly get eth-block-number -> It dumps BE
+			dispatch(setLatestBlock((data?.result?.[0].blockHeight || 0) + 1))
+
 			if (pagination.page === 1 && isEmpty(_items)) {
 				_setBlockItem(data?.result)
 				setPagination({

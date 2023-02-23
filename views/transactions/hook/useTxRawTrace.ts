@@ -8,12 +8,7 @@ export default function useTxRawTrace(txhash: string, type: 'evm' | 'cosmos') {
 	const _fetchCondition = () => {
 		if (type === 'cosmos') return ''
 
-		return [
-			`${API_LIST.TRANSACTION_RAW_TRACE}`,
-			{
-				txhash
-			}
-		]
+		return [`${API_LIST.TRANSACTION_RAW_TRACE}${txhash}`]
 	}
 	const { data } = useSWR<TransactionRawTraceResponse>(_fetchCondition())
 

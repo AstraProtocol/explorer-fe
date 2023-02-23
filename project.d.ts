@@ -33,8 +33,10 @@ interface TransactionHistoryCounter {
 }
 
 interface MarketHistoryPriceResponse {
-	history_data: string
-	supply_data: string
+	result: {
+		history_data: string
+		supply_data: string
+	}
 }
 
 interface TransactionHistoryCounterResponse {
@@ -71,6 +73,10 @@ interface CommonStatsResponse {
 	result: CommonStats
 }
 
+interface GasTrackerResponse {
+	result: GasTracker
+}
+
 interface GasTracker {
 	average: number
 	fast: number
@@ -78,9 +84,11 @@ interface GasTracker {
 }
 
 interface LatestBlock {
-	jsonrpc: string
-	result: string
-	id: number
+	result: {
+		jsonrpc: string
+		result: string
+		id: number
+	}
 }
 
 interface MarketPriceResponse {

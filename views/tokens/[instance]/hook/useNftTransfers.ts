@@ -20,19 +20,17 @@ export default function useNftTransfer(token: string, tokenId: string, params: s
 	const _fetchCondition = () => {
 		if (params) {
 			return [
-				`${API_LIST.TOKEN_TRANSER_BY_TOKEN_ID}${params}`,
+				`${API_LIST.TOKEN_TRANSER_BY_TOKEN_ID}contractaddress=${token}/tokenid=${tokenId}${params}`,
 				{
-					contractaddress: token,
-					tokenid: tokenId
+					blockscout: true
 				}
 			]
 		}
 
 		return [
-			API_LIST.TOKEN_TRANSER_BY_TOKEN_ID,
+			`${API_LIST.TOKEN_TRANSER_BY_TOKEN_ID}contractaddress=${token}/tokenid=${tokenId}`,
 			{
-				contractaddress: token,
-				tokenid: tokenId,
+				blockscout: true,
 				page: 1,
 				offset: getEnvNumber('NEXT_PUBLIC_PAGE_OFFSET')
 			}
@@ -40,8 +38,8 @@ export default function useNftTransfer(token: string, tokenId: string, params: s
 	}
 	const { data } = useSWR<NftTransferResponse>(_fetchCondition())
 
-	const convertData = (_data: NftTransferResponse): NftTransfer[] => {
-		return data.result.map((d: NftTransfer) => {
+	const convertData = (_data: NftTransfer[]): NftTransfer[] => {
+		return _data.map((d: NftTransfer) => {
 			const isMint = d.fromAddress === ZERO_ADDRESS
 			const isBurn = d.toAddress === ZERO_ADDRESS
 
@@ -55,9 +53,9 @@ export default function useNftTransfer(token: string, tokenId: string, params: s
 	useEffect(() => {
 		if (data?.result) {
 			setState({
-				result: convertData(data),
-				hasNextPage: data.hasNextPage,
-				nextPagePath: data.nextPagePath
+				result: convertData(data.result?.result),
+				hasNextPage: data.result.hasNextPage,
+				nextPagePath: data.result.nextPagePath
 			})
 		}
 	}, [data])

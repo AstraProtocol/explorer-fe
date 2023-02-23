@@ -24,7 +24,7 @@ function getGasAvgData(gasAvgData): GasTracker {
 	return gasAvgData
 }
 
-const Overview = () => {
+const Overview = ({ hasFetchLatestBlock = false }) => {
 	const { isMobile } = useMobileLayout(1112)
 
 	const _fetchCondition = key => {
@@ -40,16 +40,20 @@ const Overview = () => {
 		}
 	}
 	const { data: estimateCountedDataRaw, error: estimateCountedError } = useSWR<EstimateCountedResponse>(
-		_fetchCondition('estimate_counted_info')
+		_fetchCondition('estimate_counted_info'),
+		{ refreshInterval: 60000 }
 	)
 	const { data: commonStatsDataRaw, error: commonStatsError } = useSWR<CommonStatsResponse>(
-		_fetchCondition('common-stats')
+		_fetchCondition('common-stats'),
+		{ refreshInterval: 60000 }
 	)
-	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTracker>(_fetchCondition('gas_avg'))
+	const { data: gasAvgRaw, error: gasAvgError } = useSWR<GasTrackerResponse>(_fetchCondition('gas_avg'), {
+		refreshInterval: 600000
+	})
 
 	const estimateCountedData = getEstimateCountedData(estimateCountedDataRaw?.result)
 	const commonStatsData = getCommonStatsData(commonStatsDataRaw?.result)
-	const gasAvgData = getGasAvgData(gasAvgRaw)
+	const gasAvgData = getGasAvgData(gasAvgRaw?.result)
 
 	return (
 		<div className={clsx(styles.overview, isMobile && 'margin-bottom-2xl')}>
@@ -69,7 +73,11 @@ const Overview = () => {
 						<Price />
 					</Row>
 					<div className={styles.separateBlock} />
-					<MarketStatistics estimateCountedData={estimateCountedData} commonStatsData={commonStatsData} />
+					<MarketStatistics
+						hasFetchLatestBlock={hasFetchLatestBlock}
+						estimateCountedData={estimateCountedData}
+						commonStatsData={commonStatsData}
+					/>
 				</BackgroundCard>
 				{!isMobile && (
 					<div className={clsx('col', styles.centerBlock)}>

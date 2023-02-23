@@ -1,0 +1,25 @@
+name: CI explorer-fe
+
+on:
+    push:
+        branches: ['dev']
+    pull_request:
+        branches: ['dev']
+
+env:
+    BUILD_IMAGE: 'maven:3.6-jdk-11'
+    NEXT_PUBLIC_COSMOS_API: https://chainindexing.astranaut.dev
+    NEXT_PUBLIC_EVM_API: https://blockscout.astranaut.dev
+    NEXT_PUBLIC_URL: https://explorer.astranaut.dev
+    NEXT_PUBLIC_CHAIN_ID: 11115
+    NEXT_PUBLIC_TITLE: Astra Explorer Testnet
+    NEXT_PUBLIC_GA_MEASUREMENT_ID: G-XNDN41NMWF
+    NEXT_PUBLIC_SENTRY_CLIENT_DSN: 'https://0df08007fb014e5fa05ce2a4fb3fccea@sentry.tiki.com.vn/473'
+    NEXT_PUBLIC_SENTRY_SSR_DSN: 'https://b3b5ac84a31d407aa23b14b84af7f10d@sentry.tiki.com.vn/475'
+    NEXT_PUBLIC_ENV: 'testnet'
+
+jobs:
+    build:
+        runs-on: [self-hosted, linux]
+        steps:
+            - uses: actions/checkout@v3

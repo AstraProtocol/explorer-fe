@@ -2,7 +2,6 @@ import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/Crypt
 import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import useDelayUntilDone from 'hooks/useDelayUntilDone'
-import { isEmpty } from 'lodash'
 import { useCallback } from 'react'
 import useSWR from 'swr'
 import { evmInternalTransactionType } from 'utils/evm'
@@ -18,15 +17,16 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 	})
 
 	const isLoadedData = useCallback(() => {
-		return !isEmpty(data) || error
-	}, [data])
+		return !!data || !!error || !hash
+	}, [data, error, hash])
 
 	const { isWaiting } = useDelayUntilDone(isLoadedData)
 
 	const _convertData = useCallback((): TransactionRowProps[] => {
+		if (!data) return []
 		const items: TransactionRowProps[] = []
-		if (data && data?.result.length > 0) {
-			const internalItems = data.result
+		if (data && data?.result && data?.result.length > 0) {
+			const internalItems = data?.result
 			for (let internalItem of internalItems) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),

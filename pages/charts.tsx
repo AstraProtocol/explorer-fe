@@ -17,7 +17,7 @@ const Charts: React.FC<NextPage> = _ => {
 			</Head>
 			<Container>
 				<div className="col md-wrap" style={{ paddingTop: '150px' }}>
-					<Overview />
+					<Overview hasFetchLatestBlock />
 					<Transactions />
 					<Address />
 					<Gas />

@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { isArray, isEmpty } from 'lodash'
 import { TransactionTypeEnum } from 'utils/enum'
+import { getEnvNumber } from 'utils/helper'
 
 export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 	const messageData: CosmosTxMessage[] = []
@@ -84,12 +85,13 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
  */
 export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
+	console.log(amount)
 	if (isArray(amount) && !isEmpty(amount)) {
 		for (let a of amount) {
-			totalAmount = totalAmount.add(BigNumber.from(a.amount))
+			totalAmount = totalAmount.add(BigNumber.from(a.amount || '0'))
 		}
-	} else if (!isArray(amount)) {
-		totalAmount = totalAmount.add(BigNumber.from(amount.amount))
+	} else if (!isArray(amount) && !isEmpty(amount)) {
+		totalAmount = totalAmount.add(BigNumber.from(amount.amount || '0'))
 	}
 
 	return totalAmount.toString()
@@ -98,7 +100,7 @@ export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string
 export const getTokenName = (amount: TokenAmount | TokenAmount[]): string => {
 	if (isArray(amount) && !isEmpty(amount)) {
 		return amount[0].denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
-	} else if (!isArray(amount)) {
+	} else if (!isArray(amount) && !isEmpty(amount)) {
 		return amount.denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
 	}
 
@@ -363,7 +365,10 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 			const tokenName = getTokenName(amount)
 			vestingPeriodsContent.push([
 				formatNumber(length),
-				`${formatNumber(formatEther(totalAmount), 5)} ${tokenName}`
+				`${formatNumber(
+					formatEther(totalAmount),
+					getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
+				)} ${tokenName}`
 			])
 		}
 		return {

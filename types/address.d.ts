@@ -23,13 +23,10 @@ interface AddressDetailResponse {
 }
 
 interface AbiResponse {
-	message: string
 	result: string
-	status: string
 }
 
 interface HashAbiResponse {
-	message: string
 	result: {
 		abi: {
 			inputs: []
@@ -40,7 +37,10 @@ interface HashAbiResponse {
 		}
 		verified: boolean
 	}
-	status: string
+}
+
+interface LogAbiResponse {
+	result: string
 }
 
 interface AddressCounterResponse {
@@ -56,16 +56,20 @@ interface AddressBalanceResponse {
 }
 
 interface AddressTokenTransferResponse {
-	hasNextPage: boolean
-	result: TokenTransfer[]
-	nextPagePath: string
-	pagination: Pagination
+	result: {
+		hasNextPage: boolean
+		result: TokenTransfer[]
+		nextPagePath: string
+		pagination: Pagination
+	}
 }
 
 interface AddressTokenResponse {
-	hasNextPage: boolean
-	nextPagePath: string
-	result: AddressToken[]
+	result: {
+		hasNextPage: boolean
+		nextPagePath: string
+		result: AddressToken[]
+	}
 }
 
 interface AddressInternalTransactionResponse {
@@ -170,6 +174,10 @@ interface AddressCoinBalanceHistory {
 interface AddressCoinBalanceHistoryChartData {
 	date: string
 	value: number
+}
+
+interface AddressCoinBalanceHistoryChartResponse {
+	result: AddressCoinBalanceHistoryChartData[]
 }
 
 interface AddressCounterData {
