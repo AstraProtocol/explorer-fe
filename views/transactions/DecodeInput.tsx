@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import abiDecoder from 'abi-decoder'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
@@ -45,10 +46,14 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 	const getAbi = async (address: string): Promise<{ abi: AbiItem[]; hasVerified: boolean }> => {
 		// datainput from hash
 		if (evmHash) {
-			const hashAbiRes = await cosmosApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
+			try {
+				const hashAbiRes = await cosmosApi.get<HashAbiResponse>(`${API_LIST.HASH_ABI}${evmHash}`)
 
-			if (hashAbiRes.data) {
-				return { abi: [hashAbiRes?.data?.result?.abi], hasVerified: hashAbiRes?.data?.result?.verified }
+				if (hashAbiRes.data) {
+					return { abi: [hashAbiRes?.data?.result?.abi], hasVerified: hashAbiRes?.data?.result?.verified }
+				}
+			} catch (e) {
+				Sentry.captureException(e)
 			}
 		}
 
