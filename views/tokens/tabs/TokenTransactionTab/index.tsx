@@ -28,7 +28,7 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 	const isHasData = useMemo(() => !isEmpty(result), [result])
 
 	return (
-		<div>
+		<div key="asdfs">
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Token Transfers</span>
 				{isHasData && (
@@ -46,7 +46,11 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 			) : (
 				<div style={{ overflowY: 'auto' }}>
 					{result.map((item, index) => (
-						<TokenTransaction key={item.transactionHash} tokenData={tokenData} transaction={item} />
+						<TokenTransaction
+							key={`${item.transactionHash}-${item.fromAddress}-${item.toAddress}-${item.tokenSymbol}`}
+							tokenData={tokenData}
+							transaction={item}
+						/>
 					))}
 				</div>
 			)}
