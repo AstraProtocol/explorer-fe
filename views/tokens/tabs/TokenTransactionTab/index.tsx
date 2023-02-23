@@ -28,7 +28,7 @@ const TokenTransactionTab = ({ token, tokenData }: Props) => {
 	const isHasData = useMemo(() => !isEmpty(result), [result])
 
 	return (
-		<div key="asdfs">
+		<div>
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-xl">
 				<span className="text text-xl">Token Transfers</span>
 				{isHasData && (
