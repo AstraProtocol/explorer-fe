@@ -30,7 +30,7 @@ export default function TokenRow({ index, token }: Props) {
 			>
 				{index}
 			</div>
-			<div className={clsx(styles.borderLeft, styles.colToken, 'col col-3 padding-left-lg block-ver-center')}>
+			<div className={clsx(styles.borderLeft, styles.colToken, 'col col-3 padding-left-lg')}>
 				<Typography.LinkText href={LinkMaker.token(token.contractAddressHash)} classes={'text text-base'}>
 					{ellipseRightText(`${token.name} (${token.symbol})`, 25)}
 				</Typography.LinkText>
