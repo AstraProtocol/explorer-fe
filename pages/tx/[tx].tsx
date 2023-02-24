@@ -9,7 +9,7 @@ import PolygonTag from 'components/Tag/PolygonTag'
 import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
@@ -31,6 +31,14 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const hash = evmHash || cosmosHash
 	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
+	useEffect(() => {
+		try {
+			throw new Error('Test Sentry exception')
+		} catch (err) {
+			Sentry.captureException(err)
+		}
+	}, [])
+
 	return (
 		<Layout>
 			<Head>
