@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import CopyButton from 'components/Button/CopyButton'
 import Tabs from 'components/Tabs/Tabs'
 import web3 from 'web3'

@@ -4,19 +4,19 @@
 
 import * as Sentry from '@sentry/nextjs'
 
-const SENTRY_DSN = process.env.SENTRY_CLIENT_DSN
+const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_CLIENT_DSN
 
 const isUserRejected = err => {
 	// provider user rejected error code
 	return typeof err === 'object' && 'code' in err && err.code === 4001
 }
 
-const ENV = process.env.VERCEL_ENV || process.env.NODE_ENV
+const ENV = process.env.NEXT_PUBLIC_ENV
 
 Sentry.init({
 	dsn: SENTRY_DSN,
 
-	environment: ENV === 'production' ? 'production' : 'development',
+	environment: ENV,
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: 0,
 	// ...

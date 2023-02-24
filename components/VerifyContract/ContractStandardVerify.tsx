@@ -1,6 +1,6 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
