@@ -31,13 +31,15 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const hash = evmHash || cosmosHash
 	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
+
 	useEffect(() => {
 		try {
 			throw new Error('Test Sentry exception')
 		} catch (err) {
+			console.error('Test exception', err)
 			Sentry.captureException(err)
 		}
-	}, [])
+	}, [isMobile])
 
 	return (
 		<Layout>
