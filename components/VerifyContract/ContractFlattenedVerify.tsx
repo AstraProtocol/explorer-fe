@@ -1,7 +1,7 @@
 import { NormalButton } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import API_LIST from 'api/api_list'
 import axios from 'axios'
 import clsx from 'clsx'
