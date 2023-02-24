@@ -1,5 +1,5 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
