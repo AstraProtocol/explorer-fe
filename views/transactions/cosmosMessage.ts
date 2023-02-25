@@ -68,7 +68,6 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 				messageData.push(_mapMsgAcknowledgement(msg))
 				break
 			case TransactionTypeEnum.MsgClawback:
-				console.log('error')
 				messageData.push(_mapMsgClawback(msg))
 				break
 		}
@@ -85,7 +84,6 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
  */
 export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
-	console.log(amount)
 	if (isArray(amount) && !isEmpty(amount)) {
 		for (let a of amount) {
 			totalAmount = totalAmount.add(BigNumber.from(a.amount || '0'))
@@ -238,9 +236,13 @@ const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 		return {
 			type: msg.type,
 			delegatorAddress: content.delegatorAddress,
-			validatorDescription: content.description,
-			commissionRates: content.commissionRates,
-			minSelfDelegation: content.minSelfDelegation,
+			dynamicRender: [
+				{ validatorDescription: content.description },
+				{ commissionRates: content.commissionRates }
+			],
+			// validatorDescription: content.description,
+			// commissionRates: content.commissionRates,
+			minSelfDelegation: formatEther(content?.minSelfDelegation || '0'),
 			validatorAddress: content.validatorAddress,
 			tendermintPubkey: content.tendermintPubkey
 		}
