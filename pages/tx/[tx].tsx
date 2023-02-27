@@ -1,5 +1,5 @@
 import { Breadcumbs, useMobileLayout } from '@astraprotocol/astra-ui'
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
@@ -31,6 +31,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const hash = evmHash || cosmosHash
 	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
+
 	return (
 		<Layout>
 			<Head>

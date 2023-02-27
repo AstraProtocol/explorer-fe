@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/react'
 import abiDecoder from 'abi-decoder'
 import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
