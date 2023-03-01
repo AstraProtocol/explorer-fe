@@ -12,18 +12,33 @@ interface Props {
 
 const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 	const { isMobile } = useMobileLayout()
-	const size = isMobile ? 200 : 800
+	const size = isMobile ? 100 : 200
 	const Layout = ({ children }) =>
 		isMobile ? (
-			<div style={{ display: 'flex', flexDirection: 'column-reverse' }}>{children}</div>
+			<div style={{ display: 'flex', flexDirection: 'column' }}>{children}</div>
 		) : (
-			<Row>{children}</Row>
+			<div className="row">{children}</div>
 		)
 	const tokenImage = tokenData?.image?.replace('ipfs://', 'https://ipfs.io/ipfs/')
 	return (
 		<BackgroundCard classes="padding-top-lg padding-bottom-lg margin-top-2xl padding-left-2xl padding-right-2xl">
 			<Layout>
-				<div className="margin-right-md">
+				<div
+					className={clsx(
+						isMobile ? 'margin-bottom-md flex flex-justify-center' : 'flex flex-justify-end margin-right-md'
+					)}
+				>
+					{tokenImage && (
+						<Image
+							className="border radius-lg"
+							src={tokenImage}
+							alt={tokenData.name}
+							width={size}
+							height={size}
+						/>
+					)}
+				</div>
+				<div className=" border border-base flex-1 padding-lg radius-lg">
 					<Row style={{ justifyContent: 'space-between' }}>
 						<div className="text text-base contrast-color-50">Token ID:</div>
 						<div className="text text-base">{tokenId}</div>
@@ -37,9 +52,6 @@ const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 					<div className="text text-base contrast-color-50">Description:</div>
 					<div className="text text-base">&quot;{tokenData.description}&quot;</div>
 					{/* </Row> */}
-				</div>
-				<div className={clsx(isMobile ? 'margin-bottom-md' : 'flex flex-justify-end')}>
-					{tokenImage && <Image src={tokenImage} alt={tokenData.name} width={size} height={size} />}
 				</div>
 			</Layout>
 		</BackgroundCard>

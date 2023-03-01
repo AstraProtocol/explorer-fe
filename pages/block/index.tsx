@@ -7,7 +7,6 @@ import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import BlockRow from 'views/block/BlockRow'
@@ -29,9 +28,6 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 	}, [fullPageData])
 	return (
 		<Layout>
-			<Head>
-				<title>Block | {process.env.NEXT_PUBLIC_TITLE}</title>
-			</Head>
 			<Search />
 			<Container>
 				<div
@@ -105,6 +101,15 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Container>
 		</Layout>
 	)
+}
+
+export async function getServerSideProps() {
+	return {
+		props: {
+			title: `Astra Blocks`,
+			description: `Blocks that are included in the Astra blockchain. The timestamp, block producer, block reward and included transaction are shown.`
+		}
+	}
 }
 
 export default BlockDetailPage

@@ -28,4 +28,13 @@ const Charts: React.FC<NextPage> = _ => {
 	)
 }
 
+export async function getServerSideProps({}) {
+	return {
+		props: {
+			title: `Astra Statistics`,
+			description: 'Astra Chain common informations'
+		}
+	}
+}
+
 export default Charts

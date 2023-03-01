@@ -8,7 +8,6 @@ import Container from 'components/Container'
 import PolygonTag from 'components/Tag/PolygonTag'
 import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
-import Head from 'next/head'
 import React from 'react'
 import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
@@ -34,11 +33,6 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 
 	return (
 		<Layout>
-			<Head>
-				<title>
-					Transaction {evmHash || cosmosHash} | {process.env.NEXT_PUBLIC_TITLE}
-				</title>
-			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
@@ -91,15 +85,14 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 
 // This gets called on every request
 export async function getServerSideProps({ query }) {
-	/**
-	 * @todo nhap65 hash vao tu chuyen trang
-	 */
 	const { tx, type } = query as TransactionQuery
 
 	let evmHash = ''
 	let cosmosHash = ''
+	let txHash = tx
+	let errorMessage = null
+	let data: TransactionDetail = null
 	try {
-		let data: TransactionDetail = null
 		//evm
 		if (tx.startsWith('0x')) {
 			data = await evmTransactionDetail(tx)
@@ -123,21 +116,30 @@ export async function getServerSideProps({ query }) {
 				}
 			}
 		}
-		if (data == null || data == undefined)
-			return { props: { errorMessage: '404 Not Found', data: null, evmHash, cosmosHash } }
 
-		//remove empty attribute
-		data = pickBy(data, item => item !== undefined && item !== '')
-		return { props: { data, evmHash, cosmosHash } }
+		if (data == null || data == undefined) {
+			errorMessage = '404 Not Found'
+		} else {
+			data = pickBy(data, item => item !== undefined && item !== '')
+			txHash = evmHash || cosmosHash
+		}
 	} catch (e: any) {
-		console.log(e.message)
 		Sentry.captureException(e)
 		let errorMessage = e.message
 		if (e instanceof AxiosError) {
-			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
-		return { props: { errorMessage, data: null, evmHash: tx, cosmosHash } }
+	}
+	const txHashEllipsis = ellipseBetweenText(txHash)
+	return {
+		props: {
+			errorMessage,
+			data,
+			evmHash,
+			cosmosHash,
+			title: `Transaction ${txHashEllipsis}`,
+			description: `Astra (ASA) detailed transaction info for txhash ${txHashEllipsis}. The transaction status, block confirmation, gas fee, Astra (ASA), and token transfer are shown.`
+		}
 	}
 }
 

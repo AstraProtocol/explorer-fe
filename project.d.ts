@@ -242,3 +242,13 @@ interface FeeResponse {
 		monthlyAverage?: number
 	}
 }
+
+interface Period {
+	length: string
+	amount: Coin[]
+}
+
+interface Coin {
+	denom: string
+	amount: string
+}
