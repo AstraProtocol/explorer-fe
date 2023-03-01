@@ -8,7 +8,6 @@ import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import Container from 'components/Container'
 import Tabs from 'components/Tabs/Tabs'
-import Head from 'next/head'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import { CardInfoLabels } from 'utils/enum'
@@ -38,23 +37,26 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					})
 					break
 				case 'committedCouncilNodes': //from
-					const proposerHash = data[key].find(item => item.isProposer).address
-					const proposer = getStakingValidatorByHex(proposerHash) as Proposer
+					const proposerHash = data[key].find(item => item.isProposer)?.address
+					const proposer = proposerHash && (getStakingValidatorByHex(proposerHash) as Proposer)
 					const address =
-						proposer?.initialDelegatorAddress && astraToEth(proposer?.initialDelegatorAddress || '')
-					items.push({
-						label: CardInfoLabels.validatorAddress,
-						type: 'link-copy',
-						contents: [
-							{
-								value: address,
-								link: LinkMaker.address(
-									proposer?.initialDelegatorAddress &&
-										astraToEth(proposer?.initialDelegatorAddress || '')
-								)
-							}
-						]
-					})
+						proposer && proposer.initialDelegatorAddress
+							? astraToEth(proposer?.initialDelegatorAddress || '')
+							: null
+					if (address)
+						items.push({
+							label: CardInfoLabels.validatorAddress,
+							type: 'link-copy',
+							contents: [
+								{
+									value: address,
+									link: LinkMaker.address(
+										proposer?.initialDelegatorAddress &&
+											astraToEth(proposer?.initialDelegatorAddress || '')
+									)
+								}
+							]
+						})
 					break
 				case 'blockHeight':
 					items.push({
@@ -106,11 +108,6 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 
 	return (
 		<Layout>
-			<Head>
-				<title>
-					Block {blockHeight} | {process.env.NEXT_PUBLIC_TITLE}
-				</title>
-			</Head>
 			<Container>
 				<Breadcumbs items={[{ label: 'Blocks', link: LinkMaker.block() }, { label: '#' + blockHeight }]} />
 				{blockDetail ? (
@@ -143,33 +140,31 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 // This gets called on every request
 export async function getServerSideProps({ params }) {
 	const { block: blockHeight } = params
+	let errorMessage
+	let blockDetail
+
 	try {
 		const blockRes = await cosmosApi.get<BlockDetailResponse>(`${API_LIST.BLOCKS}${blockHeight}`)
 
 		if (blockRes?.data?.result) {
-			return { props: { blockDetail: blockRes.data.result, blockHeight } }
+			blockDetail = blockRes.data.result
 		} else {
-			return {
-				props: {
-					errorMessage: '404 Not Found',
-					blockDetail: null,
-					blockHeight
-				}
-			}
+			errorMessage = '404 Not Found'
 		}
 	} catch (e) {
 		Sentry.captureException(e)
-		let errorMessage = e.message
+		errorMessage = e.message
 		if (e instanceof AxiosError) {
-			console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
-		return {
-			props: {
-				errorMessage,
-				blockDetail: null,
-				blockHeight
-			}
+	}
+	return {
+		props: {
+			errorMessage,
+			blockDetail,
+			blockHeight,
+			title: `Astra Block ${blockHeight}`,
+			description: `Astra Block Height ${blockHeight}. The timestamp, block reward, gas used and the number of transactions in the block are detailed on Astra Explorer.`
 		}
 	}
 }

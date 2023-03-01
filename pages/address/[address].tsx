@@ -5,8 +5,6 @@ import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
-import { isEmpty } from 'lodash'
-import Head from 'next/head'
 import React from 'react'
 import { getValidatorSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
@@ -30,24 +28,14 @@ const AddressDetailPage: React.FC<Props> = props => {
 
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const validator = validatorSummary.find((v: ValidatorData) => astraToEth(v.initialDelegatorAddress) === address)
-	const isValidator = !isEmpty(validator)
-	const isContract = addressData?.type === 'contractaddress'
-	const title = isValidator
-		? `Validator ${validator.moniker} | ${process.env.NEXT_PUBLIC_TITLE}`
-		: isContract
-		? `Contract ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
-		: `Address ${address} | ${process.env.NEXT_PUBLIC_TITLE}`
+
 	return (
 		<Layout>
-			<Head>
-				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-				<title>{title}</title>
-			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
 						{
-							label: isValidator ? `Validator ${validator.moniker}` : isContract ? 'Contract' : 'Address',
+							label: 'Address', // isValidator ? `Validator ${validator.moniker}` : isContract ? 'Contract' : 'Address',
 							link: LinkMaker.address()
 						},
 						{ label: isMobile ? ellipseBetweenText(address) : address }
@@ -74,52 +62,41 @@ const AddressDetailPage: React.FC<Props> = props => {
 
 export async function getServerSideProps({ params }) {
 	let { address } = params
-	let addressData
 
 	if (address && address.startsWith('astra')) address = astraToEth(address)
-	if (web3.utils.isAddress(address))
+	let errorMessage = ''
+	let addressData
+
+	if (web3.utils.isAddress(address)) {
 		try {
 			const addressRes = await cosmosApi.get<AddressDetailResponse>(`${API_LIST.ADDRESS_DETAIL}/${address}`)
 			addressData = addressRes.data.result
 			if (!addressData) {
-				return {
-					props: {
-						errorMessage: '404 Not Found',
-						address,
-						addressData: null
-					}
-				}
-			}
-			return {
-				props: {
-					address,
-					addressData
-				}
+				errorMessage = '404 Not Found'
 			}
 		} catch (e) {
 			// console.log(e.message)
 			Sentry.captureException(e)
-			let errorMessage = e.message
+			errorMessage = e.message
 			if (e instanceof AxiosError) {
-				console.log('error api', e.message, e.code, e?.config?.baseURL, e?.config?.url)
 				if (e.code !== '200') errorMessage = '404 Not Found'
 			}
-			return {
-				props: {
-					errorMessage,
-					address,
-					addressData: null
-				}
-			}
 		}
+	} else {
+		errorMessage = 'Address invalid'
+	}
 
 	return {
 		props: {
-			errorMessage: 'Address invalid',
+			title: `Address ${address}`,
+			errorMessage,
 			address,
-			addressData: null
+			addressData,
+			description: `The Address ${address} page allows users to view transactions, balances, token holdings and transfers of ERC-20, ERC-721 and ERC-1155 (NFT) tokens, and analytics.`
 		}
 	}
 }
+
+
 
 export default AddressDetailPage

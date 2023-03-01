@@ -4,7 +4,6 @@ import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
-import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import NftDetailTab from 'views/tokens/[instance]/NftDetailTab'
@@ -22,14 +21,9 @@ type Props = {
 const TokenInstanceDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, tokenId, errorMessage } = props
-	const title = tokenData ? `${tokenData.name} (${tokenId}) - ${process.env.NEXT_PUBLIC_TITLE}` : `Token ${token}`
 
 	return (
 		<Layout>
-			<Head>
-				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-				<title>{title}</title>
-			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
@@ -54,52 +48,39 @@ const TokenInstanceDetailPage: React.FC<Props> = props => {
 
 export async function getServerSideProps({ params }) {
 	const { token, index } = params
+	let errorMessage = ''
+	let tokenData
 
 	if (Web3.utils.isAddress(token, parseInt(process.env.NEXT_PUBLIC_CHAIN_ID) || 11115)) {
 		try {
-			const tokenData = await cosmosApi.get<TokenInstanceResponse>(
+			const response = await cosmosApi.get<TokenInstanceResponse>(
 				`${API_LIST.TOKEN_METADATA}contractaddress=${token}/tokenid=${index}`
 			)
-			if (tokenData.data.result) {
-				return {
-					props: {
-						errorMessage: '',
-						token,
-						tokenId: index,
-						tokenData: tokenData.data.result.result
-					}
-				}
-			}
-			return {
-				props: {
-					errorMessage: tokenData.data.message,
-					token,
-					tokenId: index,
-					tokenData: null
-				}
+
+			if (response?.data?.result) {
+				tokenData = response.data.result.result
+			} else {
+				errorMessage = response?.data?.message
 			}
 		} catch (err) {
 			Sentry.captureException(err)
-			let errorMessage = err.message
+			errorMessage = err.message
 			if (err instanceof AxiosError) {
-				console.log('error api', err.message, err.code, err?.config?.baseURL, err?.config?.url)
 				if (err.code !== '200') errorMessage = '404 Not Found'
 			}
-			return {
-				props: {
-					errorMessage: err.message,
-					token,
-					tokenId: index,
-					tokenData: null
-				}
-			}
 		}
+	} else {
+		errorMessage = 'Token address invalid'
 	}
+
 	return {
 		props: {
-			message: 'Token address invalid',
+			errorMessage,
 			token,
-			tokenData: null
+			tokenId: index,
+			tokenData,
+			title: tokenData ? tokenData.name : `Token ${token} ID #${index}`,
+			description: tokenData ? tokenData.description : 'Token Description'
 		}
 	}
 }
