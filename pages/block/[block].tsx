@@ -140,7 +140,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 // This gets called on every request
 export async function getServerSideProps({ params }) {
 	const { block: blockHeight } = params
-	let errorMessage
+	let errorMessage = ''
 	let blockDetail
 
 	try {
@@ -158,6 +158,7 @@ export async function getServerSideProps({ params }) {
 			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
 	}
+
 	return {
 		props: {
 			errorMessage,

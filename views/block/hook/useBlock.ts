@@ -10,7 +10,7 @@ export default function useBlock() {
 	const dispatch = useAppDispatch()
 
 	const [_items, _setBlockItem] = useState<BlockItem[]>()
-	const { pagination, setPagination } = usePagination('/blocks')
+	const { pagination, setPagination } = usePagination('/block')
 	const _fetchCondition = () => {
 		return [
 			API_LIST.ALL_BLOCKS,

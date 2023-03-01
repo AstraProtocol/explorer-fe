@@ -114,7 +114,13 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 			{status === SearchStatusEnum.DONE && (!items || items.length === 0) && (
 				<div className={styles.waitResult}>
 					<span style={{ paddingTop: '26px' }}>
-						<Image alt="Astra Blockchain" src={'/images/icons/empty_search.png'} width={164} height={97} />
+						<Image
+							priority
+							alt="Astra Blockchain"
+							src={'/images/icons/empty_search.png'}
+							width={164}
+							height={97}
+						/>
 					</span>
 					Sorry! We could not find any results
 				</div>
