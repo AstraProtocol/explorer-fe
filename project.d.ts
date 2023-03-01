@@ -243,12 +243,12 @@ interface FeeResponse {
 	}
 }
 
-export interface Period {
+interface Period {
 	length: string
 	amount: Coin[]
 }
 
-export interface Coin {
+interface Coin {
 	denom: string
 	amount: string
 }

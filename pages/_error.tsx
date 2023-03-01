@@ -35,12 +35,5 @@ CustomErrorComponent.getInitialProps = async contextData => {
 	return NextErrorComponent.getInitialProps(contextData)
 }
 
-export async function getServerSideProps({}) {
-	return {
-		props: {
-			title: `Error Page`
-		}
-	}
-}
 
 export default CustomErrorComponent

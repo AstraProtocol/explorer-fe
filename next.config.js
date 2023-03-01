@@ -16,8 +16,16 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
+				source: '/blocks',
+				destination: '/block'
+			},
+			{
 				source: '/blocks/:blockId',
 				destination: '/block/:blockId'
+			},
+			{
+				source: '/txs',
+				destination: '/tx'
 			},
 			{
 				source: '/txs/:txHash',

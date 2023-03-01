@@ -170,7 +170,7 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 					BigNumber.from(getAstraTokenAmount((content as TextProposalFullContent).initialDeposit))
 				)
 			} else if ((content as MsgCreateClawbackVestingAccountContent)?.params) {
-				;(content as MsgCreateClawbackVestingAccountContent).params.vesting_periods.forEach(
+				((content as MsgCreateClawbackVestingAccountContent).params.vesting_periods || [])?.forEach(
 					(period: Period) => {
 						totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(period.amount)))
 					}
