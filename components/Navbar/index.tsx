@@ -25,7 +25,7 @@ export default function Navbar() {
 		{
 			id: '1',
 			label: 'Blocks',
-			link: '/blocks'
+			link: '/block'
 		},
 		{
 			id: '2',
