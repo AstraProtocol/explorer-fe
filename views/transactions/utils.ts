@@ -162,21 +162,20 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			if ((message.content as MsgSendContent)?.amount) {
+			const { content } = message
+			if ((content as MsgSendContent)?.amount) {
+				totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount((content as MsgSendContent).amount)))
+			} else if ((content as TextProposalFullContent)?.initialDeposit) {
 				totalAmount = totalAmount.add(
-					BigNumber.from(getAstraTokenAmount((message.content as MsgSendContent).amount))
+					BigNumber.from(getAstraTokenAmount((content as TextProposalFullContent).initialDeposit))
+				)
+			} else if ((content as MsgCreateClawbackVestingAccountContent)?.params) {
+				;(content as MsgCreateClawbackVestingAccountContent).params.vesting_periods.forEach(
+					(period: Period) => {
+						totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(period.amount)))
+					}
 				)
 			}
-			if ((message.content as TextProposalFullContent)?.initialDeposit) {
-				totalAmount = totalAmount.add(
-					BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
-				)
-			}
-			// if ((message.content as MsgCreateClawbackVestingAccountContent)?.params) {
-			// 	totalAmount = totalAmount.add(
-			// 		BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
-			// 	)
-			// }
 		}
 		return formatEther(totalAmount)
 	}
