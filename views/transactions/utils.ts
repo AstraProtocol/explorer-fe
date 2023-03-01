@@ -280,10 +280,10 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 		to = result.to
 	} else {
 		// parse from first message body data
-		const message = messages?.[0]
+		const message = messages?.[0] || {}
 		try {
-			from = message.content.params.from
-			to = message.content.params.data.to
+			from = message?.content?.params.from
+			to = message?.content?.params.data.to
 		} catch (e) {}
 	}
 

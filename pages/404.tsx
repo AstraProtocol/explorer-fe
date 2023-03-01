@@ -21,4 +21,15 @@ const Home: React.FC<NextPage> = _ => {
 		</Layout>
 	)
 }
+
+
+export async function getServerSideProps({}) {
+	return {
+		props: {
+			title: `404 Not Found`
+		}
+	}
+}
+
+
 export default Home

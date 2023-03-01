@@ -7,7 +7,6 @@ import { PageTitle } from 'components/Typography/PageTitle'
 import RowTitle from 'components/Typography/RowTitle'
 import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import useTransaction from 'views/transactions/hook/useTransaction'
 import TransactionRow from 'views/transactions/TransactionRow'
@@ -29,9 +28,6 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 	}, [fullPageData])
 	return (
 		<Layout>
-			<Head>
-				<title>Transactions | {process.env.NEXT_PUBLIC_TITLE}</title>
-			</Head>
 			<Search />
 			<Container>
 				<div
@@ -109,6 +105,15 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 			</Container>
 		</Layout>
 	)
+}
+
+export async function getServerSideProps({}) {
+	return {
+		props: {
+			title: `Astra Transactions`,
+			description: `Astra Transactions Information`
+		}
+	}
 }
 
 export default BlockDetailPage

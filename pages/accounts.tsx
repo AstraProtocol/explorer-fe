@@ -5,7 +5,6 @@ import RowLoader from 'components/Loader/RowLoader'
 import { PageTitle } from 'components/Typography/PageTitle'
 import usePaginationLite from 'hooks/usePaginationLite'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import React, { useState } from 'react'
 import { getEnvNumber } from 'utils/helper'
 import HolderHeadTitle from 'views/accounts/HolderHeadTitle'
@@ -29,9 +28,6 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 
 	return (
 		<Layout>
-			<Head>
-				<title>Astra Holders | {process.env.NEXT_PUBLIC_TITLE}</title>
-			</Head>
 			<Container>
 				<Row style={{ justifyContent: 'space-between' }}>
 					<PageTitle>Astra Address</PageTitle>
@@ -59,6 +55,14 @@ const AstraHolderPage: React.FC<NextPage> = _ => {
 			</Container>
 		</Layout>
 	)
+}
+
+export async function getServerSideProps({}) {
+	return {
+		props: {
+			title: `Astra Holders`
+		}
+	}
 }
 
 export default AstraHolderPage
