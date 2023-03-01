@@ -85,7 +85,6 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
  */
 export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string => {
 	let totalAmount = BigNumber.from('0')
-	console.log(amount)
 	if (isArray(amount) && !isEmpty(amount)) {
 		for (let a of amount) {
 			totalAmount = totalAmount.add(BigNumber.from(a.amount || '0'))

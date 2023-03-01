@@ -12,135 +12,6 @@ import Navigation, { MenuItem } from './Navigation'
 import styles from './style.module.scss'
 import SwitchTheme from './SwitchTheme'
 
-export const items: MenuItem[] = [
-	{
-		id: '1',
-		label: 'Blocks',
-		link: '/blocks'
-		// submenus: [
-		// 	{
-		// 		id: '1.1',
-		// 		label: 'Blocks',
-		// 		link: '/blocks'
-		// 	},
-		// 	{
-		// 		id: '1.2',
-		// 		label: 'Uncle',
-		// 		link: '/uncle'
-		// 	},
-		// 	{
-		// 		id: '1.3',
-		// 		label: 'Forked Blocks (Reorgs)',
-		// 		link: '/reorgs'
-		// 	}
-		// ]
-	},
-	{
-		id: '2',
-		label: 'Transactions',
-		link: '/tx'
-		// submenus: [
-		// 	{
-		// 		id: '2.1',
-		// 		label: 'Validated',
-		// 		link: '/tx'
-		// 	},
-		// 	{
-		// 		id: '2.2',
-		// 		label: 'Pending',
-		// 		link: '/pending'
-		// 	}
-		// ]
-	},
-	{
-		id: '3',
-		label: 'Tokens',
-		submenus: [
-			{
-				id: '3.1',
-				label: 'All',
-				link: '/tokens'
-			},
-			{
-				id: '3.2',
-				label: 'Astra',
-				link: '/accounts'
-			}
-		]
-	},
-	{
-		id: '4',
-		label: 'Resources',
-		submenus: [
-			{
-				id: '4.1',
-				label: 'Stats',
-				link: '/charts'
-			}
-		]
-	},
-	// {
-	// 	id: '4',
-	// 	label: 'APIs',
-	// 	submenus: [
-	// 		{
-	// 			id: '4.1',
-	// 			label: 'GraphQL',
-	// 			link: '/graphql'
-	// 		},
-	// 		{
-	// 			id: '4.2',
-	// 			label: 'RPC',
-	// 			link: '/astra'
-	// 		},
-	// 		{
-	// 			id: '4.3',
-	// 			label: 'Eth RPC',
-	// 			link: '/eth-rpc'
-	// 		}
-	// 	]
-	// },
-	{
-		id: '5',
-		label: process.env.NEXT_PUBLIC_ENV == 'mainnet' ? 'Astra Mainnet' : 'Astra Testnet',
-		prefixIcon: <LiveIcon />,
-		link: '/'
-		// submenus: [
-		// 	{
-		// 		id: '5.1',
-		// 		label: 'GraphQL',
-		// 		link: '/graphql'
-		// 	},
-		// 	{
-		// 		id: '5.2',
-		// 		label: 'RPC',
-		// 		link: '/astra'
-		// 	}
-		// ]
-	}
-	// {
-	// 	id: '6',
-	// 	type: 'locale',
-	// 	submenus: [
-	// 		{
-	// 			id: '6.1',
-	// 			label: 'ENG',
-	// 			link: '/en'
-	// 		},
-	// 		{
-	// 			id: '6.2',
-	// 			label: 'VI',
-	// 			link: '/vi'
-	// 		}
-	// 	]
-	// }
-	// {
-	// 	id: '7',
-	// 	label: 'Single Menu',
-	// 	link: '/accounts'
-	// }
-]
-
 export default function Navbar() {
 	const { isMobile } = useMobileLayout('small')
 	const { isMobile: isResponsive } = useMobileLayout('large')
@@ -149,6 +20,62 @@ export default function Navbar() {
 	const [load, setLoad] = useState(false)
 
 	const _searchWrapperRef = useRef<HTMLDivElement>(null)
+
+	const items: MenuItem[] = [
+		{
+			id: '1',
+			label: 'Blocks',
+			link: '/blocks'
+		},
+		{
+			id: '2',
+			label: 'Transactions',
+			link: '/tx'
+		},
+		{
+			id: '3',
+			label: 'Tokens',
+			submenus: [
+				{
+					id: '3.1',
+					label: 'All',
+					link: '/tokens'
+				},
+				{
+					id: '3.2',
+					label: 'Astra',
+					link: '/accounts'
+				}
+			]
+		},
+		{
+			id: '4',
+			label: 'Stats',
+			link: '/charts'
+		},
+		{
+			id: '5',
+			label: process.env.NEXT_PUBLIC_ENV == 'mainnet' ? 'Astra Mainnet' : 'Astra Testnet',
+			prefixIcon: <LiveIcon />,
+			link: '/'
+		}
+		// {
+		// 	id: '6',
+		// 	type: 'locale',
+		// 	submenus: [
+		// 		{
+		// 			id: '6.1',
+		// 			label: 'ENG',
+		// 			link: '/en'
+		// 		},
+		// 		{
+		// 			id: '6.2',
+		// 			label: 'VI',
+		// 			link: '/vi'
+		// 		}
+		// 	]
+		// }
+	]
 
 	const _hideMenu = () => {
 		setLoad(false)
