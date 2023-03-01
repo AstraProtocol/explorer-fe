@@ -12,6 +12,18 @@ const nextConfig = {
 				pathname: '/**'
 			}
 		]
+	},
+	async rewrites() {
+		return [
+			{
+				source: '/blocks/:blockId',
+				destination: '/block/:blockId'
+			},
+			{
+				source: '/txs/:txHash',
+				destination: '/tx/:txHash'
+			}
+		]
 	}
 }
 
