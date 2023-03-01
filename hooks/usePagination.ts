@@ -30,7 +30,9 @@ export default function usePagination(rootPath: string) {
 			..._pagination,
 			...data
 		})
-		if (page !== undefined && page >= 1 && router.asPath !== '/') {
+
+		// page >= 1 will make window page re-render a time to apply query params
+		if (page !== undefined && page > 1 && router.asPath !== '/') {
 			router.push(
 				{
 					pathname: rootPath,
