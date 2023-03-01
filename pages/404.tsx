@@ -5,8 +5,6 @@ import React from 'react'
 import Layout from '../components/Layout'
 
 const Home: React.FC<NextPage> = _ => {
-	// // const t = useTranslations('Index')
-
 	return (
 		<Layout>
 			<Head>
@@ -20,15 +18,6 @@ const Home: React.FC<NextPage> = _ => {
 			</Container>
 		</Layout>
 	)
-}
-
-
-export async function getServerSideProps({}) {
-	return {
-		props: {
-			title: `404 Not Found`
-		}
-	}
 }
 
 
