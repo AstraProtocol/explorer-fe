@@ -41,6 +41,12 @@ export default function usePagination(rootPath: string) {
 				undefined,
 				{ shallow: true }
 			)
+		} else if (page == 1) {
+			router.push(
+				{ pathname: rootPath },
+				undefined,
+				{ shallow: true }
+			)
 		}
 	}
 
