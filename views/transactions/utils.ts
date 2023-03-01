@@ -65,11 +65,13 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		: result?.messages?.[0]?.content?.params?.data?.gasPrice
 		? formatNumber(formatUnits(result?.messages?.[0]?.content?.params?.data?.gasPrice, 9)) + ' NanoAstra'
 		: ''
-	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
+	data.gasLimit = result.gasLimit ? numeral(formatNumber(result.gasLimit, 0)).format('0,0') : ''
 	data.gasUsed = result.gasUsed
-	data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
+	data.maxFeePerGas = result.maxFeePerGas
+		? numeral(formatUnits(result.maxFeePerGas, 9)).format('0,0') + ' NanoAstra'
+		: undefined
 	data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
-		? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
+		? numeral(formatUnits(result.maxPriorityFeePerGas, 9)).format('0,0') + ' NanoAstra'
 		: undefined
 	data.gasUsedByTransaction = result.gasUsed
 		? `${numeral(result.gasUsed).format('0,0')} ${
@@ -120,7 +122,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	data.memo = result.memo
 	data.fee = formatEther(fee.amount || '0')
 	data.feeToken = process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-	data.gasLimit = result.gasWanted?.toString()
+	data.gasLimit = numeral(result.gasWanted?.toString() || '0').format('0,0')
 	data.gasUsed = `${result.gasUsed}`
 	data.gasUsedByTransaction = result.gasUsed
 		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(result.gasUsed / result.gasWanted).format('0.00%')}`
@@ -170,6 +172,11 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 					BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
 				)
 			}
+			// if ((message.content as MsgCreateClawbackVestingAccountContent)?.params) {
+			// 	totalAmount = totalAmount.add(
+			// 		BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
+			// 	)
+			// }
 		}
 		return formatEther(totalAmount)
 	}
