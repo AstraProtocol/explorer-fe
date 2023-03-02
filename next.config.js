@@ -32,11 +32,7 @@ const nextConfig = {
 				destination: '/tx/:txHash'
 			}
 		]
-	}
-}
-
-const moduleExports = {
-	...nextConfig,
+	},
 	i18n: {
 		locales: ['en', 'vi'],
 		defaultLocale: 'en'
@@ -47,22 +43,13 @@ const moduleExports = {
 			issuer: { and: [/\.(js|ts)x?$/] },
 			use: ['@svgr/webpack']
 		})
-		// config.module.rules.push({
-		// 	test: /\.s?css$/,
-		// 	use: ['style-loader', 'css-loader', 'sass-loader'],
-		// })
-		// config.module.rules.push({
-		// 	test: /\.s[ac]ss$/i,
-		// 	use: {
-		// 		loader: 'sass-loader',
-		// 		// options: {
-		// 		// 	additionalData: '@import "src/styles/variables.scss";'
-		// 		// }
-		// 	}
-		// })
-
 		return config
-	},
+	}
+}
+
+const moduleExports = {
+	...nextConfig,
+
 	sentry: {
 		hideSourceMaps: true
 		// See the sections below for information on the following options:
