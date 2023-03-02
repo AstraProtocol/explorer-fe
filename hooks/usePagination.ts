@@ -22,6 +22,7 @@ export default function usePagination(rootPath: string) {
 		pagination: 'offset',
 		order: 'height.desc'
 	})
+
 	const setPagination = ({ page, total }: CustomRouter) => {
 		let data: CustomRouter = { page, total }
 		data = pickBy<CustomRouter>(data, item => item !== undefined)
@@ -33,7 +34,7 @@ export default function usePagination(rootPath: string) {
 
 		// page >= 1 will make window page re-render a time to apply query params
 		if (page !== undefined && page > 1 && router.asPath !== '/') {
-			router.push(
+			router.replace(
 				{
 					pathname: rootPath,
 					query: { ..._pagination, page }
@@ -42,7 +43,7 @@ export default function usePagination(rootPath: string) {
 				{ shallow: true }
 			)
 		} else if (page == 1) {
-			if (router.asPath !== rootPath) router.push({ pathname: rootPath }, undefined, { shallow: true })
+			if (router.asPath !== rootPath) router.replace({ pathname: rootPath }, undefined, { shallow: true })
 		}
 	}
 
