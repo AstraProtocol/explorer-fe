@@ -10,7 +10,6 @@ import LiveIcon from './LiveIcon'
 import MoibleNavigation from './MobileNavigation'
 import Navigation, { MenuItem } from './Navigation'
 import styles from './style.module.scss'
-import SwitchTheme from './SwitchTheme'
 
 export default function Navbar() {
 	const { isMobile } = useMobileLayout('small')
@@ -150,7 +149,7 @@ export default function Navbar() {
 					<div className={styles.right} id="nav-desktop-others">
 						<Navigation items={items} />
 						<Search full={false} />
-						<SwitchTheme />
+						{/* <SwitchTheme /> */}
 					</div>
 				</div>
 			</nav>
