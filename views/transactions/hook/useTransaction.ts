@@ -13,9 +13,9 @@ import {
 	getFromToTxFromCosmosEntry
 } from '../utils'
 
-export default function useTransaction() {
+export default function useTransaction(path: string = '/') {
 	const [_items, _setTransactionItem] = useState<TransactionItemModified[]>()
-	const { pagination, setPagination } = usePagination('/tx')
+	const { pagination, setPagination } = usePagination(path)
 
 	const _fetchCondition = () => {
 		return [
