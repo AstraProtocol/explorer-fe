@@ -124,7 +124,10 @@ export enum CardInfoLabels {
 
 	funderAddress = 'Funder Address:',
 	accountAddress = 'Account Address: ',
-	destAddress = 'Dest Address:'
+	destAddress = 'Dest Address:',
+
+	grant = 'Grant: ',
+	granter = 'Granter: '
 }
 
 export enum ErcTypeEnum {
