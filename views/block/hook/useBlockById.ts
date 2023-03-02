@@ -8,7 +8,7 @@ import { caculateAmount, getEvmTxhash } from 'views/transactions/utils'
 
 export default function useBlockById(blockHeight: string) {
 	const [items, setBlockItem] = useState<TransactionItem[]>()
-	const { pagination, setPagination } = usePagination(`/blocks/${blockHeight}`)
+	const { pagination, setPagination } = usePagination(`/block/${blockHeight}`)
 	const _fetchCondition = () => {
 		return [
 			`${API_LIST.TRANSACTION_OF_BLOCK.replace(':id', blockHeight)}`,

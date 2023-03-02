@@ -4,7 +4,6 @@ import { cosmosApi } from 'api'
 import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
-import Head from 'next/head'
 import React from 'react'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import TokenDetailTab from 'views/tokens/TokenDetailTabs'
@@ -28,10 +27,6 @@ const TokenDetailPage: React.FC<Props> = props => {
 		: `Token ${token}`
 	return (
 		<Layout>
-			<Head>
-				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-				<title>{title}</title>
-			</Head>
 			<Container>
 				<Breadcumbs
 					items={[
@@ -60,46 +55,34 @@ const TokenDetailPage: React.FC<Props> = props => {
 
 export async function getServerSideProps({ params }) {
 	const { token } = params
+	let errorMessage = ''
+	let tokenData
 	if (Web3.utils.isAddress(token, 11115)) {
 		try {
-			const tokenData = await cosmosApi.get<TokenDetailResponse>(`${API_LIST.TOKEN_DETAIL}${token}`)
-			if (tokenData.data.result) {
-				return {
-					props: {
-						errorMessage: '',
-						token,
-						tokenData: tokenData.data.result
-					}
-				}
-			}
-			return {
-				props: {
-					errorMessage: tokenData.data.message,
-					token,
-					tokenData: null
-				}
+			const response = await cosmosApi.get<TokenDetailResponse>(`${API_LIST.TOKEN_DETAIL}${token}`)
+			if (response?.data?.result) {
+				tokenData = response.data.result
+			} else {
+				errorMessage = response.data.message
 			}
 		} catch (err) {
 			Sentry.captureException(err)
-			let errorMessage = err.message
+			errorMessage = err.message
 			if (err instanceof AxiosError) {
-				console.log('error api', err.message, err.code, err?.config?.baseURL, err?.config?.url)
 				if (err.code !== '200') errorMessage = '404 Not Found'
 			}
-			return {
-				props: {
-					errorMessage: err.message,
-					token,
-					tokenData: null
-				}
-			}
 		}
+	} else {
+		errorMessage = 'Token address invalid'
 	}
+
 	return {
 		props: {
-			message: 'Token address invalid',
+			errorMessage,
 			token,
-			tokenData: null
+			tokenData,
+			title: tokenData ? tokenData.name : `Token ${token}`,
+			description: tokenData ? tokenData.name : `Token ${token}`
 		}
 	}
 }

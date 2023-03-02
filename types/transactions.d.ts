@@ -27,6 +27,7 @@ interface TransactionMessage {
 		| MsgUndelegateContent
 		| TextProposalFullContent
 		| MsgDepositContent
+		| MsgCreateClawbackVestingAccountContent
 }
 
 interface TransactionItem {

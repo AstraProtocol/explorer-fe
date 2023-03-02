@@ -65,11 +65,13 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		: result?.messages?.[0]?.content?.params?.data?.gasPrice
 		? formatNumber(formatUnits(result?.messages?.[0]?.content?.params?.data?.gasPrice, 9)) + ' NanoAstra'
 		: ''
-	data.gasLimit = result.gasLimit ? formatNumber(result.gasLimit, 0) : ''
+	data.gasLimit = result.gasLimit ? numeral(formatNumber(result.gasLimit, 0)).format('0,0') : ''
 	data.gasUsed = result.gasUsed
-	data.maxFeePerGas = result.maxFeePerGas ? formatUnits(result.maxFeePerGas, 9) + ' NanoAstra' : undefined
+	data.maxFeePerGas = result.maxFeePerGas
+		? numeral(formatUnits(result.maxFeePerGas, 9)).format('0,0') + ' NanoAstra'
+		: undefined
 	data.maxPriorityFeePerGas = result.maxPriorityFeePerGas
-		? formatUnits(result.maxPriorityFeePerGas, 9) + ' NanoAstra'
+		? numeral(formatUnits(result.maxPriorityFeePerGas, 9)).format('0,0') + ' NanoAstra'
 		: undefined
 	data.gasUsedByTransaction = result.gasUsed
 		? `${numeral(result.gasUsed).format('0,0')} ${
@@ -120,7 +122,7 @@ export const cosmsTransactionDetail = (result: TransactionItem): TransactionDeta
 	data.memo = result.memo
 	data.fee = formatEther(fee.amount || '0')
 	data.feeToken = process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
-	data.gasLimit = result.gasWanted?.toString()
+	data.gasLimit = numeral(result.gasWanted?.toString() || '0').format('0,0')
 	data.gasUsed = `${result.gasUsed}`
 	data.gasUsedByTransaction = result.gasUsed
 		? `${numeral(result.gasUsed).format('0,0')} | ${numeral(result.gasUsed / result.gasWanted).format('0.00%')}`
@@ -160,14 +162,18 @@ export const caculateCosmosTxAmount = (messages: TransactionMessage[]): string =
 	if (messages && messages.length > 0) {
 		let totalAmount = BigNumber.from('0')
 		for (let message of messages) {
-			if ((message.content as MsgSendContent)?.amount) {
+			const { content } = message
+			if ((content as MsgSendContent)?.amount) {
+				totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount((content as MsgSendContent).amount)))
+			} else if ((content as TextProposalFullContent)?.initialDeposit) {
 				totalAmount = totalAmount.add(
-					BigNumber.from(getAstraTokenAmount((message.content as MsgSendContent).amount))
+					BigNumber.from(getAstraTokenAmount((content as TextProposalFullContent).initialDeposit))
 				)
-			}
-			if ((message.content as TextProposalFullContent)?.initialDeposit) {
-				totalAmount = totalAmount.add(
-					BigNumber.from(getAstraTokenAmount((message.content as TextProposalFullContent).initialDeposit))
+			} else if ((content as MsgCreateClawbackVestingAccountContent)?.params) {
+				((content as MsgCreateClawbackVestingAccountContent).params.vesting_periods || [])?.forEach(
+					(period: Period) => {
+						totalAmount = totalAmount.add(BigNumber.from(getAstraTokenAmount(period.amount)))
+					}
 				)
 			}
 		}
@@ -275,8 +281,8 @@ const _getFromAndToEvmFromCosmosMsg = (res: EvmTransactionDetailResponse): [stri
 		// parse from first message body data
 		const message = messages?.[0]
 		try {
-			from = message.content.params.from
-			to = message.content.params.data.to
+			from = message?.content?.params.from
+			to = message?.content?.params.data.to
 		} catch (e) {}
 	}
 

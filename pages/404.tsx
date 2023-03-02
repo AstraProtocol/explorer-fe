@@ -5,8 +5,6 @@ import React from 'react'
 import Layout from '../components/Layout'
 
 const Home: React.FC<NextPage> = _ => {
-	// // const t = useTranslations('Index')
-
 	return (
 		<Layout>
 			<Head>
@@ -21,4 +19,6 @@ const Home: React.FC<NextPage> = _ => {
 		</Layout>
 	)
 }
+
+
 export default Home

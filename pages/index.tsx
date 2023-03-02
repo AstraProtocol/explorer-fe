@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import Container from 'components/Container'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import React from 'react'
 import { HomeBlock } from 'views/block/HomeBlock'
 import Overview from 'views/homepage/Overview'
@@ -14,9 +13,6 @@ const Home: React.FC<NextPage> = _ => {
 
 	return (
 		<Layout>
-			<Head>
-				<title>{process.env.NEXT_PUBLIC_TITLE}</title>
-			</Head>
 			<Search />
 			<Container>
 				<Overview />

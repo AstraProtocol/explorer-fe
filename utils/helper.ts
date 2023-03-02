@@ -87,8 +87,8 @@ export class LinkMaker {
 	 * @returns
 	 */
 	static block(blockNumber?: string | number, query: string = '') {
-		blockNumber = blockNumber > 0 ? `/${blockNumber}${query}` : ''
-		return `/blocks${blockNumber}`
+		blockNumber = blockNumber > 0 ? `${blockNumber}${query}` : ''
+		return `/block/${blockNumber}`
 	}
 
 	/**
