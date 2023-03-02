@@ -106,7 +106,7 @@ export default function CardTabs({ tabTitles, tabContent }: CardTabsProps) {
 				<Tabs
 					tabs={_title}
 					contents={_content}
-					classes="padding-top-xs aaa"
+					classes="padding-top-xs"
 					headerBorder={false}
 					headerPadding="padding-left-sm flex-wrap"
 				/>

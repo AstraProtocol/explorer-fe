@@ -28,9 +28,9 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgExec:
 				messageData.push(_mapMsgExec(msg, messages))
 				break
-			// case TransactionTypeEnum.MsgGrant:
-			// 	messageData.push(_mapMsgGrant(msg))
-			// 	break
+			case TransactionTypeEnum.MsgGrant:
+				messageData.push(_mapMsgGrant(msg))
+				break
 			case TransactionTypeEnum.MsgWithdrawDelegatorReward:
 				messageData.push(_mapMsgWithdrawDelegatorReward(msg))
 				break
@@ -207,15 +207,17 @@ const _mapMsgExec = (msg: TransactionMessage, messages: TransactionMessage[]): C
 		}
 	}
 }
-// const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
-// 	const content = msg.content as unknown as MsgExecContent
-// 	if (msg && content) {
-// 		return {
-// 			type: msg.type,
-// 			grantee: content.params.grantee
-// 		}
-// 	}
-// }
+const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgGrantContent
+	if (msg && content) {
+		return {
+			type: msg.type,
+			granter: content.params.maybeGenericGrant.granter,
+			grantee: content.params.maybeGenericGrant.grantee,
+			dynamicRender: [{ grant: content.params.maybeGenericGrant.grant }]
+		}
+	}
+}
 
 const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgWithdrawDelegatorRewardContent
