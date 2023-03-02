@@ -6,11 +6,11 @@ import { setLatestBlock } from 'slices/commonSlice'
 import { useAppDispatch } from 'store/hooks'
 import useSWR from 'swr'
 
-export default function useBlock() {
+export default function useBlock(path: string = '/') {
 	const dispatch = useAppDispatch()
 
 	const [_items, _setBlockItem] = useState<BlockItem[]>()
-	const { pagination, setPagination } = usePagination('/block')
+	const { pagination, setPagination } = usePagination(path)
 	const _fetchCondition = () => {
 		return [
 			API_LIST.ALL_BLOCKS,

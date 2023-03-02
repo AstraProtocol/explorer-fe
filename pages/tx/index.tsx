@@ -14,7 +14,7 @@ import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
 	const [loaderTime, setLoaderTime] = useState(false)
-	const { fullPageData, pagination, changePage } = useTransaction()
+	const { fullPageData, pagination, changePage } = useTransaction('/tx')
 	const { isMobile } = useMobileLayout(1220)
 
 	//loader display at least 1 second
