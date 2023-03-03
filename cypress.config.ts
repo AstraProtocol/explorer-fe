@@ -2,6 +2,7 @@ import { loadEnvConfig } from '@next/env'
 import { defineConfig } from 'cypress'
 
 const { combinedEnv } = loadEnvConfig(process.cwd())
+console.log('combinedEnv', combinedEnv)
 export default defineConfig({
 	env: combinedEnv,
 	e2e: {
