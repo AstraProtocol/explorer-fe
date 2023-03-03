@@ -9,6 +9,7 @@ export type CollapseItem = {
 }
 
 export type CollapseProps = {
+	id?: string
 	open?: boolean
 	title?: React.ReactNode
 	items: CollapseItem[]
@@ -19,7 +20,7 @@ export type CollapseProps = {
 		wappterItem?: string
 	}
 }
-export default function Collapse({ title, items, classes, open }: CollapseProps) {
+export default function Collapse({ id, title, items, classes, open }: CollapseProps) {
 	const [_open, _setOpen] = useState(false)
 
 	useEffect(() => {
@@ -27,7 +28,7 @@ export default function Collapse({ title, items, classes, open }: CollapseProps)
 	}, [open])
 
 	return (
-		<div className={clsx(styles.collapse, classes?.wrapper)}>
+		<div id={id} className={clsx(styles.collapse, classes?.wrapper)}>
 			{!!title && (
 				<div
 					className={clsx(styles.header, classes?.header, 'padding-sm', 'pointer', 'text text-bold')}

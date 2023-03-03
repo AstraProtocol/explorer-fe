@@ -121,7 +121,7 @@ export default function MoibleNavigation({ items }: MobileNavigationProps) {
 					title: titleElement,
 					items: subCollapse
 				}
-				menus.push(<Collapse key={item.label} {...collapse} />)
+				menus.push(<Collapse id={item.id} key={item.label} {...collapse} />)
 			} else {
 				menus.push(
 					<LinkMenuItem

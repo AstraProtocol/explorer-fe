@@ -42,6 +42,20 @@ describe('Home Page with Desktop', () => {
 		cy.url().should('eq', `${HOST}/`)
 	})
 
+	it('Navigate to Token Holder page', () => {
+		cy.get('#nav-token').click()
+		cy.get('#nav-token > ul > li:nth-child(2)').click()
+
+		cy.get('.page-title').should('have.html', 'Astra Address')
+	})
+
+	it('Navigate to All Tokens page', () => {
+		cy.get('#nav-token').click()
+		cy.get('#nav-token > ul > li:nth-child(1)').click()
+
+		cy.get('.page-title').should('have.html', 'Tokens')
+	})
+
 	/**
 	 * Current disable change theme feature
 	 */
@@ -57,7 +71,6 @@ describe('Home Page with Mobile', () => {
 	beforeEach(() => {
 		cy.viewport('iphone-x')
 		cy.visit(HOST)
-		// cy.get('#hamburger-menu-btn', { timeout: 5000 }).click()
 	})
 	it('loads home page with full navbar and right title/chain', () => {
 		cy.title().should('eq', 'Astra Explorer')
@@ -92,6 +105,20 @@ describe('Home Page with Mobile', () => {
 		cy.get('#nav-stats > span > a').click()
 
 		cy.url().should('eq', `${HOST}/charts`)
+	})
+
+	it('Navigate to All Tokens page', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#nav-token-1').click()
+
+		cy.get('.page-title').should('have.html', 'Tokens')
+	})
+
+	it('Navigate to Astra Holders page', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#nav-token-2').click()
+
+		cy.get('.page-title').should('have.html', 'Astra Address')
 	})
 
 	it('Close Popup Menu', () => {
