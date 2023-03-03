@@ -59,3 +59,4 @@ jobs:
                   NEXT_PUBLIC_CHAIN_ID: 11110,
                   NEXT_PUBLIC_TITLE: Astra Explorer,
                   NEXT_PUBLIC_ENV: mainnet
+                  CYPRESS: true
