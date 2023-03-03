@@ -53,3 +53,4 @@ jobs:
                   record: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NEXT_PUBLIC_ENV: mainnet
