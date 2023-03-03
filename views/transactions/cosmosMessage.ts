@@ -426,7 +426,10 @@ const _mapMsgWithdrawValidatorCommission = (msg: TransactionMessage): CosmosTxMe
 	if (msg && content) {
 		return {
 			type: msg.type,
-			validatorAddress: content.validatorAddress
+			validatorAddress: content.validatorAddress,
+			recipientAddress: content.recipientAddress,
+			amount: formatEther(getAstraTokenAmount(content.amount)),
+			amountSymbol: getTokenName(content.amount)
 		}
 	}
 }

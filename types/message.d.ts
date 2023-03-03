@@ -635,8 +635,5 @@ interface MsgWithdrawValidatorCommissionContent {
 	msgIndex: number
 	validatorAddress: string
 	uuid: string
-	amount: {
-		denom: string
-		amount: string
-	}[]
+	amount: TokenAmount[]
 }
