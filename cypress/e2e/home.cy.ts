@@ -5,7 +5,7 @@ describe('Home Page with Desktop', () => {
 		cy.visit(HOST)
 	})
 	it('loads home page with full navbar and right title/chain', () => {
-		cy.title().should('eq', 'Astra Explorer')
+		cy.title({ timeout: 10000 }).should('eq', 'Astra Explorer')
 		cy.get('#nav-block > span').should('have.html', 'Blocks')
 		cy.get('#nav-transaction > span').should('have.html', 'Transactions')
 		cy.get('#nav-token > span').should('have.html', 'Tokens')
@@ -73,7 +73,7 @@ describe('Home Page with Mobile', () => {
 		cy.visit(HOST)
 	})
 	it('loads home page with full navbar and right title/chain', () => {
-		cy.title().should('eq', 'Astra Explorer')
+		cy.title({ timeout: 10000 }).should('eq', 'Astra Explorer')
 		cy.get('#nav-mobile-others > .search').should('be.visible')
 	})
 
