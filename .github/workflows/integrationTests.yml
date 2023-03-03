@@ -53,7 +53,6 @@ jobs:
                   record: false
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NEXT_PUBLIC_ENV: mainnet
                   CYPRESS: true
                   NEXT_PUBLIC_COSMOS_API: https://chainindexing.astranaut.io
                   NEXT_PUBLIC_EVM_API: https://blockscout.astranaut.io
