@@ -1,4 +1,4 @@
-describe('Home Page', () => {
+describe('Home Page with Desktop', () => {
 	const HOST = 'http://localhost:3000'
 	beforeEach(() => {
 		cy.viewport('macbook-13')
@@ -36,6 +36,7 @@ describe('Home Page', () => {
 	})
 
 	it('Navigate to Home page', () => {
+		cy.visit(`${HOST}/tx`)
 		cy.get('.logo').click({ multiple: true })
 
 		cy.url().should('eq', `${HOST}/`)
@@ -49,4 +50,54 @@ describe('Home Page', () => {
 	// 	cy.get('#nav-desktop-others > .switch-theme').should('be.visible').click()
 	// 	cy.get('#__next > div:nth-child(2)').should('have.class', 'light--mode')
 	// })
+})
+
+describe('Home Page with Mobile', () => {
+	const HOST = 'http://localhost:3000'
+	beforeEach(() => {
+		cy.viewport('iphone-x')
+		cy.visit(HOST)
+		// cy.get('#hamburger-menu-btn', { timeout: 5000 }).click()
+	})
+	it('loads home page with full navbar and right title/chain', () => {
+		cy.title().should('eq', 'Astra Explorer')
+		cy.get('#nav-mobile-others > .search').should('be.visible')
+	})
+
+	it('Navigate to Home page', () => {
+		cy.visit(`${HOST}/tx`)
+		cy.get('.logo').click({ multiple: true })
+
+		cy.url().should('eq', `${HOST}/`)
+	})
+
+	it('Navigate to Block page', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#nav-block > span > a').click()
+
+		cy.get('.page-title').should('have.html', 'Blocks')
+		cy.url().should('eq', `${HOST}/block`)
+	})
+
+	it('Navigate to Transactions page', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#nav-transaction > span > a').click()
+
+		cy.get('.page-title').should('have.html', 'Transactions')
+		cy.url().should('eq', `${HOST}/tx`)
+	})
+
+	it('Navigate to Stats page', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#nav-stats > span > a').click()
+
+		cy.url().should('eq', `${HOST}/charts`)
+	})
+
+	it('Close Popup Menu', () => {
+		cy.get('#hamburger-menu-btn').click()
+		cy.get('#hamburger-menu-close-btn > span').click()
+
+		cy.get('#hamburger-menu-close-btn').should('not.exist')
+	})
 })
