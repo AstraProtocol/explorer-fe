@@ -2,9 +2,6 @@ name: Integration Tests
 
 on:
     pull_request:
-        branches:
-            - dev
-            - main
     push:
         branches:
             - dev
@@ -12,6 +9,10 @@ on:
 
 jobs:
     integration-tests:
+        strategy:
+            fail-fast: true
+            matrix:
+                node: [16]
         name: Integration tests
         runs-on: ubuntu-latest
         steps:
