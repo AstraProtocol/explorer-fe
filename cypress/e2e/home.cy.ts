@@ -127,6 +127,42 @@ describe('Home Page with Mobile', () => {
 
 		cy.get('#hamburger-menu-close-btn').should('not.exist')
 	})
+
+	it('Navigate to Block page', () => {
+		cy.get('#nav-block').click()
+
+		cy.get('.page-title').should('have.html', 'Blocks')
+		cy.url().should('eq', `${HOST}/block`)
+	})
+
+	it('Navigate to Transactions page', () => {
+		cy.get('#nav-transaction').click()
+
+		cy.get('.page-title').should('have.html', 'Transactions')
+		cy.url().should('eq', `${HOST}/tx`)
+	})
+
+	it('Navigate to Stats page', () => {
+		cy.get('#nav-stats').click()
+
+		cy.url().should('eq', `${HOST}/charts`)
+	})
+
+	it('Navigate to Home page', () => {
+		cy.get('.logo').click({ multiple: true })
+
+		cy.url().should('eq', `${HOST}/`)
+	})
+
+	/**
+	 * Current disable change theme feature
+	 */
+	// it('Change theme', () => {
+	// 	cy.get('#__next > div:nth-child(2)').should('have.class', 'dark--mode')
+	// 	cy.get('#nav-desktop-others > .switch-theme').should('be.visible').click()
+	// 	cy.get('#__next > div:nth-child(2)').should('have.class', 'light--mode')
+	// })
 })
 
-export {}
+export { }
+
