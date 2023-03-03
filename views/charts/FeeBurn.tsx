@@ -17,9 +17,7 @@ function convertFeeToDataSet(history: FeeItem[], convertDecimal?: boolean): [str
 }
 
 export default function FeeBurn() {
-	const { data: feeDailyRes } = useSWR<FeeResponse>(
-		API_LIST.GET_FEE_DAILY.replace('#YEAR', new Date().getFullYear().toString())
-	)
+	const { data: feeDailyRes } = useSWR<FeeResponse>(API_LIST.GET_FEE_DAILY)
 	const feeDaily = feeDailyRes?.result?.totalFeesHistory || []
 	const [feeDailyLabels, feeDailyData] = convertFeeToDataSet(feeDaily)
 

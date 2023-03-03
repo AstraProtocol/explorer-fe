@@ -18,12 +18,8 @@ function convertFeeToDataSet(history: FeeItem[], convertDecimal?: boolean): [str
 }
 
 export default function Fee() {
-	const { data: feeDailyRes } = useSWR<FeeResponse>(
-		API_LIST.GET_FEE_DAILY.replace('#YEAR', new Date().getFullYear().toString())
-	)
-	const { data: feeMonthRes } = useSWR<FeeResponse>(
-		API_LIST.GET_FEE_MONTHLY.replace('#YEAR', new Date().getFullYear().toString())
-	)
+	const { data: feeDailyRes } = useSWR<FeeResponse>(API_LIST.GET_FEE_DAILY)
+	const { data: feeMonthRes } = useSWR<FeeResponse>(API_LIST.GET_FEE_MONTHLY)
 
 	const feeDaily = feeDailyRes?.result?.totalFeesHistory || []
 	const [feeDailyLabels, feeDailyData] = convertFeeToDataSet(feeDaily)
