@@ -1,5 +1,7 @@
+import { expect, test } from '@jest/globals'
+
 describe('check config', () => {
-	it('Check not empty any config define in next.config.js', () => {
+	test('Check not empty any config define in next.config.js', () => {
 		expect(process.env.NEXT_PUBLIC_BLOCK_INTERVAL).toBeDefined()
 		expect(process.env.NEXT_PUBLIC_TRANSACTION_INTERVAL).toBeDefined()
 		expect(process.env.NEXT_PUBLIC_CHART_INTERVAL).toBeDefined()
@@ -11,7 +13,7 @@ describe('check config', () => {
 		expect(process.env.NEXT_PUBLIC_NATIVE_TOKEN).toBeDefined()
 		expect(process.env.NEXT_PUBLIC_ENV).toBeDefined()
 	})
-	it('Check env number is right', () => {
+	test('Check env number is right', () => {
 		expect(Number(process.env.NEXT_PUBLIC_BLOCK_INTERVAL)).toBeGreaterThanOrEqual(0)
 		expect(Number(process.env.NEXT_PUBLIC_TRANSACTION_INTERVAL)).toBeGreaterThanOrEqual(0)
 		expect(Number(process.env.NEXT_PUBLIC_CHART_INTERVAL)).toBeGreaterThanOrEqual(0)
@@ -19,7 +21,7 @@ describe('check config', () => {
 		expect(Number(process.env.NEXT_PUBLIC_PAGE_OFFSET)).toBeGreaterThanOrEqual(0)
 		expect(Number(process.env.NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS)).toBeGreaterThanOrEqual(0)
 	})
-	it('Check native token is right', () => {
+	test('Check native token is right', () => {
 		expect(process.env.NEXT_PUBLIC_NATIVE_TOKEN).toBe('asa')
 	})
 })
