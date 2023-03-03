@@ -13,12 +13,8 @@ function convertGasToDataSet(history: GasItem[]): [string[], number[]] {
 }
 
 export default function Gas() {
-	const { data: gasDailyRes } = useSWR<GasResponse>(
-		API_LIST.GET_GAS_DAILY.replace('#YEAR', new Date().getFullYear().toString())
-	)
-	const { data: gasMonthRes } = useSWR<GasResponse>(
-		API_LIST.GET_GAS_MONTHLY.replace('#YEAR', new Date().getFullYear().toString())
-	)
+	const { data: gasDailyRes } = useSWR<GasResponse>(API_LIST.GET_GAS_DAILY)
+	const { data: gasMonthRes } = useSWR<GasResponse>(API_LIST.GET_GAS_MONTHLY)
 
 	const gasDaily = gasDailyRes?.result?.totalGasUsedHistory || []
 	const [gasDailyLabels, gasDailyData] = convertGasToDataSet(gasDaily)
