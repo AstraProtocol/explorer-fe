@@ -43,6 +43,7 @@ export default function FeeBurn() {
 					labels={feeDailyLabels}
 					label="Fee Burned"
 					unitName="ASA"
+					stepSize={() => 5}
 				/>
 			</Row>
 		</Col>
