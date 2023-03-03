@@ -14,5 +14,6 @@ export default defineConfig({
 		video: false,
 		screenshotOnRunFailure: false
 		// experimentalSessionAndOrigin: true
-	}
+	},
+	blockHosts: ['vitals.vercel-insights.com', '*sentry.io', '*googletagmanager.com']
 })

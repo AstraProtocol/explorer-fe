@@ -9,6 +9,5 @@
 	"include": ["**/*.ts"],
 	"ts-node": {
 		"swc": true
-	},
-	"exclude": ["**/*.cy.ts"]
+	}
 }

@@ -16,7 +16,7 @@
 		"incremental": true,
 		"baseUrl": "."
 	},
-	"exclude": ["node_modules", ".vscode", "*.test.ts"],
+	"exclude": ["node_modules", ".vscode", "*.test.ts", "cypress"],
 	"include": [
 		"next-env.d.ts",
 		"project.d.ts",
