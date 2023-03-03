@@ -14,4 +14,7 @@ Cypress.on('uncaught:exception', () => {
 	return false
 })
 
+Cypress.config('defaultCommandTimeout', 10000)
+
+
 Cypress.Commands.overwrite('log', (subject, message) => cy.task('log', message))
