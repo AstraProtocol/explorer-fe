@@ -79,7 +79,7 @@ const sentryWebpackPluginOptions = {
 	// For all available options, see:
 	// https://github.com/getsentry/sentry-webpack-plugin#options.
 }
-console.log(process.env)
+
 module.exports =
 	process.env.NEXT_PUBLIC_ENV === 'mainnet' && !process.env.NEXT_PUBLIC_CYPRESS
 		? withSentryConfig(moduleExports, sentryWebpackPluginOptions)
