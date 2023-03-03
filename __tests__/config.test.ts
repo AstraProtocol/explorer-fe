@@ -9,6 +9,7 @@ describe('check config', () => {
 		expect(process.env.NEXT_PUBLIC_PAGE_OFFSET).toBeDefined()
 		expect(process.env.NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS).toBeDefined()
 		expect(process.env.NEXT_PUBLIC_NATIVE_TOKEN).toBeDefined()
+		expect(process.env.NEXT_PUBLIC_ENV).toBeDefined()
 	})
 	it('Check env number is right', () => {
 		expect(Number(process.env.NEXT_PUBLIC_BLOCK_INTERVAL)).toBeGreaterThanOrEqual(0)

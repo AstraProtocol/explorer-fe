@@ -23,38 +23,38 @@ export default function Navbar() {
 
 	const items: MenuItem[] = [
 		{
-			id: '1',
+			id: 'nav-block',
 			label: 'Blocks',
 			link: '/block'
 		},
 		{
-			id: '2',
+			id: 'nav-transaction',
 			label: 'Transactions',
 			link: '/tx'
 		},
 		{
-			id: '3',
+			id: 'nav-token',
 			label: 'Tokens',
 			submenus: [
 				{
-					id: '3.1',
+					id: 'nav-token-1',
 					label: 'All',
 					link: '/tokens'
 				},
 				{
-					id: '3.2',
+					id: 'nav-token-2',
 					label: 'Astra',
 					link: '/accounts'
 				}
 			]
 		},
 		{
-			id: '4',
+			id: 'nav-stats',
 			label: 'Stats',
 			link: '/charts'
 		},
 		{
-			id: '5',
+			id: 'nav-chain',
 			label: process.env.NEXT_PUBLIC_ENV == 'mainnet' ? 'Astra Mainnet' : 'Astra Testnet',
 			prefixIcon: <LiveIcon />,
 			link: '/'
@@ -143,7 +143,7 @@ export default function Navbar() {
 						{isMobile && <Search full={false} />}
 					</div>
 					{isResponsive && !isMobile && <Search full={false} />}
-					<div className={styles.right}>
+					<div className={styles.right} id="nav-desktop-others">
 						<Navigation items={items} />
 						<Search full={false} />
 						<SwitchTheme />
