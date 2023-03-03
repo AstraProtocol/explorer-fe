@@ -624,3 +624,19 @@ interface MsgClawbackContent {
 	version: number
 	msgIndex: number
 }
+
+interface MsgWithdrawValidatorCommissionContent {
+	txHash: string
+	recipientAddress: string
+	name: string
+	height: number
+	msgName: string
+	version: number
+	msgIndex: number
+	validatorAddress: string
+	uuid: string
+	amount: {
+		denom: string
+		amount: string
+	}[]
+}

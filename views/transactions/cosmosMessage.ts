@@ -70,6 +70,9 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgClawback:
 				messageData.push(_mapMsgClawback(msg))
 				break
+			case TransactionTypeEnum.MsgWithdrawValidatorCommission:
+				messageData.push(_mapMsgWithdrawValidatorCommission(msg))
+				break
 		}
 	}
 	return {
@@ -415,6 +418,15 @@ const _mapMsgClawback = (msg: TransactionMessage): CosmosTxMessage => {
 			funderAddress: params.funder_address,
 			accountAddress: params.account_address,
 			destAddress: params.dest_address || ' '
+		}
+	}
+}
+const _mapMsgWithdrawValidatorCommission = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgWithdrawValidatorCommissionContent
+	if (msg && content) {
+		return {
+			type: msg.type,
+			validatorAddress: content.validatorAddress
 		}
 	}
 }
