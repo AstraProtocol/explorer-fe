@@ -128,3 +128,5 @@ describe('Home Page with Mobile', () => {
 		cy.get('#hamburger-menu-close-btn').should('not.exist')
 	})
 })
+
+export {}
