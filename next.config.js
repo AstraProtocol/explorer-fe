@@ -73,7 +73,10 @@ const sentryWebpackPluginOptions = {
 	//   release, url, org, project, authToken, configFile, stripPrefix,
 	//   urlPrefix, include, ignore
 	silent: true, // Logging when deploying to check if there is any problem
-	validate: true
+	validate: true,
+	deploy: {
+		env: process.env.NEXT_PUBLIC_ENV
+	}
 	// Set to env false will skip deploying release on Sentry except Production
 	// https://github.com/getsentry/sentry-webpack-plugin/blob/master/src/index.js#L522
 	// For all available options, see:
@@ -81,6 +84,6 @@ const sentryWebpackPluginOptions = {
 }
 
 module.exports =
-	process.env.NEXT_PUBLIC_ENV === 'mainnet' && !process.env.NEXT_PUBLIC_CYPRESS
+	process.env.NEXT_PUBLIC_ENV === 'mainnet' && !(process.env.NEXT_PUBLIC_CYPRESS || process.env.CYPRESS)
 		? withSentryConfig(moduleExports, sentryWebpackPluginOptions)
 		: nextConfig
