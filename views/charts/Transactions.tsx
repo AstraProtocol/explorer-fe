@@ -11,9 +11,7 @@ function convertToDataSet(history: TransactionHistoryItem[]): [string[], number[
 }
 
 export default function Transactions() {
-	const { data: res } = useSWR<TransactionHistoryResponse>(
-		API_LIST.GET_TRANSACTION_HISTORY.replace('#YEAR', new Date().getFullYear().toString())
-	)
+	const { data: res } = useSWR<TransactionHistoryResponse>(API_LIST.GET_TRANSACTION_HISTORY)
 	const history = res?.result?.transactionsHistory || []
 	const [labels, data] = convertToDataSet(history)
 	return (
