@@ -4,6 +4,7 @@ import Head from 'next/head'
 import React from 'react'
 import Address from 'views/charts/Address'
 import Fee from 'views/charts/Fee'
+import FeeBurn from 'views/charts/FeeBurn'
 import Gas from 'views/charts/Gas'
 import Transactions from 'views/charts/Transactions'
 import Overview from 'views/homepage/Overview'
@@ -22,6 +23,7 @@ const Charts: React.FC<NextPage> = _ => {
 					<Address />
 					<Gas />
 					<Fee />
+					<FeeBurn />
 				</div>
 			</Container>
 		</Layout>
