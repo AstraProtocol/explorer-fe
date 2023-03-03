@@ -53,8 +53,6 @@ jobs:
                   start: npm start
                   record: false
               env:
-                  # Recommended: pass the GitHub token lets this action correctly
-                  # determine the unique run id necessary to re-run the checks
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NEXT_PUBLIC_COSMOS_API: 'https://chainindexing.astranaut.io',
                   NEXT_PUBLIC_EVM_API: 'https://blockscout.astranaut.io',
