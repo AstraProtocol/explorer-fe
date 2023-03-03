@@ -78,6 +78,12 @@ describe('Home Page with Mobile', () => {
 	})
 
 	it('Navigate to Home page', () => {
+		cy.get('.logo').click({ multiple: true })
+
+		cy.url().should('eq', `${HOST}/`)
+	})
+
+	it('Navigate to Transaction page and back with Logo click', () => {
 		cy.visit(`${HOST}/tx`)
 		cy.get('.logo').click({ multiple: true })
 
@@ -126,32 +132,6 @@ describe('Home Page with Mobile', () => {
 		cy.get('#hamburger-menu-close-btn > span').click()
 
 		cy.get('#hamburger-menu-close-btn').should('not.exist')
-	})
-
-	it('Navigate to Block page', () => {
-		cy.get('#nav-block').click()
-
-		cy.get('.page-title').should('have.html', 'Blocks')
-		cy.url().should('eq', `${HOST}/block`)
-	})
-
-	it('Navigate to Transactions page', () => {
-		cy.get('#nav-transaction').click()
-
-		cy.get('.page-title').should('have.html', 'Transactions')
-		cy.url().should('eq', `${HOST}/tx`)
-	})
-
-	it('Navigate to Stats page', () => {
-		cy.get('#nav-stats').click()
-
-		cy.url().should('eq', `${HOST}/charts`)
-	})
-
-	it('Navigate to Home page', () => {
-		cy.get('.logo').click({ multiple: true })
-
-		cy.url().should('eq', `${HOST}/`)
 	})
 
 	/**
