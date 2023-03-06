@@ -33,7 +33,7 @@ const LinkMenuItem = ({
 	prefix?: React.ReactNode
 }) => (
 	<div
-		id={id}
+		cypress-id={id}
 		className={clsx('radius-base', classes, styles.subItem, {
 			[styles.subActive]: pathname === link
 		})}

@@ -112,7 +112,7 @@ export default function Navbar() {
 					})}
 					ref={_searchWrapperRef}
 				>
-					<div className={styles.close} id="hamburger-menu-close-btn">
+					<div className={styles.close} cypress-id="hamburger-menu-close-btn">
 						<span onClick={_hideMenu} className="icon-close contrast-color-100 pointer"></span>
 					</div>
 					<div className={styles.content}>
@@ -127,7 +127,7 @@ export default function Navbar() {
 				})}
 			>
 				<div className={clsx(styles.container, 'margin-auto')}>
-					<div className={styles.hamburgerMenuIcon} id="hamburger-menu-btn">
+					<div className={styles.hamburgerMenuIcon} cypress-id="hamburger-menu-btn">
 						<div className="padding-left-lg pointer">
 							<Image
 								onClick={() => setShowHamburgerMenu(true)}
@@ -140,13 +140,13 @@ export default function Navbar() {
 					<div className={styles.left}>
 						<Logo type="transparent" />
 						{isMobile && (
-							<div id="nav-mobile-others">
+							<div cypress-id="nav-mobile-others">
 								<Search full={false} />{' '}
 							</div>
 						)}
 					</div>
 					{isResponsive && !isMobile && <Search full={false} />}
-					<div className={styles.right} id="nav-desktop-others">
+					<div className={styles.right} cypress-id="nav-desktop-others">
 						<Navigation items={items} />
 						<Search full={false} />
 						{/* <SwitchTheme /> */}

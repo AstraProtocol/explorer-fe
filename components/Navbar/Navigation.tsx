@@ -108,7 +108,7 @@ export default function Navigation({ items }: NavigationProps) {
 						[`padding-left-lg ${styles.background}`]: prefixIcon,
 						'padding-right-md padding-left-xs': !prefixIcon
 					})}
-					id={id}
+					cypress-id={id}
 					onClick={event => _showSubMenu(event, [id])}
 				>
 					{type === 'locale' ? (
