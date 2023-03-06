@@ -14,7 +14,7 @@ export default function Search({ full = true }: Props) {
 	const [_openSearchModal, setOpenSearchModal] = useState(false)
 
 	return (
-		<div className="container">
+		<div className="search container">
 			<div
 				className={clsx(
 					styles.search,

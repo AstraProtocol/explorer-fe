@@ -18,12 +18,14 @@ type LinkItem = {
 const Checked = () => <span className="icon-checked alert-color-success block-ver-center"></span>
 
 const LinkMenuItem = ({
+	id,
 	link,
 	label,
 	pathname,
 	classes,
 	prefix
 }: {
+	id: string
 	link?: string
 	label?: string
 	pathname?: string
@@ -31,6 +33,7 @@ const LinkMenuItem = ({
 	prefix?: React.ReactNode
 }) => (
 	<div
+		cypress-id={id}
 		className={clsx('radius-base', classes, styles.subItem, {
 			[styles.subActive]: pathname === link
 		})}
@@ -74,6 +77,7 @@ export default function MoibleNavigation({ items }: MobileNavigationProps) {
 					subCollapse = item.submenus.map(item => ({
 						element: (
 							<LinkMenuItem
+								id={item.id}
 								link={item.link}
 								label={item.label}
 								pathname={pathname}
@@ -101,6 +105,7 @@ export default function MoibleNavigation({ items }: MobileNavigationProps) {
 					subCollapse = item.submenus.map(item => ({
 						element: (
 							<LinkMenuItem
+								id={item.id}
 								link={item.link}
 								label={item.label}
 								key={item.label}
@@ -116,9 +121,17 @@ export default function MoibleNavigation({ items }: MobileNavigationProps) {
 					title: titleElement,
 					items: subCollapse
 				}
-				menus.push(<Collapse key={item.label} {...collapse} />)
+				menus.push(<Collapse id={item.id} key={item.label} {...collapse} />)
 			} else {
-				menus.push(<LinkMenuItem key={item.label} link={item.link} label={item.label} pathname={pathname} />)
+				menus.push(
+					<LinkMenuItem
+						id={item.id}
+						key={item.label}
+						link={item.link}
+						label={item.label}
+						pathname={pathname}
+					/>
+				)
 			}
 		}
 		return menus

@@ -3,7 +3,9 @@ const { withSentryConfig } = require('@sentry/nextjs')
 
 const nextConfig = {
 	reactStrictMode: false,
-
+	compiler: {
+		reactRemoveProperties: { properties: ['^cypress-id$'] }
+	},
 	images: {
 		remotePatterns: [
 			{

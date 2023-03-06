@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Integration Tests
 
 on:
     pull_request:
@@ -8,18 +8,15 @@ on:
             - main
 
 jobs:
-    unit-tests:
-        runs-on: ubuntu-latest
-
+    integration-tests:
         strategy:
             fail-fast: true
             matrix:
                 node: [16]
-
-        name: Unit tests (Jest)
-
+        name: Integration tests
+        runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
+            - name: Checkout
               uses: actions/checkout@v2
 
             - name: Setup Node
@@ -41,14 +38,25 @@ jobs:
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-yarn-
-
             - name: Setup npm token
               run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
 
-            - name: Install dependencies
+            - name: Cypress install
               run: yarn install --frozen-lockfile
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Run tests
-              run: yarn test 
-              env: 
-                NEXT_PUBLIC_ENV: mainnet
+            - uses: cypress-io/github-action@v5.0.7 # use the explicit version number
+              with:
+                  build: npm run build
+                  start: npm start
+                  record: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  CYPRESS: true
+                  NEXT_PUBLIC_COSMOS_API: https://chainindexing.astranaut.io
+                  NEXT_PUBLIC_EVM_API: https://blockscout.astranaut.io
+                  NEXT_PUBLIC_URL: https://explorer.astranaut.io
+                  NEXT_PUBLIC_CHAIN_ID: 11110
+                  NEXT_PUBLIC_TITLE: Astra Explorer
+                  NEXT_PUBLIC_ENV: mainnet

@@ -11,7 +11,7 @@ type LogoProps = {
 export default function Logo({ type = 'white', textSize = '2xl', hasText = true, text = 'Astra Explorer' }: LogoProps) {
 	return (
 		<Link href="/">
-			<div className="link block-center text-bold contrast-color-100">
+			<div className="logo link block-center text-bold contrast-color-100">
 				<Image alt="Astra Explorer" src={`/images/logo/${type}_logo.svg`} width={48} height={48} />
 				{hasText && <span className={`text text-${textSize} text-bold`}>{text}</span>}
 			</div>

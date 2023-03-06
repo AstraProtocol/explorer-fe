@@ -26,6 +26,9 @@ ARG NEXT_PUBLIC_ENV
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/ ./
 COPY . . 
+RUN rm next.config.js
+COPY next.config.prod.js next.config.js
+
 RUN SENTRY_AUTH_TOKEN=${ASTRA_SENTRY_AUTH_TOKEN} \
     NEXT_PUBLIC_COSMOS_API=${NEXT_PUBLIC_COSMOS_API} \
     NEXT_PUBLIC_EVM_API=${NEXT_PUBLIC_EVM_API} \

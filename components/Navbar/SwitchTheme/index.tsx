@@ -13,7 +13,7 @@ export default function SwitchTheme() {
 		dispatch(switchTheme())
 	}
 	return (
-		<div className={clsx(styles.switchTheme, 'margin-right-xs margin-left-xs')}>
+		<div className={clsx(styles.switchTheme, 'switch-theme margin-right-xs margin-left-xs')}>
 			<button onClick={_changeTheme}>{theme === ThemeEnum.DARK ? <LightIcon /> : <DarkIcon />}</button>
 		</div>
 	)
