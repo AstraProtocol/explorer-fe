@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"target": "es5",
+		"lib": ["es5", "dom"],
+		"types": ["cypress", "./support/index.d.ts"],
+		"isolatedModules": false
+	},
+	"include": ["**/*.ts"],
+	"ts-node": {
+		"swc": true
+	}
+}

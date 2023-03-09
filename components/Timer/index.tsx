@@ -7,19 +7,15 @@ type TimerProps = {
 }
 
 export default function Timer({ interval = 1000, updatedAt }: TimerProps) {
-	const [_intervalTime, _setIntervalTime] = useState(interval)
 	const [count, setCount] = useState(0)
 	useEffect(() => {
-		if (_intervalTime > 0) {
+		if (interval > 0) {
 			const intervel = setInterval(function () {
-				setCount(count + 1)
-			}, _intervalTime)
-			return () => {
-				clearInterval(intervel)
-			}
+				setCount(prevCount => prevCount + 1)
+			}, interval)
+			return () => clearInterval(intervel)
 		}
-	}, [count, _intervalTime])
-	const _disabledInterval = () => _setIntervalTime(0)
+	}, [interval])
 
 	const _renderText = () => {
 		const years = Number(dayjs().diff(dayjs(updatedAt), 'years'))
@@ -54,13 +50,11 @@ export default function Timer({ interval = 1000, updatedAt }: TimerProps) {
 		const minutes = Number(dayjs().diff(dayjs(updatedAt), 'minutes'))
 
 		if (minutes > 0) {
-			// _setIntervalTime(30000)
 			return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
 		}
 		const seconds = Number(dayjs().diff(dayjs(updatedAt), 'seconds'))
 
 		if (seconds > 0) {
-			// _setIntervalTime(1000)
 			return `${seconds} second${seconds > 1 ? 's' : ''} ago`
 		}
 	}

@@ -19,12 +19,8 @@ function convertAddressGrowthToDataSet(history: AddressGrowthItem[]): [string[],
 }
 
 export default function Address() {
-	const { data: activeAddressRes } = useSWR<ActiveAddressResponse>(
-		API_LIST.GET_ACTIVE_ADDRESS.replace('#YEAR', new Date().getFullYear().toString())
-	)
-	const { data: addressGrowthRes } = useSWR<AddressGrowthResponse>(
-		API_LIST.GET_ADDRESS_GROWTH.replace('#YEAR', new Date().getFullYear().toString())
-	)
+	const { data: activeAddressRes } = useSWR<ActiveAddressResponse>(API_LIST.GET_ACTIVE_ADDRESS)
+	const { data: addressGrowthRes } = useSWR<AddressGrowthResponse>(API_LIST.GET_ADDRESS_GROWTH)
 
 	const activeAddress = activeAddressRes?.result?.activeAddressesHistory || []
 	const [activeAddressLabels, activeAddressdata] = convertActiveAddressToDataSet(activeAddress)

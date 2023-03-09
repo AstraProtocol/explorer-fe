@@ -28,9 +28,9 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 			case TransactionTypeEnum.MsgExec:
 				messageData.push(_mapMsgExec(msg, messages))
 				break
-			// case TransactionTypeEnum.MsgGrant:
-			// 	messageData.push(_mapMsgGrant(msg))
-			// 	break
+			case TransactionTypeEnum.MsgGrant:
+				messageData.push(_mapMsgGrant(msg))
+				break
 			case TransactionTypeEnum.MsgWithdrawDelegatorReward:
 				messageData.push(_mapMsgWithdrawDelegatorReward(msg))
 				break
@@ -69,6 +69,9 @@ export const handleCosmosMsg = (messages: TransactionMessage[]) => {
 				break
 			case TransactionTypeEnum.MsgClawback:
 				messageData.push(_mapMsgClawback(msg))
+				break
+			case TransactionTypeEnum.MsgWithdrawValidatorCommission:
+				messageData.push(_mapMsgWithdrawValidatorCommission(msg))
 				break
 		}
 	}
@@ -207,15 +210,17 @@ const _mapMsgExec = (msg: TransactionMessage, messages: TransactionMessage[]): C
 		}
 	}
 }
-// const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
-// 	const content = msg.content as unknown as MsgExecContent
-// 	if (msg && content) {
-// 		return {
-// 			type: msg.type,
-// 			grantee: content.params.grantee
-// 		}
-// 	}
-// }
+const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgGrantContent
+	if (msg && content) {
+		return {
+			type: msg.type,
+			granter: content.params.maybeGenericGrant.granter,
+			grantee: content.params.maybeGenericGrant.grantee,
+			dynamicRender: [{ grant: content.params.maybeGenericGrant.grant }]
+		}
+	}
+}
 
 const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgWithdrawDelegatorRewardContent
@@ -413,6 +418,18 @@ const _mapMsgClawback = (msg: TransactionMessage): CosmosTxMessage => {
 			funderAddress: params.funder_address,
 			accountAddress: params.account_address,
 			destAddress: params.dest_address || ' '
+		}
+	}
+}
+const _mapMsgWithdrawValidatorCommission = (msg: TransactionMessage): CosmosTxMessage => {
+	const content = msg.content as unknown as MsgWithdrawValidatorCommissionContent
+	if (msg && content) {
+		return {
+			type: msg.type,
+			validatorAddress: content.validatorAddress,
+			recipientAddress: content.recipientAddress,
+			amount: formatEther(getAstraTokenAmount(content.amount)),
+			amountSymbol: getTokenName(content.amount)
 		}
 	}
 }

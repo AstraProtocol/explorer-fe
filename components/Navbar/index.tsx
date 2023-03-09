@@ -10,7 +10,6 @@ import LiveIcon from './LiveIcon'
 import MoibleNavigation from './MobileNavigation'
 import Navigation, { MenuItem } from './Navigation'
 import styles from './style.module.scss'
-import SwitchTheme from './SwitchTheme'
 
 export default function Navbar() {
 	const { isMobile } = useMobileLayout('small')
@@ -23,38 +22,38 @@ export default function Navbar() {
 
 	const items: MenuItem[] = [
 		{
-			id: '1',
+			id: 'nav-block',
 			label: 'Blocks',
 			link: '/block'
 		},
 		{
-			id: '2',
+			id: 'nav-transaction',
 			label: 'Transactions',
 			link: '/tx'
 		},
 		{
-			id: '3',
+			id: 'nav-token',
 			label: 'Tokens',
 			submenus: [
 				{
-					id: '3.1',
+					id: 'nav-token-1',
 					label: 'All',
 					link: '/tokens'
 				},
 				{
-					id: '3.2',
+					id: 'nav-token-2',
 					label: 'Astra',
 					link: '/accounts'
 				}
 			]
 		},
 		{
-			id: '4',
+			id: 'nav-stats',
 			label: 'Stats',
 			link: '/charts'
 		},
 		{
-			id: '5',
+			id: 'nav-chain',
 			label: process.env.NEXT_PUBLIC_ENV == 'mainnet' ? 'Astra Mainnet' : 'Astra Testnet',
 			prefixIcon: <LiveIcon />,
 			link: '/'
@@ -113,7 +112,7 @@ export default function Navbar() {
 					})}
 					ref={_searchWrapperRef}
 				>
-					<div className={styles.close}>
+					<div className={styles.close} cypress-id="hamburger-menu-close-btn">
 						<span onClick={_hideMenu} className="icon-close contrast-color-100 pointer"></span>
 					</div>
 					<div className={styles.content}>
@@ -128,7 +127,7 @@ export default function Navbar() {
 				})}
 			>
 				<div className={clsx(styles.container, 'margin-auto')}>
-					<div className={styles.hamburgerMenuIcon}>
+					<div className={styles.hamburgerMenuIcon} cypress-id="hamburger-menu-btn">
 						<div className="padding-left-lg pointer">
 							<Image
 								onClick={() => setShowHamburgerMenu(true)}
@@ -140,13 +139,17 @@ export default function Navbar() {
 					</div>
 					<div className={styles.left}>
 						<Logo type="transparent" />
-						{isMobile && <Search full={false} />}
+						{isMobile && (
+							<div cypress-id="nav-mobile-others">
+								<Search full={false} />{' '}
+							</div>
+						)}
 					</div>
 					{isResponsive && !isMobile && <Search full={false} />}
-					<div className={styles.right}>
+					<div className={styles.right} cypress-id="nav-desktop-others">
 						<Navigation items={items} />
 						<Search full={false} />
-						<SwitchTheme />
+						{/* <SwitchTheme /> */}
 					</div>
 				</div>
 			</nav>

@@ -46,7 +46,9 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 	CardInfoLabels.validatorSrcAddress,
 	CardInfoLabels.validatorDstAddress,
 	//MsgExec
+	CardInfoLabels.granter,
 	CardInfoLabels.grantee,
+	CardInfoLabels.grant,
 	//MsgCreateValidator
 	CardInfoLabels.validatorDescription,
 	CardInfoLabels.commissionRates,

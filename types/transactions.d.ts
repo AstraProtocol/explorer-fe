@@ -275,6 +275,8 @@ interface CosmosTxMessage {
 	funderAddress?: string
 	accountAddress?: string
 	destAddress?: string
+
+	granter?: string
 }
 
 interface TransactionDetail {

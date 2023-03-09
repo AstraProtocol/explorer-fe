@@ -213,6 +213,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 			case 'delegatorAddress':
 			case 'recipientAddress':
 			case 'grantee':
+			case 'granter':
 				if (!isEmpty(data[key])) {
 					const evmAddress = key === 'grantee' ? data[key] : astraToEth(data[key])
 					items.push({
