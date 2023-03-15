@@ -34,7 +34,9 @@ const Layout: React.FC<Props> = props => {
 		}
 	}
 	const { data: marketPriceDataRaw } = useSWR<MarketPriceResponse>(_fetchCondition('market_price'))
-	const { data: validatorSummaryRaw } = useSWR<ValidatorResponse>(_fetchCondition('validator'))
+	const { data: validatorSummaryRaw } = useSWR<ValidatorResponse>(_fetchCondition('validator'), {
+		refreshInterval: 60000
+	})
 	const validatorSummary = getValidatorSummary(validatorSummaryRaw)
 	const marketPrice = getMarketPriceData(marketPriceDataRaw)
 

@@ -1,6 +1,9 @@
+import { astraToEth } from '@astradefi/address-converter'
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useMemo } from 'react'
+import { getValidatorSummary } from 'slices/commonSlice'
+import { useAppSelector } from 'store/hooks'
 import ResultView, { SearchResultViewItem } from './ResultView'
 import { SearchStatusEnum } from './SearchModal'
 import styles from './style.module.scss'
@@ -12,6 +15,7 @@ type SearchResultProps = {
 }
 
 export default function SearchResult({ status, data }: SearchResultProps) {
+	const validatorSummary = useAppSelector(getValidatorSummary)
 	const _convertDataToView = useMemo((): SearchResultViewItem[] => {
 		if (!data) {
 			return []
@@ -35,7 +39,11 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (addresses && addresses.length > 0) {
 			for (let item of addresses) {
 				if (!items.find((i: SearchResultViewItem) => item.addressHash === i.key)) {
-					const name = item.name || item.tokenName || item.contractName
+					const validator = validatorSummary.find(
+						(v: ValidatorData) =>
+							astraToEth(v.initialDelegatorAddress).toLowerCase() == item.addressHash.toLowerCase()
+					)
+					const name = item.name || item.tokenName || item.contractName || validator?.moniker
 					items.push({
 						time: item.insertedAt,
 						type: 'Address',
@@ -76,11 +84,15 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 		if (validators && validators.length > 0) {
 			for (let item of validators) {
 				if (!items.find((i: SearchResultViewItem) => item.operatorAddress === i.key)) {
+					const validator = validatorSummary.find(
+						(v: ValidatorData) => v.operatorAddress.toLowerCase() === item.operatorAddress.toLowerCase()
+					)
+					const name = validator?.moniker
 					items.push({
 						status: item.status,
 						type: 'Validator',
 						key: item.operatorAddress,
-						value: item.operatorAddress,
+						value: name ? `${name} (item.operatorAddress)` : item.operatorAddress,
 						linkValue: item.operatorAddress
 					})
 				}
