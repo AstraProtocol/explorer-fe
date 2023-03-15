@@ -27,7 +27,9 @@ const AddressDetailPage: React.FC<Props> = props => {
 	const validatorSummary = useAppSelector(getValidatorSummary)
 
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
-	const validator = validatorSummary.find((v: ValidatorData) => astraToEth(v.initialDelegatorAddress) === address)
+	const validator = validatorSummary.find(
+		(v: ValidatorData) => astraToEth(v.initialDelegatorAddress).toLowerCase() === address.toLowerCase()
+	)
 
 	return (
 		<Layout>

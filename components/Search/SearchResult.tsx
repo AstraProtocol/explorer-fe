@@ -85,15 +85,16 @@ export default function SearchResult({ status, data }: SearchResultProps) {
 			for (let item of validators) {
 				if (!items.find((i: SearchResultViewItem) => item.operatorAddress === i.key)) {
 					const validator = validatorSummary.find(
-						(v: ValidatorData) => v.operatorAddress.toLowerCase() === item.operatorAddress.toLowerCase()
+						(v: ValidatorData) =>
+							v.initialDelegatorAddress.toLowerCase() === item.initialDelegatorAddress.toLowerCase()
 					)
 					const name = validator?.moniker
 					items.push({
 						status: item.status,
 						type: 'Validator',
 						key: item.operatorAddress,
-						value: name ? `${name} (item.operatorAddress)` : item.operatorAddress,
-						linkValue: item.operatorAddress
+						value: name ? `${name} (${item.initialDelegatorAddressHash})` : item.operatorAddress,
+						linkValue: item.initialDelegatorAddressHash
 					})
 				}
 			}
