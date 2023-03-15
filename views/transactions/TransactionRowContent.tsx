@@ -150,7 +150,7 @@ export default function TransactionRowContent({
 						{Number(value || '0') >= 0 && (
 							<>
 								<TypographyLib.Balance
-									size="xs"
+									size="sm"
 									value={value}
 									currency={
 										valueCurrency
@@ -166,7 +166,7 @@ export default function TransactionRowContent({
 							{Number(fee) >= 0 && (
 								<TypographyLib.Balance
 									icon={<span>Fee:</span>}
-									size="2xs"
+									size="xs"
 									value={convertBalanceToView(fee)}
 									fixNumber={7}
 									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
