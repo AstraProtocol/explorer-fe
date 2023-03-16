@@ -247,7 +247,7 @@ const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 			],
 			// validatorDescription: content.description,
 			// commissionRates: content.commissionRates,
-			minSelfDelegation: formatEther(content?.minSelfDelegation || '0'),
+			minSelfDelegation: content?.minSelfDelegation || '0',
 			validatorAddress: content.validatorAddress,
 			tendermintPubkey: content.tendermintPubkey
 		}
@@ -361,7 +361,7 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 			const { amount, length } = lock
 			const totalAmount = getAstraTokenAmount(amount)
 			const tokenName = getTokenName(amount)
-			lockupPeriodsContent.push([length, `${formatEther(totalAmount)} ${tokenName}`])
+			lockupPeriodsContent.push([length, `${formatNumber(formatEther(totalAmount))} ${tokenName}`])
 		}
 
 		const vestingPeriodsTitle = ['LENGTH', 'AMOUNT']

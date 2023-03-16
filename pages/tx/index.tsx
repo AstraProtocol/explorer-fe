@@ -80,6 +80,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 										to={item.to}
 										value={item.value}
 										labelStatus={item.evmType}
+										valueToken="asa"
 										type={item.type}
 										newBlock={item.newTransaction}
 										height="auto"
