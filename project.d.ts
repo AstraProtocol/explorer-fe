@@ -112,6 +112,7 @@ interface ValidatorData {
 	operatorAddress: string
 	consensusNodeAddress: string
 	initialDelegatorAddress: string
+	initialDelegatorAddressHash?: string
 	tendermintPubkey: string
 	tendermintAddress: string
 	status: string

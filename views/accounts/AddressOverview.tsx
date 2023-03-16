@@ -35,7 +35,6 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 
 	const addressCounter = useAddressCounter(address)
 	const astraSummary = useAppSelector(getAstraSummary)
-
 	const isValidator = !isEmpty(validator)
 	const isContract = addressData.type === AddressTypeEnum.Contract
 	const [totalLock, totalUnvested, totalVested] = useMemo<Array<TokenAmount | undefined>>(() => {
@@ -116,6 +115,16 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 					{/* <QrButton textTitle="qrcode" content={address} /> */}
 				</div>
 			</Row>
+			{validator && (
+				<div
+					style={{ justifyContent: 'space-between' }}
+					className={clsx(styles.borderBottom, 'padding-bottom-lg padding-top-lg')}
+				>
+					<span className="text text-base contrast-color-50">Description</span>
+					<br />
+					<span className="text text-base">{validator.details}</span>
+				</div>
+			)}
 			{isContract && (
 				<div style={{ justifyContent: 'space-between' }} className={clsx('padding-bottom-lg ')}>
 					{addressData.tokenSymbol && (
@@ -175,17 +184,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						{isUndefined(addressCounter?.tokenTransferCount) ? 'NaN' : addressCounter?.tokenTransferCount}
 					</span>
 				</div>
-				{/* <div className={styles.colLastBalanceUpdated}>
-					<span className="text text-base contrast-color-50">Fee:</span>
-					<br />
-					<TypographyUI.Balance
-						size="sm"
-						currency={'ASA'}
-						icon={<CryptoIcon name="asa" size="sm" />}
-						value={addressCounter.feesCount ? addressCounter.feesCount : 0}
-						fixNumber={5}
-					/>
-				</div> */}
+
 				<div className={styles.colGasUsed}>
 					<span className="text text-base contrast-color-50">Gas used:</span>
 					<br />
