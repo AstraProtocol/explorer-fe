@@ -247,7 +247,7 @@ const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 			],
 			// validatorDescription: content.description,
 			// commissionRates: content.commissionRates,
-			minSelfDelegation: formatEther(content?.minSelfDelegation || '0'),
+			minSelfDelegation: content?.minSelfDelegation || '0',
 			validatorAddress: content.validatorAddress,
 			tendermintPubkey: content.tendermintPubkey
 		}
