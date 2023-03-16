@@ -238,7 +238,6 @@ const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessag
 const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgCreateValidatorContent
 	if (msg && content) {
-		console.log(content.minSelfDelegation)
 		return {
 			type: msg.type,
 			delegatorAddress: content.delegatorAddress,
