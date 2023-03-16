@@ -238,6 +238,7 @@ const _mapMsgWithdrawDelegatorReward = (msg: TransactionMessage): CosmosTxMessag
 const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgCreateValidatorContent
 	if (msg && content) {
+		console.log(content.minSelfDelegation)
 		return {
 			type: msg.type,
 			delegatorAddress: content.delegatorAddress,
@@ -247,7 +248,7 @@ const _mapMsgCreateValidator = (msg: TransactionMessage): CosmosTxMessage => {
 			],
 			// validatorDescription: content.description,
 			// commissionRates: content.commissionRates,
-			minSelfDelegation: formatEther(content?.minSelfDelegation || '0'),
+			minSelfDelegation: content?.minSelfDelegation || '0',
 			validatorAddress: content.validatorAddress,
 			tendermintPubkey: content.tendermintPubkey
 		}
