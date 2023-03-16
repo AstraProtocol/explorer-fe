@@ -1,10 +1,8 @@
-name: Integration Tests
+name: Semantic Release ChangeLog
 
 on:
-    pull_request:
     push:
         branches:
-            - dev
             - main
 
 jobs:
@@ -46,11 +44,8 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: cypress-io/github-action@v5.0.7 # use the explicit version number
-              with:
-                  build: npm run build
-                  start: npm start
-                  record: false
+            - name: Test build
+              run: yarn build
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CYPRESS: true
