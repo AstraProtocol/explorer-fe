@@ -1,4 +1,5 @@
 import { CryptoIcon, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
+import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import GradientRow from 'components/Row/GradientRow'
@@ -7,9 +8,10 @@ import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { formatEther } from 'ethers/lib/utils'
 import numeral from 'numeral'
 import { CONFIG } from 'utils/constants'
-import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import style from './style.module.scss'
 
@@ -22,6 +24,10 @@ const AddressTokenTransfer = ({ data }: Props) => {
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
 	const type = useTransactionType(data.from, data.to)
+	const tokenTransfer = data.tokenTransfers[0]
+	const tokenTransferAmount = tokenTransfer ? formatEther(tokenTransfer.amount) : 0
+	const tokenTransferSymbol = tokenTransfer?.tokenSymbol
+
 	return (
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
@@ -66,15 +72,13 @@ const AddressTokenTransfer = ({ data }: Props) => {
 				</LinkText>
 			</div>
 			<div className={clsx('col-2 margin-left-xs', style.colFee)}>
-				{Number(data.value || '0') >= 0 && (
-					<TypographyUI.Balance
-						size="sm"
-						currency=""
-						icon={<CryptoIcon name="asa" size="sm" />}
-						value={data.value ? convertBalanceToView(data.value) : data.value}
-						fixNumber={5}
-					/>
-				)}
+				<TypographyUI.Balance
+					size="sm"
+					currency={tokenTransferSymbol}
+					icon={<CryptoIcon name={tokenTransferSymbol?.toLowerCase() as CryptoIconNames} size="sm" />}
+					value={tokenTransferAmount}
+					fixNumber={5}
+				/>
 
 				<br />
 				<span className="text text-xs contrast-color-70">Fee: </span>
