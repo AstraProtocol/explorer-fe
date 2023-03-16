@@ -1,0 +1,62 @@
+name: Semantic Release ChangeLog
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    integration-tests:
+        strategy:
+            fail-fast: true
+            matrix:
+                node: [16]
+        name: Integration tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup Node
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 16.x
+                  registry-url: 'https://npm.pkg.github.com'
+                  scope: '@astraprotocol'
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+            - name: Setup npm token
+              run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
+
+            - name: Cypress install
+              run: yarn install --frozen-lockfile
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Test build
+              run: yarn build
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  CYPRESS: true
+                  NEXT_PUBLIC_COSMOS_API: https://chainindexing.astranaut.io
+                  NEXT_PUBLIC_EVM_API: https://blockscout.astranaut.io
+                  NEXT_PUBLIC_URL: https://explorer.astranaut.io
+                  NEXT_PUBLIC_CHAIN_ID: 11110
+                  NEXT_PUBLIC_TITLE: Astra Explorer
+                  NEXT_PUBLIC_ENV: mainnet
+
+            - name: Semantic release
+              run: yarn semantic
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
