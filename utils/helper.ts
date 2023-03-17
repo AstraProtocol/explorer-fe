@@ -1,3 +1,4 @@
+import { astraToEth } from '@astradefi/address-converter'
 import { BigNumber } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import { isEmpty, isUndefined } from 'lodash'
@@ -180,6 +181,16 @@ export const getTransactionInOrOut = (
 	to: string = '',
 	defaultType: string = ''
 ) => {
+	if (address.toLowerCase().startsWith('astra')) {
+		address = astraToEth(address)
+	}
+
+	if (from.toLowerCase().startsWith('astra')) {
+		from = astraToEth(from)
+	}
+	if (to.toLowerCase().startsWith('astra')) {
+		to = astraToEth(to)
+	}
 	if (address.toLocaleLowerCase() === from.toLocaleLowerCase() && !isEmpty(to)) {
 		return 'OUT'
 	}
