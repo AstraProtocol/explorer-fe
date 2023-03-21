@@ -28,6 +28,15 @@ const Home: React.FC<NextPage> = _ => {
 		</Layout>
 	)
 }
+
+export async function getServerSideProps({}) {
+	return {
+		props: {
+			title: ''
+		}
+	}
+}
+
 // // type HomeExtendProps = typeof Home & { messages: string[] }
 // // ;(Home as HomeExtendProps).messages = ['Index']
 
