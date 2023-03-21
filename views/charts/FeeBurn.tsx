@@ -26,7 +26,7 @@ export default function FeeBurn() {
 			<ChartHeader text="Fees Burned" />
 			<Row className="md-flex-column">
 				<LineChart
-					leftTitle="Total fees burned | Daily"
+					leftTitle="Total Fees Burned | Daily"
 					rightTitle={{
 						title: 'Daily Average',
 						value: parseFloat(
