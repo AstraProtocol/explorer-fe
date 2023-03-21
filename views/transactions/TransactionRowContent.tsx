@@ -100,6 +100,7 @@ export default function TransactionRowContent({
 											</Typography.LinkText>
 										</>
 									)}
+									{(fromName || toName) && <br />}
 									{(to || contractAddress) && (
 										<>
 											<span
