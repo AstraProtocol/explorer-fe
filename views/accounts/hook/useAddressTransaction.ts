@@ -32,8 +32,8 @@ export default function useAddressTransactions(address: string, page: number) {
 
 	const getFromAndToOfEvm = (account: string, messages: TransactionMessage[]): [string, string] => {
 		if (account && !isEmpty(messages) && messages.length > 0) {
-			const to = astraToEth(account)
-			const from = (messages[0].content as MsgEthereumTxContent)?.params?.from
+			const from = astraToEth(account)
+			const to = (messages[0].content as MsgEthereumTxContent)?.params?.data?.to
 
 			return [from, to]
 		}
