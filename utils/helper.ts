@@ -183,7 +183,7 @@ export const getTransactionInOrOut = (
 ) => {
 	from = from.toLowerCase()
 	to = to.toLowerCase()
-	address = from.toLowerCase()
+	address = address.toLowerCase()
 
 	if (address.startsWith('astra')) {
 		address = astraToEth(address).toLowerCase()
@@ -195,10 +195,10 @@ export const getTransactionInOrOut = (
 	if (to.toLowerCase().startsWith('astra')) {
 		to = astraToEth(to).toLowerCase()
 	}
-	if (address === from && !isEmpty(to)) {
+	if (!isEmpty(to) && address === from) {
 		return 'OUT'
 	}
-	if (address === to && !isEmpty(from)) {
+	if (!isEmpty(from) && address === to) {
 		return 'IN'
 	}
 	return defaultType
