@@ -6,7 +6,6 @@ import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
-import { isEmpty } from 'lodash'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
@@ -22,9 +21,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
-	const type = !isEmpty(transaction.createdContractAddressHash)
-		? 'Contract Creation'
-		: useTransactionType(transaction.from, transaction.to)
+	const type = useTransactionType(transaction.from, transaction.to)
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}

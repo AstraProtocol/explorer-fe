@@ -204,7 +204,9 @@ interface AddressTransactionData {
 	fee: string | number
 	value?: string
 	from?: string
+	fromAddressName?: string
 	to?: string
+	toAddressName?: string
 	type: string
 }
 

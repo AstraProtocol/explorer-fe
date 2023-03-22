@@ -30,10 +30,11 @@ export default function useAddressTransactions(address: string, page: number) {
 
 	const { isWaiting } = useDelayUntilDone(() => !isEmpty(data) || error)
 
-	const getFromAndToOfEvm = (account: string, messages: TransactionMessage[]): [string, string] => {
-		if (account && !isEmpty(messages) && messages.length > 0) {
-			const to = astraToEth(account)
-			const from = (messages[0].content as MsgEthereumTxContent)?.params?.from
+	const getFromAndToOfEvm = (messages: TransactionMessage[]): [string, string] => {
+		if (!isEmpty(messages) && messages.length > 0) {
+			const message = messages[0].content as MsgEthereumTxContent
+			const from = message?.params?.from
+			const to = message?.params?.data?.to
 
 			return [from, to]
 		}
@@ -72,7 +73,7 @@ export default function useAddressTransactions(address: string, page: number) {
 			let from = ''
 			let to = ''
 			if (!isEmpty(evmHash)) {
-				;[from, to] = getFromAndToOfEvm(d.account, d.messages)
+				;[from, to] = getFromAndToOfEvm(d.messages)
 			} else {
 				;[from, to] = getFromAndToOfCosmos(d.messages)
 			}

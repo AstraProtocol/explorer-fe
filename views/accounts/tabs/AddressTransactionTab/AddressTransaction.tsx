@@ -6,6 +6,7 @@ import PolygonTag from 'components/Tag/PolygonTag'
 import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
+import { LinkText } from 'components/Typography/LinkText'
 import { isEmpty } from 'lodash'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
@@ -25,6 +26,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 	const transactionType = useTransactionType(transaction.from, transaction.to)
+
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
@@ -56,6 +58,48 @@ const AddressTransaction = ({ transaction }: Props) => {
 								</Typography.LinkText>
 								{evmType && <PolygonTag hasArrowRight={false} fontType="Titi" text={evmType} />}
 							</Row>
+							{(transaction.from || transaction.to) && (
+								<div className="margin-top-xs">
+									{transaction.from && (
+										<>
+											<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
+												From
+											</span>
+											<LinkText
+												href={LinkMaker.address(transaction.from)}
+												classes="margin-right-lg "
+											>
+												{transaction.fromAddressName
+													? `${transaction.fromAddressName} (${ellipseBetweenText(
+															transaction.from,
+															6,
+															6
+													  )})`
+													: ellipseBetweenText(transaction.from, 6, 6)}
+											</LinkText>
+										</>
+									)}
+									{transaction.to && (
+										<>
+											<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>
+												To
+											</span>
+											<LinkText
+												href={LinkMaker.address(transaction.to)}
+												classes="margin-right-lg "
+											>
+												{transaction.fromAddressName
+													? `${transaction.fromAddressName} (${ellipseBetweenText(
+															transaction.to,
+															6,
+															6
+													  )})`
+													: ellipseBetweenText(transaction.to, 6, 6)}
+											</LinkText>
+										</>
+									)}
+								</div>
+							)}
 						</div>
 					</Row>
 				</div>
