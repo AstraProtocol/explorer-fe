@@ -21,7 +21,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
-	const type = useTransactionType(transaction.from, transaction.to)
+	const type = useTransactionType(transaction.from, transaction.to, transaction.createdContractAddressHash)
 	return (
 		<GradientRow
 			type={transaction.success ? 'success' : 'error'}
