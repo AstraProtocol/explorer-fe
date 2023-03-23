@@ -7,6 +7,8 @@ import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
 import numeral from 'numeral'
 import { CONFIG } from 'utils/constants'
 import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
@@ -22,6 +24,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
 
 	const type = useTransactionType(data.from, data.to)
+	const fee = formatEther(BigNumber.from(data.gasUsed).mul(data.gasPrice).toString())
 	return (
 		<GradientRow
 			style={{ justifyContent: 'space-between' }}
@@ -78,9 +81,7 @@ const AddressTokenTransfer = ({ data }: Props) => {
 
 				<br />
 				<span className="text text-xs contrast-color-70">Fee: </span>
-				<span className="money money-xs contrast-color-70">
-					{numeral(parseInt(data.gasUsed) / 10 ** 9).format('0,0.000000000')} ASA
-				</span>
+				<span className="money money-xs contrast-color-70">{numeral(fee).format('0,0.00000')} ASA</span>
 			</div>
 
 			<div className={clsx('col col-2 margin-left-xs', style.colStatus)}>

@@ -22,21 +22,26 @@ export const evmConvertTokenTransferToTransactionRow = (
 ): TransactionRowProps[] => {
 	const rows: TransactionRowProps[] = []
 	for (let item of items) {
+		const isCreate = item.fromAddress === ZERO_ADDRESS && item.toAddress === ZERO_ADDRESS
 		const isMint = item.fromAddress === ZERO_ADDRESS
 		const isBurn = item.toAddress === ZERO_ADDRESS
-		const labelStatus = (isMint && 'Mint') || (isBurn && 'Burn')
+		const labelStatus = (isCreate && 'Create') || (isMint && 'Mint') || (isBurn && 'Burn')
 
 		const isNft = isERC721(item.tokenType)
+		const value = isNft ? '1' : formatUnits(item.amount || '0', item.decimals)
+
 		rows.push({
 			style: 'inject',
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
-			value: isNft ? '1' : formatUnits(item.amount || '0', item.decimals),
+			value,
 			valueCurrency: item.tokenSymbol?.toUpperCase(),
 			hash: hash,
 			status,
 			from: item.fromAddress,
+			fromName: item.fromAddressName,
 			to: item.toAddress,
+			toName: item.toAddressName,
 			labelStatus,
 			type: 'MsgEthereumTx'
 		})

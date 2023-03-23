@@ -14,7 +14,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                node: [16]
+                node: [18]
 
         name: Unit tests (Jest)
 
@@ -25,7 +25,7 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v2
               with:
-                  node-version: 16.x
+                  node-version: 18.x
                   registry-url: 'https://npm.pkg.github.com'
                   scope: '@astraprotocol'
                   token: ${{ secrets.GITHUB_TOKEN }}
@@ -49,6 +49,6 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Run tests
-              run: yarn test 
-              env: 
-                NEXT_PUBLIC_ENV: mainnet
+              run: yarn test
+              env:
+                  NEXT_PUBLIC_ENV: mainnet

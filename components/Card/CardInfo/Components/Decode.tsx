@@ -39,7 +39,6 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 					}
 				]}
 				rows={[{ method: methodId, call }]}
-				inverted
 				classes={{ wapper: styles.table }}
 			/>
 			<div className="margin-bottom-xs" />
