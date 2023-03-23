@@ -1,3 +1,22 @@
+## [1.0.1](https://github.com/AstraProtocol/explorer-fe/compare/v1.0.0...v1.0.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* check empty data ([2d359d9](https://github.com/AstraProtocol/explorer-fe/commit/2d359d9a4eb279cba1f015ac580737d4c38a0b27))
+* convert address ([8246dab](https://github.com/AstraProtocol/explorer-fe/commit/8246dabaa660772a0165cdc7d1655d0e01c1651f))
+* convert astra address to eth ([9bcd889](https://github.com/AstraProtocol/explorer-fe/commit/9bcd88932ce3135f316dd86611a91364b0aad4f0))
+* get from/to from messages instead of account ([7b2c5b1](https://github.com/AstraProtocol/explorer-fe/commit/7b2c5b1d56d0506b2c6aa00e8a11000a57842390))
+* missing transaction from/to in address tx list, wrong from/to ([ed98b85](https://github.com/AstraProtocol/explorer-fe/commit/ed98b85ed2a9241eeb0b3cce46e4299871ea45d6))
+* recalculate  token transfers tx gas ([4ed795b](https://github.com/AstraProtocol/explorer-fe/commit/4ed795b3b2f6631521a99c3e0c95581998ce3c0d))
+* refactor code ([1bdee43](https://github.com/AstraProtocol/explorer-fe/commit/1bdee439248e369397488a13d335116938914a0b))
+* remove "inverted" attribute ([f2a11e7](https://github.com/AstraProtocol/explorer-fe/commit/f2a11e7db7403fa9081c1dcc90778b36923b1a62))
+* update Create tag token ([4bbbdd8](https://github.com/AstraProtocol/explorer-fe/commit/4bbbdd8bc17fe57c04c008e398cdcaaacaedbc18))
+* update git ci node version ([e68160f](https://github.com/AstraProtocol/explorer-fe/commit/e68160fd1b65bf4103525545abef7260a8860cec))
+* update SEO title ([45dc648](https://github.com/AstraProtocol/explorer-fe/commit/45dc6485dd41bf88671cabb7716d210fc0576609))
+* use ? for short if ([56abed9](https://github.com/AstraProtocol/explorer-fe/commit/56abed95997e5a0a6de86b5034f4a4a626f928f3))
+* wording ([58a4429](https://github.com/AstraProtocol/explorer-fe/commit/58a442961538bcab24b1f79429ef6c5d8e385ec6))
+
 # 1.0.0 (2023-03-16)
 
 
