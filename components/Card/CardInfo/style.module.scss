@@ -8,7 +8,6 @@
 			td,
 			th {
 				padding-left: 10px !important;
-				width: 2%;
 			}
 		}
 	}
@@ -40,6 +39,7 @@
 
 .table {
 	min-width: 600px;
+	background: hsla(0, 0%, 100%, 0.05);
 }
 
 .left {

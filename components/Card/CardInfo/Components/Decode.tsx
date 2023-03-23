@@ -1,6 +1,6 @@
+import { Table } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import CopyButton from 'components/Button/CopyButton'
-import Table from 'components/Table/Table'
 import { isString } from 'lodash'
 import styles from '../style.module.scss'
 
@@ -24,21 +24,21 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 				id="method"
 				colums={[
 					{
-						title: 'Method Id',
+						content: 'Method Id',
 						key: 'method',
 						render: value => (
 							<span className={clsx('money money-sm', styles.primaryColor)}>{value || '0x'}</span>
 						)
 					},
 					{
-						title: 'Call',
+						content: 'Call',
 						key: 'call',
 						render: value => (
 							<span className={clsx('money money-sm', styles.primaryColor)}>{value || '...'}</span>
 						)
 					}
 				]}
-				rows={[{ method: methodId, call }]}
+				rows={[{ method: { content: methodId }, call: { content: call } }]}
 				classes={{ wapper: styles.table }}
 			/>
 			<div className="margin-bottom-xs" />
@@ -46,17 +46,17 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 				id="param"
 				colums={[
 					{
-						title: 'Name',
+						content: 'Name',
 						key: 'name',
 						render: value => <span className="text text-sm contrast-color-70">{value}</span>
 					},
 					{
-						title: 'Type',
+						content: 'Type',
 						key: 'type',
 						render: value => <span className="text text-sm contrast-color-70">{value}</span>
 					},
 					{
-						title: 'Indexed?',
+						content: 'Indexed?',
 						key: 'indexed',
 						render: value => (
 							<span className={clsx('money money-sm', styles.primaryColor)}>
@@ -65,7 +65,7 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 						)
 					},
 					{
-						title: 'Data',
+						content: 'Data',
 						key: 'value',
 						render: values => {
 							let valueCopy = values
@@ -100,7 +100,14 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 						}
 					}
 				]}
-				rows={(items as any[]) || []}
+				rows={
+					items.map(item => ({
+						indexed: { content: item.indexed },
+						name: { content: item.name },
+						type: { content: item.type },
+						value: { content: item.value }
+					})) || []
+				}
 				classes={{ wapper: styles.table }}
 			/>
 		</div>
