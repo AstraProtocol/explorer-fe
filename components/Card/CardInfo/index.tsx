@@ -248,7 +248,7 @@ export default function CardInfo({
 										</div>
 									) : null}
 									{type === TransactionCardTypeEnum.TOKEN_TRANSFER ? (
-										<Transfers content={content} />
+										<Transfers key={index} content={content} /> // can use index here because token-transfered is one time
 									) : null}
 									{type === TransactionCardTypeEnum.RAW_INPUT ? (
 										<RawInput text={content.value as string} />
