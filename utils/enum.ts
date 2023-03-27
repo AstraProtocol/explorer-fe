@@ -137,19 +137,20 @@ export enum ErcTypeEnum {
 }
 
 export enum TransactionCardTypeEnum {
+	BALANCE = 'balance',
+	COMMISION = 'commission',
 	COPY = 'copy',
-	LINK_COPY = 'link-copy',
+	DECODE = 'decode',
 	LABEL = 'label',
 	LINK = 'link',
-	BALANCE = 'balance',
+	LINK_COPY = 'link-copy',
+	INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL = 'interact_contract_with_transfer_internal',
+	NONCE = 'nonce',
+	RAW_INPUT = 'raw-input',
+	TABS = 'tabs',
+	TABLE = 'table',
 	TEXT = 'text',
 	TIME = 'time',
 	TOKEN_TRANSFER = 'token-transfer',
-	RAW_INPUT = 'raw-input',
-	NONCE = 'nonce',
-	DECODE = 'decode',
-	VALIDATOR_DESCRIPTION = 'validator-description',
-	COMMISION = 'commission',
-	TABS = 'tabs',
-	TABLE = 'table'
+	VALIDATOR_DESCRIPTION = 'validator-description'
 }

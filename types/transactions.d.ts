@@ -324,6 +324,7 @@ interface TransactionDetail {
 	memo?: string
 
 	isInteractWithContract?: boolean
+	internalTokenTransfers?: TransferItem[]
 }
 
 

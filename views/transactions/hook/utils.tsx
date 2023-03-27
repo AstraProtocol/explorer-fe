@@ -85,7 +85,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					if (isInteractWith) {
 						items.push({
 							label: CardInfoLabels.interactWith,
-							type: TransactionCardTypeEnum.LINK_COPY,
+							type: TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL,
 							contents: [
 								{
 									text: (
@@ -97,44 +97,11 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 										</>
 									),
 									value: data[key],
-									link: LinkMaker.address(data[key])
+									link: LinkMaker.address(data[key]),
+									internalTransfer: data.internalTokenTransfers
 								}
 							]
 						})
-						// for (let transfer of transfers) {
-						// 	transferItems.unshift({
-						// 		label: CardInfoLabels[key],
-						// 		type: 'transfer',
-						// 		contents: [
-						// 			{
-						// 				transfer: {
-						// 					from: transfer.fromAddress,
-						// 					fromText: evmAddressName(
-						// 						transfer.fromAddressName,
-						// 						ellipseBetweenText(transfer.fromAddress, 6, 6)
-						// 					),
-						// 					to: transfer.toAddress,
-						// 					toText: evmAddressName(
-						// 						transfer.toAddressName,
-						// 						ellipseBetweenText(transfer.toAddress, 6, 6)
-						// 					),
-						// 					value: transfer.amount
-						// 						? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
-						// 						: '',
-						// 					tokenAddress: transfer.tokenContractAddress,
-						// 					tokenSymbol: transfer.tokenSymbol,
-						// 					tokenName: transfer.tokenName,
-						// 					tokenId: transfer.tokenId,
-						// 					tokenType: transfer.tokenType
-						// 				}
-						// 			}
-						// 		],
-						// 		responsive: {
-						// 			wrap: 'md'
-						// 		}
-						// 	})
-						// }
-						// items = items.concat(transferItems)
 					} else {
 						items.push({
 							label: CardInfoLabels.to,
@@ -230,14 +197,15 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 							}
 						})
 					}
-					items.push({
-						label: CardInfoLabels[key],
-						type: TransactionCardTypeEnum.TOKEN_TRANSFER,
-						contents: transferItems,
-						responsive: {
-							wrap: 'md'
-						}
-					})
+					if (transferItems && transferItems.length > 0)
+						items.push({
+							label: CardInfoLabels[key],
+							type: TransactionCardTypeEnum.TOKEN_TRANSFER,
+							contents: transferItems,
+							responsive: {
+								wrap: 'md'
+							}
+						})
 				}
 				break
 			case 'nonce':

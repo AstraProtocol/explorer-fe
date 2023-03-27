@@ -1,4 +1,10 @@
-import { CryptoIcon, Table, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
+import {
+	CryptoIcon,
+	ellipseBetweenText,
+	Table,
+	Typography as TypographyUI,
+	useMobileLayout
+} from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { Column, RowData } from '@astraprotocol/astra-ui/lib/es/components/Table/Table'
 import clsx from 'clsx'
@@ -6,6 +12,7 @@ import CopyButton from 'components/Button/CopyButton'
 import Tag from 'components/Tag/PolygonTag'
 import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
+import Image from 'next/image'
 import { TransactionCardTypeEnum } from 'utils/enum'
 import { ellipseRightText } from 'utils/helper'
 import BackgroundCard from '../Background/BackgroundCard'
@@ -17,6 +24,23 @@ import ValidatorCommission from './Components/ValidatorCommission'
 import ValidatorDescription from './Components/ValidatorDescription'
 import styles from './style.module.scss'
 
+type TransferContent = {
+	from?: string
+	fromText?: string
+	to?: string
+	toText?: string
+	value?: number
+	tokenAddress?: string
+	tokenName?: string
+	tokenSymbol?: string
+	tokenType?: string
+	tokenId?: string
+}
+
+export interface InternalTransferContent extends TransferContent {
+	index: string
+}
+
 export type Content = {
 	link?: string
 	value?: string | number | any
@@ -27,18 +51,8 @@ export type Content = {
 	token?: string
 	type?: LabelTypes
 	backgroundType?: LabelBackgroundTypes
-	transfer?: {
-		from?: string
-		fromText?: string
-		to?: string
-		toText?: string
-		value?: number
-		tokenAddress?: string
-		tokenName?: string
-		tokenSymbol?: string
-		tokenType?: string
-		tokenId?: string
-	}
+	internalTransfer?: InternalTransferContent[]
+	transfer?: TransferContent
 	decode?: DecodeProps
 	tabs?: {
 		tabTitles: string[]
@@ -123,25 +137,25 @@ export default function CardInfo({
 						>
 							{(contents as Content[]).map((content, index) => (
 								<div key={(content.value as string) + index}>
-									{type === 'nonce' ? (
+									{type === TransactionCardTypeEnum.NONCE ? (
 										<div className="block-ver-center money money-sm contrast-color-70">
 											{content.value}
 											<Tag text={content.suffix} />
 										</div>
 									) : null}
-									{type === 'text' ? (
+									{type === TransactionCardTypeEnum.TEXT ? (
 										<span className="money money-sm contrast-color-100 word-break-all ">
 											{/* {_ellipsis(content.value, responsive.ellipsis)}{' '} */}
 											{content.value} {content.suffix && content.suffix}
 										</span>
 									) : null}
-									{type === 'copy' ? (
+									{type === TransactionCardTypeEnum.COPY ? (
 										<CopyButton
 											textCopy={content?.value as string}
 											textTitle={_ellipsis(content?.value as string, responsive.ellipsis)}
 										/>
 									) : null}
-									{type === 'link' ? (
+									{type === TransactionCardTypeEnum.LINK ? (
 										<Typography.LinkText
 											href={(content.link as string) || ''}
 											fontType="Titi"
@@ -151,7 +165,7 @@ export default function CardInfo({
 											{content.value}
 										</Typography.LinkText>
 									) : null}
-									{type === 'link-copy' ? (
+									{type === TransactionCardTypeEnum.LINK_COPY ? (
 										<div className="block-center">
 											<Typography.LinkText href={content.link || ''}>
 												{/* {_ellipsis(
@@ -163,7 +177,45 @@ export default function CardInfo({
 											<CopyButton textCopy={content.value as string} />
 										</div>
 									) : null}
-									{type === 'label' ? (
+									{type === TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL ? (
+										<div className="col">
+											<div className="row ">
+												<Typography.LinkText href={content.link || ''}>
+													{content.text || content.value}
+												</Typography.LinkText>
+												<CopyButton textCopy={content.value as string} />
+											</div>
+											{content.internalTransfer?.map((t: InternalTransferContent) => (
+												<div key={t.index} className="margin-left-sm margin-top-xs">
+													<Image
+														className="contrast-color-100"
+														alt="internal-tx"
+														src={'/images/icons/shape.svg'}
+														width={8}
+														height={8}
+													/>
+													<span className="margin-left-xs text text-sm contrast-color-70">
+														Transfer <span className="money money-sm">{t.value} ASA</span>
+														{'  '}
+														From{'  '}
+														<Typography.LinkText href={t.from || ''}>
+															{t.fromText
+																? `${t.fromText} (${ellipseBetweenText(t.from)})`
+																: ellipseBetweenText(t.from)}
+														</Typography.LinkText>
+														{'  '}
+														To{'  '}
+														<Typography.LinkText href={t.to || ''}>
+															{t.toText
+																? `${t.toText} (${ellipseBetweenText(t.to)})`
+																: ellipseBetweenText(t.to)}
+														</Typography.LinkText>
+													</span>
+												</div>
+											))}
+										</div>
+									) : null}
+									{type === TransactionCardTypeEnum.LABEL ? (
 										<div className="block-center margin-right-md">
 											<Typography.Label
 												text={content.value as string}
@@ -173,7 +225,7 @@ export default function CardInfo({
 											/>
 										</div>
 									) : null}
-									{type === 'balance' ? (
+									{type === TransactionCardTypeEnum.BALANCE ? (
 										<div className="block-center">
 											<TypographyUI.Balance
 												icon={
@@ -187,7 +239,7 @@ export default function CardInfo({
 											/>
 										</div>
 									) : null}
-									{type === 'time' ? (
+									{type === TransactionCardTypeEnum.TIME ? (
 										<div className="block-center">
 											<Typography.Time
 												time={content.value}
@@ -198,16 +250,18 @@ export default function CardInfo({
 									{type === TransactionCardTypeEnum.TOKEN_TRANSFER ? (
 										<Transfers content={content} />
 									) : null}
-									{type === 'raw-input' ? <RawInput text={content.value as string} /> : null}
-									{type === 'decode' ? <Decode {...content.decode} /> : null}
-									{type === 'validator-description' ? (
+									{type === TransactionCardTypeEnum.RAW_INPUT ? (
+										<RawInput text={content.value as string} />
+									) : null}
+									{type === TransactionCardTypeEnum.DECODE ? <Decode {...content.decode} /> : null}
+									{type === TransactionCardTypeEnum.VALIDATOR_DESCRIPTION ? (
 										<ValidatorDescription description={content.value as ValidatorData} />
 									) : null}
-									{type === 'commission' ? (
+									{type === TransactionCardTypeEnum.COMMISION ? (
 										<ValidatorCommission commission={content.value as CommissionRates} />
 									) : null}
-									{type === 'tabs' ? <CardTabs {...content.tabs} /> : null}
-									{type === 'table'
+									{type === TransactionCardTypeEnum.TABS ? <CardTabs {...content.tabs} /> : null}
+									{type === TransactionCardTypeEnum.TABLE
 										? content.table && (
 												<div
 													style={{
