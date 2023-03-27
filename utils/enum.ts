@@ -99,7 +99,7 @@ export enum CardInfoLabels {
 	signer = 'Signer:',
 	header = 'Header:',
 	clientId = 'Client ID: ',
-	delayPeriod = 'Deplay Period',
+	delayPeriod = 'Delay Period',
 	version = 'Version: ',
 	counterparty = 'Counterparty: ',
 	sourcePort = 'Source Port: ',
@@ -120,7 +120,7 @@ export enum CardInfoLabels {
 	packet = 'Packet: ',
 	acknowledgement = 'Acknowledgement: ',
 	proofAcked = 'Proof Acked: ',
-	proofHeigh = 'Proof Height: ',
+	proofHeight = 'Proof Height: ',
 	msgs = 'Msgs: ',
 
 	funderAddress = 'Funder Address:',
@@ -134,4 +134,22 @@ export enum CardInfoLabels {
 export enum ErcTypeEnum {
 	ERC20 = 'ERC-20',
 	ERC721 = 'ERC-721'
+}
+
+export enum TransactionCardTypeEnum {
+	COPY = 'copy',
+	LINK_COPY = 'link-copy',
+	LABEL = 'label',
+	LINK = 'link',
+	BALANCE = 'balance',
+	TEXT = 'text',
+	TIME = 'time',
+	TOKEN_TRANSFER = 'token-transfer',
+	RAW_INPUT = 'raw-input',
+	NONCE = 'nonce',
+	DECODE = 'decode',
+	VALIDATOR_DESCRIPTION = 'validator-description',
+	COMMISION = 'commission',
+	TABS = 'tabs',
+	TABLE = 'table'
 }

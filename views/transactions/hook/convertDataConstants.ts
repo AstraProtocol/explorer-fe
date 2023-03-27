@@ -84,7 +84,7 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 	CardInfoLabels.packet,
 	CardInfoLabels.acknowledgement,
 	CardInfoLabels.proofAcked,
-	CardInfoLabels.proofHeigh,
+	CardInfoLabels.proofHeight,
 	CardInfoLabels.msgs,
 
 	CardInfoLabels.funderAddress,

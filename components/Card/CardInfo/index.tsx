@@ -6,6 +6,7 @@ import CopyButton from 'components/Button/CopyButton'
 import Tag from 'components/Tag/PolygonTag'
 import Typography from 'components/Typography'
 import { LabelBackgroundTypes, LabelTypes } from 'components/Typography/Label'
+import { TransactionCardTypeEnum } from 'utils/enum'
 import { ellipseRightText } from 'utils/helper'
 import BackgroundCard from '../Background/BackgroundCard'
 import CardTabs from './Components/CardTabs'
@@ -19,7 +20,7 @@ import styles from './style.module.scss'
 export type Content = {
 	link?: string
 	value?: string | number | any
-	text?: string
+	text?: string | JSX.Element | JSX.Element[]
 	prefix?: string
 	suffix?: string
 	icon?: boolean
@@ -51,22 +52,7 @@ export type Content = {
 
 export type CardRowItem = {
 	label?: string
-	type:
-		| 'copy'
-		| 'link-copy'
-		| 'label'
-		| 'link'
-		| 'balance'
-		| 'text'
-		| 'time'
-		| 'transfer'
-		| 'raw-input'
-		| 'nonce'
-		| 'decode'
-		| 'validator-description'
-		| 'commission'
-		| 'tabs'
-		| 'table'
+	type: TransactionCardTypeEnum
 	contents: Content[]
 	responsive?: {
 		wrap?: 'sm' | 'md'
@@ -126,8 +112,10 @@ export default function CardInfo({
 						<div
 							className={clsx(
 								styles.rightColumn,
+								'flex col flex-align-center flex-wrap',
+								'margin-right-sm',
 								'col-10',
-								'block-ver-center margin-right-sm',
+								// 'block-ver-center margin-right-sm',
 								{ 'padding-bottom-sm border border-bottom-base': items.length > 1 },
 								{ [`${responsive?.wrap}-full`]: responsive?.wrap }
 							)}
@@ -170,7 +158,7 @@ export default function CardInfo({
 													content.text || (content.value as string),
 													responsive.ellipsis
 												)} */}
-												{content.text || (content.value as string)}
+												{content.text || content.value}
 											</Typography.LinkText>
 											<CopyButton textCopy={content.value as string} />
 										</div>
@@ -207,7 +195,9 @@ export default function CardInfo({
 											/>
 										</div>
 									) : null}
-									{type === 'transfer' ? <Transfers content={content} /> : null}
+									{type === TransactionCardTypeEnum.TOKEN_TRANSFER ? (
+										<Transfers content={content} />
+									) : null}
 									{type === 'raw-input' ? <RawInput text={content.value as string} /> : null}
 									{type === 'decode' ? <Decode {...content.decode} /> : null}
 									{type === 'validator-description' ? (
