@@ -3,7 +3,7 @@ import API_LIST from 'api/api_list'
 import { formatEther } from 'ethers/lib/utils'
 import useDelayUntilDone from 'hooks/useDelayUntilDone'
 import { useCallback } from 'react'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import { evmInternalTransactionType } from 'utils/evm'
 import { upperCaseFirstLetterOfWord } from 'utils/helper'
 import { TransactionRowProps } from '../TransactionRow'
@@ -12,7 +12,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 	const _fetchCondition = () => {
 		return !!hash ? [`${API_LIST.EVM_INTERNAL_TRANSACTION}${hash}`] : null
 	}
-	const { data, error } = useSWR<InternalTransactionReponse>(_fetchCondition(), {
+	const { data, error } = useSWRImmutable<InternalTransactionReponse>(_fetchCondition(), {
 		refreshInterval: 0
 	})
 
