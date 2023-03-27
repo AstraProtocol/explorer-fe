@@ -100,6 +100,8 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			result.blockHeight
 		)
 	data.logs = result.logs
+	data.isInteractWithContract = result.isInteractWithContract
+
 	data['type'] = 'evm'
 	return data
 }
