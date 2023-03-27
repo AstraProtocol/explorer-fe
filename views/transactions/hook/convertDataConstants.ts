@@ -94,9 +94,9 @@ export const COSMOS_MESSAGE_SORT_FIELD = [
 
 export const GAS_ITEM_FIELD_SORT_ORDER = [
 	CardInfoLabels.gasLimit,
+	CardInfoLabels.gasUsedByTransaction,
 	CardInfoLabels.maxFeePerGas,
 	CardInfoLabels.maxPriorityFeePerGas,
-	CardInfoLabels.gasUsedByTransaction,
 	CardInfoLabels.nonce,
 	CardInfoLabels.rawInput
 ]
