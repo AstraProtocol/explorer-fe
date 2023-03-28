@@ -29,7 +29,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 	const hash = evmHash || cosmosHash
 	const { isMobile } = useMobileLayout('small')
 	const { raw: internalTransactionRows, loading: internalLoading } = useInternalTransactions({
-		hash: data.isInteractWithContract ? hash : null
+		hash: data?.isInteractWithContract ? hash : null
 	})
 	const cards = useConvertData({ data, internalTransactionRows, internalLoading })
 	const isEvm = data && !!data.evmHash
