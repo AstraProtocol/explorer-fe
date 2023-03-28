@@ -7,10 +7,9 @@ const ContractTransferInternal = ({ content }: { content: Content }) => {
 	return (
 		<div className="col">
 			<div className="row">
-				<Typography.LinkText href={content.link || ''}>
-					<span className="text text-base icon-contract contrast-color-70 margin-right-2xs" />
-					{content.text || content.value}
-				</Typography.LinkText>
+				<span className="text text-base icon-contract contrast-color-70 margin-right-2xs" />
+				<span className="contrast-color-100">Contract </span>
+				<Typography.LinkText href={content.link || ''}>{content.text || content.value}</Typography.LinkText>
 				<CopyButton textCopy={content.value as string} />
 			</div>
 			{content.internalTransfer?.map((t: InternalTransferContent) => (

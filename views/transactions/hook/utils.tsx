@@ -95,18 +95,14 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					const isInteractWith = data?.isInteractWithContract
 					if (isInteractWith) {
 						items.push({
-							label: CardInfoLabels.interactWith,
+							label: CardInfoLabels.to,
 							type: TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL,
 							contents: [
 								{
-									text: (
-										<>
-											<span className="contrast-color-100">Contract </span>
-											{data['toAddressName']
-												? `${data['toAddressName']} (${data[key]})`
-												: `${data[key]}`}
-										</>
-									),
+									text: data['toAddressName']
+										? `${data['toAddressName']} (${data[key]})`
+										: `${data[key]}`,
+
 									value: data[key],
 									link: LinkMaker.address(data[key]),
 									internalTransfer: data.internalTokenTransfers
@@ -133,11 +129,18 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null) {
 					const name = data['createdContractAddressName']
 					items.push({
-						label: CardInfoLabels.interactWith,
+						label: CardInfoLabels.to,
 						type: TransactionCardTypeEnum.LINK_COPY,
 						contents: [
 							{
-								text: `[Contract ${name ? `${name} (${data[key]})` : data[key]} created]`,
+								text: (
+									<>
+										<span className="contrast-color-100">[</span>
+										<span className="text icon-contract contrast-color-70" />{' '}
+										{name ? `${name} (${data[key]})` : data[key]}{' '}
+										<span className="contrast-color-100">Created]</span>
+									</>
+								),
 								value: data[key],
 								link: LinkMaker.address(data[key])
 							}
