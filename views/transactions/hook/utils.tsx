@@ -30,7 +30,18 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 						type: TransactionCardTypeEnum.LABEL,
 						contents: [
 							{
-								value: data[key],
+								value:
+									data[key] === 'Indexing' ? (
+										<>
+											Indexing
+											<span className="text text-sm text-italic contrast-color-50 margin-left-md">
+												This transaction has been included and will be reflected in a short
+												while
+											</span>
+										</>
+									) : (
+										data[key]
+									),
 								icon: true,
 								type: (data[key] as string).toLowerCase() as LabelTypes,
 								backgroundType: 'unset'

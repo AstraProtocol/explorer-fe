@@ -194,6 +194,7 @@ interface EvmTransactionDetailResponse {
 		value: string
 		messages?: MsgEthereumTx[]
 		transactionFee?: string
+		status?: string // indexing
 		isInteractWithContract?: boolean
 	}
 	status: string

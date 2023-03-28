@@ -1,10 +1,8 @@
-name: Integration Tests
+name: Semantic Release ChangeLog
 
 on:
-    pull_request:
     push:
         branches:
-            - dev
             - main
 
 jobs:
@@ -41,16 +39,13 @@ jobs:
             - name: Setup npm token
               run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
 
-            - name: Cypress install
+            - name: npm install
               run: yarn install --frozen-lockfile
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: cypress-io/github-action@v5.0.7 # use the explicit version number
-              with:
-                  build: npm run build
-                  start: npm start
-                  record: false
+            - name: Test build
+              run: yarn build
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   CYPRESS: true
@@ -60,3 +55,8 @@ jobs:
                   NEXT_PUBLIC_CHAIN_ID: 11110
                   NEXT_PUBLIC_TITLE: Astra Explorer
                   NEXT_PUBLIC_ENV: mainnet
+
+            - name: Semantic release
+              run: yarn semantic
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
