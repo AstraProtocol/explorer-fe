@@ -33,7 +33,8 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 
 	const big = BigNumber.from(value)
 	const valueInWei = formatUnits(big, decimals).valueOf()
-	if (parseFloat(valueInWei) < CONFIG.APPROXIMATE_ZERO) return '0'
+	if (parseFloat(valueInWei) == 0) return 0
+	if (parseFloat(valueInWei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(valueInWei).toExponential()
 	return valueInWei
 }
 

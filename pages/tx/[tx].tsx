@@ -13,6 +13,7 @@ import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
 import useConvertData from 'views/transactions/hook/useConvertData'
+import useInternalTransactions from 'views/transactions/hook/useInternalTransactions'
 import TransactionTabs from 'views/transactions/TransactionTabs'
 import { cosmsTransactionDetail, evmTransactionDetail, TransactionQuery } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
@@ -25,9 +26,12 @@ type Props = {
 }
 
 const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
-	const { isMobile } = useMobileLayout('small')
-	const cards = useConvertData({ data })
 	const hash = evmHash || cosmosHash
+	const { isMobile } = useMobileLayout('small')
+	const { raw: internalTransactionRows, loading: internalLoading } = useInternalTransactions({
+		hash: data.isInteractWithContract ? hash : null
+	})
+	const cards = useConvertData({ data, internalTransactionRows, internalLoading })
 	const isEvm = data && !!data.evmHash
 	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 
