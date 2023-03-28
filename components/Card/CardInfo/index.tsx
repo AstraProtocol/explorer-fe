@@ -179,8 +179,9 @@ export default function CardInfo({
 									) : null}
 									{type === TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL ? (
 										<div className="col">
-											<div className="row ">
+											<div className="row">
 												<Typography.LinkText href={content.link || ''}>
+													<span className="text text-base icon-contract contrast-color-70 margin-right-2xs" />
 													{content.text || content.value}
 												</Typography.LinkText>
 												<CopyButton textCopy={content.value as string} />
