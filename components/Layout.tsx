@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import React, { ReactNode, useEffect } from 'react'
 import { setAstraSummary, setValidatorSummary } from 'slices/commonSlice'
 import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import { selectTheme } from '../slices/themeSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import styles from './Layout.module.scss'
@@ -34,7 +35,7 @@ const Layout: React.FC<Props> = props => {
 		}
 	}
 	const { data: marketPriceDataRaw } = useSWR<MarketPriceResponse>(_fetchCondition('market_price'))
-	const { data: validatorSummaryRaw } = useSWR<ValidatorResponse>(_fetchCondition('validator'), {
+	const { data: validatorSummaryRaw } = useSWRImmutable<ValidatorResponse>(_fetchCondition('validator'), {
 		refreshInterval: 60000
 	})
 	const validatorSummary = getValidatorSummary(validatorSummaryRaw)

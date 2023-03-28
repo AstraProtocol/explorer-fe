@@ -10,7 +10,7 @@ const Transfers = ({ content }: { content: Content }) => {
 	const data = content?.transfer || {}
 	const isNFT = isERC721(data.tokenType)
 	return (
-		<div className="block-center sm-wrap flex-justify-start">
+		<div className="block-center sm-wrap flex-justify-start margin-top-xs margin-bottom-xs">
 			<span
 				className={clsx(
 					styles.smallCard,

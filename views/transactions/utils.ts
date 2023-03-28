@@ -87,7 +87,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.tokenTransfers = result.tokenTransfers
 	data.index = result.index
 	data.failLog = !result.success ? result.error || result.log : ''
-	data.revertReason = result.revertReason
+	data.revertReason = result.success ? '' : result.revertReason // Only have revertReason when transaction failed
 	data.typeOfTransfer = result.type ? evmTransactionType(result.type) : ''
 	data.tabTokenTransfers =
 		result.tokenTransfers &&
@@ -100,6 +100,8 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			result.blockHeight
 		)
 	data.logs = result.logs
+	data.isInteractWithContract = result.isInteractWithContract
+
 	data['type'] = 'evm'
 	return data
 }

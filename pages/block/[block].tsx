@@ -10,7 +10,7 @@ import Container from 'components/Container'
 import Tabs from 'components/Tabs/Tabs'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
-import { CardInfoLabels } from 'utils/enum'
+import { CardInfoLabels, TransactionCardTypeEnum } from 'utils/enum'
 import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import BlockTransactionTab from 'views/block/tabs/BlockTransactionTab'
 import Layout from '../../components/Layout'
@@ -32,7 +32,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 				case 'blockHash':
 					items.push({
 						label: CardInfoLabels.hash,
-						type: 'copy',
+						type: TransactionCardTypeEnum.COPY,
 						contents: [{ value: data[key] }]
 					})
 					break
@@ -46,7 +46,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					if (address)
 						items.push({
 							label: CardInfoLabels.validatorAddress,
-							type: 'link-copy',
+							type: TransactionCardTypeEnum.LINK_COPY,
 							contents: [
 								{
 									value: address,
@@ -61,7 +61,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 				case 'blockHeight':
 					items.push({
 						label: CardInfoLabels.blockHeight,
-						type: 'text',
+						type: TransactionCardTypeEnum.TEXT,
 						contents: [{ value: data[key] }],
 						responsive: {
 							wrap: 'sm'
@@ -69,21 +69,21 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 					})
 					items.push({
 						label: CardInfoLabels.block,
-						type: 'link',
+						type: TransactionCardTypeEnum.LINK,
 						contents: [{ value: data[key], link: LinkMaker.block(data[key]) }]
 					})
 					break
 				case 'blockTime':
 					items.push({
 						label: CardInfoLabels.time,
-						type: 'time',
+						type: TransactionCardTypeEnum.TIME,
 						contents: [{ value: data[key], type: data[key], suffix: '' }]
 					})
 					break
 				case 'transactionCount':
 					items.push({
 						label: CardInfoLabels.Transaction,
-						type: 'label',
+						type: TransactionCardTypeEnum.LABEL,
 						contents: [
 							{
 								value: `${data[key]} transaction${data[key] > 1 ? 's' : ''}`,

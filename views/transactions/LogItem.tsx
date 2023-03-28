@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import { EventDecode } from 'components/Card/CardInfo/Components/Decode'
+import { TransactionCardTypeEnum } from 'utils/enum'
 import styles from './style.module.scss'
 
 export type LogElementProps = {
@@ -43,7 +44,7 @@ export default function LogElement({
 	if (address && showAddress) {
 		items.push({
 			label: 'Address:',
-			type: 'text',
+			type: TransactionCardTypeEnum.TEXT,
 			contents: [{ value: addressName ? `${addressName} | ${address}` : address }],
 			responsive: {
 				ellipsis: false,
@@ -54,7 +55,7 @@ export default function LogElement({
 	if (callRow) {
 		items.push({
 			label: '',
-			type: 'text',
+			type: TransactionCardTypeEnum.TEXT,
 			contents: [{ value: callRow }],
 			responsive: {
 				ellipsis: false,
@@ -67,7 +68,7 @@ export default function LogElement({
 	if (verified || useDraftAbiToDecode) {
 		items.push({
 			label: 'Decode:',
-			type: 'decode',
+			type: TransactionCardTypeEnum.DECODE,
 			contents: [
 				{
 					decode: {
@@ -106,7 +107,7 @@ export default function LogElement({
 		}
 		items.push({
 			label: label,
-			type: 'text',
+			type: TransactionCardTypeEnum.TEXT,
 			contents: [{ value: `[${idx}] ${topics[idx]}` }],
 			responsive: {
 				ellipsis: false,
@@ -117,7 +118,7 @@ export default function LogElement({
 	if (data) {
 		items.push({
 			label: 'Data:',
-			type: 'text',
+			type: TransactionCardTypeEnum.TEXT,
 			contents: [{ value: data }],
 			responsive: {
 				ellipsis: false,
@@ -128,7 +129,7 @@ export default function LogElement({
 	if (index) {
 		items.push({
 			label: 'Log Index:',
-			type: 'text',
+			type: TransactionCardTypeEnum.TEXT,
 			contents: [{ value: index }]
 		})
 	}
