@@ -6,9 +6,8 @@ import { Content, InternalTransferContent } from '..'
 const ContractTransferInternal = ({ content }: { content: Content }) => {
 	return (
 		<div className="col">
-			<div className="row">
+			<div className="row flex-align-center">
 				<span className="text text-base icon-contract contrast-color-70 margin-right-2xs" />
-				<span className="contrast-color-100">Contract </span>
 				<Typography.LinkText href={content.link || ''}>{content.text || content.value}</Typography.LinkText>
 				<CopyButton textCopy={content.value as string} />
 			</div>
