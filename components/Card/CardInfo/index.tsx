@@ -1,4 +1,4 @@
-import { CryptoIcon, Table, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
+import { CryptoIcon, IconEnum, Table, Typography as TypographyUI, useMobileLayout } from '@astraprotocol/astra-ui'
 import { CryptoIconNames } from '@astraprotocol/astra-ui/lib/es/components/CryptoIcon'
 import { Column, RowData } from '@astraprotocol/astra-ui/lib/es/components/Table/Table'
 import clsx from 'clsx'
@@ -41,7 +41,7 @@ export type Content = {
 	text?: string | JSX.Element | JSX.Element[]
 	prefix?: string
 	suffix?: string
-	icon?: boolean
+	icon?: IconEnum
 	token?: string
 	type?: LabelTypes
 	backgroundType?: LabelBackgroundTypes
@@ -178,7 +178,7 @@ export default function CardInfo({
 										<div className="block-center margin-right-md">
 											<Typography.Label
 												text={content.value as string}
-												icon={content.icon}
+												icon={content.icon as IconEnum}
 												type={content.type as LabelTypes}
 												backgroundShape={content.backgroundType as LabelBackgroundTypes}
 											/>
