@@ -1,5 +1,5 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { ellipseBetweenText, formatNumber } from '@astraprotocol/astra-ui'
+import { ellipseBetweenText, formatNumber, IconEnum } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
 import { formatUnits } from 'ethers/lib/utils'
@@ -42,7 +42,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 									) : (
 										data[key]
 									),
-								icon: true,
+								icon: data[key] === 'Indexing' ? IconEnum.ICON_RECENT : IconEnum.ICON_CHECKED,
 								type: (data[key] as string).toLowerCase() as LabelTypes,
 								backgroundType: 'unset'
 							}

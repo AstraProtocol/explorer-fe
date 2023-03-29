@@ -88,8 +88,7 @@ const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeig
 							{
 								value: `${data[key]} transaction${data[key] > 1 ? 's' : ''}`,
 								backgroundType: 'rectangle',
-								type: 'unset',
-								icon: false
+								type: 'unset'
 							}
 						]
 					})
