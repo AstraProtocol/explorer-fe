@@ -95,7 +95,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					const isInteractWith = data?.isInteractWithContract
 					if (isInteractWith) {
 						items.push({
-							label: CardInfoLabels.to,
+							label: CardInfoLabels.interactWith,
 							type: TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL,
 							contents: [
 								{
