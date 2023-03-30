@@ -31,14 +31,21 @@ export default function RawInput({ text }: RawInputProps) {
 		Sentry.captureException(e)
 	}
 
-	const tabs = []
-	if (isHex) tabs.push({ title: 'Hex', id: 'hex', padding: ' ' })
-	tabs.push({ title: 'UTF-8', id: 'utf8', padding: ' ' })
+	if (!isHex) {
+		return (
+			<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'auto' }}>
+				<Copy text={utf8Text} />
+			</div>
+		)
+	}
 
 	return (
 		<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'auto' }}>
 			<Tabs
-				tabs={tabs}
+				tabs={[
+					{ title: 'Hex', id: 'hex', padding: ' ' },
+					{ title: 'UTF-8', id: 'utf8', padding: ' ' }
+				]}
 				contents={{
 					hex: <Copy text={text} />,
 					utf8: <Copy text={utf8Text} />
