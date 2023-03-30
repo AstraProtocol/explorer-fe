@@ -142,7 +142,7 @@ export async function getServerSideProps({ query }) {
 			evmHash,
 			cosmosHash,
 			title: `Transaction ${txHashEllipsis}`,
-			description: `Astra (ASA) detailed transaction info for txhash ${txHashEllipsis}. The transaction status, block confirmation, gas fee, Astra (ASA), and token transfer are shown.`
+			description: `Astra (ASA) detailed transaction info for txhash ${txHash}. The transaction status, block confirmation, gas fee, Astra (ASA), and token transfer are shown.`
 		}
 	}
 }
