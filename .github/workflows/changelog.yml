@@ -11,7 +11,7 @@ jobs:
             fail-fast: true
             matrix:
                 node: [18]
-        name: Integration tests
+        name: Semantic release changelog
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -38,6 +38,9 @@ jobs:
                       ${{ runner.os }}-yarn-
             - name: Setup npm token
               run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
+
+            - name: Ignore scripts
+              run: npm ci --ignore-scripts
 
             - name: npm install
               run: yarn install --frozen-lockfile
