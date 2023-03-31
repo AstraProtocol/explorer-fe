@@ -40,7 +40,7 @@ jobs:
               run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
 
             - name: Ignore scripts
-              run: npm ci --ignore-scripts
+              run: yarn ci --ignore-scripts
 
             - name: npm install
               run: yarn install --frozen-lockfile
