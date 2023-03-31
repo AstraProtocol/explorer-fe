@@ -1,4 +1,5 @@
-import { CopyButton, ellipseBetweenText } from '@astraprotocol/astra-ui'
+import { ellipseBetweenText } from '@astraprotocol/astra-ui'
+import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
 import Image from 'next/image'
 import { Content, InternalTransferContent } from '..'
