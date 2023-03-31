@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/react'
 import CopyButton from 'components/Button/CopyButton'
 import Tabs from 'components/Tabs/Tabs'
 import web3 from 'web3'
+import { isHex } from 'web3-utils'
 import styles from '../style.module.scss'
 
 type RawInputProps = {
@@ -23,15 +24,14 @@ const Copy = ({ text }) => {
 
 export default function RawInput({ text }: RawInputProps) {
 	let utf8Text = text
-	const regex = /0[xX][0-9a-fA-F]+/g
-	const isHex = !!utf8Text.match(regex)
+	const isHexString = isHex(text)
 	try {
 		utf8Text = web3.utils.toAscii(text)
 	} catch (e) {
 		Sentry.captureException(e)
 	}
 
-	if (!isHex) {
+	if (!isHexString) {
 		return (
 			<div style={{ maxWidth: '885px', maxHeight: '200px', overflowY: 'auto' }}>
 				<Copy text={utf8Text} />
@@ -44,11 +44,11 @@ export default function RawInput({ text }: RawInputProps) {
 			<Tabs
 				tabs={[
 					{ title: 'Hex', id: 'hex', padding: ' ' },
-					{ title: 'UTF-8', id: 'utf8', padding: ' ' }
+					utf8Text && { title: 'UTF-8', id: 'utf8', padding: ' ' }
 				]}
 				contents={{
 					hex: <Copy text={text} />,
-					utf8: <Copy text={utf8Text} />
+					utf8: utf8Text && <Copy text={utf8Text} />
 				}}
 				classes="padding-top-xs"
 				headerBorder={false}
