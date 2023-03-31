@@ -1,5 +1,6 @@
 import CardInfo, { CardRowItem } from 'components/Card/CardInfo'
 import { useCallback } from 'react'
+import { TransactionCardTypeEnum } from 'utils/enum'
 
 interface Props {
 	tokenData: TokenNFTMetadata
@@ -13,7 +14,7 @@ const NftPropertiesTab = ({ tokenData }: Props) => {
 			if (item !== undefined && item !== null)
 				items.push({
 					label: item.trait_type,
-					type: 'text',
+					type: TransactionCardTypeEnum.TEXT,
 					contents: [{ value: item.value }]
 				})
 		}

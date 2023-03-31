@@ -35,8 +35,8 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 		`${API_LIST.TRANSACTIONS}/${evmHash || cosmosHash}?type=evm`
 	)
 	const result = res.data.result
-	if (!result) return
 
+	if (!result) return
 	const [from, to] = _getFromAndToEvmFromCosmosMsg(res.data)
 	data.evmHash = isUndefined(evmHash)
 		? result.messages && result.messages.length > 0
@@ -44,7 +44,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			: result.hash
 		: evmHash
 	data.cosmosHash = cosmosHash || result.cosmosHash || result.messages?.[0]?.content?.txHash || ''
-	data.result = result.success ? 'Success' : 'Error'
+	data.result = result.status ? result.status : result.success ? 'Success' : 'Error'
 	data.confirmations = result.confirmations ? result.confirmations.toString() : ''
 	data.blockHeight = `${result.blockHeight}`
 	data.time = result.blockTime
@@ -87,7 +87,7 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 	data.tokenTransfers = result.tokenTransfers
 	data.index = result.index
 	data.failLog = !result.success ? result.error || result.log : ''
-	data.revertReason = result.revertReason
+	data.revertReason = result.success ? '' : result.revertReason // Only have revertReason when transaction failed
 	data.typeOfTransfer = result.type ? evmTransactionType(result.type) : ''
 	data.tabTokenTransfers =
 		result.tokenTransfers &&
@@ -100,6 +100,8 @@ export const evmTransactionDetail = async (evmHash?: string, cosmosHash?: string
 			result.blockHeight
 		)
 	data.logs = result.logs
+	data.isInteractWithContract = result.isInteractWithContract
+
 	data['type'] = 'evm'
 	return data
 }

@@ -401,7 +401,7 @@ const _mapMsgAcknowledgement = (msg: TransactionMessage): CosmosTxMessage => {
 	if (msg && content) {
 		return {
 			type: msg.type,
-			dynamicRender: [{ packet: params.packet }, { proofHeigh: params.proofHeight }],
+			dynamicRender: [{ packet: params.packet }, { proofHeight: params.proofHeight }],
 			acknowledgement: params.acknowledgement,
 			proofAcked: params.proofAcked,
 			signer: params.signer

@@ -1,3 +1,4 @@
+import { IconEnum } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 
 export type LabelTypes = 'unset' | 'success' | 'error'
@@ -5,7 +6,7 @@ export type LabelBackgroundTypes = 'unset' | 'rectangle' | 'specialShape'
 
 /**
  * @type LabelTypes
- * @icon show or hide. follow the type of label
+ * @icon what icon
  * @color css color
  * @raidus css radius
  * @backgroundShape LabelBackgroundTypes default value is unset
@@ -13,7 +14,7 @@ export type LabelBackgroundTypes = 'unset' | 'rectangle' | 'specialShape'
  */
 type LabelProps = {
 	type?: LabelTypes
-	icon?: boolean
+	icon?: IconEnum
 	text: string
 	titleText?: string
 	color?: string
@@ -38,6 +39,7 @@ export function Label({
 		<span
 			className={clsx('label', font || 'money-sm money', padding || 'padding-right-xs', radius || 'radius-sm', {
 				// color
+				'contrast-color-100': type === 'unset',
 				'alert-color-error ': type === 'error',
 				'alert-color-success': type === 'success',
 				[color]: type === 'unset',
@@ -51,10 +53,8 @@ export function Label({
 		>
 			{icon && (
 				<span
-					className={clsx({
-						'icon-checked padding-right-xs block-ver-center': icon,
-						'alert-color-error': type === 'error',
-						'alert-color-success': type === 'success'
+					className={clsx(icon, {
+						'block-ver-center': icon
 					})}
 				/>
 			)}

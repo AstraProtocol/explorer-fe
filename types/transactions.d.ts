@@ -194,6 +194,8 @@ interface EvmTransactionDetailResponse {
 		value: string
 		messages?: MsgEthereumTx[]
 		transactionFee?: string
+		status?: string // indexing
+		isInteractWithContract?: boolean
 	}
 	status: string
 }
@@ -321,7 +323,11 @@ interface TransactionDetail {
 	revertReason?: string
 	logs?: EvmLog[]
 	memo?: string
+
+	isInteractWithContract?: boolean
+	internalTokenTransfers?: TransferItem[]
 }
+
 
 interface TransactionMsgExecDetail extends TransactionDetail {
 	grantee: string

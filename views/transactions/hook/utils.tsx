@@ -1,11 +1,11 @@
 import { astraToEth } from '@astradefi/address-converter'
-import { ellipseBetweenText, formatNumber } from '@astraprotocol/astra-ui'
+import { ellipseBetweenText, formatNumber, IconEnum } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
 import { formatUnits } from 'ethers/lib/utils'
 import { isArray, isBoolean, isEmpty, isNumber, isObject, isString } from 'lodash'
 import { CONFIG } from 'utils/constants'
-import { CardInfoLabels } from 'utils/enum'
+import { CardInfoLabels, TransactionCardTypeEnum } from 'utils/enum'
 import { evmAddressName } from 'utils/evm'
 import { formatCurrencyValue, LinkMaker } from 'utils/helper'
 
@@ -19,7 +19,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'copy',
+						type: TransactionCardTypeEnum.COPY,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -27,11 +27,22 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'label',
+						type: TransactionCardTypeEnum.LABEL,
 						contents: [
 							{
-								value: data[key],
-								icon: true,
+								value:
+									data[key] === 'Indexing' ? (
+										<>
+											Indexing
+											<span className="text text-sm text-italic contrast-color-50 margin-left-md">
+												This transaction has been included and will be reflected in a short
+												while
+											</span>
+										</>
+									) : (
+										data[key]
+									),
+								icon: data[key] === 'Indexing' ? IconEnum.ICON_RECENT : IconEnum.ICON_CHECKED,
 								type: (data[key] as string).toLowerCase() as LabelTypes,
 								backgroundType: 'unset'
 							}
@@ -43,7 +54,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					if (data[key])
 						items.push({
 							label: CardInfoLabels[key],
-							type: 'label',
+							type: TransactionCardTypeEnum.LABEL,
 							contents: [
 								{ value: 'Confirmed', type: 'success', backgroundType: 'rectangle' },
 								{
@@ -58,7 +69,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null) {
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'link',
+						type: TransactionCardTypeEnum.LINK,
 						contents: [{ value: '#' + data[key], link: LinkMaker.block(data[key]) }]
 					})
 				}
@@ -68,7 +79,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'link-copy',
+						type: TransactionCardTypeEnum.LINK_COPY,
 						contents: [
 							{
 								value: data['fromAddressName']
@@ -81,28 +92,55 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				break
 			case 'to': //to
 				if (data[key] !== undefined && data[key] !== null) {
-					// const isInteractWith = !!data?.rawInput?.startsWith('0x')
-					items.push({
-						label: CardInfoLabels.to,
-						type: 'link-copy',
-						contents: [
-							{
-								value: data['toAddressName'] ? `${data['toAddressName']} (${data[key]})` : data[key],
-								link: LinkMaker.address(data[key])
-							}
-						]
-					})
+					const isInteractWith = data?.isInteractWithContract
+					if (isInteractWith) {
+						items.push({
+							label: CardInfoLabels.interactWith,
+							type: TransactionCardTypeEnum.INTERACT_CONTRACT_WITH_TRANSFER_INTERNAL,
+							contents: [
+								{
+									text: data['toAddressName']
+										? `${data['toAddressName']} (${data[key]})`
+										: `${data[key]}`,
+
+									value: data[key],
+									link: LinkMaker.address(data[key]),
+									internalTransfer: data.internalTokenTransfers
+								}
+							]
+						})
+					} else {
+						items.push({
+							label: CardInfoLabels.to,
+							type: TransactionCardTypeEnum.LINK_COPY,
+							contents: [
+								{
+									value: data['toAddressName']
+										? `${data['toAddressName']} (${data[key]})`
+										: data[key],
+									link: LinkMaker.address(data[key])
+								}
+							]
+						})
+					}
 				}
 				break
 			case 'createdContractAddressHash': //to
 				if (data[key] !== undefined && data[key] !== null) {
 					const name = data['createdContractAddressName']
 					items.push({
-						label: CardInfoLabels.interactWith,
-						type: 'link-copy',
+						label: CardInfoLabels.to,
+						type: TransactionCardTypeEnum.LINK_COPY,
 						contents: [
 							{
-								text: `[Contract ${name ? `${name} (${data[key]})` : data[key]} created]`,
+								text: (
+									<>
+										<span className="contrast-color-100">[</span>
+										<span className="text icon-contract contrast-color-70" />{' '}
+										{name ? `${name} (${data[key]})` : data[key]}{' '}
+										<span className="contrast-color-100">Created]</span>
+									</>
+								),
 								value: data[key],
 								link: LinkMaker.address(data[key])
 							}
@@ -114,7 +152,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'time',
+						type: TransactionCardTypeEnum.TIME,
 						contents: [{ value: data[key], type: data[key] as LabelTypes, suffix: '' }]
 					})
 				break
@@ -127,7 +165,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					let moneyFormat = formatCurrencyValue(money)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'balance',
+						type: TransactionCardTypeEnum.BALANCE,
 						contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 					})
 				}
@@ -139,7 +177,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					const value = Number(data[key]) < CONFIG.APPROXIMATE_ZERO ? 0 : data[key]
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'balance',
+						type: TransactionCardTypeEnum.BALANCE,
 						contents: [{ value, suffix: `(${moneyFormat})` }]
 					})
 				}
@@ -150,46 +188,45 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					const transfers = data[key] as EVMTransferItem[]
 					const transferItems = []
 					for (let transfer of transfers) {
-						transferItems.unshift({
+						transferItems.push({
+							transfer: {
+								from: transfer.fromAddress,
+								fromText: evmAddressName(
+									transfer.fromAddressName,
+									ellipseBetweenText(transfer.fromAddress, 6, 6)
+								),
+								to: transfer.toAddress,
+								toText: evmAddressName(
+									transfer.toAddressName,
+									ellipseBetweenText(transfer.toAddress, 6, 6)
+								),
+								value: transfer.amount
+									? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
+									: '',
+								tokenAddress: transfer.tokenContractAddress,
+								tokenSymbol: transfer.tokenSymbol,
+								tokenName: transfer.tokenName,
+								tokenId: transfer.tokenId,
+								tokenType: transfer.tokenType
+							}
+						})
+					}
+					if (transferItems && transferItems.length > 0)
+						items.push({
 							label: CardInfoLabels[key],
-							type: 'transfer',
-							contents: [
-								{
-									transfer: {
-										from: transfer.fromAddress,
-										fromText: evmAddressName(
-											transfer.fromAddressName,
-											ellipseBetweenText(transfer.fromAddress, 6, 6)
-										),
-										to: transfer.toAddress,
-										toText: evmAddressName(
-											transfer.toAddressName,
-											ellipseBetweenText(transfer.toAddress, 6, 6)
-										),
-										value: transfer.amount
-											? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
-											: '',
-										tokenAddress: transfer.tokenContractAddress,
-										tokenSymbol: transfer.tokenSymbol,
-										tokenName: transfer.tokenName,
-										tokenId: transfer.tokenId,
-										tokenType: transfer.tokenType
-									}
-								}
-							],
+							type: TransactionCardTypeEnum.TOKEN_TRANSFER,
+							contents: transferItems,
 							responsive: {
 								wrap: 'md'
 							}
 						})
-					}
-					items = items.concat(transferItems)
 				}
 				break
 			case 'nonce':
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'nonce',
+						type: TransactionCardTypeEnum.NONCE,
 						contents: [{ value: data[key], suffix: data.index.toString() }]
 					})
 				break
@@ -205,7 +242,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'link-copy',
+						type: TransactionCardTypeEnum.LINK_COPY,
 						contents: [{ link: LinkMaker.address(data[key]), value: data[key] }]
 					})
 				break
@@ -218,7 +255,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					const evmAddress = key === 'grantee' ? data[key] : astraToEth(data[key])
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'link-copy',
+						type: TransactionCardTypeEnum.LINK_COPY,
 						contents: [{ value: evmAddress, link: LinkMaker.address(evmAddress) }]
 					})
 				}
@@ -231,7 +268,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (!isEmpty(data[key]))
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'copy',
+						type: TransactionCardTypeEnum.COPY,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -241,7 +278,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'raw-input',
+						type: TransactionCardTypeEnum.RAW_INPUT,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -267,7 +304,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (data[key] !== undefined && data[key] !== null)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'text',
+						type: TransactionCardTypeEnum.TEXT,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -276,7 +313,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (!isEmpty(data[key]))
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'validator-description',
+						type: TransactionCardTypeEnum.VALIDATOR_DESCRIPTION,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -284,7 +321,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				if (!isEmpty(data[key]))
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'commission',
+						type: TransactionCardTypeEnum.COMMISION,
 						contents: [{ value: data[key] }]
 					})
 				break
@@ -294,7 +331,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					let moneyFormat = formatCurrencyValue(money)
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'balance',
+						type: TransactionCardTypeEnum.BALANCE,
 						contents: [{ value: data[key], suffix: `(${moneyFormat})` }]
 					})
 				}
@@ -318,7 +355,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 					}
 					items.push({
 						label: CardInfoLabels[key],
-						type: 'table',
+						type: TransactionCardTypeEnum.TABLE,
 						contents: [
 							{
 								table: {
@@ -336,7 +373,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				for (let key of keys) {
 					items.push({
 						label: key,
-						type: 'tabs',
+						type: TransactionCardTypeEnum.TABS,
 						contents: [
 							{
 								tabs: {

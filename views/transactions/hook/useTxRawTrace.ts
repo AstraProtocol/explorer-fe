@@ -1,6 +1,6 @@
 import API_LIST from 'api/api_list'
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 
 export default function useTxRawTrace(txhash: string, type: 'evm' | 'cosmos') {
 	const [hookData, setState] = useState<any>({ result: '' })
@@ -10,7 +10,9 @@ export default function useTxRawTrace(txhash: string, type: 'evm' | 'cosmos') {
 
 		return [`${API_LIST.TRANSACTION_RAW_TRACE}${txhash}`]
 	}
-	const { data } = useSWR<TransactionRawTraceResponse>(_fetchCondition())
+	const { data } = useSWRImmutable<TransactionRawTraceResponse>(_fetchCondition(), {
+		refreshInterval: 0
+	})
 
 	useEffect(() => {
 		if (data?.result) {
