@@ -84,7 +84,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
-			url: `${process.env.NEXT_PUBLIC_EVM_API}/verify_smart_contract/contract_verifications`,
+			url: `${process.env.NEXT_PUBLIC_COSMOS_API}/verify_smart_contract/contract_verifications`,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
@@ -107,7 +107,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	useEffect(() => {
 		if (isValidated) onSuccess()
 	}, [isValidated])
-
+	console.log(versions)
 	return (
 		<div className={clsx(styles.modalVerify, 'radius-lg')}>
 			<Header onClose={onClose} />
