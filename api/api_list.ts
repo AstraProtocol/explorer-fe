@@ -48,7 +48,7 @@ const API_LIST = {
 
 	CONTRACT_CODE: '/api/v1/contract/source-code/',
 	VERIFY_CONTRACT: `/verify_smart_contract/contract_verifications`,
-	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus',
+	CHECK_VERIFY_STATUS: '/api?module=contract&action=checkverifystatus',
 	GET_EVM_VERSION: '/api/v1/evm-versions',
 	GET_SOLIDITY_COMPILER: '/api/v1/compiler-versions/',
 

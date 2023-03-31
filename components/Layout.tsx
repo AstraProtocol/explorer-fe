@@ -1,4 +1,4 @@
-import { Footer } from '@astraprotocol/astra-ui'
+import { Footer, ToastWrapper } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import clsx from 'clsx'
 import React, { ReactNode, useEffect } from 'react'
@@ -54,6 +54,7 @@ const Layout: React.FC<Props> = props => {
 			<div className={styles.layout}>{props.children}</div>
 			<Footer />
 			<div id="modal-root"></div>
+			<ToastWrapper />
 		</div>
 	)
 }
