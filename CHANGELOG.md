@@ -1,3 +1,34 @@
+# [1.1.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.0.1...v1.1.0) (2023-03-31)
+
+
+### Bug Fixes
+
+* add check undefined with data?.isInteractWithContract in tx detail ([7e8bf98](https://github.com/AstraProtocol/explorer-fe/commit/7e8bf98e0b95e82eff9bfdcf8dc5b291970e300f))
+* add field isInteractWithContract in txdetail ([f09e227](https://github.com/AstraProtocol/explorer-fe/commit/f09e227b525e19c62337067df134eb419972782f))
+* add logic show revert reason ([f946f1c](https://github.com/AstraProtocol/explorer-fe/commit/f946f1c862c74cff3d65c9c1252637528f63160b))
+* add table background ([bf4018e](https://github.com/AstraProtocol/explorer-fe/commit/bf4018e29ec21e664faa0d73acaa7558ccd0bc52))
+* duplicate react component key ([b54bf0c](https://github.com/AstraProtocol/explorer-fe/commit/b54bf0c438d3dc27c11c970b2bc3049e7886ebc5))
+* just display HEX tab when revertReason is UTF8 ([782b788](https://github.com/AstraProtocol/explorer-fe/commit/782b788d5fcd8f0206f032cb5c80cbab9f9fa4d5))
+* missing import ([3a13ba9](https://github.com/AstraProtocol/explorer-fe/commit/3a13ba94129ffefb8f2d535ebd1acdd7099f2c5d))
+* missing params in check Creation Contract ([fb64bb4](https://github.com/AstraProtocol/explorer-fe/commit/fb64bb4223d268de16f11b97928afe5fe8b590d6))
+* move to use table on astra-ui ([63e6db2](https://github.com/AstraProtocol/explorer-fe/commit/63e6db22399d41153d20feb59308ebfa98027149))
+* re-order gasUserByTransaction higer than max fee ([66be673](https://github.com/AstraProtocol/explorer-fe/commit/66be673804d344263214aaecbc016cc698a9757f))
+* remove tabs UTF8 when text is utf8 ([bf6aa17](https://github.com/AstraProtocol/explorer-fe/commit/bf6aa176e3aed766a35fad29211516e374ba7863))
+* remove text Contract ([a5b6bfd](https://github.com/AstraProtocol/explorer-fe/commit/a5b6bfd6d44df803f8331d91839bd00dbd1a055c))
+* remove unused icon ([45648a8](https://github.com/AstraProtocol/explorer-fe/commit/45648a8215dd1daa3b4061928d887f62b1d15cdc))
+* show full txhash in SEO description ([e9e147f](https://github.com/AstraProtocol/explorer-fe/commit/e9e147fa61102edfddd3047f7c9c14a5e77796ac))
+* show internal transfer amount in from/to space ([ca4435a](https://github.com/AstraProtocol/explorer-fe/commit/ca4435a7a624eb2a1d4332030a54f186fbb74c98))
+* text interactWithContract when have isInteractWithContract in tx detail ([40b8400](https://github.com/AstraProtocol/explorer-fe/commit/40b84002dfdd75a3784f96d6fc5f2d282e18c4e2))
+* update astra-ui ([469fd8f](https://github.com/AstraProtocol/explorer-fe/commit/469fd8f18124fba2f4f249cd0eb22d12a74a8f12))
+* update Indexing UI status transaction detail ([3dfae44](https://github.com/AstraProtocol/explorer-fe/commit/3dfae44a898f3ebee3286068e05143bc6811c618))
+* update text display tx interactWithContract or create Contract ([e1768cb](https://github.com/AstraProtocol/explorer-fe/commit/e1768cbe96f5fe2dd929223686f41598c7509fc5))
+* useSWRImmutable instead of useSwr in some data ([5e9a678](https://github.com/AstraProtocol/explorer-fe/commit/5e9a6789b2e65c11dcbf7720dd8cec9455dba84e))
+
+
+### Features
+
+* show indexing status tx ([7de5f20](https://github.com/AstraProtocol/explorer-fe/commit/7de5f204300c664a7528a9cac475780122cf9051))
+
 ## [1.0.1](https://github.com/AstraProtocol/explorer-fe/compare/v1.0.0...v1.0.1) (2023-03-23)
 
 
