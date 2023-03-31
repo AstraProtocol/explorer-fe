@@ -57,6 +57,6 @@ jobs:
                   NEXT_PUBLIC_ENV: mainnet
 
             - name: Semantic release
-              run: CI=true && yarn semantic
+              run: HUSKY=0 yarn semantic
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
