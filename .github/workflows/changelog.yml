@@ -39,9 +39,6 @@ jobs:
             - name: Setup npm token
               run: npm config set '//npm.pkg.github.com/:_authToken' "${{secrets.GITHUB_TOKEN}}"
 
-            - name: Ignore scripts
-              run: yarn ci --ignore-scripts
-
             - name: npm install
               run: yarn install --frozen-lockfile
               env:
@@ -60,6 +57,6 @@ jobs:
                   NEXT_PUBLIC_ENV: mainnet
 
             - name: Semantic release
-              run: yarn semantic
+              run: CI=true && yarn semantic
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
