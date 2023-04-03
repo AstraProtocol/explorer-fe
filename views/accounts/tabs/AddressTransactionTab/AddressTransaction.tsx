@@ -79,6 +79,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 											</LinkText>
 										</>
 									)}
+									{(transaction.fromAddressName || transaction.toAddressName) && <br />}
 									{transaction.to && (
 										<>
 											<span className={clsx('contrast-color-30 margin-right-xs text text-sm')}>

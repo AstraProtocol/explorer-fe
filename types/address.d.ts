@@ -14,6 +14,8 @@ interface Address {
 	type: 'address' | 'contractaddress' // string
 	verified: boolean
 	vestingBalances?: VestingBalances
+	implementationAddressName?: string
+	implementationAddressHash?: string
 }
 
 interface AddressDetailResponse {
