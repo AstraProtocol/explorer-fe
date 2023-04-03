@@ -2,6 +2,7 @@ import { NormalButton, withToast } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
 import * as Sentry from '@sentry/react'
+import API_LIST from 'api/api_list'
 import axios from 'axios'
 import clsx from 'clsx'
 import FormItem, { FormRadioButtonData, FormSelectData, InputData } from 'components/FormItem'
@@ -84,7 +85,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
-			url: `${process.env.NEXT_PUBLIC_COSMOS_API}/verify_smart_contract/contract_verifications`,
+			url: `${process.env.NEXT_PUBLIC_COSMOS_API}${API_LIST.VERIFY_CONTRACT}`,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
