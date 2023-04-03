@@ -2,6 +2,7 @@ import { ellipseBetweenText } from '@astraprotocol/astra-ui'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
 import Image from 'next/image'
+import { LinkMaker } from 'utils/helper'
 import { Content, InternalTransferContent } from '..'
 
 const ContractTransferInternal = ({ content }: { content: Content }) => {
@@ -25,12 +26,12 @@ const ContractTransferInternal = ({ content }: { content: Content }) => {
 						Transfer <span className="money money-sm">{t.value} ASA</span>
 						{'  '}
 						From{'  '}
-						<Typography.LinkText href={t.from || ''}>
+						<Typography.LinkText href={LinkMaker.address(t.from || '')}>
 							{t.fromText ? `${t.fromText} (${ellipseBetweenText(t.from)})` : ellipseBetweenText(t.from)}
 						</Typography.LinkText>
 						{'  '}
 						To{'  '}
-						<Typography.LinkText href={t.to || ''}>
+						<Typography.LinkText href={LinkMaker.address(t.to || '')}>
 							{t.toText ? `${t.toText} (${ellipseBetweenText(t.to)})` : ellipseBetweenText(t.to)}
 						</Typography.LinkText>
 					</span>
