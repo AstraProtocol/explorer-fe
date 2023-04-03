@@ -11,7 +11,7 @@ jobs:
             fail-fast: true
             matrix:
                 node: [18]
-        name: Integration tests
+        name: Semantic release changelog
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -57,6 +57,6 @@ jobs:
                   NEXT_PUBLIC_ENV: mainnet
 
             - name: Semantic release
-              run: yarn semantic
+              run: HUSKY=0 yarn semantic
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
