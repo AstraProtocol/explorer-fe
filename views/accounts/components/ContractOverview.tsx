@@ -15,7 +15,9 @@ const ContractOverview = ({ addressData, address }: Props) => {
 				<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm')}>
 					<span className="col-2 text text-base contrast-color-50">Token</span>
 					<LinkText classes="col-10" href={LinkMaker.token(address)}>
-						{addressData.tokenName} ({addressData.tokenSymbol})
+						{addressData.tokenName
+							? `${addressData.tokenName} (${addressData.tokenSymbol})`
+							: addressData.tokenSymbol}
 					</LinkText>
 				</div>
 			)}

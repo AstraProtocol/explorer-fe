@@ -61,7 +61,11 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 								/>
 							</div>
 						) : isContract ? (
-							`${addressData.contractName} (${address})`
+							addressData.contractName ? (
+								`${addressData.contractName} (${address})`
+							) : (
+								address
+							)
 						) : (
 							<div>
 								{displayMode === DisplayMode.EVM ? address : ethToAstra(address)}
