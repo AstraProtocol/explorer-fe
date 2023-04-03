@@ -47,8 +47,8 @@ const API_LIST = {
 	TOKEN_TRANSER_BY_TOKEN_ID: '/api/v1/contract/token-transfers-by-tokenid/', // contractaddress=0x8CB41dA24793D4515E6b96D1adA50b721878C0Ca&tokenid=10
 
 	CONTRACT_CODE: '/api/v1/contract/source-code/',
-	VERIFY_CONTRACT: `evm_/verify_smart_contract/contract_verifications`,
-	CHECK_VERIFY_STATUS: 'evm_/api/v1?module=contract&action=checkverifystatus',
+	VERIFY_CONTRACT: `/verify_smart_contract/contract_verifications`,
+	CHECK_VERIFY_STATUS: '/api?module=contract&action=checkverifystatus',
 	GET_EVM_VERSION: '/api/v1/evm-versions',
 	GET_SOLIDITY_COMPILER: '/api/v1/compiler-versions/',
 
