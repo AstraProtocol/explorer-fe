@@ -69,16 +69,6 @@ const AccountAssets = ({ addressData, address }: Props) => {
 		}
 	}
 	const { isMobile } = useMobileLayout()
-	// console.log(BigNumber(addressData.totalBalance).toString(10))
-	console.log(Number(astraPrice) * parseFloat(convertBalanceToView(addressData.totalBalance) || '0'))
-	console.log(
-		`(${
-			(formatCurrencyValue(
-				Number(astraPrice) * parseFloat(convertBalanceToView(addressData.totalBalance) || '0')
-			) || '0',
-			'VND')
-		})`
-	)
 
 	return (
 		<div className="row flex flex-wrap margin-top-md margin-bottom-md">
