@@ -37,6 +37,9 @@ const API_LIST = {
 	ADDRESS_TRANSACTION: '/api/v1/accounts',
 	ADDRESS_INTERNAL_TRANSACTION: 'evm_/api/v1?module=account&action=txlistinternal', // address, page, offset
 	ADDRESS_TOKEN_TRANSFER: '/api/v1/accounts/token-transfers/', // address=?
+
+	ACCOUNT_DELEGATION: `${process.env.NEXT_PUBLIC_CHAIN_API}/cosmos/staking/v1beta1/delegations`,
+
 	CONTRACT_TRANSACTION: '/api/v1/contract/txs/', // address = ?
 
 	TOKEN_DETAIL: '/api/v1/contract/token-detail/', // SSR

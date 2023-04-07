@@ -1,6 +1,7 @@
 import { astraToEth } from '@astradefi/address-converter'
+import { BigNumber as BN } from 'bignumber.js'
 import { BigNumber } from 'ethers'
-import { formatUnits } from 'ethers/lib/utils'
+import { formatEther, formatUnits } from 'ethers/lib/utils'
 import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import qs from 'qs'
@@ -30,12 +31,20 @@ export const ellipseLeftText = (address: string, to: number) => {
 export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	if (!value) return 0
 	if (!decimals) decimals = 1
-
-	const big = BigNumber.from(value)
-	const valueInWei = formatUnits(big, decimals).valueOf()
-	if (parseFloat(valueInWei) == 0) return 0
-	if (parseFloat(valueInWei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(valueInWei).toExponential()
-	return valueInWei
+	const returnValue = wei => {
+		if (parseFloat(wei) == 0) return 0
+		if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
+		return wei
+	}
+	try {
+		const big = BigNumber.from(value)
+		const valueInWei = formatUnits(big, decimals).valueOf()
+		return returnValue(valueInWei)
+	} catch (err) {
+		// bignumber (ethers) error with 500100000000.000000000000000000
+		// bignumber.js caught this. but ethers not
+		return returnValue(formatEther(BN(value).toString(10)))
+	}
 }
 
 /**

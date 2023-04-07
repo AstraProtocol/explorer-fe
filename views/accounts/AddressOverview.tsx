@@ -14,7 +14,7 @@ import { useAppSelector } from 'store/hooks'
 import { AddressTypeEnum } from 'utils/enum'
 
 import { convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
-import AccountOverview from './components/AccountOverview'
+import AccountOverview from './components/account/AccountOverview'
 import ContractOverview from './components/ContractOverview'
 import ValidatorOverview from './components/ValidatorOverview'
 import useAddressCounter from './hook/useAddressCounter'
@@ -83,9 +83,13 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 					{/* <QrButton textTitle="qrcode" content={address} /> */}
 				</div>
 			</Row>
-			{validator && <ValidatorOverview validator={validator} />}
-			{isContract && <ContractOverview addressData={addressData} address={address} />}
-			{!(validator && isContract) && <AccountOverview addressData={addressData} />}
+			{isValidator ? (
+				<ValidatorOverview validator={validator} />
+			) : isContract ? (
+				<ContractOverview addressData={addressData} address={address} />
+			) : (
+				<AccountOverview addressData={addressData} address={address} />
+			)}
 			<Row style={{ justifyContent: 'space-between' }} classes="padding-top-lg">
 				<div className={styles.colBalance}>
 					<span className="text text-base contrast-color-50">Balance:</span>
