@@ -81,10 +81,11 @@ const AccountAssets = ({ addressData, address }: Props) => {
 					<div className="money money-sm">
 						<Typography.Balance
 							size="sm"
-							currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[0] || '0', 'VND')})`}
-							icon={
-								<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
-							}
+							currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
+							// currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[0] || '0', 'VND')})`}
+							// icon={
+							// 	<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
+							// }
 							value={dataSet[0]}
 							fixNumber={5}
 						/>
@@ -95,10 +96,11 @@ const AccountAssets = ({ addressData, address }: Props) => {
 					<div className="money money-sm">
 						<Typography.Balance
 							size="sm"
-							currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[1] || '0', 'VND')})`}
-							icon={
-								<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
-							}
+							currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
+							// currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[1] || '0', 'VND')})`}
+							// icon={
+							// 	<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
+							// }
 							value={dataSet[1]}
 							fixNumber={5}
 						/>
@@ -109,10 +111,11 @@ const AccountAssets = ({ addressData, address }: Props) => {
 					<div className="money money-sm">
 						<Typography.Balance
 							size="sm"
-							currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[2] || '0', 'VND')})`}
-							icon={
-								<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
-							}
+							currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
+							// currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[2] || '0', 'VND')})`}
+							// icon={
+							// 	<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
+							// }
 							value={dataSet[2]}
 							fixNumber={5}
 						/>
@@ -123,10 +126,11 @@ const AccountAssets = ({ addressData, address }: Props) => {
 					<div className="money money-sm">
 						<Typography.Balance
 							size="sm"
-							currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[3] || '0', 'VND')})`}
-							icon={
-								<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
-							}
+							currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()}
+							// currency={`(${formatCurrencyValue(Number(astraPrice) * dataSet[3] || '0', 'VND')})`}
+							// icon={
+							// 	<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />
+							// }
 							value={dataSet[3]}
 							fixNumber={5}
 						/>
