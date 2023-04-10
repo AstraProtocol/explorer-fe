@@ -77,6 +77,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 											</LinkText>
 										</>
 									)}
+									{(transaction.fromAddressName || transaction.toAddressName) && <br />}
 									{interactToAddress && (
 										<>
 											<span className={clsx('contrast-color-30 padding-right-2xs text text-sm')}>

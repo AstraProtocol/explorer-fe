@@ -98,15 +98,6 @@ export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string
 	return totalAmount.toString()
 }
 
-export const getTokenName = (amount: TokenAmount | TokenAmount[]): string => {
-	if (isArray(amount) && !isEmpty(amount)) {
-		return amount[0].denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
-	} else if (!isArray(amount) && !isEmpty(amount)) {
-		return amount.denom.toLowerCase().includes('astra') ? process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() : ''
-	}
-
-	return ''
-}
 
 const _mapMsgSendField = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgSendContent
@@ -116,7 +107,7 @@ const _mapMsgSendField = (msg: TransactionMessage): CosmosTxMessage => {
 			from: astraToEth(content.fromAddress),
 			to: astraToEth(content.toAddress),
 			amount: formatEther(getAstraTokenAmount(content.amount)),
-			amountSymbol: getTokenName(content.amount)
+			amountSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 		}
 	}
 }
@@ -141,7 +132,7 @@ const _mapMsgDelegate = (msg: TransactionMessage): CosmosTxMessage => {
 			delegatorAddress: content.delegatorAddress,
 			validatorAddress: content.validatorAddress,
 			amount: formatEther(getAstraTokenAmount(content.amount)),
-			amountSymbol: getTokenName(content.amount)
+			amountSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 		}
 	}
 }
@@ -167,7 +158,7 @@ const _mapMsgBeginRedelegate = (msg: TransactionMessage): CosmosTxMessage => {
 			validatorSrcAddress: content.validatorSrcAddress,
 			validatorDstAddress: content.validatorDstAddress,
 			amount: formatEther(getAstraTokenAmount(content.amount)),
-			amountSymbol: getTokenName(content.amount)
+			amountSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 		}
 	}
 }
@@ -261,7 +252,7 @@ const _mapMsgTextProposalOrMsgSubmitProposal = (msg: TransactionMessage): Cosmos
 			type: msg.type,
 			proposer: content.proposerAddress,
 			initialDepositValue: formatEther(getAstraTokenAmount(content.initialDeposit)),
-			initialDepositTokenSymbol: getTokenName(content.initialDeposit),
+			initialDepositTokenSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase(),
 			dynamicRender: [{ textProposalContent: content.content }]
 		}
 	}
@@ -275,7 +266,7 @@ const _mapMsgDeposit = (msg: TransactionMessage) => {
 			depositor: content.depositor,
 			proposalId: content.proposalId,
 			amount: formatEther(getAstraTokenAmount(content.amount)),
-			amountSymbol: getTokenName(content.amount)
+			amountSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 		}
 	}
 }
@@ -328,7 +319,7 @@ const _mapMsgTransfer = (msg: TransactionMessage): CosmosTxMessage => {
 			sender: params.sender,
 			receiver: params.receiver,
 			timeoutTimestamp: params.timeoutTimestamp,
-			token: `${formatEther(params.token.amount)} ${getTokenName(params.token)}`,
+			token: `${formatEther(params.token.amount)} ${process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()}`,
 			memo: '',
 			dynamicRender: [{ timeoutHeight: params.timeoutHeight }]
 		}
@@ -360,7 +351,7 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 		for (let lock of params.lockup_periods) {
 			const { amount, length } = lock
 			const totalAmount = getAstraTokenAmount(amount)
-			const tokenName = getTokenName(amount)
+			const tokenName = process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 			lockupPeriodsContent.push([length, `${formatNumber(formatEther(totalAmount))} ${tokenName}`])
 		}
 
@@ -369,7 +360,7 @@ const _mapMsgCreateClawbackVestingAccount = (msg: TransactionMessage): CosmosTxM
 		for (let vest of params.vesting_periods) {
 			const { amount, length } = vest
 			const totalAmount = getAstraTokenAmount(amount)
-			const tokenName = getTokenName(amount)
+			const tokenName = process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 			vestingPeriodsContent.push([
 				formatNumber(length),
 				`${formatNumber(
@@ -429,7 +420,7 @@ const _mapMsgWithdrawValidatorCommission = (msg: TransactionMessage): CosmosTxMe
 			validatorAddress: content.validatorAddress,
 			recipientAddress: content.recipientAddress,
 			amount: formatEther(getAstraTokenAmount(content.amount)),
-			amountSymbol: getTokenName(content.amount)
+			amountSymbol: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()
 		}
 	}
 }
