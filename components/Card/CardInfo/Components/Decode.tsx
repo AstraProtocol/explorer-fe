@@ -101,7 +101,7 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 					}
 				]}
 				rows={
-					items.map(item => ({
+					items?.map(item => ({
 						indexed: { content: item.indexed },
 						name: { content: item.name },
 						type: { content: item.type },
