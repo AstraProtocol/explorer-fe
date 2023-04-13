@@ -37,7 +37,9 @@ const ContractOverview = ({ addressData, address }: Props) => {
 				<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm')}>
 					<span className="col-2 text text-base contrast-color-50">Implementation</span>
 					<LinkText classes="col-10" href={LinkMaker.address(addressData.implementationAddressHash)}>
-						{addressData.implementationAddressName} | {addressData.implementationAddressHash}
+						{addressData.implementationAddressName
+							? `${addressData.implementationAddressName} | ${addressData.implementationAddressHash}`
+							: addressData.implementationAddressHash}
 					</LinkText>
 				</div>
 			)}
