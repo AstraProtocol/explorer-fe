@@ -6,6 +6,14 @@ interface VestingBalances {
 interface Address {
 	contractName?: string
 	balance: string
+	delegationBalance?: string
+	redelegatingBalance?: string
+	unbondingBalance?: string
+	totalRewards?: string
+	commissions?: string
+	totalBalance?: string
+	contractName?: string
+
 	creationTransaction: string
 	creator: string
 	lastBalanceUpdate: number
@@ -14,6 +22,11 @@ interface Address {
 	type: 'address' | 'contractaddress' // string
 	verified: boolean
 	vestingBalances?: VestingBalances
+
+	implementationAddressName?: string
+	implementationAddressHash?: string
+
+	verified?: boolean
 }
 
 interface AddressDetailResponse {
@@ -315,3 +328,18 @@ interface ContractSearchResponse {
 	insertedAt: string
 	name: string
 }
+
+interface Delegation {
+	balance: TokenAmount
+	delegation: { delegator_address: string; shares: string; validator_address: string }
+}
+
+interface AccountDelegationResponse {
+	delegation_responses: Delegation[]
+	pagination: {
+		// Cosmos sdk
+		next_key: string | null
+		total: string
+	}
+}
+

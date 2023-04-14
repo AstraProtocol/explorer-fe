@@ -1,4 +1,4 @@
-import { NormalButton } from '@astraprotocol/astra-ui'
+import { NormalButton, withToast } from '@astraprotocol/astra-ui'
 import { InputProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input'
 import { InputProps as InputNumberProps } from '@astraprotocol/astra-ui/lib/es/components/Form/Input/NumberInput'
 import * as Sentry from '@sentry/react'
@@ -11,7 +11,7 @@ import qs from 'qs'
 import { useEffect, useRef, useState } from 'react'
 import AddressDisplay from './AddressDisplay'
 import Header from './Header'
-import useContractVerifyStatus from './hook/useContractVerifyStatus'
+import useContractVerifyStatus, { Status } from './hook/useContractVerifyStatus'
 import useEvmVersion from './hook/useEvmVersion'
 import useSolidityCompiler from './hook/useSolidityCompiler'
 import styles from './style.module.scss'
@@ -27,7 +27,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	const [contractName, setContractName] = useState('')
 	const [hasNightlyBuild, setHasNightlyBuild] = useState(true)
 	const [compiler, setCompiler] = useState(undefined)
-	const [evmVersion, setEvmVersion] = useState('default')
+	const [evmVersion, setEvmVersion] = useState(undefined)
 	const [hasOptimization, setOptimization] = useState(true)
 	const [optimizeRun, setOptimizeRun] = useState(200)
 	const [solidityCode, setSolidityCode] = useState('')
@@ -38,7 +38,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 
 	const versions = useEvmVersion()
 	const solidityCompilers = useSolidityCompiler()
-	const isValidated = useContractVerifyStatus(guid)
+	const [status, errorMessage] = useContractVerifyStatus(guid)
 
 	const addLibraryItem = () => {
 		if (libs.length > 10) return
@@ -85,7 +85,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 		const data = qs.stringify(params)
 		var config = {
 			method: 'post',
-			url: API_LIST.VERIFY_CONTRACT,
+			url: `${process.env.NEXT_PUBLIC_COSMOS_API}${API_LIST.VERIFY_CONTRACT}`,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
@@ -106,8 +106,23 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 	}
 
 	useEffect(() => {
-		if (isValidated) onSuccess()
-	}, [isValidated])
+		if (status !== Status.Waiting) {
+			setGuid(undefined)
+			setLoading(false)
+
+			const isSuccess = status === Status.Validated
+			if (isSuccess) onSuccess()
+			else {
+				withToast(
+					{
+						title: 'Error',
+						moreInfo: errorMessage
+					},
+					{ type: 'error' }
+				)
+			}
+		}
+	}, [status])
 
 	return (
 		<div className={clsx(styles.modalVerify, 'radius-lg')}>
@@ -116,6 +131,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 				<AddressDisplay classes="margin-bottom-xl" address={address} />
 				<div className={clsx('margin-bottom-xl border border-bottom-base', styles.borderColor)}>
 					<FormItem
+						disabled={loading}
 						label="Contract Name:"
 						type="input"
 						inputProps={{
@@ -139,6 +155,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="Include nightly build:"
 						type="radio-button"
 						inputProps={{
@@ -158,6 +175,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="Compiler:"
 						type="select"
 						inputProps={{
@@ -174,6 +192,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="EVM Version:"
 						type="select"
 						inputProps={{
@@ -191,6 +210,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="Optimization:"
 						type="radio-button"
 						inputProps={{
@@ -211,6 +231,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 					/>
 
 					<FormItem
+						disabled={loading}
 						label="Optimize run:"
 						type="input-number"
 						inputProps={{
@@ -223,6 +244,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="Enter the Solidity Contract Code:"
 						type="text-field"
 						inputProps={{
@@ -239,6 +261,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						}}
 					/>
 					<FormItem
+						disabled={loading}
 						label="Try to fetch constructor arguments automatically:"
 						type="radio-button"
 						inputProps={{
@@ -261,6 +284,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 					return (
 						<>
 							<FormItem
+								disabled={loading}
 								key={lib.index}
 								label={`Library ${lib.index + 1} Name:`}
 								type="input"
@@ -286,6 +310,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 								}}
 							/>
 							<FormItem
+								disabled={loading}
 								key={lib.index}
 								label={`Library ${lib.index + 1} Address:`}
 								type="input"
@@ -313,7 +338,7 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 						</>
 					)
 				})}
-				<NormalButton style={{ width: 207, marginRight: 10 }} onClick={addLibraryItem}>
+				<NormalButton disabled={loading} style={{ width: 207, marginRight: 10 }} onClick={addLibraryItem}>
 					<span className="text text-base contrast-color-100">Add Contract Library</span>
 				</NormalButton>
 			</div>
@@ -321,14 +346,14 @@ const ContractFlattenedVerify = ({ address, onClose, onSuccess }: Props) => {
 				style={{ justifyContent: 'space-between' }}
 				classes={clsx(styles.paddingHoz, styles.footer, 'padding-top-md padding-bottom-md')}
 			>
-				<NormalButton style={{ width: 78 }} onClick={onReset} variant="default">
+				<NormalButton disabled={loading} style={{ width: 78 }} onClick={onReset} variant="default">
 					<span className="text text-base contrast-color-100">Reset</span>
 				</NormalButton>
 				<Row style={{ flex: 0 }}>
 					<NormalButton loading={loading} style={{ width: 170, marginRight: 10 }} onClick={onVerify}>
 						<span className="text text-base contrast-color-100">Verify and Publish</span>
 					</NormalButton>
-					<NormalButton style={{ width: 86 }} onClick={() => onClose()} variant="text">
+					<NormalButton disabled={loading} style={{ width: 86 }} onClick={() => onClose()} variant="text">
 						<span className="text text-base contrast-color-100">Cancel</span>
 					</NormalButton>
 				</Row>

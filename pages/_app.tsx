@@ -7,7 +7,6 @@ import type { NextWebVitalsMetric } from 'next/app'
 import { AppProps } from 'next/app'
 import { event, GoogleAnalytics } from 'nextjs-google-analytics'
 import { Provider } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -94,7 +93,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 						<>
 							{process.env.NODE_ENV === 'production' && <GoogleAnalytics trackPageViews />}
 							<PageLoader />
-							<ToastContainer toastClassName="dark--mode" />
+
 							<Component {...pageProps} />
 						</>
 					</SWRConfig>

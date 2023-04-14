@@ -34,6 +34,7 @@ export interface InputNumberData extends Tooltip {}
 export interface TextAreaData extends Tooltip {}
 
 interface Props {
+	disabled?: boolean
 	label: string
 	type: 'input' | 'select' | 'radio-button' | 'text-field' | 'input-number' | 'file'
 	inputProps: {
@@ -42,7 +43,7 @@ interface Props {
 	}
 }
 
-const FormItem = ({ label, type, inputProps }: Props) => {
+const FormItem = ({ label, type, inputProps, disabled = false }: Props) => {
 	let content
 	let data
 	let props
@@ -50,7 +51,7 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 		case 'input':
 			props = inputProps.props as InputProps
 			data = inputProps.data as InputData
-			content = <Form.Input data-tip={data?.tooltip} data-for={data?.id} {...props} />
+			content = <Form.Input disabled={disabled} data-tip={data?.tooltip} data-for={data?.id} {...props} />
 			break
 		case 'radio-button':
 			props = inputProps.props as RadioButtonProps
@@ -60,6 +61,7 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 					<Row>
 						{data.items.map((o: Option) => (
 							<RadioButton
+								disabled={disabled}
 								{...props}
 								text={o.label}
 								value={o.value}
@@ -79,6 +81,7 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 
 			content = (
 				<Form.Select
+					isDisabled={disabled}
 					data-tip={data?.tooltip}
 					data-for={data?.id}
 					onChange={value => props.onSelect(value)}
@@ -91,16 +94,16 @@ const FormItem = ({ label, type, inputProps }: Props) => {
 		case 'input-number':
 			props = inputProps.props as InputNumberProps
 			data = inputProps.data as InputNumberData
-			content = <Form.NumberInput data-tip={data?.tooltip} data-for={data?.id} {...props} />
+			content = <Form.NumberInput disabled={disabled} data-tip={data?.tooltip} data-for={data?.id} {...props} />
 			break
 		case 'text-field':
 			props = inputProps.props as TextAreaProps
 			data = inputProps.data as TextAreaData
-			content = <Form.TextArea data-tip={data?.tooltip} data-for={data?.id} {...props} />
+			content = <Form.TextArea disabled={disabled} data-tip={data?.tooltip} data-for={data?.id} {...props} />
 			break
 		case 'file':
 			content = (
-				<Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+				<Dropzone disabled={disabled} onDrop={acceptedFiles => console.log(acceptedFiles)}>
 					{({ getRootProps, getInputProps }) => (
 						<section className="container" style={{ borderWidth: 1, borderColor: 'red' }}>
 							<div {...getRootProps({ className: 'dropzone' })}>
