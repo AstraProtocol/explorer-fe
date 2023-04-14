@@ -1,3 +1,26 @@
+# [1.2.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.1.0...v1.2.0) (2023-04-14)
+
+
+### Bug Fixes
+
+* add implementation contract name + hash (contract overview) ([75957d0](https://github.com/AstraProtocol/explorer-fe/commit/75957d0083aa47b7427b9f9c30f0824a2502bcaf))
+* component CardInfo not use CopyButton from astra-ui ([daf71a8](https://github.com/AstraProtocol/explorer-fe/commit/daf71a88adc1fcd99b5ebf87d73d1142d64ff6b9))
+* decode log items with undefined ([95e45d5](https://github.com/AstraProtocol/explorer-fe/commit/95e45d56fa562983f49d07bad5a200814a171d46))
+* display contract implementation text ([e2810ae](https://github.com/AstraProtocol/explorer-fe/commit/e2810ae509cf5964f0d9d9dc3f063135066d947c))
+* update display currency of AccountAssets ([7160c02](https://github.com/AstraProtocol/explorer-fe/commit/7160c028198b9fc3cd7f84b3d6b7289899be02f5))
+* update display name with hash in ContractOverview ([ec43430](https://github.com/AstraProtocol/explorer-fe/commit/ec43430c83a860f1741f1e8e4be063fa283ff7d0))
+* update endpoint verify contract ([e099d7a](https://github.com/AstraProtocol/explorer-fe/commit/e099d7af3bfef4cfacad17c7c573cb02ae016a0a))
+* use ApiList constant insteadof hardcode ([a7eda38](https://github.com/AstraProtocol/explorer-fe/commit/a7eda387959d12a7bb8f0d31df158fad432bd09a))
+* use func isHex from web3-utils insteadof homemade ([2b5157a](https://github.com/AstraProtocol/explorer-fe/commit/2b5157aa6db5c02e50e57522b01e290aada74a0f))
+* verify contract endpoint ([4fa6b78](https://github.com/AstraProtocol/explorer-fe/commit/4fa6b782d03c3007b465d7e83d4485616db92e50))
+* verify contract with new API endpoint + UX ([900e986](https://github.com/AstraProtocol/explorer-fe/commit/900e986ecda058df6404b23936214e184501afdc))
+* wrong link when click address transfer internal ([7a1a7b8](https://github.com/AstraProtocol/explorer-fe/commit/7a1a7b80c4dd12fc387a4f5fbf8783ed5b4eb3c7))
+
+
+### Features
+
+* add Address Balance Tab ([4c72fc7](https://github.com/AstraProtocol/explorer-fe/commit/4c72fc7f93f3a0be7a7ead1af719c52663d1980c))
+
 # [1.1.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.0.1...v1.1.0) (2023-03-31)
 
 
