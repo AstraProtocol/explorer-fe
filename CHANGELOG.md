@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.0...v1.2.1) (2023-04-14)
+
+
+### Bug Fixes
+
+* hotfix bignumber with point non-decimal number ([d51427d](https://github.com/AstraProtocol/explorer-fe/commit/d51427d80d1a3232e4a663b8463bcc590f1a8194))
+
 # [1.2.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.1.0...v1.2.0) (2023-04-14)
 
 
