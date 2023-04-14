@@ -8,6 +8,8 @@ import qs from 'qs'
 import { CONFIG } from './constants'
 import { ErcTypeEnum } from './enum'
 
+BN.config({ ROUNDING_MODE: 2 })
+
 export const ellipseBetweenText = (
 	address: string,
 	left = CONFIG.TXS_MOBILE_SPLIT_LENGTH,
@@ -43,7 +45,8 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 	} catch (err) {
 		// bignumber (ethers) error with 500100000000.000000000000000000
 		// bignumber.js caught this. but ethers not
-		return returnValue(formatEther(BN(value).toString(10)))
+		// must convert value to decimal, sometimes round this value
+		return returnValue(formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10)))
 	}
 }
 
