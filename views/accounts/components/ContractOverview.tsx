@@ -28,7 +28,7 @@ const ContractOverview = ({ addressData, address }: Props) => {
 				</LinkText>
 			</div>
 			<div className={clsx(styles.borderBottom, 'row padding-bottom-sm padding-top-sm')}>
-				<span className="col-2 text text-base contrast-color-50">Creation Hash</span>
+				<span className="col-2 text text-base contrast-color-50">Create Tx Hash</span>
 				<LinkText classes="col-10" href={LinkMaker.transaction(addressData.creationTransaction)}>
 					{addressData.creationTransaction}
 				</LinkText>
