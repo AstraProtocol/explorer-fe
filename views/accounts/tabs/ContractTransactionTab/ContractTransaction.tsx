@@ -125,7 +125,7 @@ const ContractTransaction = ({ transaction }: Props) => {
 								<TypographyLib.Balance
 									icon={<span>Fee:</span>}
 									size="2xs"
-									value={convertBalanceToView(transaction.gasUsed)}
+									value={convertBalanceToView(+transaction.gasUsed * +transaction.gasPrice)}
 									fixNumber={7}
 									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()}
 									classes="contrast-color-70"
