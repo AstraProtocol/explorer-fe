@@ -107,7 +107,7 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 								<>
 									<TypographyLib.Balance
 										size="xs"
-										value={convertBalanceToView(transaction.amount, parseInt(transaction.decimals))}
+										value={convertBalanceToView(transaction.amount, transaction.decimals)}
 										currency={transaction.tokenSymbol}
 										icon={
 											<CryptoIcon

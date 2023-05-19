@@ -30,7 +30,7 @@ export default function useInternalTransactions({ hash }: { hash: string }) {
 				items.push({
 					blockNumber: Number(internalItem?.blockNumber),
 					updatedAt: Number(internalItem?.timeStamp) * 1000,
-					value: convertBalanceToView(internalItem?.value || '0').toString(),
+					value: convertBalanceToView(internalItem?.value || '0'),
 					valueToken: process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase() as CryptoIconNames,
 					// valueCurrency: internalItem.
 					hash: internalItem?.transactionHash,

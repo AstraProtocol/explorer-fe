@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { CardInfoLabels } from 'utils/enum'
-import { convertBalanceToView, sortArrayFollowValue } from 'utils/helper'
+import { convertBalanceToView, getAmountFromBignumber, sortArrayFollowValue } from 'utils/helper'
 import {
 	COSMOS_MESSAGE_SORT_FIELD,
 	EVM_MESSAGE_SORT_FIELD,
@@ -32,11 +32,11 @@ export default function useConvertData({
 		if (data.result !== 'Error') {
 			internalTokenTransfers = internalTransactionRows
 				// filter tx
-				.filter((t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0)
+				.filter((t: InternalTransactionItem) => t.callType === 'call' && getAmountFromBignumber(t.value) > 0)
 				// Reformat value
 				.map((t: InternalTransactionItem) => ({
 					...t,
-					value: convertBalanceToView(t.value).toString()
+					value: convertBalanceToView(t.value)
 				}))
 		}
 

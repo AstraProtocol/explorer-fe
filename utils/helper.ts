@@ -30,17 +30,21 @@ export const ellipseLeftText = (address: string, to: number) => {
 	return `${address.slice(-to)}...`
 }
 
-export const convertBalanceToView = (value: number | string, decimals = 18) => {
-	if (!value) return 0
-	if (!decimals) decimals = 1
+export const getAmountFromBignumber = (value: number | string, decimals: string = '18') => {
+	if (!value) return '0'
+
+	if (!decimals) decimals = '1'
+	const parsedDecimals = parseInt(decimals)
+
 	const returnValue = wei => {
 		if (parseFloat(wei) == 0) return 0
 		if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
 		return wei
 	}
+
 	try {
 		const big = BigNumber.from(value)
-		const valueInWei = formatUnits(big, decimals).valueOf()
+		const valueInWei = formatUnits(big, parsedDecimals).valueOf()
 		return returnValue(valueInWei)
 	} catch (err) {
 		// bignumber (ethers) error with 500100000000.000000000000000000
@@ -49,6 +53,15 @@ export const convertBalanceToView = (value: number | string, decimals = 18) => {
 		return returnValue(formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10)))
 	}
 }
+
+export const convertBalanceToView = (value: number | string, decimals = '18'): string => {
+	const amount = getAmountFromBignumber(value, decimals)
+	return numeral(amount).format('0,0.00000')
+}
+
+export const calculateGasFee = (gasUsed: string, gasPrice: string) => +gasUsed * +gasPrice
+export const calculateAmountInVND = (asaAmount: number, asaPrice: string) => asaAmount * +asaPrice
+
 
 /**
  * return format text of date

@@ -39,7 +39,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 	const isValidator = !isEmpty(validator)
 	const isContract = addressData.type === AddressTypeEnum.Contract
 
-	const astraPrice = astraSummary?.last || 0
+	const astraPrice = astraSummary?.last || '0'
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
 			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>

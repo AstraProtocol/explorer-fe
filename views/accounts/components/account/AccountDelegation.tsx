@@ -2,7 +2,7 @@ import { Table } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import { formatEther } from 'ethers/lib/utils'
 import { useMemo } from 'react'
-import { getAstraSummary, getValidatorSummary } from 'slices/commonSlice'
+import { getValidatorSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import useAccountDelegation from 'views/accounts/hook/useAccountDelegation'
 interface Props {
@@ -11,8 +11,6 @@ interface Props {
 }
 
 const AccountDelegation = ({ addressData, address }: Props) => {
-	const astraSummary = useAppSelector(getAstraSummary)
-	const astraPrice = astraSummary?.last || 0
 	const delegations = useAccountDelegation(address)
 	const validators = useAppSelector(getValidatorSummary)
 
