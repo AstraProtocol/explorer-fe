@@ -30,15 +30,14 @@ export default function useConvertData({
 		// Trigger internal tx have amount
 		let internalTokenTransfers = []
 		if (data.result !== 'Error') {
-			internalTransactionRows.filter(
-				(t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0
-			)
-
-			// Reformat value
-			internalTokenTransfers = internalTokenTransfers.map((t: InternalTransactionItem) => ({
-				...t,
-				value: convertBalanceToView(t.value).toString()
-			}))
+			internalTokenTransfers = internalTransactionRows
+				// filter tx
+				.filter((t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0)
+				// Reformat value
+				.map((t: InternalTransactionItem) => ({
+					...t,
+					value: convertBalanceToView(t.value).toString()
+				}))
 		}
 
 		const items = _cardData({ ...data, internalTokenTransfers }, astraPrice)
