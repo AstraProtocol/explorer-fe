@@ -1,7 +1,7 @@
 import { Col, Row } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
+import numeral from 'numeral'
 import useSWR from 'swr'
-import { convertBigNumberToString } from 'utils/helper'
 import BarChart from './components/BarChart'
 import ChartHeader from './components/Header'
 import LineChart from './components/LineChart'
@@ -30,7 +30,7 @@ export default function Gas() {
 					leftTitle="Average Gas Usage | Daily"
 					rightTitle={{
 						title: 'Daily Average',
-						value: convertBigNumberToString(gasDailyRes?.result?.dailyAverage)
+						value: numeral(gasDailyRes?.result?.dailyAverage).format('0,0')
 					}}
 					data={gasDailyData}
 					labels={gasDailyLabels}
@@ -45,7 +45,7 @@ export default function Gas() {
 					leftTitle="Average Gas Usage | Monthly"
 					rightTitle={{
 						title: 'Monthly Average',
-						value: convertBigNumberToString(gasMonthRes?.result?.monthlyAverage)
+						value: numeral(gasMonthRes?.result?.monthlyAverage).format('0,0')
 					}}
 					data={gasMonthlyData}
 					labels={gasMonthlyLabels}

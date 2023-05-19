@@ -1,4 +1,4 @@
-import { ellipseBetweenText } from '@astraprotocol/astra-ui'
+import { CryptoIcon, ellipseBetweenText } from '@astraprotocol/astra-ui'
 import CopyButton from 'components/Button/CopyButton'
 import Typography from 'components/Typography'
 import Image from 'next/image'
@@ -23,7 +23,10 @@ const ContractTransferInternal = ({ content }: { content: Content }) => {
 						height={8}
 					/>
 					<span className="margin-left-xs text text-sm contrast-color-70">
-						Transfer <span className="money money-sm">{t.value} ASA</span>
+						Transfer{' '}
+						<span className="money money-sm">
+							{t.value} <CryptoIcon size="sm" name={'asa'} />
+						</span>
 						{'  '}
 						From{'  '}
 						<Typography.LinkText href={LinkMaker.address(t.from || '')}>

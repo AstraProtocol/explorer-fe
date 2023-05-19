@@ -1,7 +1,6 @@
-import { formatUnits } from 'ethers/lib/utils'
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { ZERO_ADDRESS } from './constants'
-import { isERC721 } from './helper'
+import { convertBalanceToView } from './helper'
 
 export const evmTransactionType = (type: number): string => {
 	if (type === 2) {
@@ -27,8 +26,9 @@ export const evmConvertTokenTransferToTransactionRow = (
 		const isBurn = item.toAddress === ZERO_ADDRESS
 		const labelStatus = (isCreate && 'Create') || (isMint && 'Mint') || (isBurn && 'Burn')
 
-		const isNft = isERC721(item.tokenType)
-		const value = isNft ? '1' : formatUnits(item.amount || '0', item.decimals)
+		// const isNft = isERC721(item.tokenType)
+		// const value = isNft ? '1' : formatUnits(item.amount || '0', item.decimals)
+		const value = convertBalanceToView(item.amount, item.decimals)
 
 		rows.push({
 			style: 'inject',

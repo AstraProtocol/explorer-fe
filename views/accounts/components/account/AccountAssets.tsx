@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
-import { convertBalanceToView, formatCurrencyValue } from 'utils/helper'
+import { calculateAmountInVND, convertBalanceToView, formatCurrencyValue, getAmountFromBignumber } from 'utils/helper'
 
 Chart.defaults.font.family =
 	'Nunito, "Helvetica Neue", Arial, sans-serif,"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
@@ -22,16 +22,16 @@ interface Props {
 
 const AccountAssets = ({ addressData, address }: Props) => {
 	const astraSummary = useAppSelector(getAstraSummary)
-	const astraPrice = astraSummary?.last || 0
+	const astraPrice = astraSummary?.last || '0'
 	const [dataSet, setData] = useState([])
 
 	useEffect(() => {
 		const { balance, delegationBalance, totalRewards, unbondingBalance } = addressData
 		const newDataSet = [
-			convertBalanceToView(balance),
-			convertBalanceToView(delegationBalance),
-			convertBalanceToView(totalRewards),
-			convertBalanceToView(unbondingBalance)
+			getAmountFromBignumber(balance),
+			getAmountFromBignumber(delegationBalance),
+			getAmountFromBignumber(totalRewards),
+			getAmountFromBignumber(unbondingBalance)
 		]
 		setData(newDataSet)
 	}, [addressData])
@@ -142,7 +142,7 @@ const AccountAssets = ({ addressData, address }: Props) => {
 						<Typography.Balance
 							size="sm"
 							currency={`(${formatCurrencyValue(
-								Number(astraPrice) * parseFloat(convertBalanceToView(addressData.totalBalance)) || '0',
+								calculateAmountInVND(getAmountFromBignumber(addressData.totalBalance), astraPrice),
 								'VND'
 							)})`}
 							icon={

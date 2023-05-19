@@ -8,7 +8,13 @@ import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
-import { capitalizeFirstLetter, convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import {
+	calculateGasFee,
+	capitalizeFirstLetter,
+	convertBalanceToView,
+	ellipseBetweenText,
+	LinkMaker
+} from 'utils/helper'
 import { useTransactionType } from 'views/accounts/hook/useTransactionType'
 import styles from './style.module.scss'
 
@@ -125,7 +131,9 @@ const ContractTransaction = ({ transaction }: Props) => {
 								<TypographyLib.Balance
 									icon={<span>Fee:</span>}
 									size="2xs"
-									value={convertBalanceToView(+transaction.gasUsed * +transaction.gasPrice)}
+									value={convertBalanceToView(
+										calculateGasFee(transaction.gasUsed, transaction.gasPrice)
+									)}
 									fixNumber={7}
 									currency={process.env.NEXT_PUBLIC_NATIVE_TOKEN.toUpperCase()}
 									classes="contrast-color-70"

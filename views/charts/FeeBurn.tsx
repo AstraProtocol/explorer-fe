@@ -1,9 +1,8 @@
 import { Col, Row } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
 import { ethers } from 'ethers'
-import { isNumber } from 'lodash'
 import useSWR from 'swr'
-import { convertBigNumberToString } from 'utils/helper'
+import { convertBalanceToView, convertBigNumberToString } from 'utils/helper'
 import ChartHeader from './components/Header'
 import LineChart from './components/LineChart'
 
@@ -29,15 +28,7 @@ export default function FeeBurn() {
 					leftTitle="Total Fees Burned | Daily"
 					rightTitle={{
 						title: 'Daily Average',
-						value: parseFloat(
-							ethers.utils.formatEther(
-								`${
-									isNumber(feeDailyRes?.result?.dailyAverage)
-										? convertBigNumberToString((feeDailyRes?.result?.dailyAverage || 0) / 2)
-										: 0
-								}`
-							)
-						)
+						value: convertBalanceToView((feeDailyRes?.result?.dailyAverage || 0) / 2)
 					}}
 					data={feeDailyData}
 					labels={feeDailyLabels}

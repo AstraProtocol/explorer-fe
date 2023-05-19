@@ -35,7 +35,7 @@ type LineChartProps = {
 	unitName?: string
 	rightTitle: {
 		title: string
-		value: number
+		value: string
 	}
 }
 
@@ -131,7 +131,7 @@ const BarChart = ({ leftTitle, rightTitle, label, data, labels, unitName }: Line
 				</Col>
 				<Col className="flex-align-end" style={{ flex: 1 }}>
 					<span className=" text text-sm contrast-color-70">{rightTitle.title}</span>
-					<span className=" text text-xl">{numeral(rightTitle.value).format('0,0[.]000')} </span>
+					<span className=" text text-xl">{rightTitle.value} </span>
 				</Col>
 			</Row>
 			<Bar height={isMobile ? 190 : 100} options={options} data={cfg} />
