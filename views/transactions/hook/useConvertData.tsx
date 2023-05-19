@@ -32,7 +32,10 @@ export default function useConvertData({
 		if (data.result !== 'Error') {
 			internalTokenTransfers = internalTransactionRows
 				// filter tx
-				.filter((t: InternalTransactionItem) => t.callType === 'call' && getAmountFromBignumber(t.value) > 0)
+				.filter(
+					(t: InternalTransactionItem) =>
+						t.callType === 'call' && parseFloat(getAmountFromBignumber(t.value)) > 0
+				)
 				// Reformat value
 				.map((t: InternalTransactionItem) => ({
 					...t,

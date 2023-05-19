@@ -30,38 +30,38 @@ export const ellipseLeftText = (address: string, to: number) => {
 	return `${address.slice(-to)}...`
 }
 
-export const getValueFromWei = (wei: string) => {
-	if (parseFloat(wei) == 0) return 0
+export const formatValueFromWei = (wei: string): string => {
+	if (parseFloat(wei) == 0) return '0'
 	if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
 	return wei
 }
 
-export const getAmountFromBignumber = (value: number | string, decimals: string = '18') => {
+export const getAmountFromBignumber = (value: number | string, decimals: string = '18'): string => {
 	if (!value) return '0'
 
-	if (!decimals) decimals = '1'
+	if (!decimals) decimals = '0'
 	const parsedDecimals = parseInt(decimals)
 
 	try {
 		const big = BigNumber.from(value)
 		const valueInWei = formatUnits(big, parsedDecimals).valueOf()
-		return getValueFromWei(valueInWei)
+		return valueInWei
 	} catch (err) {
 		// bignumber (ethers) error with 500100000000.000000000000000000
 		// bignumber.js caught this. but ethers not
 		// must convert value to decimal, sometimes round this value
-		return getValueFromWei(formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10)))
+		return formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10))
 	}
 }
 
 export const convertBalanceToView = (value: number | string, decimals = '18'): string => {
-	const amount = getAmountFromBignumber(value, decimals)
-	return numeral(amount).format('0,0.00000')
+	const amount = formatValueFromWei(getAmountFromBignumber(value, decimals))
+	return isInt(amount) ? numeral(amount).format('0,0') : numeral(amount).format('0,0.00000')
 }
 
-export const calculateGasFee = (gasUsed: string, gasPrice: string) => +gasUsed * +gasPrice
-export const calculateAmountInVND = (asaAmount: number, asaPrice: string) => asaAmount * +asaPrice
-
+export const calculateGasFee = (gasUsed: string, gasPrice: string): number => +gasUsed * +gasPrice
+export const calculateAmountInVND = (asaAmount: number, asaPrice: string): number => asaAmount * +asaPrice
+export const isInt = n => n % 1 === 0
 
 /**
  * return format text of date
@@ -197,9 +197,7 @@ export const capitalizeFirstLetter = (text: string) => {
 	return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-export const isERC721 = (type: string): boolean => {
-	return type === ErcTypeEnum.ERC721
-}
+export const isERC721 = (type: string): boolean => type === ErcTypeEnum.ERC721
 
 export const getTransactionInOrOut = (
 	address: string = '',

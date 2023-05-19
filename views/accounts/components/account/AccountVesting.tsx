@@ -26,7 +26,7 @@ const VestingView = ({
 			<TypographyUI.Balance
 				size="sm"
 				currency={`(${formatCurrencyValue(
-					calculateAmountInVND(getAmountFromBignumber(value), astraPrice),
+					calculateAmountInVND(parseFloat(getAmountFromBignumber(value)), astraPrice),
 					'VND'
 				)})`}
 				icon={<CryptoIcon name={process.env.NEXT_PUBLIC_NATIVE_TOKEN as CryptoIconNames} size="sm" />}
