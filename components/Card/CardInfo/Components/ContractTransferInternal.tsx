@@ -25,7 +25,7 @@ const ContractTransferInternal = ({ content }: { content: Content }) => {
 					<span className="margin-left-xs text text-sm contrast-color-70">
 						Transfer{' '}
 						<span className="money money-sm">
-							{t.value} <CryptoIcon size="sm" name={'asa'} />
+							{t.value} <CryptoIcon size="xs" name={'asa'} />
 						</span>
 						{'  '}
 						From{'  '}
