@@ -30,27 +30,27 @@ export const ellipseLeftText = (address: string, to: number) => {
 	return `${address.slice(-to)}...`
 }
 
+export const getValueFromWei = (wei: string) => {
+	if (parseFloat(wei) == 0) return 0
+	if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
+	return wei
+}
+
 export const getAmountFromBignumber = (value: number | string, decimals: string = '18') => {
 	if (!value) return '0'
 
 	if (!decimals) decimals = '1'
 	const parsedDecimals = parseInt(decimals)
 
-	const returnValue = wei => {
-		if (parseFloat(wei) == 0) return 0
-		if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
-		return wei
-	}
-
 	try {
 		const big = BigNumber.from(value)
 		const valueInWei = formatUnits(big, parsedDecimals).valueOf()
-		return returnValue(valueInWei)
+		return getValueFromWei(valueInWei)
 	} catch (err) {
 		// bignumber (ethers) error with 500100000000.000000000000000000
 		// bignumber.js caught this. but ethers not
 		// must convert value to decimal, sometimes round this value
-		return returnValue(formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10)))
+		return getValueFromWei(formatEther(BN(value).integerValue(BN.ROUND_DOWN).toString(10)))
 	}
 }
 
