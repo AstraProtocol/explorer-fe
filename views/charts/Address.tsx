@@ -1,5 +1,6 @@
 import { Col, Row } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
+import numeral from 'numeral'
 import useSWR from 'swr'
 import AreaChart from './components/AreaChart'
 import ChartHeader from './components/Header'
@@ -33,7 +34,10 @@ export default function Address() {
 			<Row className="md-flex-column">
 				<LineChart
 					leftTitle="Active Addresses | Daily"
-					rightTitle={{ title: 'Daily Average', value: activeAddressRes?.result?.dailyAverage }}
+					rightTitle={{
+						title: 'Daily Average',
+						value: numeral(activeAddressRes?.result?.dailyAverage).format('0,0')
+					}}
 					data={activeAddressdata}
 					labels={activeAddressLabels}
 					label="Addresses"
@@ -41,7 +45,10 @@ export default function Address() {
 				<div style={{ width: '10px', height: '10px' }}></div>
 				<AreaChart
 					leftTitle="Total Addresses Growth | Daily"
-					rightTitle={{ title: 'Total Addresses', value: addressGrowthRes?.result?.totalAddresses }}
+					rightTitle={{
+						title: 'Total Addresses',
+						value: numeral(addressGrowthRes?.result?.totalAddresses).format('0,0')
+					}}
 					line1Data={notActiveAddressData}
 					line2Data={activeAddressData}
 					labels={labels}

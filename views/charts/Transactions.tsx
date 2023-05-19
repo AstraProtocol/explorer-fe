@@ -1,5 +1,6 @@
 import { Col } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
+import numeral from 'numeral'
 import useSWR from 'swr'
 import ChartHeader from './components/Header'
 import LineChart from './components/LineChart'
@@ -20,7 +21,7 @@ export default function Transactions() {
 			<LineChart
 				leftTitle="Transactions | Daily"
 				label="Transactions"
-				rightTitle={{ title: 'Daily Average', value: res?.result?.dailyAverage }}
+				rightTitle={{ title: 'Daily Average', value: numeral(res?.result?.dailyAverage).format('0,0') }}
 				data={data}
 				labels={labels}
 			/>

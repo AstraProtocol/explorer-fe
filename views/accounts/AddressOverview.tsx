@@ -5,7 +5,6 @@ import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
-import { utils } from 'ethers'
 import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import { useState } from 'react'
@@ -13,7 +12,13 @@ import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { AddressTypeEnum } from 'utils/enum'
 
-import { convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
+import {
+	calculateAmountInVND,
+	convertBalanceToView,
+	formatCurrencyValue,
+	getAmountFromBignumber,
+	LinkMaker
+} from 'utils/helper'
 import AccountOverview from './components/account/AccountOverview'
 import ContractOverview from './components/ContractOverview'
 import ValidatorOverview from './components/ValidatorOverview'
@@ -99,7 +104,7 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 						currency={
 							astraSummary && addressData.balance
 								? `(${formatCurrencyValue(
-										Number(astraPrice) * parseFloat(utils.formatEther(addressData.balance)),
+										calculateAmountInVND(getAmountFromBignumber(addressData.balance), astraPrice),
 										'VND'
 								  )})`
 								: ''

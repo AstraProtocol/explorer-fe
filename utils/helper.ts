@@ -59,8 +59,9 @@ export const convertBalanceToView = (value: number | string, decimals = '18'): s
 	return isInt(amount) ? numeral(amount).format('0,0') : numeral(amount).format('0,0.00000')
 }
 
-export const calculateGasFee = (gasUsed: string, gasPrice: string): number => +gasUsed * +gasPrice
-export const calculateAmountInVND = (asaAmount: number, asaPrice: string): number => asaAmount * +asaPrice
+export const calculateGasFee = (gasUsed: string, gasPrice: string): number => parseFloat(gasUsed) * parseFloat(gasPrice)
+export const calculateAmountInVND = (asaAmount: string, asaPrice: string): number =>
+	parseFloat(asaAmount) * parseFloat(asaPrice)
 export const isInt = n => n % 1 === 0
 
 /**
