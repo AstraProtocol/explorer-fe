@@ -44,7 +44,7 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 							tokenData.totalSupply
 								? isNFT
 									? tokenData.totalSupply
-									: convertBalanceToView(tokenData.totalSupply, parseInt(tokenData.decimals || '1'))
+									: convertBalanceToView(tokenData.totalSupply, tokenData.decimals || '1')
 								: ''
 						}
 						fixNumber={5}
