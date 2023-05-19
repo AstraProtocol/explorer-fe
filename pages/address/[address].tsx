@@ -8,7 +8,7 @@ import Container from 'components/Container'
 import React from 'react'
 import { getValidatorSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
-import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, isMainnet, LinkMaker } from 'utils/helper'
 import AddressDetailTabs from 'views/accounts/AddressDetailTabs'
 import AddressOverview from 'views/accounts/AddressOverview'
 import web3 from 'web3'
@@ -26,7 +26,6 @@ const AddressDetailPage: React.FC<Props> = props => {
 
 	const validatorSummary = useAppSelector(getValidatorSummary)
 
-	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const validator = validatorSummary.find(
 		(v: ValidatorData) => astraToEth(v.initialDelegatorAddress).toLowerCase() === address.toLowerCase()
 	)

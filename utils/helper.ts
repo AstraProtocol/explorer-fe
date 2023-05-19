@@ -235,3 +235,5 @@ export function convertBigNumberToString(x: any) {
 	}
 	return isEmpty(x.toString()) ? '0' : x.toString()
 }
+
+export const isMainnet = process.env.NEXT_PUBLIC_ENV === 'mainnet'
