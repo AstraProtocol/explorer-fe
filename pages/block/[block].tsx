@@ -11,7 +11,7 @@ import Tabs from 'components/Tabs/Tabs'
 import React from 'react'
 import { getStakingValidatorByHex } from 'utils/address'
 import { CardInfoLabels, TransactionCardTypeEnum } from 'utils/enum'
-import { LinkMaker, sortArrayFollowValue } from 'utils/helper'
+import { isMainnet, LinkMaker, sortArrayFollowValue } from 'utils/helper'
 import BlockTransactionTab from 'views/block/tabs/BlockTransactionTab'
 import Layout from '../../components/Layout'
 
@@ -23,7 +23,6 @@ type Props = {
 }
 
 const BlockDetailPage: React.FC<Props> = ({ errorMessage, blockDetail, blockHeight, transactions }: Props) => {
-	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 	const _convertRawDataToCardData = data => {
 		const keys = Object.keys(data)
 		let items: CardRowItem[] = []

@@ -10,7 +10,7 @@ import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import React from 'react'
 import { TransactionTypeEnum } from 'utils/enum'
-import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { ellipseBetweenText, isMainnet, LinkMaker } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
 import useConvertData from 'views/transactions/hook/useConvertData'
 import useInternalTransactions from 'views/transactions/hook/useInternalTransactions'
@@ -28,12 +28,12 @@ type Props = {
 const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, cosmosHash }: Props) => {
 	const hash = evmHash || cosmosHash
 	const { isMobile } = useMobileLayout('small')
+	// Recheck here
 	const { raw: internalTransactionRows, loading: internalLoading } = useInternalTransactions({
 		hash: data?.isInteractWithContract ? hash : null
 	})
 	const cards = useConvertData({ data, internalTransactionRows, internalLoading })
 	const isEvm = data && !!data.evmHash
-	const isMainnet = window?.location?.hostname?.includes('.astranaut.io')
 
 	return (
 		<Layout>

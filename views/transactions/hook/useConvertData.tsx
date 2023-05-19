@@ -28,15 +28,18 @@ export default function useConvertData({
 	const _convertRawDataToCardData = useCallback(() => {
 		if (!data) return [[], []]
 		// Trigger internal tx have amount
-		let internalTokenTransfers = internalTransactionRows.filter(
-			(t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0
-		)
+		let internalTokenTransfers = []
+		if (data.result !== 'Error') {
+			internalTransactionRows.filter(
+				(t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0
+			)
 
-		// Reformat value
-		internalTokenTransfers = internalTokenTransfers.map((t: InternalTransactionItem) => ({
-			...t,
-			value: convertBalanceToView(t.value).toString()
-		}))
+			// Reformat value
+			internalTokenTransfers = internalTokenTransfers.map((t: InternalTransactionItem) => ({
+				...t,
+				value: convertBalanceToView(t.value).toString()
+			}))
+		}
 
 		const items = _cardData({ ...data, internalTokenTransfers }, astraPrice)
 		const cosmosCards = []
