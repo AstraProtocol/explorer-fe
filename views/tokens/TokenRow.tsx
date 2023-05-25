@@ -1,7 +1,7 @@
-import { ellipseBetweenText, formatNumber } from '@astraprotocol/astra-ui'
+import { ellipseBetweenText } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Typography from 'components/Typography'
-import { convertBalanceToView, ellipseRightText, getEnvNumber, isERC721, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseRightText, isERC721, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 type Props = {
@@ -46,12 +46,7 @@ export default function TokenRow({ index, token }: Props) {
 
 			<div className={clsx(styles.borderLeft, styles.colTotalSupply, 'col padding-left-lg col-3')}>
 				<span className={clsx('money money-sm money-bold padding-right-xs')}>
-					{isNFT
-						? 1
-						: formatNumber(
-								convertBalanceToView(token.totalSupply, parseInt(token.decimals || '1')),
-								getEnvNumber('NEXT_PUBLIC_MAXIMUM_FRACTION_DIGITS')
-						  )}
+					{convertBalanceToView(token.totalSupply, token.decimals)}
 				</span>
 				<span className={clsx(styles.currency, 'money money-sm money-bold')}>{token.symbol}</span>
 			</div>

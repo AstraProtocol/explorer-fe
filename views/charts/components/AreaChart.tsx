@@ -37,7 +37,7 @@ type LineChartProps = {
 	line2Label: string
 	rightTitle: {
 		title: string
-		value: number
+		value: string
 	}
 }
 
@@ -161,7 +161,7 @@ const AreaChart = ({ leftTitle, rightTitle, labels, line1Data, line2Data, line1L
 				</Col>
 				<Col className="flex-align-end" style={{ flex: 1 }}>
 					<span className=" text text-sm contrast-color-70">{rightTitle.title}</span>
-					<span className=" text text-xl">{numeral(rightTitle.value).format('0,0[.]000')} </span>
+					<span className=" text text-xl">{rightTitle.value} </span>
 				</Col>
 			</Row>
 			<Line height={isMobile ? 190 : 100} options={options} data={data} />

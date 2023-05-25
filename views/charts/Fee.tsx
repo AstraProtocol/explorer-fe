@@ -1,9 +1,8 @@
 import { Col, Row } from '@astraprotocol/astra-ui'
 import API_LIST from 'api/api_list'
-import { BigNumber, ethers } from 'ethers'
-import { isNumber } from 'lodash'
+import { ethers } from 'ethers'
 import useSWR from 'swr'
-import { convertBigNumberToString } from 'utils/helper'
+import { convertBalanceToView, convertBigNumberToString } from 'utils/helper'
 import BarChart from './components/BarChart'
 import ChartHeader from './components/Header'
 import LineChart from './components/LineChart'
@@ -35,15 +34,7 @@ export default function Fee() {
 					leftTitle="Total Transaction Fees | Daily"
 					rightTitle={{
 						title: 'Daily Average',
-						value: parseFloat(
-							ethers.utils.formatEther(
-								`${
-									isNumber(feeDailyRes?.result?.dailyAverage)
-										? convertBigNumberToString(feeDailyRes?.result?.dailyAverage)
-										: 0
-								}`
-							)
-						)
+						value: convertBalanceToView(feeDailyRes?.result?.dailyAverage)
 					}}
 					data={feeDailyData}
 					labels={feeDailyLabels}
@@ -55,15 +46,7 @@ export default function Fee() {
 					leftTitle="Total Transaction Fees | Monthly"
 					rightTitle={{
 						title: 'Monthly Average',
-						value: parseFloat(
-							ethers.utils.formatEther(
-								BigNumber.from(
-									feeMonthRes?.result?.monthlyAverage
-										? convertBigNumberToString(feeMonthRes?.result?.monthlyAverage)
-										: 0
-								)
-							)
-						)
+						value: convertBalanceToView(feeMonthRes?.result?.monthlyAverage)
 					}}
 					data={feeMonthData}
 					labels={feeMonthlyLabels}

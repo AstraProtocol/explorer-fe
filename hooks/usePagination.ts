@@ -1,6 +1,7 @@
 import { pickBy } from 'lodash'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { LIMIT_PER_PAGE } from 'utils/constants'
 import { convertURLQueryToObject } from 'utils/helper'
 
 type CustomRouter = {
@@ -18,7 +19,7 @@ export default function usePagination(rootPath: string) {
 	const [_pagination, _setPagination] = useState<CustomRouter>({
 		page: Number(query?.page) || 1,
 		total: Number(query?.total) || 0,
-		limit: 20,
+		limit: LIMIT_PER_PAGE,
 		pagination: 'offset',
 		order: 'height.desc'
 	})

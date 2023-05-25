@@ -2,12 +2,11 @@ import { astraToEth } from '@astradefi/address-converter'
 import { ellipseBetweenText, formatNumber, IconEnum } from '@astraprotocol/astra-ui'
 import { CardRowItem } from 'components/Card/CardInfo'
 import { LabelTypes } from 'components/Typography/Label'
-import { formatUnits } from 'ethers/lib/utils'
 import { isArray, isBoolean, isEmpty, isNumber, isObject, isString } from 'lodash'
 import { CONFIG } from 'utils/constants'
 import { CardInfoLabels, TransactionCardTypeEnum } from 'utils/enum'
 import { evmAddressName } from 'utils/evm'
-import { formatCurrencyValue, LinkMaker } from 'utils/helper'
+import { calculateAmountInVND, convertBalanceToView, formatCurrencyValue, LinkMaker } from 'utils/helper'
 
 export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 	const keys = Object.keys(data)
@@ -161,7 +160,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 			case 'amount':
 			case 'totalAmount':
 				if (data[key] !== undefined && data[key] !== null) {
-					let money = Number(astraPrice) * parseFloat(data[key])
+					let money = calculateAmountInVND(data[key], astraPrice)
 					let moneyFormat = formatCurrencyValue(money)
 					items.push({
 						label: CardInfoLabels[key],
@@ -172,7 +171,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				break
 			case 'fee':
 				if (data[key] !== undefined && data[key] !== null) {
-					let money = Number(astraPrice) * parseFloat(data[key])
+					let money = calculateAmountInVND(data[key], astraPrice)
 					let moneyFormat = formatCurrencyValue(money)
 					const value = Number(data[key]) < CONFIG.APPROXIMATE_ZERO ? 0 : data[key]
 					items.push({
@@ -200,9 +199,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 									transfer.toAddressName,
 									ellipseBetweenText(transfer.toAddress, 6, 6)
 								),
-								value: transfer.amount
-									? Number(formatUnits(transfer.amount, transfer.decimals || '1'))
-									: '',
+								value: transfer.amount ? convertBalanceToView(transfer.amount, transfer.decimals) : '',
 								tokenAddress: transfer.tokenContractAddress,
 								tokenSymbol: transfer.tokenSymbol,
 								tokenName: transfer.tokenName,
@@ -327,7 +324,7 @@ export const _cardData = (data: TransactionDetail, astraPrice: string) => {
 				break
 			case 'initialDepositValue':
 				if (data[key] !== undefined && data[key] !== null) {
-					let money = Number(astraPrice) * parseFloat(data[key])
+					let money = calculateAmountInVND(data[key], astraPrice)
 					let moneyFormat = formatCurrencyValue(money)
 					items.push({
 						label: CardInfoLabels[key],

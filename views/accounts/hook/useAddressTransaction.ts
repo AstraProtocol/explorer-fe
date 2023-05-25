@@ -5,6 +5,7 @@ import useDelayUntilDone from 'hooks/useDelayUntilDone'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import { LIMIT_PER_PAGE } from 'utils/constants'
 import { getTransactionType } from 'utils/cosmos'
 import { isEvmTransactionType } from 'utils/evm'
 import { caculateCosmosTxAmount, caculateEthereumTxAmount, getEvmTxhash } from 'views/transactions/utils'
@@ -22,7 +23,7 @@ export default function useAddressTransactions(address: string, page: number) {
 				pagination: 'offset',
 				order: 'height.desc',
 				page,
-				limit: 20
+				limit: LIMIT_PER_PAGE
 			}
 		]
 	}

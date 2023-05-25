@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { getAstraSummary } from 'slices/commonSlice'
 import { useAppSelector } from 'store/hooks'
 import { CardInfoLabels } from 'utils/enum'
-import { convertBalanceToView, sortArrayFollowValue } from 'utils/helper'
+import { convertBalanceToView, getAmountFromBignumber, sortArrayFollowValue } from 'utils/helper'
 import {
 	COSMOS_MESSAGE_SORT_FIELD,
 	EVM_MESSAGE_SORT_FIELD,
@@ -28,15 +28,20 @@ export default function useConvertData({
 	const _convertRawDataToCardData = useCallback(() => {
 		if (!data) return [[], []]
 		// Trigger internal tx have amount
-		let internalTokenTransfers = internalTransactionRows.filter(
-			(t: InternalTransactionItem) => t.callType === 'call' && convertBalanceToView(t.value) > 0
-		)
-
-		// Reformat value
-		internalTokenTransfers = internalTokenTransfers.map((t: InternalTransactionItem) => ({
-			...t,
-			value: convertBalanceToView(t.value).toString()
-		}))
+		let internalTokenTransfers = []
+		if (data.result !== 'Error') {
+			internalTokenTransfers = internalTransactionRows
+				// filter tx
+				.filter(
+					(t: InternalTransactionItem) =>
+						t.callType === 'call' && parseFloat(getAmountFromBignumber(t.value)) > 0
+				)
+				// Reformat value
+				.map((t: InternalTransactionItem) => ({
+					...t,
+					value: convertBalanceToView(t.value)
+				}))
+		}
 
 		const items = _cardData({ ...data, internalTokenTransfers }, astraPrice)
 		const cosmosCards = []
