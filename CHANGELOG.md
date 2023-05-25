@@ -1,3 +1,18 @@
+## [1.2.2](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.1...v1.2.2) (2023-05-25)
+
+
+### Bug Fixes
+
+* bug missing return value filter ([ae5649b](https://github.com/AstraProtocol/explorer-fe/commit/ae5649bd19c28ccd11cedf98d48117d6456b4448))
+* convert BalancetoView format + write test ([5142c26](https://github.com/AstraProtocol/explorer-fe/commit/5142c26facf41e7a0e1756044c15ca726628dd06))
+* display AstraIcon instead of ASA text in internal transfer call ([668eb69](https://github.com/AstraProtocol/explorer-fe/commit/668eb6902a387b209c0e63907174a11198d287e7))
+* hide internal transfer call when tx was failed ([164e8ed](https://github.com/AstraProtocol/explorer-fe/commit/164e8edda8ff6d75db8106275089d2cd98330c39))
+* update astra-ui package ([7960f22](https://github.com/AstraProtocol/explorer-fe/commit/7960f227a0cec6217cea705d9153081f1de73241))
+* update fn ([d45137c](https://github.com/AstraProtocol/explorer-fe/commit/d45137c209ca18c960f044735bccb92019c71153))
+* update limit per page in pagination to 10 ([c05f95c](https://github.com/AstraProtocol/explorer-fe/commit/c05f95cee8e2df2c93f6e82c0ddb16cd42a05262))
+* update text ([5742655](https://github.com/AstraProtocol/explorer-fe/commit/5742655976ddc7299512a9f30008cc43f21342d7))
+* wrong calculate tx fee in Contract tx list ([52d120c](https://github.com/AstraProtocol/explorer-fe/commit/52d120cc95112b1cd2af612608f6c27d4c9af2e7))
+
 ## [1.2.1](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.0...v1.2.1) (2023-04-14)
 
 
