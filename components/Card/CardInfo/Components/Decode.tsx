@@ -72,23 +72,29 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 							let valueTitle = values
 							// array params
 							if (isString(values) && (values as string).includes('[')) {
-								const data: string[] = JSON.parse(values)
-								valueTitle = (
-									<span>
-										[<br />{' '}
-										{data.map((val, index) => (
-											<span key={val + index} className="padding-left-xs">
-												{val}
-												{index < values.length ? (
-													<>
-														, <br />{' '}
-													</>
-												) : null}
-											</span>
-										))}
-										]
-									</span>
-								)
+								try {
+									const data: string[] = JSON.parse('{}')
+									valueTitle = (
+										<span>
+											[<br />{' '}
+											{data.map((val, index) => (
+												<span key={val + index} className="padding-left-xs">
+													{val}
+													{index < values.length ? (
+														<>
+															, <br />{' '}
+														</>
+													) : null}
+												</span>
+											))}
+											]
+										</span>
+									)
+								} catch (err) {
+									// If data is not JSON data, display raw data
+									valueTitle = values
+								}
+								
 							}
 							return (
 								<CopyButton
