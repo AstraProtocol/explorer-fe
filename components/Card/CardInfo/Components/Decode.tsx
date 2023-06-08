@@ -73,7 +73,7 @@ export default function Decode({ methodId, call, items }: DecodeProps) {
 							// array params
 							if (isString(values) && (values as string).includes('[')) {
 								try {
-									const data: string[] = JSON.parse('{}')
+									const data: string[] = JSON.parse(values)
 									valueTitle = (
 										<span>
 											[<br />{' '}
