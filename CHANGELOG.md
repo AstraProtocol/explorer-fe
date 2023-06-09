@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.2...v1.2.3) (2023-06-09)
+
+
+### Bug Fixes
+
+* decode non json contract data ([6c0e3d2](https://github.com/AstraProtocol/explorer-fe/commit/6c0e3d2c7815369b15767090f0a362fd15139737))
+* remove example code ([72b0d0c](https://github.com/AstraProtocol/explorer-fe/commit/72b0d0c8d5b3c816195497f50de81f5ceac5a9a0))
+
 ## [1.2.2](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.1...v1.2.2) (2023-05-25)
 
 
