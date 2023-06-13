@@ -84,8 +84,8 @@ const AddressTokenTab = ({ address, addressData }: Props) => {
 				>
 					<div className={clsx('col-2 margin-right-xs', styles.colSymbol)}>Assets</div>
 					<div className={clsx('col-1 margin-right-xs', styles.colType)}>Type</div>
-					<div className={clsx('col-3 margin-right-xs', styles.colAmount)}>Amount</div>
-					<div className={clsx('col-1 margin-right-xs', styles.colSymbol)}>Symbol</div>
+					<div className={clsx('col-2 margin-right-xs', styles.colAmount)}>Amount</div>
+					<div className={clsx('col-2 margin-right-xs', styles.colSymbol)}>Symbol</div>
 					<div className={clsx('col-1', styles.colPrice)}>Price</div>
 					<div className={clsx('col-1', styles.colValue)}>Value</div>
 					<div className={clsx('col-3', styles.colAddress)}>Contract Address</div>
