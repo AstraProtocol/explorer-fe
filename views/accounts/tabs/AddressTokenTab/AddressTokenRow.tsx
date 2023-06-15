@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
-import { convertBalanceToView, ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { convertBalanceToView, ellipseBetweenText, isERC721, LinkMaker } from 'utils/helper'
 import styles from './style.module.scss'
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const AddressTokenRow = ({ data }: Props) => {
+	const isNFT = isERC721(data.type)
 	return (
 		<Row
 			classes={clsx(
@@ -21,10 +22,10 @@ const AddressTokenRow = ({ data }: Props) => {
 			<div className={clsx('col-1 margin-right-xs', styles.colType)}>
 				<span>{data.type}</span>
 			</div>
-			<div className={clsx('col-3 margin-right-xs', styles.colAmount)}>
-				<span>{convertBalanceToView(data.balance)}</span>
+			<div className={clsx('col-2 margin-right-xs', styles.colAmount)}>
+				<span>{isNFT ? data.balance : convertBalanceToView(data.balance)}</span>
 			</div>
-			<div className={clsx('col-1 margin-right-xs', styles.colSymbol)}>
+			<div className={clsx('col-2 margin-right-xs', styles.colSymbol)}>
 				<span>{data.symbol}</span>
 			</div>
 			<div className={clsx('col-1', styles.colPrice)}>
