@@ -1,6 +1,6 @@
 {
 	"name": "explorer-fe",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"description": "Explorer for inspecting and analyzing EVM & Cosmos based blockchains",
 	"scripts": {
 		"dev": "next",

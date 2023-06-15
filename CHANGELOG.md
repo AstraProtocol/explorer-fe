@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.3...v1.2.4) (2023-06-15)
+
+
+### Bug Fixes
+
+* display nfttoken amount in address detail ([d76cb5f](https://github.com/AstraProtocol/explorer-fe/commit/d76cb5fc1d6c5d6556fd812a26d9904c496569d2))
+
 ## [1.2.3](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.2...v1.2.3) (2023-06-09)
 
 
