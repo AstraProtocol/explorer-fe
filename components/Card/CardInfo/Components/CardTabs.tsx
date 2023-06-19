@@ -1,4 +1,4 @@
-import { Card, Table } from '@astraprotocol/astra-ui'
+import { Card, Table, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Tabs from 'components/Tabs/Tabs'
 import { isObject, isString } from 'lodash'
@@ -10,6 +10,7 @@ type CardTabsProps = {
 }
 
 export default function CardTabs({ tabTitles, tabContent }: CardTabsProps) {
+	const { isMobile } = useMobileLayout()
 	const _title = tabTitles
 		? tabTitles.map(title => ({ title: title, id: title, padding: ' ' }))
 		: [{ title: '', id: '', padding: ' ' }]
@@ -98,7 +99,7 @@ export default function CardTabs({ tabTitles, tabContent }: CardTabsProps) {
 				_content[tabTitles[idx]] = (
 					<span
 						className={clsx(styles.rawInput, 'text text-sm contrast-color-70 padding-sm word-break-all')}
-						style={{ display: 'block', minWidth: 500 }}
+						style={{ display: 'block', minWidth: isMobile ? 300 : 500 }}
 					>
 						{rows}
 					</span>
