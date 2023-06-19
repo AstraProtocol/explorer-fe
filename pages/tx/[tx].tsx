@@ -110,6 +110,7 @@ export async function getServerSideProps({ query }) {
 			cosmosHash = tx
 			const cosmosDetailRes = await cosmosApi.get<TransactionDetailResponse>(`${API_LIST.TRANSACTIONS}/${tx}`)
 			let _data = cosmosDetailRes?.data?.result
+
 			if (_data) {
 				const type = _data?.messages[0]?.type
 				if (type === TransactionTypeEnum.Ethermint) {
@@ -129,7 +130,7 @@ export async function getServerSideProps({ query }) {
 		}
 	} catch (e: any) {
 		Sentry.captureException(e)
-		let errorMessage = e.message
+		errorMessage = e.message
 		if (e instanceof AxiosError) {
 			if (e.code !== '200') errorMessage = '404 Not Found'
 		}
