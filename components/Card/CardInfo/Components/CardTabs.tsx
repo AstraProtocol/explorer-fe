@@ -1,4 +1,4 @@
-import { Card, Table } from '@astraprotocol/astra-ui'
+import { Card, Table, useMobileLayout } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
 import Tabs from 'components/Tabs/Tabs'
 import { isObject, isString } from 'lodash'
@@ -10,7 +10,10 @@ type CardTabsProps = {
 }
 
 export default function CardTabs({ tabTitles, tabContent }: CardTabsProps) {
-	const _title = tabTitles.map(title => ({ title: title, id: title, padding: ' ' }))
+	const { isMobile } = useMobileLayout()
+	const _title = tabTitles
+		? tabTitles.map(title => ({ title: title, id: title, padding: ' ' }))
+		: [{ title: '', id: '', padding: ' ' }]
 	const _content = {}
 	// console.log({ tabContent, tabTitles })
 
@@ -32,74 +35,77 @@ export default function CardTabs({ tabTitles, tabContent }: CardTabsProps) {
 		return <Table classes={{ table: styles.tableTD }} id="param" colums={titleEl} rows={rows} />
 	}
 
-	tabContent.map((content, idx) => {
-		if (isString(content)) {
-			// only string
-			_content[tabTitles[idx]] = (
-				<span
-					className={clsx(styles.rawInput, 'text text-sm contrast-color-70 padding-sm word-break-all')}
-					style={{ display: 'block' }}
-				>
-					{content}
-				</span>
-			)
-		} else if (isObject(content) && content['tableTitles']) {
-			// table
-			_content[tabTitles[idx]] = _renderTable(content['tableTitles'], content['tableContents'])
-		} else if (isObject(content) && content['tabTitles']) {
-			// table
-			_content[tabTitles[idx]] = <CardTabs tabTitles={content['tabTitles']} tabContent={content['tabContent']} />
-		} else {
-			// row
-			const keys = Object.keys(content)
-			const rows: JSX.Element[] = []
-			for (let key of keys) {
-				if (isString(content[key])) {
-					rows.push(
-						<Card.Row
-							left={{ content: key, wapperClasses: styles.left }}
-							right={{ content: content[key], align: 'left' }}
-						/>
-					)
-				} else if (isObject(content[key]) && content[key]['tableTitles']) {
-					// table
-					rows.push(
-						<Card.Row
-							left={{ content: key, wapperClasses: styles.left }}
-							right={{
-								content: _renderTable(content[key]['tableTitles'], content[key]['tableContents']),
-								align: 'left'
-							}}
-						/>
-					)
-				} else if (isObject(content[key]) && content[key]['tabTitles']) {
-					// table
-					rows.push(
-						<Card.Row
-							left={{ content: key, wapperClasses: styles.left }}
-							right={{
-								content: (
-									<CardTabs
-										tabTitles={content[key]['tabTitles']}
-										tabContent={content[key]['tabContent']}
-									/>
-								),
-								align: 'left'
-							}}
-						/>
-					)
+	tabContent &&
+		tabContent.forEach((content, idx) => {
+			if (isString(content)) {
+				// only string
+				_content[tabTitles[idx]] = (
+					<span
+						className={clsx(styles.rawInput, 'text text-sm contrast-color-70 padding-sm word-break-all')}
+						style={{ display: 'block' }}
+					>
+						{content}
+					</span>
+				)
+			} else if (isObject(content) && content['tableTitles']) {
+				// table
+				_content[tabTitles[idx]] = _renderTable(content['tableTitles'], content['tableContents'])
+			} else if (isObject(content) && content['tabTitles']) {
+				// table
+				_content[tabTitles[idx]] = (
+					<CardTabs tabTitles={content['tabTitles']} tabContent={content['tabContent']} />
+				)
+			} else {
+				// row
+				const keys = Object.keys(content)
+				const rows: JSX.Element[] = []
+				for (let key of keys) {
+					if (isString(content[key])) {
+						rows.push(
+							<Card.Row
+								left={{ content: key, wapperClasses: styles.left }}
+								right={{ content: content[key], align: 'left' }}
+							/>
+						)
+					} else if (isObject(content[key]) && content[key]['tableTitles']) {
+						// table
+						rows.push(
+							<Card.Row
+								left={{ content: key, wapperClasses: styles.left }}
+								right={{
+									content: _renderTable(content[key]['tableTitles'], content[key]['tableContents']),
+									align: 'left'
+								}}
+							/>
+						)
+					} else if (isObject(content[key]) && content[key]['tabTitles']) {
+						// table
+						rows.push(
+							<Card.Row
+								left={{ content: key, wapperClasses: styles.left }}
+								right={{
+									content: (
+										<CardTabs
+											tabTitles={content[key]['tabTitles']}
+											tabContent={content[key]['tabContent']}
+										/>
+									),
+									align: 'left'
+								}}
+							/>
+						)
+					}
 				}
+				_content[tabTitles[idx]] = (
+					<span
+						className={clsx(styles.rawInput, 'text text-sm contrast-color-70 padding-sm word-break-all')}
+						style={{ display: 'block', minWidth: isMobile ? 300 : 500 }}
+					>
+						{rows}
+					</span>
+				)
 			}
-			_content[tabTitles[idx]] = (
-				<span
-					className={clsx(styles.rawInput, 'text text-sm contrast-color-70 padding-sm word-break-all')}
-					style={{ display: 'block' }}
-				>
-					{rows}
-				</span>
-			)
-		}
-	})
+		})
 	return (
 		<div>
 			<div style={{ maxWidth: '10000px' }}>

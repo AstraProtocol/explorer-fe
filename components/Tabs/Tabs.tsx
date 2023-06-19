@@ -25,7 +25,7 @@ interface Props {
 }
 
 const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, defaultTab, tabChange }: Props) => {
-	const [tabId, setTabId] = useState(defaultTab || tabs[0].id)
+	const [tabId, setTabId] = useState(defaultTab || tabs[0]?.id)
 
 	const _changeTab = value => {
 		setTabId(value)
@@ -45,15 +45,16 @@ const Tabs = ({ tabs, contents, classes, headerBorder = true, headerPadding, def
 					'border border-bottom-base': headerBorder
 				})}
 			>
-				{tabs.map((tab: Tab) => (
-					<Tab
-						onClick={() => _changeTab(tab.id)}
-						active={tabId == tab.id}
-						title={tab.title}
-						key={tab.id}
-						padding={tab.padding}
-					/>
-				))}
+				{tabs &&
+					tabs.map((tab: Tab) => (
+						<Tab
+							onClick={() => _changeTab(tab.id)}
+							active={tabId == tab.id}
+							title={tab.title}
+							key={tab.id}
+							padding={tab.padding}
+						/>
+					))}
 			</Row>
 			<div className={classes || 'margin-top-xl padding-bottom-lg'}>{contents[tabId]}</div>
 		</div>
