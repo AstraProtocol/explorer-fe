@@ -10,6 +10,10 @@ interface Props {
 	tokenData: TokenNFTMetadata
 }
 
+const imageLoader = ({ src, width, quality }) => {
+	return `${src}?w=${width}&q=${quality || 85}`
+}
+
 const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 	const { isMobile } = useMobileLayout()
 	const size = isMobile ? 100 : 200
@@ -20,6 +24,7 @@ const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 			<div className="row">{children}</div>
 		)
 	const tokenImage = tokenData?.image?.replace('ipfs://', 'https://ipfs.io/ipfs/')
+
 	return (
 		<BackgroundCard classes="padding-top-lg padding-bottom-lg margin-top-2xl padding-left-2xl padding-right-2xl">
 			<Layout>
@@ -30,6 +35,7 @@ const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 				>
 					{tokenImage && (
 						<Image
+							loader={imageLoader}
 							className="border radius-lg"
 							src={tokenImage}
 							alt={tokenData.name}

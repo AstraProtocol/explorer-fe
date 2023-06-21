@@ -2,7 +2,7 @@ import { astraToEth } from '@astradefi/address-converter'
 import { formatNumber } from '@astraprotocol/astra-ui'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
-import { isArray, isEmpty } from 'lodash'
+import { get, isArray, isEmpty } from 'lodash'
 import { TransactionTypeEnum } from 'utils/enum'
 import { getEnvNumber } from 'utils/helper'
 
@@ -97,7 +97,6 @@ export const getAstraTokenAmount = (amount: TokenAmount | TokenAmount[]): string
 
 	return totalAmount.toString()
 }
-
 
 const _mapMsgSendField = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgSendContent
@@ -204,11 +203,17 @@ const _mapMsgExec = (msg: TransactionMessage, messages: TransactionMessage[]): C
 const _mapMsgGrant = (msg: TransactionMessage): CosmosTxMessage => {
 	const content = msg.content as unknown as MsgGrantContent
 	if (msg && content) {
+		const grant =
+			get(content, 'params.maybeGenericGrant') ||
+			get(content, 'params.maybeSendGrant') ||
+			get(content, 'params.maybeStakeGrant') ||
+			{}
+
 		return {
 			type: msg.type,
-			granter: content.params.maybeGenericGrant.granter,
-			grantee: content.params.maybeGenericGrant.grantee,
-			dynamicRender: [{ grant: content.params.maybeGenericGrant.grant }]
+			granter: grant.granter || '',
+			grantee: grant.grantee || '',
+			dynamicRender: [{ grant: grant.grant }]
 		}
 	}
 }
