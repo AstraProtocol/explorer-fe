@@ -1,3 +1,11 @@
+## [1.2.5](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.4...v1.2.5) (2023-06-21)
+
+
+### Bug Fixes
+
+* cor-1 msg grant parse error ([65aaaa7](https://github.com/AstraProtocol/explorer-fe/commit/65aaaa7c84fd6c2efa4c6709cad67c4864180e88))
+* temporarely add imageLoader for NFT instance image ([9dba9a8](https://github.com/AstraProtocol/explorer-fe/commit/9dba9a88c38597d3310533159fd41a0b27137935))
+
 ## [1.2.4](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.3...v1.2.4) (2023-06-15)
 
 
