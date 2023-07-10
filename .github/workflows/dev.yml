@@ -1,0 +1,29 @@
+name: UAT deployment
+on:
+  push:
+    branches: ['dev']
+  pull_request:
+    branches: ['dev']
+
+jobs:
+  build-and-deploy:
+     uses: AstraProtocol/github-actions-workflows/.github/workflows/stella-deployment-advanced.yml@main
+
+     secrets:
+       secretBuildArgs: |
+         SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+         GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+     with:
+       ingressEnabled: "yes"
+       ingressHost: "explorer.dev.astranet.services"
+       replicas: "1"
+       servicePort: "3000"
+       buildArgs: |-
+        NEXT_PUBLIC_COSMOS_API=https://chainindexing.astranaut.dev
+        NEXT_PUBLIC_EVM_API=https://blockscout.astranaut.dev
+        NEXT_PUBLIC_URL=https://explorer.astranaut.dev
+        NEXT_PUBLIC_CHAIN_ID=11115
+        NEXT_PUBLIC_TITLE=Astra Explorer Testnet
+        NEXT_PUBLIC_GA_MEASUREMENT_ID=G-VXSKSRXRLJ
+        NEXT_PUBLIC_SENTRY_DSN=https://e5a0c44ff6ed4b9b967c490d4587a1b9@sentry.astranet.live/2
+        NEXT_PUBLIC_ENV=testnet

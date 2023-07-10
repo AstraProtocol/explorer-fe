@@ -1,3 +1,71 @@
+## [1.2.5](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.4...v1.2.5) (2023-06-21)
+
+
+### Bug Fixes
+
+* cor-1 msg grant parse error ([65aaaa7](https://github.com/AstraProtocol/explorer-fe/commit/65aaaa7c84fd6c2efa4c6709cad67c4864180e88))
+* temporarely add imageLoader for NFT instance image ([9dba9a8](https://github.com/AstraProtocol/explorer-fe/commit/9dba9a88c38597d3310533159fd41a0b27137935))
+
+## [1.2.4](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.3...v1.2.4) (2023-06-15)
+
+
+### Bug Fixes
+
+* display nfttoken amount in address detail ([d76cb5f](https://github.com/AstraProtocol/explorer-fe/commit/d76cb5fc1d6c5d6556fd812a26d9904c496569d2))
+
+## [1.2.3](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.2...v1.2.3) (2023-06-09)
+
+
+### Bug Fixes
+
+* decode non json contract data ([6c0e3d2](https://github.com/AstraProtocol/explorer-fe/commit/6c0e3d2c7815369b15767090f0a362fd15139737))
+* remove example code ([72b0d0c](https://github.com/AstraProtocol/explorer-fe/commit/72b0d0c8d5b3c816195497f50de81f5ceac5a9a0))
+
+## [1.2.2](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.1...v1.2.2) (2023-05-25)
+
+
+### Bug Fixes
+
+* bug missing return value filter ([ae5649b](https://github.com/AstraProtocol/explorer-fe/commit/ae5649bd19c28ccd11cedf98d48117d6456b4448))
+* convert BalancetoView format + write test ([5142c26](https://github.com/AstraProtocol/explorer-fe/commit/5142c26facf41e7a0e1756044c15ca726628dd06))
+* display AstraIcon instead of ASA text in internal transfer call ([668eb69](https://github.com/AstraProtocol/explorer-fe/commit/668eb6902a387b209c0e63907174a11198d287e7))
+* hide internal transfer call when tx was failed ([164e8ed](https://github.com/AstraProtocol/explorer-fe/commit/164e8edda8ff6d75db8106275089d2cd98330c39))
+* update astra-ui package ([7960f22](https://github.com/AstraProtocol/explorer-fe/commit/7960f227a0cec6217cea705d9153081f1de73241))
+* update fn ([d45137c](https://github.com/AstraProtocol/explorer-fe/commit/d45137c209ca18c960f044735bccb92019c71153))
+* update limit per page in pagination to 10 ([c05f95c](https://github.com/AstraProtocol/explorer-fe/commit/c05f95cee8e2df2c93f6e82c0ddb16cd42a05262))
+* update text ([5742655](https://github.com/AstraProtocol/explorer-fe/commit/5742655976ddc7299512a9f30008cc43f21342d7))
+* wrong calculate tx fee in Contract tx list ([52d120c](https://github.com/AstraProtocol/explorer-fe/commit/52d120cc95112b1cd2af612608f6c27d4c9af2e7))
+
+## [1.2.1](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.0...v1.2.1) (2023-04-14)
+
+
+### Bug Fixes
+
+* hotfix bignumber with point non-decimal number ([d51427d](https://github.com/AstraProtocol/explorer-fe/commit/d51427d80d1a3232e4a663b8463bcc590f1a8194))
+
+# [1.2.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.1.0...v1.2.0) (2023-04-14)
+
+
+### Bug Fixes
+
+* add implementation contract name + hash (contract overview) ([75957d0](https://github.com/AstraProtocol/explorer-fe/commit/75957d0083aa47b7427b9f9c30f0824a2502bcaf))
+* component CardInfo not use CopyButton from astra-ui ([daf71a8](https://github.com/AstraProtocol/explorer-fe/commit/daf71a88adc1fcd99b5ebf87d73d1142d64ff6b9))
+* decode log items with undefined ([95e45d5](https://github.com/AstraProtocol/explorer-fe/commit/95e45d56fa562983f49d07bad5a200814a171d46))
+* display contract implementation text ([e2810ae](https://github.com/AstraProtocol/explorer-fe/commit/e2810ae509cf5964f0d9d9dc3f063135066d947c))
+* update display currency of AccountAssets ([7160c02](https://github.com/AstraProtocol/explorer-fe/commit/7160c028198b9fc3cd7f84b3d6b7289899be02f5))
+* update display name with hash in ContractOverview ([ec43430](https://github.com/AstraProtocol/explorer-fe/commit/ec43430c83a860f1741f1e8e4be063fa283ff7d0))
+* update endpoint verify contract ([e099d7a](https://github.com/AstraProtocol/explorer-fe/commit/e099d7af3bfef4cfacad17c7c573cb02ae016a0a))
+* use ApiList constant insteadof hardcode ([a7eda38](https://github.com/AstraProtocol/explorer-fe/commit/a7eda387959d12a7bb8f0d31df158fad432bd09a))
+* use func isHex from web3-utils insteadof homemade ([2b5157a](https://github.com/AstraProtocol/explorer-fe/commit/2b5157aa6db5c02e50e57522b01e290aada74a0f))
+* verify contract endpoint ([4fa6b78](https://github.com/AstraProtocol/explorer-fe/commit/4fa6b782d03c3007b465d7e83d4485616db92e50))
+* verify contract with new API endpoint + UX ([900e986](https://github.com/AstraProtocol/explorer-fe/commit/900e986ecda058df6404b23936214e184501afdc))
+* wrong link when click address transfer internal ([7a1a7b8](https://github.com/AstraProtocol/explorer-fe/commit/7a1a7b80c4dd12fc387a4f5fbf8783ed5b4eb3c7))
+
+
+### Features
+
+* add Address Balance Tab ([4c72fc7](https://github.com/AstraProtocol/explorer-fe/commit/4c72fc7f93f3a0be7a7ead1af719c52663d1980c))
+
 # [1.1.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.0.1...v1.1.0) (2023-03-31)
 
 
