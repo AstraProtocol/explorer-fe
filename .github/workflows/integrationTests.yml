@@ -14,7 +14,7 @@ jobs:
             matrix:
                 node: [18]
         name: Integration tests
-        runs-on: ubuntu-latest
+        runs-on: [self-hosted, linux]
         steps:
             - name: Checkout
               uses: actions/checkout@v2
