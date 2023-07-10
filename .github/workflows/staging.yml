@@ -1,8 +1,7 @@
 name: Production deployment
 on:
   push:
-    tags: 
-      - '*' # Push events to matching tags
+    branches: ['staging']
  
 jobs:
   build-and-deploy:
@@ -13,8 +12,8 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      with:
        ingressEnabled: "yes"
-       ingressHost: "explorer.prod.astranet.services"
-       replicas: "2"
+       ingressHost: "explorer-staging.prod.astranet.services"
+       replicas: "1"
        servicePort: "3000"
        buildArgs: |-
         NEXT_PUBLIC_COSMOS_API=https://chainindexing.astranaut.io

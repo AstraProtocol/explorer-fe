@@ -59,4 +59,4 @@ jobs:
             - name: Semantic release
               run: HUSKY=0 yarn semantic
               env:
-                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
