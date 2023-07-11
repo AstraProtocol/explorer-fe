@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.5...v1.2.6) (2023-07-10)
+
+
+### Bug Fixes
+
+* wrong contract verified notice ([ca970e6](https://github.com/AstraProtocol/explorer-fe/commit/ca970e60ccc8b67443249bc00542a3169bd3a6a4))
+
 ## [1.2.5](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.4...v1.2.5) (2023-06-21)
 
 
