@@ -25,7 +25,7 @@
     link-module-alias "^1.2.0"
     shx "^0.3.4"
 
-"@astraprotocol/astra-ui@^1.0.44":
+"@astraprotocol/astra-ui@^1.0.39":
   version "1.0.44"
   resolved "https://npm.pkg.github.com/download/@astraprotocol/astra-ui/1.0.44/f4a89df5c52372835143ab3aadcf9543ecb4539e#f4a89df5c52372835143ab3aadcf9543ecb4539e"
   integrity sha512-HH6mYXxvyntMf5vMrZeDrg523nAjNcv0JvronygcwmvwH6lEyL2a4OKONuoXhz/jdGvHOyFfgeZnp65e88bOog==
