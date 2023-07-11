@@ -1,6 +1,5 @@
-import { Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CopyButton, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
-import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { isUndefined } from 'lodash'
@@ -18,16 +17,13 @@ const TokenOverview = ({ token, tokenData }: Props) => {
 
 	return (
 		<BackgroundCard classes="padding-lg margin-top-2xl">
-			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
-				<div>
-					<span className="text text-base contrast-color-50">Contract:</span>
-					<br />
+			<div>
+				<span className="text text-base contrast-color-50">Contract:</span>
+				<Row classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
 					<span className={clsx('text', 'text-lg')}>{token}</span>
-				</div>
-				<div>
 					<CopyButton textCopy={token} />
-				</div>
-			</Row>
+				</Row>
+			</div>
 			<Row style={{ justifyContent: 'space-between' }} classes="md-wrap padding-top-lg">
 				<div className="">
 					<span className="text text-base contrast-color-50">Token Name:</span>
