@@ -12,6 +12,7 @@ jobs:
          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
      with:
+       namespace: "default"
        ingressEnabled: "yes"
        ingressHost: "explorer.prod.astranet.services"
        replicas: "2"
