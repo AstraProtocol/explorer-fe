@@ -4,7 +4,8 @@
 		"target": "es5",
 		"lib": ["es5", "dom"],
 		"types": ["cypress", "./support/index.d.ts"],
-		"isolatedModules": false
+		"isolatedModules": false,
+		"resolveJsonModule": true
 	},
 	"include": ["**/*.ts"],
 	"ts-node": {
