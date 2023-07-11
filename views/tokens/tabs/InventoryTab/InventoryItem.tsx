@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import Typography from 'components/Typography'
 import Image from 'next/image'
 import { LinkMaker } from 'utils/helper'
+import { imageLoader } from 'utils/image'
 import styles from './style.module.scss'
 
 type Props = {
@@ -34,7 +35,16 @@ export default function InventoryItem({ index, tokenAddress, token }: Props) {
 				</Typography.LinkText>
 			</div>
 			<div className={clsx(styles.borderLeft, styles.colImage, 'col-6 padding-left-lg block-ver-center')}>
-				{tokenImage && <Image src={tokenImage} alt={token.tokenId} height={50} width={80} layout="fixed" />}
+				{tokenImage && (
+					<Image
+						loader={imageLoader}
+						src={tokenImage}
+						alt={token.tokenId}
+						height={50}
+						width={80}
+						layout="fixed"
+					/>
+				)}
 			</div>
 		</div>
 	)
