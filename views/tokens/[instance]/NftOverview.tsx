@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import Image from 'next/image'
+import { imageLoader } from 'utils/image'
 
 interface Props {
 	token: string
@@ -10,9 +11,7 @@ interface Props {
 	tokenData: TokenNFTMetadata
 }
 
-const imageLoader = ({ src, width, quality }) => {
-	return `${src}?w=${width}&q=${quality || 85}`
-}
+
 
 const NftOverview = ({ token, tokenData, tokenId }: Props) => {
 	const { isMobile } = useMobileLayout()

@@ -1,7 +1,6 @@
 import { ethToAstra } from '@astradefi/address-converter'
-import { CryptoIcon, IconButton, IconEnum, Typography as TypographyUI } from '@astraprotocol/astra-ui'
+import { CopyButton, CryptoIcon, IconButton, IconEnum, Typography as TypographyUI } from '@astraprotocol/astra-ui'
 import clsx from 'clsx'
-import CopyButton from 'components/Button/CopyButton'
 import BackgroundCard from 'components/Card/Background/BackgroundCard'
 import Row from 'components/Grid/Row'
 import { LinkText } from 'components/Typography/LinkText'
@@ -47,47 +46,48 @@ const AddressOverview = ({ validator, address, addressData }: Props) => {
 	const astraPrice = astraSummary?.last || '0'
 	return (
 		<BackgroundCard classes={clsx('padding-lg margin-top-2xl', styles.overview)}>
-			<Row style={{ justifyContent: 'space-between' }} classes={clsx(styles.borderBottom, 'padding-bottom-lg')}>
+			<div className={clsx(styles.borderBottom, 'padding-bottom-lg')}>
+				<span className="text text-base contrast-color-50">
+					{isValidator ? 'Validator' : isContract ? 'Contract' : 'Wallet Address'}
+				</span>
+				<br />
 				<div>
-					<span className="text text-base contrast-color-50">
-						{isValidator ? 'Validator' : isContract ? 'Contract' : 'Wallet Address'}
-					</span>
-					<br />
-					<span className="text text-lg">
-						{isValidator ? (
-							<div>
+					{isValidator ? (
+						<Row>
+							<span className="text text-lg">
 								{displayMode === DisplayMode.EVM
 									? `${validator.moniker} (${address})`
 									: `${validator.moniker} (${validator.initialDelegatorAddress})`}
-								<IconButton
-									classes="margin-left-xs"
-									onClick={() => setDisplayMode(displayMode * -1)}
-									icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
-								/>
-							</div>
-						) : isContract ? (
-							addressData.contractName ? (
-								`${addressData.contractName} (${address})`
-							) : (
-								address
-							)
-						) : (
-							<div>
+							</span>
+							<IconButton
+								classes="margin-left-xs"
+								onClick={() => setDisplayMode(displayMode * -1)}
+								icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
+							/>
+							<CopyButton textCopy={address} />
+						</Row>
+					) : isContract ? (
+						<Row>
+							<span className="text text-lg">
+								{addressData.contractName ? `${addressData.contractName} (${address})` : address}
+							</span>
+							<CopyButton textCopy={address} />
+						</Row>
+					) : (
+						<Row>
+							<span className="text text-lg">
 								{displayMode === DisplayMode.EVM ? address : ethToAstra(address)}
-								<IconButton
-									classes="margin-left-xs"
-									onClick={() => setDisplayMode(displayMode * -1)}
-									icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
-								/>
-							</div>
-						)}
-					</span>
+							</span>
+							<IconButton
+								classes="margin-left-xs"
+								onClick={() => setDisplayMode(displayMode * -1)}
+								icon={IconEnum.ICON_SWAP_LEFT_RIGHT}
+							/>
+							<CopyButton textCopy={address} />
+						</Row>
+					)}
 				</div>
-				<div>
-					<CopyButton textCopy={address} />
-					{/* <QrButton textTitle="qrcode" content={address} /> */}
-				</div>
-			</Row>
+			</div>
 			{isValidator ? (
 				<ValidatorOverview validator={validator} />
 			) : isContract ? (
