@@ -14,6 +14,22 @@ interface Props {
 	address: string
 }
 
+const VerifiedAlert = contractCode => (
+	<div className="text text-sm contrast-color-30 margin-bottom-md">
+		Contract is not verified.{' '}
+		{contractCode.SameBytecodeAddress && (
+			<>
+				However, we found a verified contract with the same bytecode{' '}
+				<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
+					{contractCode.SameBytecodeAddress}
+				</LinkText>
+				.{' '}
+			</>
+		)}
+		In order to verify this contract, click Verify & Publish button.
+	</div>
+)
+
 const ContractCodeTab = ({ address }: Props) => {
 	const { contractCode, mutate, isValidating } = useContractCode(address)
 	const [verifyVisible, setVerifiVisible] = useState(false)
@@ -25,6 +41,7 @@ const ContractCodeTab = ({ address }: Props) => {
 		mutate()
 		setVerifiVisible(false)
 	}
+	
 
 	return (
 		<div>
@@ -41,37 +58,21 @@ const ContractCodeTab = ({ address }: Props) => {
 					<Spinner size="md" />
 				</div>
 			) : contractCode ? (
-				contractCode?.Verified ? (
-					''
-				) : (
-					<div className="margin-left-xl margin-right-xl">
-						<div className="text text-sm contrast-color-30 margin-bottom-md">
-							Contract is not verified.{' '}
-							{contractCode.SameBytecodeAddress && (
-								<>
-									However, we found a verified contract with the same bytecode{' '}
-									<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
-										{contractCode.SameBytecodeAddress}
-									</LinkText>
-									.{' '}
-								</>
-							)}
-							In order to verify this contract, click Verify & Publish button.
-						</div>
-						<ContractCodeOverview contractCode={contractCode} />
-						<ContractConstructorArguments
-							abi={contractCode.ABI}
-							constructorArgument={contractCode.ConstructorArguments}
-						/>
-						<SolidityView code={contractCode.SourceCode} filename="Contract Source Code" />
-						{contractCode.AdditionalSources?.map((v: ContractFile) => (
-							<SolidityView code={v.SourceCode} filename={v.Filename} key={v.Filename} />
-						))}
-						<JsonView filename="Contract ABI" code={contractCode.ABI} />
-						{/* <SolidityView filename="Contract Creation Code" code={contractCode.ContractCreationCode} /> */}
-						<SolidityView filename="Deployed ByteCode" code={contractCode.DeployedByteCode} />
-					</div>
-				)
+				<div className="margin-left-xl margin-right-xl">
+					{!contractCode?.Verified && <VerifiedAlert contractCode={contractCode} />}
+					<ContractCodeOverview contractCode={contractCode} />
+					<ContractConstructorArguments
+						abi={contractCode.ABI}
+						constructorArgument={contractCode.ConstructorArguments}
+					/>
+					<SolidityView code={contractCode.SourceCode} filename="Contract Source Code" />
+					{contractCode.AdditionalSources?.map((v: ContractFile) => (
+						<SolidityView code={v.SourceCode} filename={v.Filename} key={v.Filename} />
+					))}
+					<JsonView filename="Contract ABI" code={contractCode.ABI} />
+					{/* <SolidityView filename="Contract Creation Code" code={contractCode.ContractCreationCode} /> */}
+					<SolidityView filename="Deployed ByteCode" code={contractCode.DeployedByteCode} />
+				</div>
 			) : (
 				<div className="padding-xl">
 					<span className="text text-xl contrast-color-30">API error. Something went wrong</span>
