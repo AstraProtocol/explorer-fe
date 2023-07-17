@@ -32,7 +32,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					{ title: 'Token Transfers', id: 'token-transfer' },
 					{ title: 'Tokens', id: 'tokens' },
 					{ title: 'Internal Transactions', id: 'internal-transactions' },
-					{ title: 'Coin Balance History', id: 'balance-history' },
+					{ title: 'Balance History', id: 'balance-history' },
 
 					isContract && {
 						title: (
