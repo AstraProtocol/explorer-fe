@@ -4,9 +4,10 @@ interface Props {
 	text: string
 	fontType?: 'Titi' | 'Manrope'
 	hasArrowRight?: boolean
+	ellipsis?: boolean
 }
 
-export default function PolygonTag({ text, fontType = 'Manrope', hasArrowRight = true }: Props) {
+export default function PolygonTag({ text, fontType = 'Manrope', hasArrowRight = true, ellipsis }: Props) {
 	return (
 		<div
 			className={clsx(
@@ -16,10 +17,12 @@ export default function PolygonTag({ text, fontType = 'Manrope', hasArrowRight =
 					? 'margin-left-sm arrow-right radius-tl-sm radius-bl-sm padding-right-2xs'
 					: 'radius-sm padding-right-xs',
 				fontType == 'Manrope' && 'text text-base contrast-color-50',
-				fontType == 'Titi' && 'money money-2xs contrast-color-50'
+				fontType == 'Titi' && 'money money-2xs contrast-color-50',
+				{ ['text-ellipsis']: ellipsis }
 			)}
+			style={ellipsis && { maxWidth: 100, overflow: 'clip' }}
 		>
-			{text}
+			<span title={text}>{text}</span>
 			<style jsx>{`
 				.arrow-right {
 					position: relative;
