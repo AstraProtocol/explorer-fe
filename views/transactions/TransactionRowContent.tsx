@@ -82,7 +82,9 @@ export default function TransactionRowContent({
 								>
 									{ellipseBetweenText(hash, length, length).toLowerCase()}
 								</Typography.LinkText>
-								{labelStatus && <Tag hasArrowRight={false} fontType="Titi" text={labelStatus} />}
+								{labelStatus && (
+									<Tag hasArrowRight={false} fontType="Titi" text={labelStatus} ellipsis />
+								)}
 							</Row>
 							{(from || to) && (
 								<div className="margin-top-xs">
