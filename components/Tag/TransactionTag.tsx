@@ -5,6 +5,8 @@ type TransactionTagProps = {
 	type: string
 }
 export default function TransactionTag({ type }: TransactionTagProps) {
+	if (!type) return ''
+	
 	const tagType: TagType = type === 'IN' ? 'success' : type === 'OUT' ? 'error' : 'primary'
 
 	return (
