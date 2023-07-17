@@ -50,7 +50,7 @@ const AddressBalanceHistory = ({ data, addressBalance, astraSummary }: Props) =>
 					icon={<CryptoIcon name="asa" size="sm" />}
 					value={data.value ? convertBalanceToView(data.value) : data.value}
 					fixNumber={10}
-					fixedLength={15}
+					// fixedLength={15}
 				/>
 				<span className="padding-left-xs money money-sm contrast-color-70">ASA</span>
 				<Tag classes="margin-left-xs" type={deltaStyle} text={`${deltaText}%`} />
