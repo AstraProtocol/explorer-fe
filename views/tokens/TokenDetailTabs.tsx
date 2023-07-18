@@ -16,7 +16,7 @@ const TokenDetailTab = ({ token, tokenData }: Props) => {
 	const isNFT = isERC721(tokenData.type)
 
 	const tabs = [
-		{ title: 'Transactions', id: 'token-transactions' },
+		{ title: 'Token Transfers', id: 'token-transactions' },
 		{ title: 'Token Holders', id: 'token-holders' }
 	]
 	if (isNFT) tabs.push({ title: 'Inventory', id: 'inventory' })
