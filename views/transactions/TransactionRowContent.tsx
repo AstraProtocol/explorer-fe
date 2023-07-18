@@ -9,7 +9,7 @@ import Typography from 'components/Typography'
 import Image from 'next/image'
 import { CONFIG } from 'utils/constants'
 import { evmAddressName, isEvmTransactionType } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, ellipseRightText, LinkMaker } from 'utils/helper'
+import { LinkMaker, convertBalanceToView, ellipseBetweenText, ellipseRightText } from 'utils/helper'
 import styles from './style.module.scss'
 
 export type TransactionRowContentProps = {
@@ -60,6 +60,7 @@ export default function TransactionRowContent({
 	const statusText = status ? 'success' : 'error'
 	const isEvm = isEvmTransactionType(type)
 	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
+
 	return (
 		<>
 			<div
@@ -154,7 +155,8 @@ export default function TransactionRowContent({
 							<>
 								<TypographyLib.Balance
 									size="sm"
-									value={value}
+									value={parseFloat(value || '0').toPrecision(4)}
+									// value={value}
 									currency={
 										valueCurrency
 											? valueCurrency.toUpperCase()
