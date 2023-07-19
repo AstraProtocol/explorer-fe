@@ -9,7 +9,6 @@ import AddressTokenTab from './tabs/AddressTokenTab'
 import AddressTokenTransferTab from './tabs/AddressTokenTransferTab'
 import AddressTransactionTab from './tabs/AddressTransactionTab'
 import ContractCodeTab from './tabs/ContractCodeTab'
-import ContractTransactionTab from './tabs/ContractTransactionTab'
 
 interface Props {
 	address: string
@@ -44,11 +43,12 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					}
 				]}
 				contents={{
-					'transactions': isContract ? (
-						<ContractTransactionTab address={address} />
-					) : (
-						<AddressTransactionTab address={address} />
-					),
+					// 'transactions': isContract ? (
+					// 	<ContractTransactionTab address={address} />
+					// ) : (
+					// 	<AddressTransactionTab address={address} />
+					// ),
+					'transactions': <AddressTransactionTab address={address} />,
 					'token-transfer': <AddressTokenTransferTab address={address} />,
 					'tokens': <AddressTokenTab addressData={addressData} address={address} />,
 					'internal-transactions': <AddressInternalTransactionTab address={address} />,
