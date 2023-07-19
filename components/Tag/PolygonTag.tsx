@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function PolygonTag({ text, fontType = 'Manrope', hasArrowRight = true, ellipsis }: Props) {
-	console.log('txMethod', text)
 	return (
 		<div
 			className={clsx(
