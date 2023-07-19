@@ -43,7 +43,7 @@ const AddressDetailTab = ({ address, addressData }: Props) => {
 					}
 				]}
 				contents={{
-					/** 19/07/2023 currently contract tx use as an address. So merge this. */
+					/** 19/07/2023 currently contract tx use as an address. So merge this.  (COR-9)*/
 					// 'transactions': isContract ? (
 					// 	<ContractTransactionTab address={address} />
 					// ) : (
