@@ -21,7 +21,7 @@ interface Props {
 }
 
 const AddressTransaction = ({ transaction }: Props) => {
-	const evmType = transaction?.messages ? transaction?.messages[0]?.evmType : ''
+	const txMethod = transaction?.messages ? transaction?.messages[0]?.evmType : ''
 	const isEvm = isEvmTransactionType(transaction?.type)
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
@@ -56,7 +56,8 @@ const AddressTransaction = ({ transaction }: Props) => {
 								>
 									{ellipseBetweenText(transaction.hash, txsHashLength, txsHashLength).toLowerCase()}
 								</Typography.LinkText>
-								{evmType && <PolygonTag hasArrowRight={false} fontType="Titi" text={evmType} />}
+								<></>
+								{txMethod && <PolygonTag hasArrowRight={false} fontType="Titi" text={txMethod} />}
 							</Row>
 							{(transaction.from || transaction.to) && (
 								<div className="margin-top-xs">
@@ -107,7 +108,7 @@ const AddressTransaction = ({ transaction }: Props) => {
 				<div className={clsx('col-2 block-ver-center')}>
 					<Typography.Label
 						text={ellipseRightText(transaction.type, 13)}
-						// titleText={type}
+						titleText={transaction.type}
 						backgroundShape="rectangle"
 						radius="radius-2xl"
 						font="text-bold text text-sm"
