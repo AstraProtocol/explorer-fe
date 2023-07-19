@@ -1,3 +1,4 @@
+import { useMobileLayout } from '@astraprotocol/astra-ui'
 import * as Sentry from '@sentry/react'
 import abiDecoder from 'abi-decoder'
 import { cosmosApi } from 'api'
@@ -26,6 +27,7 @@ type DecodeInputProps = {
 }
 
 export default function DecodeInput({ dataInput, address, evmHash }: DecodeInputProps) {
+	const { isMobile } = useMobileLayout('small')
 	const router = useRouter()
 	const [verifyVisible, setVerifiVisible] = useState(false)
 
@@ -135,20 +137,25 @@ export default function DecodeInput({ dataInput, address, evmHash }: DecodeInput
 				) : (
 					<BackgroundCard classes={`margin-bottom-md`}>
 						<div
-							className="text text-xl text-bold padding-left-2xl"
+							className={clsx(
+								'text text-xl text-bold',
+								isMobile ? 'padding-left-md' : 'padding-left-2xl'
+							)}
 							style={{ marginTop: '30px', marginBottom: '22px' }}
 						>
 							INPUT
 						</div>
-						{items?.map((item, index) => (
-							<LogElement
-								onOpenVerify={onShowVerify}
-								key={item.index}
-								{...item}
-								borderTop={index !== 0}
-								showLeftBorder={false}
-							/>
-						))}
+						<div style={{ overflow: 'auto' }}>
+							{items?.map((item, index) => (
+								<LogElement
+									onOpenVerify={onShowVerify}
+									key={item.index}
+									{...item}
+									borderTop={index !== 0}
+									showLeftBorder={false}
+								/>
+							))}
+						</div>
 					</BackgroundCard>
 				)}
 			</div>

@@ -8,6 +8,7 @@ interface Props {
 }
 const ContractCodeOverview = ({ contractCode }: Props) => {
 	const { isMobile } = useMobileLayout()
+
 	return (
 		<div className={clsx(styles.overview, 'margin-bottom-xl ')}>
 			<div className={isMobile ? 'col col-5' : 'col col-5 margin-right-xl'}>
@@ -28,7 +29,9 @@ const ContractCodeOverview = ({ contractCode }: Props) => {
 				<Row style={{ justifyContent: 'space-between' }}>
 					<span className="text text-sm contrast-color-30">Optimization enabled: </span>
 					<span className="text text-base contrast-color-100">
-						{contractCode.OptimizationUsed ? `Yes with ${contractCode.OptimizationRuns} runs` : 'No'}
+						{contractCode.OptimizationUsed === 'true'
+							? `Yes with ${contractCode.OptimizationRuns} runs`
+							: 'No'}
 					</span>
 				</Row>
 				{contractCode.Verified && (

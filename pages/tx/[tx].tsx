@@ -10,12 +10,12 @@ import Typography from 'components/Typography'
 import { pickBy } from 'lodash'
 import React from 'react'
 import { TransactionTypeEnum } from 'utils/enum'
-import { ellipseBetweenText, isMainnet, LinkMaker } from 'utils/helper'
+import { LinkMaker, ellipseBetweenText, isMainnet } from 'utils/helper'
 import DecodeInput from 'views/transactions/DecodeInput'
+import TransactionTabs from 'views/transactions/TransactionTabs'
 import useConvertData from 'views/transactions/hook/useConvertData'
 import useInternalTransactions from 'views/transactions/hook/useInternalTransactions'
-import TransactionTabs from 'views/transactions/TransactionTabs'
-import { cosmsTransactionDetail, evmTransactionDetail, TransactionQuery } from 'views/transactions/utils'
+import { TransactionQuery, cosmsTransactionDetail, evmTransactionDetail } from 'views/transactions/utils'
 import Layout from '../../components/Layout'
 
 type Props = {
@@ -45,7 +45,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 					]}
 				/>
 				{data ? (
-					<>
+					<div>
 						<div className="margin-top-2xl margin-bottom-md">
 							<Typography.PageTitle className={['flex flex-align-center']}>
 								{data.cosmosMsgCount ? (
@@ -72,7 +72,7 @@ const TransactionDetailPage: React.FC<Props> = ({ errorMessage, data, evmHash, c
 								logs={data?.logs}
 							/>
 						)}
-					</>
+					</div>
 				) : (
 					<h1 className="text contrast-color-70 margin-top-sm">
 						{isMainnet
