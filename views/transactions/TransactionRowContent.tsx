@@ -157,11 +157,7 @@ export default function TransactionRowContent({
 									size="sm"
 									value={parseFloat(value || '0').toPrecision(4)}
 									// value={value}
-									currency={
-										valueCurrency
-											? valueCurrency.toUpperCase()
-											: process.env.NEXT_PUBLIC_NATIVE_TOKEN?.toUpperCase()
-									}
+									currency={valueCurrency ? valueCurrency.toUpperCase() : ''} // Remove default token transfer is ASA here
 									icon={valueToken && <CryptoIcon name={valueToken} size="sm" />}
 								/>
 								<br />

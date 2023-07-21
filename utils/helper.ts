@@ -77,11 +77,13 @@ export function formatCurrencyValue(value: number | string | undefined, symbol =
 	symbol = symbol || ''
 	if (isNaN(value as number) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
-	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
-	if (value < 1000) return `${numeral(value).format('0,0')} ${symbol}`
-	if (value < 1000000) return `${numeral(value).format('0,0')} ${symbol}`
-	if (value < 1000000000) return `${numeral(Number(value) / 10 ** 6).format('0,0')} Million ${symbol}`
-	if (value > 1000000000) return `${numeral(Number(value) / 10 ** 9).format('0,0')} Billion ${symbol}`
+
+	const parseValue = parseFloat(value as string)
+	if (parseValue < 0.000001) return `Less than 0.000001 ${symbol}`
+	if (parseValue < 1000) return `${numeral(value).format('0,0')} ${symbol}`
+	if (parseValue < 1000000) return `${numeral(value).format('0,0')} ${symbol}`
+	if (parseValue < 1000000000) return `${numeral(Number(value) / 10 ** 6).format('0,0')} Million ${symbol}`
+	if (parseValue > 1000000000) return `${numeral(Number(value) / 10 ** 9).format('0,0')} Billion ${symbol}`
 	return `${numeral(value).format('0,0')} ${symbol}`
 }
 
