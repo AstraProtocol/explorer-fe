@@ -1,6 +1,6 @@
 import { TransactionRowProps } from 'views/transactions/TransactionRow'
 import { ZERO_ADDRESS } from './constants'
-import { convertBalanceToView } from './helper'
+import { convertBalanceToView, isERC721 } from './helper'
 
 export const evmTransactionType = (type: number): string => {
 	if (type === 2) {
@@ -26,7 +26,7 @@ export const evmConvertTokenTransferToTransactionRow = (
 		const isBurn = item.toAddress === ZERO_ADDRESS
 		const labelStatus = (isCreate && 'Create') || (isMint && 'Mint') || (isBurn && 'Burn')
 
-		// const isNft = isERC721(item.tokenType)
+		const isNft = isERC721(item.tokenType)
 		// const value = isNft ? '1' : formatUnits(item.amount || '0', item.decimals)
 		const value = convertBalanceToView(item.amount, item.decimals)
 
@@ -35,7 +35,9 @@ export const evmConvertTokenTransferToTransactionRow = (
 			blockNumber: blockHeight,
 			updatedAt: blockTime,
 			value,
-			valueCurrency: item.tokenSymbol?.toUpperCase(),
+			valueCurrency: isNft
+				? item.tokenSymbol?.toUpperCase() || `NFT [${item.tokenId}]`
+				: item.tokenSymbol?.toUpperCase(),
 			hash: hash,
 			status,
 			from: item.fromAddress,
