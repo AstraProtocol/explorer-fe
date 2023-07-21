@@ -5,7 +5,7 @@ import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
 import React from 'react'
-import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { LinkMaker, ellipseBetweenText } from 'utils/helper'
 import NftDetailTab from 'views/tokens/[instance]/NftDetailTab'
 import NftOverview from 'views/tokens/[instance]/NftOverview'
 import Web3 from 'web3'
@@ -21,7 +21,6 @@ type Props = {
 const TokenInstanceDetailPage: React.FC<Props> = props => {
 	const { isMobile } = useMobileLayout()
 	const { token, tokenData, tokenId, errorMessage } = props
-
 	return (
 		<Layout>
 			<Container>
@@ -78,7 +77,7 @@ export async function getServerSideProps({ params }) {
 			errorMessage,
 			token,
 			tokenId: index,
-			tokenData,
+			tokenData: tokenData || {},
 			title: tokenData ? tokenData.name : `Token ${token} ID #${index}`,
 			description: tokenData ? tokenData.description : 'Token Description'
 		}
@@ -86,3 +85,4 @@ export async function getServerSideProps({ params }) {
 }
 
 export default TokenInstanceDetailPage
+
