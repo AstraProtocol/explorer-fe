@@ -33,6 +33,10 @@ export const ellipseLeftText = (address: string, to: number) => {
 export const formatValueFromWei = (wei: string): string => {
 	if (parseFloat(wei) == 0) return '0'
 	if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
+	if (parseFloat(wei) > 0) {
+		if (isInt(wei)) return numeral(wei).format('0,0')
+		return numeral(wei).format('0,0.00000')
+	}
 	return wei
 }
 
@@ -56,7 +60,7 @@ export const getAmountFromBignumber = (value: number | string, decimals: string 
 
 export const convertBalanceToView = (value: number | string, decimals = '18'): string => {
 	const amount = formatValueFromWei(getAmountFromBignumber(value, decimals))
-	return isInt(amount) ? numeral(amount).format('0,0') : numeral(amount).format('0,0.00000')
+	return amount
 }
 
 export const calculateGasFee = (gasUsed: string, gasPrice: string): number => parseFloat(gasUsed) * parseFloat(gasPrice)
@@ -77,11 +81,13 @@ export function formatCurrencyValue(value: number | string | undefined, symbol =
 	symbol = symbol || ''
 	if (isNaN(value as number) || isUndefined(value)) return 'NaN'
 	if (value === 0 || value === '0') return `0.00 ${symbol}`
-	if (value < 0.000001) return `Less than 0.000001 ${symbol}`
-	if (value < 1000) return `${numeral(value).format('0,0')} ${symbol}`
-	if (value < 1000000) return `${numeral(value).format('0,0')} ${symbol}`
-	if (value < 1000000000) return `${numeral(Number(value) / 10 ** 6).format('0,0')} Million ${symbol}`
-	if (value > 1000000000) return `${numeral(Number(value) / 10 ** 9).format('0,0')} Billion ${symbol}`
+
+	const parseValue = parseFloat(value as string)
+	if (parseValue < 0.000001) return `Less than 0.000001 ${symbol}`
+	if (parseValue < 1000) return `${numeral(value).format('0,0')} ${symbol}`
+	if (parseValue < 1000000) return `${numeral(value).format('0,0')} ${symbol}`
+	if (parseValue < 1000000000) return `${numeral(Number(value) / 10 ** 6).format('0,0')} Million ${symbol}`
+	if (parseValue > 1000000000) return `${numeral(Number(value) / 10 ** 9).format('0,0')} Billion ${symbol}`
 	return `${numeral(value).format('0,0')} ${symbol}`
 }
 

@@ -14,7 +14,7 @@ interface Props {
 	address: string
 }
 
-const VerifiedAlert = contractCode => (
+const VerifiedAlert = ({ contractCode }) => (
 	<div className="text text-sm contrast-color-30 margin-bottom-md">
 		Contract is not verified.{' '}
 		{contractCode.SameBytecodeAddress && (
@@ -23,13 +23,12 @@ const VerifiedAlert = contractCode => (
 				<LinkText href={LinkMaker.address(contractCode.SameBytecodeAddress)}>
 					{contractCode.SameBytecodeAddress}
 				</LinkText>
-				.{' '}
+				. <br />
 			</>
 		)}
 		In order to verify this contract, click Verify & Publish button.
 	</div>
 )
-
 const ContractCodeTab = ({ address }: Props) => {
 	const { contractCode, mutate, isValidating } = useContractCode(address)
 	const [verifyVisible, setVerifiVisible] = useState(false)
@@ -41,7 +40,6 @@ const ContractCodeTab = ({ address }: Props) => {
 		mutate()
 		setVerifiVisible(false)
 	}
-	
 
 	return (
 		<div>
