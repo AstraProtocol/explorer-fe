@@ -33,6 +33,10 @@ export const ellipseLeftText = (address: string, to: number) => {
 export const formatValueFromWei = (wei: string): string => {
 	if (parseFloat(wei) == 0) return '0'
 	if (parseFloat(wei) < CONFIG.APPROXIMATE_ZERO) return parseFloat(wei).toExponential()
+	if (parseFloat(wei) > 0) {
+		if (isInt(wei)) return numeral(wei).format('0,0')
+		return numeral(wei).format('0,0.00000')
+	}
 	return wei
 }
 
@@ -56,7 +60,7 @@ export const getAmountFromBignumber = (value: number | string, decimals: string 
 
 export const convertBalanceToView = (value: number | string, decimals = '18'): string => {
 	const amount = formatValueFromWei(getAmountFromBignumber(value, decimals))
-	return isInt(amount) ? numeral(amount).format('0,0') : numeral(amount).format('0,0.00000')
+	return amount
 }
 
 export const calculateGasFee = (gasUsed: string, gasPrice: string): number => parseFloat(gasUsed) * parseFloat(gasPrice)
