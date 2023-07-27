@@ -1,5 +1,6 @@
-import { decodeConstructorArgs } from 'canoe-solidity'
 import AutoLanguageView from 'components/CodeView/AutoView'
+import { useMemo } from 'react'
+import Web3 from 'web3'
 
 interface DecodeArgItem {
 	name: string
@@ -18,17 +19,25 @@ const getData = (type, data) => {
 }
 
 const ContractConstructorArguments = ({ abi, constructorArgument }: Props) => {
-	if (!abi || !constructorArgument) return
-	const decodeArgs = decodeConstructorArgs(JSON.parse(abi), constructorArgument)
-	const code = `
-    ${constructorArgument}
-    
-    ${decodeArgs.map(
-		(d: DecodeArgItem, index: number) => `Arg [${index}] (${d.type}): ${getData(d.type, d.data)} ${
-			d.name ? `(${d.name})` : ''
-		}
-    `
-	)}`.replaceAll(',', '')
+	const code = useMemo(() => {
+		const abiJson = JSON.parse(abi)
+		const contractConstructor = abiJson.find(item => item.type === 'constructor')
+		const decodeArgsInput = contractConstructor.inputs
+		const decodeArgsType: string[] = decodeArgsInput.map(item => item.type)
+		const web3 = new Web3()
+		const decodeArgs = web3.eth.abi.decodeParameters(decodeArgsType, constructorArgument)
+		const result = `${constructorArgument}
+		
+${decodeArgsType.map(
+	(d: string, index: number) => `Arg [${index}] (${d}): ${getData(d, decodeArgs[index])} (${
+		decodeArgsInput[index].name
+	})
+`
+)}`.replaceAll(',', '')
+		return result
+	}, [abi, constructorArgument])
+
+	if (!abi || !constructorArgument) return ''
 	return (
 		<div className="margin-bottom-xl">
 			<AutoLanguageView code={code} filename="Constructor Arguments" />
