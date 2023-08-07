@@ -8,8 +8,8 @@ import RowTitle from 'components/Typography/RowTitle'
 import { isEmpty } from 'lodash'
 import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
-import useTransaction from 'views/transactions/hook/useTransaction'
 import TransactionRow from 'views/transactions/TransactionRow'
+import useTransaction from 'views/transactions/hook/useTransaction'
 import Layout from '../../components/Layout'
 
 const BlockDetailPage: React.FC<NextPage> = _ => {
@@ -44,6 +44,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						<Pagination
 							total={pagination.total}
 							currentPage={pagination.page}
+							limit={pagination.limit}
 							disabled={false}
 							onChange={changePage}
 							noted="(Only the first 50,000 results are displayed)"
@@ -97,6 +98,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						<Pagination
 							total={pagination.total}
 							currentPage={pagination.page}
+							limit={pagination.limit}
 							disabled={false}
 							onChange={changePage}
 							noted="(Only the first 50,000 results are displayed)"

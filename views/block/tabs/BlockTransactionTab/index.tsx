@@ -20,6 +20,7 @@ const BlockTransactionTab = ({ blockHeight }: Props) => {
 				<div>
 					<Pagination
 						total={pagination.total * pagination.limit}
+						limit={pagination.limit}
 						currentPage={pagination.page}
 						onChange={changePage}
 					/>
@@ -61,6 +62,7 @@ const BlockTransactionTab = ({ blockHeight }: Props) => {
 					<Pagination
 						total={pagination.total * pagination.limit}
 						currentPage={pagination.page}
+						limit={pagination.limit}
 						onChange={changePage}
 					/>
 				</div>
