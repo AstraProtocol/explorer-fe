@@ -37,7 +37,7 @@ ${decodeArgsType.map(
 		return result
 	}, [abi, constructorArgument])
 
-	if (!abi || !constructorArgument) return ''
+	if (!abi || !constructorArgument) return null
 	return (
 		<div className="margin-bottom-xl">
 			<AutoLanguageView code={code} filename="Constructor Arguments" />
