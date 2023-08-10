@@ -1,4 +1,5 @@
 import AutoLanguageView from 'components/CodeView/AutoView'
+import { isEmpty } from 'lodash'
 import { useMemo } from 'react'
 import Web3 from 'web3'
 
@@ -20,13 +21,17 @@ const getData = (type, data) => {
 
 const ContractConstructorArguments = ({ abi, constructorArgument }: Props) => {
 	const code = useMemo(() => {
-		const abiJson = JSON.parse(abi)
-		const contractConstructor = abiJson.find(item => item.type === 'constructor')
-		const decodeArgsInput = contractConstructor.inputs
-		const decodeArgsType: string[] = decodeArgsInput.map(item => item.type)
-		const web3 = new Web3()
-		const decodeArgs = web3.eth.abi.decodeParameters(decodeArgsType, constructorArgument)
-		const result = `${constructorArgument}
+		try {
+			const abiJson = JSON.parse(abi)
+			const contractConstructor = abiJson.find(item => item.type === 'constructor')
+			const decodeArgsInput = contractConstructor.inputs
+			const decodeArgsType: string[] = decodeArgsInput.map(item => item.type)
+			const web3 = new Web3()
+
+			if (isEmpty(constructorArgument) || isEmpty(decodeArgsType)) return null
+
+			const decodeArgs = web3.eth.abi.decodeParameters(decodeArgsType, constructorArgument)
+			const result = `${constructorArgument}
 		
 ${decodeArgsType.map(
 	(d: string, index: number) => `Arg [${index}] (${d}): ${getData(d, decodeArgs[index])} (${
@@ -34,7 +39,11 @@ ${decodeArgsType.map(
 	})
 `
 )}`.replaceAll(',', '')
-		return result
+
+			return result
+		} catch (_e) {
+			return null
+		}
 	}, [abi, constructorArgument])
 
 	if (!abi || !constructorArgument) return null
