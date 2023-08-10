@@ -42,6 +42,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						<Pagination
 							total={pagination.total}
 							currentPage={pagination.page}
+							limit={pagination.limit}
 							disabled={false}
 							onChange={changePage}
 							noted="(Only the first 50,000 results are displayed)"
@@ -92,6 +93,7 @@ const BlockDetailPage: React.FC<NextPage> = _ => {
 						<Pagination
 							total={pagination.total}
 							currentPage={pagination.page}
+							limit={pagination.limit}
 							disabled={false}
 							onChange={changePage}
 							noted="(Only the first 50,000 results are displayed)"
