@@ -257,6 +257,7 @@ export function convertBigNumberToString(x: any) {
 export const isMainnet = process.env.NEXT_PUBLIC_ENV === 'mainnet'
 
 export const convertHexToUtf8 = (hex: string) => {
+	if (hex === null || hex === undefined || hex === '') return ''
 	var s = ''
 	for (var i = 0; i < hex.length; i += 2) {
 		s += String.fromCharCode(parseInt(hex.substr(i, 2), 16))

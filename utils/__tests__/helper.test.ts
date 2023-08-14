@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { convertBalanceToView, getAmountFromBignumber } from 'utils/helper'
+import { convertBalanceToView, convertHexToUtf8, getAmountFromBignumber } from 'utils/helper'
 
 describe('helper.getAmountFromBignumber() fnc', () => {
 	test('with normal bignumber', () => {
@@ -40,5 +40,23 @@ describe('helper.convertBalanceToView() fnc', () => {
 	})
 	test('with decimals = 0', () => {
 		expect(convertBalanceToView('1', '0')).toBe('1')
+	})
+})
+
+describe('helper.convertHexToUtf8() fnc', () => {
+	test('with hex string', () => {
+		expect(
+			convertHexToUtf8(
+				'0x4769e1baa369207468c6b0e1bb9f6e67204d696e6967616d65205468c3aa6d2062e1baa16e207468c3aa6d20415341'
+			).replace(/\0/g, '') // remove null character from received string
+		).toBe('Giải thưởng Minigame Thêm bạn thêm ASA')
+	})
+
+	test('with empty string', () => {
+		expect(convertHexToUtf8('')).toBe('')
+	})
+
+	test('with null', () => {
+		expect(convertHexToUtf8(null)).toBe('')
 	})
 })
