@@ -1,7 +1,6 @@
-import * as Sentry from '@sentry/react'
 import CopyButton from 'components/Button/CopyButton'
 import Tabs from 'components/Tabs/Tabs'
-import web3 from 'web3'
+import { convertHexToUtf8 } from 'utils/helper'
 import { isHex } from 'web3-utils'
 import styles from '../style.module.scss'
 
@@ -26,10 +25,8 @@ export default function RawInput({ text }: RawInputProps) {
 	let utf8Text = text
 	const isHexString = isHex(text)
 	try {
-		utf8Text = web3.utils.toAscii(text)
-	} catch (e) {
-		Sentry.captureException(e)
-	}
+		utf8Text = convertHexToUtf8(text)
+	} catch (e) {}
 
 	if (!isHexString) {
 		return (
