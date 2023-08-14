@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
 
+import { tokenApi } from 'store/token'
 import commonReducer, { CommonState } from './commonSlice'
 import themeReducer, { ThemeState } from './themeSlice'
 
@@ -10,7 +11,8 @@ export interface IAppState {
 
 const rootReducers = combineReducers({
 	theme: themeReducer,
-	common: commonReducer
+	common: commonReducer,
+	[tokenApi.reducerPath]: tokenApi.reducer
 })
 
 export default rootReducers

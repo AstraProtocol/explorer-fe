@@ -23,6 +23,7 @@
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
 		"@sentry/nextjs": "^7.20.0",
+		"@solarswap/sdk": "^1.0.12",
 		"abi-decoder": "^2.4.0",
 		"axios": "^0.27.2",
 		"bignumber.js": "^9.1.0",
