@@ -1,6 +1,6 @@
 {
 	"name": "explorer-fe",
-	"version": "1.2.6",
+	"version": "1.2.7",
 	"description": "Explorer for inspecting and analyzing EVM & Cosmos based blockchains",
 	"scripts": {
 		"dev": "next",
@@ -23,6 +23,7 @@
 		"@cosmjs/encoding": "^0.29.0",
 		"@reduxjs/toolkit": "^1.8.5",
 		"@sentry/nextjs": "^7.20.0",
+		"@solarswap/sdk": "^1.0.12",
 		"abi-decoder": "^2.4.0",
 		"axios": "^0.27.2",
 		"bignumber.js": "^9.1.0",

@@ -1,3 +1,12 @@
+## [1.2.7](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.6...v1.2.7) (2023-07-11)
+
+
+### Bug Fixes
+
+* cor-3 format internal tx value with formatEther instead convertBalanceToView in useInternalTx ([e74b81e](https://github.com/AstraProtocol/explorer-fe/commit/e74b81e8a8c73dec98edc7716259eb40d650b95d))
+* error load image from CDN ([bd6b3da](https://github.com/AstraProtocol/explorer-fe/commit/bd6b3daaa1c634800de78d7938bfd4a81dc3b73a))
+* revert update astraui version ([7b481dc](https://github.com/AstraProtocol/explorer-fe/commit/7b481dc92b6f5c883172576080b63ea191df3ce6))
+
 ## [1.2.6](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.5...v1.2.6) (2023-07-10)
 
 

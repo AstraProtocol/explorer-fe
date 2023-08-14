@@ -1,9 +1,8 @@
 name: Production deployment
 on:
   push:
-    tags: 
-      - '**' # Push events to matching tags
-    
+    branches: ['main']
+
  
 jobs:
   build-and-deploy:
@@ -13,6 +12,7 @@ jobs:
          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
      with:
+       namespace: "default"
        ingressEnabled: "yes"
        ingressHost: "explorer.prod.astranet.services"
        replicas: "2"
@@ -26,3 +26,4 @@ jobs:
         NEXT_PUBLIC_GA_MEASUREMENT_ID=G-1KW22EJBY5
         NEXT_PUBLIC_SENTRY_DSN=https://e5a0c44ff6ed4b9b967c490d4587a1b9@sentry.astranet.live/2
         NEXT_PUBLIC_ENV=mainnet
+        NEXT_PUBLIC_WASA_ADDRESS=0x6637D8275DC58983Cb3A2fa64b705EC11f6EC670
