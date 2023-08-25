@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/dist/query'
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducers from '../slices/reducers'
+import { tokenApi } from './token'
 
 const persistConfig = {
 	key: 'root',
@@ -27,9 +29,11 @@ const store = configureStore({
 					'crossChainTransfer/updateSwapConfig'
 				]
 			}
-		}),
+		}).concat(tokenApi.middleware),
 	devTools: true
 })
+
+setupListeners(store.dispatch)
 
 export const persistor = persistStore(store)
 

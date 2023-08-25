@@ -5,6 +5,7 @@ import API_LIST from 'api/api_list'
 import { AxiosError } from 'axios'
 import Container from 'components/Container'
 import React from 'react'
+import { CHAIN_ID } from 'utils/constants'
 import { LinkMaker, ellipseBetweenText } from 'utils/helper'
 import NftDetailTab from 'views/tokens/[instance]/NftDetailTab'
 import NftOverview from 'views/tokens/[instance]/NftOverview'
@@ -50,7 +51,7 @@ export async function getServerSideProps({ params }) {
 	let errorMessage = ''
 	let tokenData
 
-	if (Web3.utils.isAddress(token, parseInt(process.env.NEXT_PUBLIC_CHAIN_ID) || 11115)) {
+	if (Web3.utils.isAddress(token, CHAIN_ID)) {
 		try {
 			const response = await cosmosApi.get<TokenInstanceResponse>(
 				`${API_LIST.TOKEN_METADATA}contractaddress=${token}/tokenid=${index}`

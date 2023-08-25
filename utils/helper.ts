@@ -5,7 +5,7 @@ import { formatEther, formatUnits } from 'ethers/lib/utils'
 import { isEmpty, isUndefined } from 'lodash'
 import numeral from 'numeral'
 import qs from 'qs'
-import { CONFIG } from './constants'
+import { CONFIG, WASA_ADDRESS } from './constants'
 import { ErcTypeEnum } from './enum'
 
 BN.config({ ROUNDING_MODE: 2 })
@@ -204,7 +204,8 @@ export const capitalizeFirstLetter = (text: string) => {
 	return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-export const isERC721 = (type: string): boolean => type === ErcTypeEnum.ERC721
+export const isERC721 = (type: string): boolean => type.toLowerCase() === ErcTypeEnum.ERC721.toLowerCase()
+export const isWASA = (address: string): boolean => address.toLowerCase() === WASA_ADDRESS.toLowerCase()
 
 export const getTransactionInOrOut = (
 	address: string = '',
