@@ -5,9 +5,10 @@ import GradientRow from 'components/Row/GradientRow'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import { LinkText } from 'components/Typography/LinkText'
+import { useMemo } from 'react'
 import { CONFIG } from 'utils/constants'
-import { evmAddressName } from 'utils/evm'
-import { convertBalanceToView, ellipseBetweenText, isERC721, LinkMaker } from 'utils/helper'
+import { LinkMaker, convertBalanceToView, ellipseBetweenText, isERC721 } from 'utils/helper'
+import { getAddressLabel } from 'utils/label'
 import styles from './style.module.scss'
 
 interface Props {
@@ -19,6 +20,15 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 	const isNFT = isERC721(tokenData.type)
 	const { isMobile } = useMobileLayout()
 	const txsHashLength = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
+
+	const fromAddressLabel = useMemo(
+		() => getAddressLabel(transaction.fromAddressName, transaction.fromAddress),
+		[transaction.fromAddress, transaction.fromAddressName]
+	)
+	const toAddressLabel = useMemo(
+		() => getAddressLabel(transaction.toAddressName, transaction.toAddress),
+		[transaction.toAddress, transaction.toAddressName]
+	)
 
 	return (
 		<GradientRow
@@ -64,10 +74,9 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 										fontType="Titi"
 										fontSize="money-2xs"
 									>
-										{evmAddressName(
-											transaction.fromAddressName,
-											ellipseBetweenText(transaction.fromAddress, 6, 6)
-										)}
+										{fromAddressLabel
+											? fromAddressLabel
+											: ellipseBetweenText(transaction.fromAddress, 6, 6)}
 									</LinkText>
 								</>
 							)}
@@ -80,10 +89,9 @@ const TokenTransaction = ({ transaction, tokenData }: Props) => {
 										fontType="Titi"
 										fontSize="money-2xs"
 									>
-										{evmAddressName(
-											transaction.toAddressName,
-											ellipseBetweenText(transaction.toAddress, 6, 6)
-										)}
+										{toAddressLabel
+											? toAddressLabel
+											: ellipseBetweenText(transaction.toAddress, 6, 6)}
 									</LinkText>
 								</>
 							)}
