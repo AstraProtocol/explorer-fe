@@ -7,9 +7,11 @@ import TransactionTag from 'components/Tag/TransactionTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
+import { useMemo } from 'react'
 import { CONFIG } from 'utils/constants'
-import { evmAddressName, isEvmTransactionType } from 'utils/evm'
+import { isEvmTransactionType } from 'utils/evm'
 import { LinkMaker, convertBalanceToView, ellipseBetweenText, ellipseRightText } from 'utils/helper'
+import { getAddressLabel } from 'utils/label'
 import styles from './style.module.scss'
 
 export type TransactionRowContentProps = {
@@ -61,6 +63,9 @@ export default function TransactionRowContent({
 	const isEvm = isEvmTransactionType(type)
 	const addressQuery = hash?.startsWith('0x') ? '' : isEvm ? { type: 'evm' } : ''
 
+	const fromAddressLabel = useMemo(() => getAddressLabel(fromName, from), [fromName, from])
+	const toAddressLabel = useMemo(() => getAddressLabel(toName, to || contractAddress), [toName, to, contractAddress])
+
 	return (
 		<>
 			<div
@@ -99,7 +104,7 @@ export default function TransactionRowContent({
 												href={LinkMaker.address(from)}
 												classes="margin-right-sm"
 											>
-												{evmAddressName(fromName, ellipseBetweenText(from, 6, 6))}
+												{fromAddressLabel ? fromAddressLabel : ellipseBetweenText(from, 6, 6)}
 											</Typography.LinkText>
 										</>
 									)}
@@ -115,10 +120,9 @@ export default function TransactionRowContent({
 												fontType="Titi"
 												href={LinkMaker.address(to || contractAddress)}
 											>
-												{evmAddressName(
-													toName,
-													ellipseBetweenText(to || contractAddress, 6, 6)
-												)}
+												{toAddressLabel
+													? toAddressLabel
+													: ellipseBetweenText(to || contractAddress, 6, 6)}
 											</Typography.LinkText>
 										</>
 									)}
