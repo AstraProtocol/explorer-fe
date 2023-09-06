@@ -5,9 +5,11 @@ import Tag from 'components/Tag/PolygonTag'
 import Timer from 'components/Timer'
 import Typography from 'components/Typography'
 import Image from 'next/image'
+import { useMemo } from 'react'
 import { CONFIG } from 'utils/constants'
 import { TransactionTypeEnum } from 'utils/enum'
 import { ellipseBetweenText, LinkMaker } from 'utils/helper'
+import { getAddressLabel } from 'utils/label'
 import styles from './style.module.scss'
 
 type TransactionBriefRowProps = {
@@ -43,6 +45,9 @@ export default function TransactionBriefRow({
 	const isEvm = transactionType === TransactionTypeEnum.Ethermint
 	const transactionQuery = isEvm ? { type: 'evm' } : null
 	const length = isMobile ? CONFIG.TXS_MOBILE_SPLIT_LENGTH : CONFIG.TXS_DESKTOP_SPLIT_LENGTH
+
+	const fromAddressLabel = useMemo(() => getAddressLabel('', from), [from])
+	const toAddressLabel = useMemo(() => getAddressLabel('', to), [to])
 
 	return (
 		<RowShowAnimation action={newTransaction}>
@@ -94,7 +99,9 @@ export default function TransactionBriefRow({
 													fontSize="money-2xs"
 													classes="margin-right-sm"
 												>
-													{ellipseBetweenText(from, 6, 6)}
+													{fromAddressLabel
+														? fromAddressLabel
+														: ellipseBetweenText(from, 6, 6)}
 												</Typography.LinkText>
 											</>
 										)}
@@ -112,7 +119,7 @@ export default function TransactionBriefRow({
 													href={LinkMaker.address(to)}
 													fontSize="money-2xs"
 												>
-													{ellipseBetweenText(to, 6, 6)}
+													{toAddressLabel ? toAddressLabel : ellipseBetweenText(to, 6, 6)}
 												</Typography.LinkText>
 											</>
 										)}
