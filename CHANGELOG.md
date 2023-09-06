@@ -1,3 +1,34 @@
+# [1.3.0](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.7...v1.3.0) (2023-09-06)
+
+
+### Bug Fixes
+
+* add limit for pagination ([dae0828](https://github.com/AstraProtocol/explorer-fe/commit/dae0828a8674f9abd842cd7a385061bb3e4943f7))
+* break layout table decode on mobile ([7db10e8](https://github.com/AstraProtocol/explorer-fe/commit/7db10e83b6a7f344ad52a215095c621d29d1f051))
+* bug not show same contract code address ([e1d3c76](https://github.com/AstraProtocol/explorer-fe/commit/e1d3c76477b5a59bafd93ecaa24293762a29db24))
+* catch error ([0f88075](https://github.com/AstraProtocol/explorer-fe/commit/0f88075c674e2d8e673f676d940caf2be3abcb64))
+* component was returned a string ([26efbc6](https://github.com/AstraProtocol/explorer-fe/commit/26efbc680b149971a3f69e552765ab88bd12fc8c))
+* component was returned string ([6aec4a1](https://github.com/AstraProtocol/explorer-fe/commit/6aec4a1b056b8e70ce8ed1f6fbe44a71cbeabb96))
+* contract use address tx list api ([513540a](https://github.com/AstraProtocol/explorer-fe/commit/513540aee93d21a2f1418c569d4ea6bf56141da9))
+* decode contructor contract code cor-17 ([b714b15](https://github.com/AstraProtocol/explorer-fe/commit/b714b151ddd2d01480117f665d856e6b4e43da7a))
+* display Optimization enabled in contract code ([18c68bb](https://github.com/AstraProtocol/explorer-fe/commit/18c68bb23e79fdebb0b1686020b38f9c6c11fe6f))
+* error empty data in NFT instance ([51df28a](https://github.com/AstraProtocol/explorer-fe/commit/51df28ab4ec3166e3c40883d164df5dd8722cd4a))
+* error Type 'string' is not assignable to type 'Element' in TransactionTag ([0c9f655](https://github.com/AstraProtocol/explorer-fe/commit/0c9f655282fed9f8a8f71b49bb8b2fb7e107bbf5))
+* format number from wei ([b916674](https://github.com/AstraProtocol/explorer-fe/commit/b9166741070a822d3d8edcdafb74a080c5e11476))
+* format tx value amount in txlist ([9a7504d](https://github.com/AstraProtocol/explorer-fe/commit/9a7504d650ed3c22b4119ec4b23dba4cda0ca0b6))
+* hide tx type IN/OUT when empty from/to ([64b9a44](https://github.com/AstraProtocol/explorer-fe/commit/64b9a448abfa6c92c54a26d714fa4b0dd7f2fed7))
+* hotfix decode hex to uft8 ([c42098d](https://github.com/AstraProtocol/explorer-fe/commit/c42098d368dd29cca1330359329550edd372d2ee))
+* remove default currency transfer symbol in tab Transfer (/tx) COR-19 ([c178527](https://github.com/AstraProtocol/explorer-fe/commit/c178527cc6cea94b8c28f862caceece63419982e))
+* show title text in address tx list ([54c9b37](https://github.com/AstraProtocol/explorer-fe/commit/54c9b375b75fc565c9179a56c85b8ffa9add03fb))
+* show verified contract ([896b471](https://github.com/AstraProtocol/explorer-fe/commit/896b47110837c9a19a3cce220a67b5a09f80c88c))
+* update getAddressLabel in some cases and write tests ([ed0c648](https://github.com/AstraProtocol/explorer-fe/commit/ed0c6484ec8af1b3804a1007ef48cb6a22c8d063))
+
+
+### Features
+
+* add token with ASA price COR-22 ([0ba4bd3](https://github.com/AstraProtocol/explorer-fe/commit/0ba4bd34d874139d715da86a3b64dd73e8538253))
+* labeling whitelist address with verify character ([cb446fe](https://github.com/AstraProtocol/explorer-fe/commit/cb446fe0f2974d2f9ecd4d19c70ae055e4363abe))
+
 ## [1.2.7](https://github.com/AstraProtocol/explorer-fe/compare/v1.2.6...v1.2.7) (2023-07-11)
 
 
