@@ -3,7 +3,7 @@ import { getAddressLabel } from 'utils/label'
 
 describe('getAddressLabel() fnc', () => {
 	test('return Tiki Account label', () => {
-		expect(getAddressLabel('', '0x661276b8c832da06c709dbc2b0c063e2f1d25ef9')).toBe('Tiki Account')
+		expect(getAddressLabel('', '0x661276b8c832da06c709dbc2b0c063e2f1d25ef9')).toBe('Tiki Account ✅')
 	})
 
 	test('return contract name from data', () => {
