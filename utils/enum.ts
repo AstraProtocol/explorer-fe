@@ -54,7 +54,7 @@ export enum CardInfoLabels {
 	to = 'To:',
 	interactWith = 'Interacted With:',
 	time = 'Timestamp:',
-	value = 'Amount:',
+	value = 'Value:',
 	fee = 'Transaction Fee:',
 	gasPrice = 'Gas Price:',
 	gasLimit = 'Gas Limit:',
